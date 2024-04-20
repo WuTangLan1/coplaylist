@@ -75,7 +75,7 @@ export default {
   text-decoration: none;
   color: black;
   padding: 0.2em 0.8em; 
-  border-radius: 5px; 
+  border-radius: 10px; 
   font-size: 1rem;
   transition: background-color 0.3s ease;
 }
