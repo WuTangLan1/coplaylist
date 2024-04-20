@@ -26,11 +26,11 @@ export default {
 <template>
   <header class="top-header">
     <div class="logo-container">
-      <img src="@/assets/css/images/header/home.png" alt="Mapple Logo" class="logo"/>
+      <img src="@/assets/images/header/cp_logo.png" alt="Mapple Logo" class="logo"/>
     </div>
     <nav class="navigation">
       <router-link to="/" class="nav-link">
-        <img src="@/assets/images/header/cp_logo.png" alt="Home" class="nav-icon"/>
+        <img src="@/assets/images/header/home.png" alt="Home" class="nav-icon"/>
       </router-link>
       <div class="nav-link" @click="handleAuthAction">
         <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>
