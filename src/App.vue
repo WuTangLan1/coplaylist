@@ -3,14 +3,36 @@
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
+import tokensModal from '@/components/tokensDir/tokensModal.vue'
+import explanationModal from '@/components/homeDir/explanationModal.vue'
 
 export default { 
   components : {
     topHeader,
-    authmodal
+    authmodal,
+    tokensModal,
+    explanationModal
   },
   setup() {
     const showAuthModal = ref(false);
+    const showExplanationModal = ref(false);
+    const showTokensModal = ref(false);
+
+    function openExplanationModal() {
+      showExplanationModal.value = true;
+    }
+
+    function closeExplanationModal() {
+      showExplanationModal.value = false;
+    }
+
+    function openTokensModal() {
+      showTokensModal.value = true;
+    }
+
+    function closeTokensModal() {
+      showTokensModal.value = false;
+    }
 
     function openAuthModal() {
       showAuthModal.value = true;
@@ -21,15 +43,42 @@ export default {
     }
 
 
-    return {showAuthModal, openAuthModal, closeAuthModal}
+    return {
+      showAuthModal,
+      showExplanationModal,
+      openExplanationModal,
+      closeExplanationModal,
+      showTokensModal,
+      openTokensModal,
+      closeTokensModal,
+      openAuthModal,
+      closeAuthModal}
   }
 }
 </script>
 
 <template>
   <div id="app">
-    <top-Header @auth-modal-open="openAuthModal"/>
-    <authmodal v-if="showAuthModal" @closeModal="closeAuthModal"/>
+    <top-Header
+      @auth-modal-open="openAuthModal"
+      @info-clicked="openExplanationModal"
+      @tokens-clicked="openTokensModal"
+    />
+
+    <authmodal 
+    v-if="showAuthModal" 
+    @closeModal="closeAuthModal"
+    />
+
+    <explanationModal 
+    v-if="showExplanationModal" 
+    @closeModal="closeExplanationModal"
+    />
+
+    <tokensModal
+     v-if="showTokensModal" 
+     @closeModal="closeTokensModal"
+     />
 
     <div class="router-view-container">
       <router-view/>

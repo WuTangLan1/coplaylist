@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'TopHeader',
-  emits: ['auth-modal-open'],  
+  emits: ['auth-modal-open', 'info-clicked', 'tokens-clicked'],
   setup(props, { emit }) {
     const authStore = useAuthStore();
 
