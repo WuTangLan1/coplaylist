@@ -1,29 +1,38 @@
-<template>
-  <nav>
+<!-- src/App.vue-->
+<script>
+import topheader from '@/components/homeDir/topHeader.vue'
+import authmodal from '@/components/authDir/authModal.vue'
 
-  </nav>
-  <router-view/>
+export default { 
+  components : {
+    topheader,
+    authmodal
+  }
+}
+</script>
+
+<template>
+  <div id="app">
+    <topheader/>
+    <authmodal/>
+    <div class="router-view-container">
+      <router-view/>
+    </div>
+  </div>
 </template>
 
 <style>
+ @import '@/assets/css/styles.css';
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.router-view-container {
+    height: var(--router-view-height);
+    transition: height 0.3s ease-in-out;
+    overflow: auto;
 }
 </style>
