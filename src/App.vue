@@ -1,19 +1,34 @@
 <!-- src/App.vue-->
 <script>
-import topheader from '@/components/homeDir/topHeader.vue'
+import { ref } from 'vue';
+import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
 
 export default { 
   components : {
-    topheader,
+    topHeader,
     authmodal
+  },
+  setup() {
+    const showAuthModal = ref(false);
+
+    function openAuthModal() {
+      showAuthModal.value = true;
+    }
+
+    function closeAuthModal() {
+      showAuthModal.value = false;
+    }
+
+
+    return {showAuthModal, openAuthModal, closeAuthModal}
   }
 }
 </script>
 
 <template>
   <div id="app">
-    <topheader/>
+    <top-Header @auth-modal-open="openAuthModal"/>
     <authmodal/>
     <div class="router-view-container">
       <router-view/>

@@ -36,7 +36,7 @@ export default {
       currentComponent,
       toggleComponent,
       closeModal,
-      toggleButtonText // make sure to return it here so it can be used in the template
+      toggleButtonText 
     };
   }
 };

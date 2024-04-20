@@ -5,7 +5,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'TopHeader',
-  emits: ['auth-modal-open', 'coming-soon-modal-open'],  
+  emits: ['auth-modal-open'],  
   setup(props, { emit }) {
     const authStore = useAuthStore();
 
@@ -17,12 +17,7 @@ export default {
       }
     }
 
-    // Function to emit event to open the Coming Soon modal
-    const openComingSoonModal = () => {
-      emit('coming-soon-modal-open');
-    }
-
-    return { authStore, handleAuthAction, openComingSoonModal };
+    return { authStore, handleAuthAction };
   }
 }
 </script>
