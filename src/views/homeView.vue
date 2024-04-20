@@ -8,7 +8,7 @@ export default {
 
 <template>
   <div class="home-view">
-        <P>this is where the homeview will display</P>
+        <p>this is where the homeview will display</p>
   </div>
 </template>
 

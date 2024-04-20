@@ -15,11 +15,19 @@ export default {
       } else {
         emit('auth-modal-open');
       }
-    }
+    };
 
-    return { authStore, handleAuthAction };
+    const emitInfoClicked = () => {
+      emit('info-clicked');
+    };
+
+    const emitTokensClicked = () => {
+      emit('tokens-clicked');
+    };
+
+    return { authStore, handleAuthAction, emitInfoClicked, emitTokensClicked };
   }
-}
+};
 </script>
 
 
@@ -32,10 +40,10 @@ export default {
       <router-link to="/" class="nav-link">
         <img src="@/assets/images/header/home.png" alt="Home" class="nav-icon"/>
       </router-link>
-      <div class="nav-link">
+      <div class="nav-link" @click="emitInfoClicked">
         <img src="@/assets/images/header/info.png" alt="Info" class="nav-icon"/>
       </div>
-      <div class="nav-link">
+      <div class="nav-link" @click="emitTokensClicked">
         <img src="@/assets/images/header/tokens.png" alt="Tokens" class="nav-icon"/>
       </div>
       <div class="nav-link" @click="handleAuthAction">
