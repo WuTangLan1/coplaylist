@@ -63,12 +63,12 @@ export default {
 .logo {
   height: auto;
   width: auto;
-  max-height: 60px; 
+  max-height: clamp(40px, 10vw, 80px); 
 }
 
 .navigation {
   display: flex;
-  gap: 1rem; 
+  gap: 0.6rem; 
 }
 
 .nav-link {
@@ -81,13 +81,13 @@ export default {
 }
 
 .nav-icon {
-  height: 35px; /* Adjust the size to fit your navigation bar */
+  height: clamp(24px, 6vw, 50px);
   width: auto;
   transition: transform 0.3s ease;
 }
 
 .nav-link:hover .nav-icon {
-  transform: scale(1.3); /* Slightly increase the size on hover for a visual effect */
+  transform: scale(1.3); 
 }
 
 
