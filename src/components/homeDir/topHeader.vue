@@ -29,11 +29,12 @@ export default {
       <img src="@/assets/css/images/header/home.png" alt="Mapple Logo" class="logo"/>
     </div>
     <nav class="navigation">
-        <p>Home link</p>
-        <p>New link</p>
+      <router-link to="/" class="nav-link">
+        <img src="@/assets/images/header/cp_logo.png" alt="Home" class="nav-icon"/>
+      </router-link>
       <div class="nav-link" @click="handleAuthAction">
-        <img v-if="authStore.user" src="@/assets/css/images/header/logout.png" alt="Logout" class="nav-icon"/>
-        <img v-else src="@/assets/css/images/header/login.png" alt="Reg/Login" class="nav-icon"/>
+        <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>
+        <img v-else src="@/assets/images/header/login.png" alt="Reg/Login" class="nav-icon"/>
       </div>
     </nav>
   </header>
@@ -46,7 +47,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0 0px; 
-  background-color: #ACC888;
+  background-color: #C3D7F8;
   width: 100%;
   color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
