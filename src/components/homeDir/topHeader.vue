@@ -31,14 +31,14 @@ export default {
 <template>
   <header class="top-header">
     <div class="logo-container">
-      <img src="@/assets/images/logo/logo.png" alt="Mapple Logo" class="logo"/>
+      <img src="@/assets/css/images/header/home.png" alt="Mapple Logo" class="logo"/>
     </div>
     <nav class="navigation">
         <p>Home link</p>
         <p>New link</p>
       <div class="nav-link" @click="handleAuthAction">
-        <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>
-        <img v-else src="@/assets/images/header/login.png" alt="Reg/Login" class="nav-icon"/>
+        <img v-if="authStore.user" src="@/assets/css/images/header/logout.png" alt="Logout" class="nav-icon"/>
+        <img v-else src="@/assets/css/images/header/login.png" alt="Reg/Login" class="nav-icon"/>
       </div>
     </nav>
   </header>
