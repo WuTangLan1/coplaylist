@@ -33,7 +33,10 @@ export default {
         <img src="@/assets/images/header/home.png" alt="Home" class="nav-icon"/>
       </router-link>
       <div class="nav-link">
-        <img src="@/assets/images/header/tokens.png" alt="Daily" class="nav-icon"/>
+        <img src="@/assets/images/header/info.png" alt="Info" class="nav-icon"/>
+      </div>
+      <div class="nav-link">
+        <img src="@/assets/images/header/tokens.png" alt="Tokens" class="nav-icon"/>
       </div>
       <div class="nav-link" @click="handleAuthAction">
         <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>
@@ -49,7 +52,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0px; 
   background-color: #C3D7F8;
   width: 100%;
   color: black;
@@ -68,7 +70,7 @@ export default {
 
 .navigation {
   display: flex;
-  gap: 0.6rem; 
+  gap: 0.4rem; 
 }
 
 .nav-link {
@@ -81,13 +83,19 @@ export default {
 }
 
 .nav-icon {
-  height: clamp(24px, 6vw, 50px);
+  height: clamp(25px, 6vw, 50px);
   width: auto;
   transition: transform 0.3s ease;
 }
 
 .nav-link:hover .nav-icon {
   transform: scale(1.3); 
+}
+
+@media (max-width: 400px) {
+  .navigation {
+    gap: 0.1rem;
+  }
 }
 
 
