@@ -59,8 +59,8 @@
 
   .modal {
     background: white;
-    padding: 30px;
-    border-radius: 5px;
+    padding: 1rem;
+    border-radius: 10px;
     width: auto;
     max-width: 90%;
     max-height: 95vh;
@@ -80,62 +80,61 @@
       opacity: 1;
     }
   }
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
-  
-  .modal-body {
-    margin-top: 20px;
-  }
-  
-  .token-icon {
-    height: 50px; /* Adjust as needed */
-    width: auto;
-  }
-  
-  .token-balance {
-    text-align: center;
-  }
-  
-  .token-transactions {
-    margin-top: 20px;
-  }
-  
-  .token-actions {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .token-actions button {
-    margin: 0 10px;
-    padding: 10px;
-    background-color: #759acd; /* Light blue background */
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .token-actions button:hover {
-    background-color: #507cac; /* Darker blue on hover */
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .close-button:hover {
-    color: #ff0000;
-  }
+
+.modal-header {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: space-between;
+  position: relative;
+  padding-right: 40px; /* Make room for the close button */
+}
+
+.modal-body {
+  margin-top: 20px;
+  font-size: 1rem; 
+}
+
+.token-icon {
+  height: 60px; 
+  margin-bottom: 1rem;
+}
+
+.token-balance h3,
+.token-transactions h3,
+.token-actions h3 {
+  color: #333; 
+  margin-bottom: 0.5rem;
+}
+
+ul {
+  padding-left: 20px; 
+}
+
+li {
+  margin-bottom: 0.25rem; 
+}
+
+.token-actions button {
+  margin: 0.5rem; 
+  padding: 0.5rem 1rem; 
+  font-weight: bold; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.close-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #507cac; /* Set the color to blue */
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.close-button:hover {
+  color: #345f8d; /* A darker blue for hover state */
+}
   </style>
   
