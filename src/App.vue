@@ -13,10 +13,12 @@ export default {
     const showAuthModal = ref(false);
 
     function openAuthModal() {
+      console.log('yees')
       showAuthModal.value = true;
     }
 
     function closeAuthModal() {
+      console.log('no')
       showAuthModal.value = false;
     }
 
@@ -29,10 +31,12 @@ export default {
 <template>
   <div id="app">
     <top-Header @auth-modal-open="openAuthModal"/>
-    <authmodal/>
+    <authmodal v-if="showAuthModal"/>
+
     <div class="router-view-container">
       <router-view/>
     </div>
+    
   </div>
 </template>
 
