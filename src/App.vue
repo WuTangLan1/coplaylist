@@ -4,26 +4,26 @@ import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
 import tokensModal from '@/components/tokensDir/tokensModal.vue'
-import explanationModal from '@/components/homeDir/explanationModal.vue'
+import infoModal from '@/components/homeDir/infoModal.vue'
 
 export default { 
   components : {
     topHeader,
     authmodal,
     tokensModal,
-    explanationModal
+    infoModal
   },
   setup() {
     const showAuthModal = ref(false);
-    const showExplanationModal = ref(false);
+    const showinfoModal = ref(false);
     const showTokensModal = ref(false);
 
-    function openExplanationModal() {
-      showExplanationModal.value = true;
+    function openinfoModal() {
+      showinfoModal.value = true;
     }
 
-    function closeExplanationModal() {
-      showExplanationModal.value = false;
+    function closeinfoModal() {
+      showinfoModal.value = false;
     }
 
     function openTokensModal() {
@@ -45,9 +45,9 @@ export default {
 
     return {
       showAuthModal,
-      showExplanationModal,
-      openExplanationModal,
-      closeExplanationModal,
+      showinfoModal,
+      openinfoModal,
+      closeinfoModal,
       showTokensModal,
       openTokensModal,
       closeTokensModal,
@@ -61,7 +61,7 @@ export default {
   <div id="app">
     <top-Header
       @auth-modal-open="openAuthModal"
-      @info-clicked="openExplanationModal"
+      @info-clicked="openinfoModal"
       @tokens-clicked="openTokensModal"
     />
 
@@ -70,9 +70,9 @@ export default {
     @closeModal="closeAuthModal"
     />
 
-    <explanationModal 
-    v-if="showExplanationModal" 
-    @closeModal="closeExplanationModal"
+    <infoModal 
+    v-if="showinfoModal" 
+    @closeModal="closeinfoModal"
     />
 
     <tokensModal
