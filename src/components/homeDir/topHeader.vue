@@ -32,6 +32,9 @@ export default {
       <router-link to="/" class="nav-link">
         <img src="@/assets/images/header/home.png" alt="Home" class="nav-icon"/>
       </router-link>
+      <div class="nav-link">
+        <img src="@/assets/images/header/tokens.png" alt="Daily" class="nav-icon"/>
+      </div>
       <div class="nav-link" @click="handleAuthAction">
         <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>
         <img v-else src="@/assets/images/header/login.png" alt="Reg/Login" class="nav-icon"/>
