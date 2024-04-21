@@ -178,6 +178,7 @@ export default {
   gap: 0.5rem; 
   padding: 0.5rem;
   align-content: flex-start; /* Aligns content to the top */
+  
 }
 
 
@@ -214,13 +215,15 @@ export default {
 .selected-genre-chip, .selected-era-chip {
   border-color: #0b1d30;
   background-color: #d4cbef;
+  position: relative; 
+  padding-right: 0.2rem; 
 
 }
 
 .remove-genre, .remove-era {
   background: none;
   border: none;
-  color: white;
+  color: black;
   cursor: pointer;
   font-size: 0.8rem;
 }
