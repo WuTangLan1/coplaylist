@@ -23,7 +23,7 @@
     },
     methods: {
       goToNext() {
-      this.$router.push({ name: 'Vibe' });
+      this.$router.push({ name: 'Songs' });
     }
     }
   };

@@ -35,12 +35,14 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   max-width: 800px; 
+  max-height: 550px;
   margin: auto; 
   padding: 20px;
   background: #F4F4F4; 
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   border: 1px solid blue;
+  overflow-y: auto;
 }
 
 .explanation-content h1 {
@@ -119,7 +121,7 @@ export default {
   .explanation-content p,
   .explanation-content ul,
   .explanation-content li {
-    font-size: 12px; /* Further adjust font size for very small screens */
+    font-size: 13px; /* Further adjust font size for very small screens */
   }
 
   .next-button {

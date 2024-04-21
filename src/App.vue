@@ -100,8 +100,8 @@ export default {
   display: flex;
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
-  height: calc(100vh - var(--header-height)); /* Adjust the height as necessary */
-  padding: 1rem;
+  height: calc(100vh - 60px); /* Adjust the height as necessary */
+  padding: 0.5rem;
 }
 
 </style>

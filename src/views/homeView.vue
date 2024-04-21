@@ -27,8 +27,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - var(--header-height)); /* Ensure full height minus header */
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: #ffffff;
   color: #333333;
 }
