@@ -88,7 +88,7 @@ export default {
 </template>
 
 <style>
- @import '@/assets/css/styles.css';
+ @import './assets/css/styles.css';
 #app {
   display: flex;
   flex-direction: column;
@@ -97,9 +97,11 @@ export default {
 }
 
 .router-view-container {
-    height: var(--router-view-height);
-    transition: height 0.3s ease-in-out;
-    overflow: auto;
-    margin: 0;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  height: calc(100vh - var(--header-height)); /* Adjust the height as necessary */
+  padding: 1rem;
 }
+
 </style>

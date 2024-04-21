@@ -22,17 +22,18 @@ export default {
 </script>
 
 <style scoped>
+ @import '@/assets/css/styles.css';
 .home-view {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; 
+  height: calc(100vh - var(--header-height)); /* Ensure full height minus header */
   padding: 1rem;
   background-color: #ffffff;
   color: #333333;
 }
-
 </style>
+
 
 
 

@@ -25,7 +25,7 @@ export default {
         </ul>
         <p>Join us and redefine your music streaming experience, making it as unique as you are!</p>
       </div>
-      <button class="next-button" @click="getStarted">Lets get started !</button>
+      <button class="next-button" @click="getStarted">Lets get started</button>
     </div>
   </template>
   
