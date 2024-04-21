@@ -30,17 +30,24 @@ export default {
   </template>
   
   <style scoped>
-  .explanation-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 800px; /* Max width for better readability */
-    margin: auto; /* Center the container */
-    padding: 20px;
-    background: #F4F4F4; /* Light background to pop content */
-    border-radius: 8px; /* Slight rounding of corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  }
+.explanation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 800px; /* Max width for better readability */
+  margin: auto; /* Center the container */
+  padding: 20px;
+  background: #F4F4F4; /* Light background to pop content */
+  border-radius: 8px; /* Slight rounding of corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border: 1px solid #blue; /* Thin blue border */
+}
+
+.explanation-content h1 {
+  text-align: center; /* Center align the header */
+  color: #2D3047; /* A dark, rich color for headings */
+  margin-bottom: 1rem;
+}
   
   .explanation-content {
     text-align: left;
@@ -58,24 +65,24 @@ export default {
   }
   
   li strong {
-    color: #4CAF50; /* Color coding for key terms */
+    color: #4c65af; /* Color coding for key terms */
   }
   
   .next-button {
     align-self: flex-end;
     padding: 10px 20px;
-    background-color: #4CAF50; /* A vibrant color for action */
+    background-color: #4c56af; /* A vibrant color for action */
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    transition: background-color 0.3s ease; /* Smooth background transition */
+    transition: background-color 0.3s ease; 
   }
   
   .next-button:hover {
-    background-color: #367C39; /* Darker shade on hover */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight lift effect */
+    background-color: #46367c; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
   @media (max-width: 768px) {
