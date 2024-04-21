@@ -93,6 +93,7 @@ export default {
   margin-bottom: 0.5rem;
   font-weight: bold;
   color: #333;
+  font-size: clamp(13px, 2.5vw, 16px);
 }
 
 .input-group select {
@@ -100,7 +101,8 @@ export default {
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: white;
-    margin-bottom: 1rem; /* Added margin for spacing */
+    margin-bottom: 1rem; 
+    font-size: clamp(12px, 2.5vw, 16px);
   }
 
 .next-btn {
@@ -112,7 +114,7 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  align-self: center;
+  align-self: flex-end;
   margin-top: 1rem;
 }
 
@@ -123,6 +125,7 @@ export default {
 h2 {
   color: #333;
   margin-bottom: 1rem;
+  font-size: clamp(18px, 5vw, 24px);
 }
 
 </style>
