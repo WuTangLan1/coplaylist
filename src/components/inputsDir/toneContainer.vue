@@ -59,7 +59,10 @@ export default {
       } else if (type === 'era') {
         this.selectedEra = this.selectedEra.filter(e => e !== item);
       }
-    }
+    },
+    removeEra(era) {
+      this.selectedEra = this.selectedEra.filter(e => e !== era);
+    },
   }
 };
 </script>
@@ -220,7 +223,6 @@ export default {
   color: white;
   cursor: pointer;
   font-size: 0.8rem;
-  margin-left: 8px;
 }
 
 .input-group {
