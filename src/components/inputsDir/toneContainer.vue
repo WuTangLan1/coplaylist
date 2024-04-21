@@ -8,8 +8,8 @@ export default {
       newEra: '',
       selectedGenres: [],
       selectedEra: [],
-      commonGenres: ['Pop', 'Rock', 'Hip-Hop', 'Electronic', 'Country'],
-      commonEras: ['60s', '80s', '2000s'],
+      commonGenres: ['Pop', 'Rock', 'Hip-Hop', 'Electronic', 'Country', 'Funk', 'Dance', 'Blues'],
+      commonEras: ['60s', '70s', '80s', '90s', '2000s'],
     };
   },
   methods: {
@@ -67,8 +67,9 @@ export default {
 <template>
   <div class="tone-container">
     <h2>Define Your Tone</h2>
+
+    <!-- Available Genre Options -->
     <div class="genres-container">
-      <!-- Genre Selection -->
       <div
         v-for="genre in commonGenres"
         :key="genre"
@@ -79,8 +80,14 @@ export default {
         {{ genre }}
       </div>
     </div>
+
+    <!-- Placeholder for Selected Genres -->
+    <div v-if="selectedGenres.length === 0" class="placeholder">
+      Select up to 3 genres
+    </div>
+    
+    <!-- Selected Genres -->
     <div class="selected-genres-container">
-      <!-- Selected Genres Display -->
       <div
         v-for="genre in selectedGenres"
         :key="genre"
@@ -90,6 +97,7 @@ export default {
         <button class="remove-genre" @click="removeGenre('genre', genre)">✕</button>
       </div>
     </div>
+
     <!-- Genre Input -->
     <div class="input-group">
       <input
@@ -100,7 +108,8 @@ export default {
       />
       <button @click="addNewItem('genre', newGenre)">Submit</button>
     </div>
-    <!-- Era Selection -->
+
+    <!-- Available Era Options -->
     <div class="eras-container">
       <div
         v-for="era in commonEras"
@@ -112,6 +121,7 @@ export default {
         {{ era }}
       </div>
     </div>
+
     <!-- Selected Eras Display -->
     <div class="selected-eras-container">
       <div
@@ -123,8 +133,15 @@ export default {
         <button class="remove-era" @click="removeEra(era)">✕</button>
       </div>
     </div>
+
+    <!-- Placeholder for Selected Eras -->
+    <div v-if="selectedEra.length === 0" class="placeholder">
+      Select an era
+    </div>
+    <button @click="goToNext">Next</button>
   </div>
 </template>
+
   
 <style scoped>
 .tone-container {
@@ -140,15 +157,34 @@ export default {
   border: 2px solid #507cac; 
 }
 
+.placeholder {
+    text-align: center;
+    color: #aaa; /* Placeholder text color */
+    padding: 1rem;
+    border: dashed 2px #ccc;
+    border-radius: 10px;
+    width: 90%; /* Adjust width as needed */
+    margin-bottom: 1rem;
+  }
+  
+  .selected-genres-container,
+  .selected-eras-container {
+    border: solid 1px #ccc; /* Border for the selected container */
+    border-radius: 10px;
+    min-height: 50px; /* Minimum height so it's visible even if empty */
+    width: 90%; /* Adjust width as needed */
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start; /* Align to start or center based on design */
+    gap: 0.5rem; /* Gap between chips */
+    padding: 0.5rem;
+  }
 .genres-container,
-.selected-genres-container,
-.eras-container,
-.selected-eras-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 1rem;
+.eras-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+  gap: 0.5rem;
 }
 
 .genre-chip, .era-chip {

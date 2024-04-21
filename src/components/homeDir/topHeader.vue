@@ -65,6 +65,7 @@ export default {
   width: 100%;
   color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  margin-bottom: 1rem;
 }
 
 .logo-container {
@@ -80,7 +81,7 @@ export default {
 @media (min-width: 450px) {
   .logo {
     max-height: clamp(22px, 7vw, 40px); 
-}
+      }
 }
 
 
@@ -102,6 +103,12 @@ export default {
   height: clamp(20px, 6vw, 45px);
   width: auto;
   transition: transform 0.3s ease;
+}
+
+@media (min-width: 450px) {
+  .nav-icon {
+      height: clamp(15px, 5vw, 30px);
+    }
 }
 
 .nav-link:hover .nav-icon {
