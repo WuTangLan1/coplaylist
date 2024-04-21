@@ -9,7 +9,8 @@ export default {
       selectedSetting: null,
       moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
       activities: ['Working Out', 'Studying', 'Relaxing'],
-      // Additional data properties for the new inputs
+      familiarities: ['Famous', 'Known', 'Not Well Known'],
+      settings: ['By Yourself','With Close Friends','At the Party']
     };
   },
   methods : {
@@ -41,19 +42,14 @@ export default {
       <label for="familiarity">Familiarity:</label>
       <select id="familiarity" v-model="selectedFamiliarity">
         <option value="" disabled>Select familiarity</option>
-        <option value="famous">Famous</option>
-        <option value="known">Known</option>
-        <option value="obscure">Not Well Known</option>
+        <option v-for="familiarity in familiarities" :key="familiarity" :value="familiarity">{{ familiarity }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="setting">Setting:</label>
       <select id="setting" v-model="selectedSetting">
         <option value="" disabled>Select setting</option>
-        <option value="byYourself">By Yourself</option>
-        <option value="closeFriends">With Close Friends</option>
-        <option value="party">At The Party</option>
-        <option value="others">Others</option>
+        <option v-for="setting in settings" :key="setting " :value="setting ">{{ setting }}</option>
       </select>
     </div>
     <button class="next-btn" @click="next">Next</button>
@@ -69,9 +65,21 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 500px; 
+  max-width: 300px; 
   margin: auto;
   border: 2px solid #507cac;
+}
+
+@media (max-width: 1000px) {
+  .vibe-container {
+    min-width: 60%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .vibe-container {
+    min-width: 30%;
+  }
 }
 
 .input-group {
@@ -116,4 +124,5 @@ h2 {
   color: #333;
   margin-bottom: 1rem;
 }
+
 </style>
