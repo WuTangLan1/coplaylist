@@ -56,6 +56,18 @@ export default {
     line-height: 1.6; 
     color: #333; 
   }
+
+  .explanation-content ul {
+  list-style-type: none; /* Removes default list styling */
+  padding-left: 0; /* Removes indentation */
+  margin-left: 0; /* Aligns with the paragraph text */
+}
+
+.explanation-content li::before {
+  content: "• "; /* Adds a bullet point before each list item */
+  color: #4c65af; /* Same color as the strong elements for consistency */
+  font-weight: bold; /* Makes the bullet point bold */
+}
   
   h1 {
     color: #2D3047; 
@@ -64,6 +76,7 @@ export default {
   
   ul {
     list-style: inside square; 
+    text-align: left;
   }
   
   li strong {
