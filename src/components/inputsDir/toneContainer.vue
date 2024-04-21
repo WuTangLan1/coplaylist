@@ -8,8 +8,8 @@ export default {
       newEra: '',
       selectedGenres: [],
       selectedEra: [],
-      commonGenres: ['Pop', 'Rock', 'Hip-Hop', 'Electronic', 'Country', 'Funk', 'Dance', 'Blues'],
-      commonEras: ['60s', '70s', '80s', '90s', '2000s'],
+      commonGenres: ['Pop', 'Rock', 'Hip-Hop', 'Electronic', 'Country', 'Funk', 'Dance', 'Blues', 'Techno'],
+      commonEras: ['60s', '70s', '80s', '90s', '2000s', '2010s'],
     };
   },
   methods: {
@@ -68,7 +68,6 @@ export default {
   <div class="tone-container">
     <h2>Define Your Tone</h2>
 
-    <!-- Available Genre Options -->
     <div class="genres-container">
       <div
         v-for="genre in commonGenres"
@@ -81,12 +80,10 @@ export default {
       </div>
     </div>
 
-    <!-- Placeholder for Selected Genres -->
     <div v-if="selectedGenres.length === 0" class="placeholder">
       Select up to 3 genres
     </div>
     
-    <!-- Selected Genres -->
     <div class="selected-genres-container">
       <div
         v-for="genre in selectedGenres"
@@ -98,7 +95,6 @@ export default {
       </div>
     </div>
 
-    <!-- Genre Input -->
     <div class="input-group">
       <input
         type="text"
@@ -109,7 +105,6 @@ export default {
       <button @click="addNewItem('genre', newGenre)">Submit</button>
     </div>
 
-    <!-- Available Era Options -->
     <div class="eras-container">
       <div
         v-for="era in commonEras"
@@ -122,7 +117,9 @@ export default {
       </div>
     </div>
 
-    <!-- Selected Eras Display -->
+    <div v-if="selectedGenres.length === 0" class="placeholder">
+      Select up to 3 eras
+    </div>
     <div class="selected-eras-container">
       <div
         v-for="era in selectedEra"
@@ -134,11 +131,8 @@ export default {
       </div>
     </div>
 
-    <!-- Placeholder for Selected Eras -->
-    <div v-if="selectedEra.length === 0" class="placeholder">
-      Select an era
-    </div>
-    <button @click="goToNext">Next</button>
+
+    <button class="next-btn" @click="goToNext">Next</button>
   </div>
 </template>
 
@@ -152,57 +146,72 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px; /* Set a max-width for larger screens */
+  max-width: 700px; 
   margin: 0;
   border: 2px solid #507cac; 
+  max-height: 80vh;
+  overflow-y: auto; 
 }
 
 .placeholder {
     text-align: center;
-    color: #aaa; /* Placeholder text color */
+    color: #aaa; 
     padding: 1rem;
-    border: dashed 2px #ccc;
-    border-radius: 10px;
-    width: 90%; /* Adjust width as needed */
-    margin-bottom: 1rem;
+    margin:0;
+    align-items: center;
+    align-self: center;
   }
   
-  .selected-genres-container,
-  .selected-eras-container {
-    border: solid 1px #ccc; /* Border for the selected container */
-    border-radius: 10px;
-    min-height: 50px; /* Minimum height so it's visible even if empty */
-    width: 90%; /* Adjust width as needed */
-    margin-bottom: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start; /* Align to start or center based on design */
-    gap: 0.5rem; /* Gap between chips */
-    padding: 0.5rem;
-  }
+.selected-genres-container,
+.selected-eras-container {
+  border: solid 1px #ccc; 
+  border-radius: 10px;
+  height: 150px; /* Fixed height for the scrollable area */
+  width: 90%; /* Adjust width as needed */
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start; 
+  gap: 0.5rem; 
+  padding: 0.5rem;
+  align-content: flex-start; /* Aligns content to the top */
+}
+
+
 .genres-container,
 .eras-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+  grid-template-columns: repeat(3, 1fr); 
   gap: 0.5rem;
 }
 
-.genre-chip, .era-chip {
+@media (min-width: 500px) {
+.genres-container,
+.eras-container {
+  grid-template-columns: repeat(4, 1fr); 
+}
+}
+
+.genre-chip, .era-chip,
+.selected-genre-chip, .selected-era-chip {
   padding: 0.5rem 1rem;
   border: 1px solid #ccc;
-  border-radius: 25px;
+  border-radius: 10px;
+  align-items: center;
+  text-align: center;
+  align-content: center;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;
   margin: 0.25rem;
-  background-color: #f8f8f8;
+  background-color: #e5e1f2;
 }
 
 .genre-chip.selected, .era-chip.selected,
 .selected-genre-chip, .selected-era-chip {
-  background-color: #507cac;
-  color: white;
-  border-color: #507cac;
+  border-color: #0b1d30;
+  background-color: #d4cbef;
+
 }
 
 .remove-genre, .remove-era {
@@ -217,7 +226,7 @@ export default {
 .input-group {
   display: flex;
   justify-content: space-between;
-  width: 100%; /* Use the full width of the container */
+  width: 100%; 
   margin-bottom: 1rem;
 }
 
@@ -247,4 +256,21 @@ h2 {
   color: #333;
   margin-bottom: 1rem;
 }
+
+.next-btn {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: #4c56af; 
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .next-btn:hover {
+    background-color: #46367c; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 </style>
