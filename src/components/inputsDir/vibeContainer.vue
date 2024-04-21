@@ -10,6 +10,7 @@
           v-model="selectedSongs[index - 1]"
         />
       </div>
+      <button @click="goToNext">Next</button>
     </div>
   </template>
   
@@ -19,6 +20,11 @@
       return {
         selectedSongs: ['', '', '']
       };
+    },
+    methods: {
+      goToNext() {
+      this.$router.push({ name: 'Vibe' });
+    }
     }
   };
   </script>

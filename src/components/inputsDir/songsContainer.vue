@@ -15,6 +15,7 @@
           <!-- Options for activity -->
         </select>
       </div>
+      <button @click="finish">Finish</button>
     </div>
   </template>
   
@@ -24,10 +25,14 @@
       return {
         selectedMood: null,
         selectedActivity: null,
-        // Populate with actual options
         moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
         activities: ['Working Out', 'Studying', 'Relaxing']
       };
+    },
+    methods : {
+      finish() {
+      this.$router.push({ name: 'Home' });
+    }
     }
   };
   </script>
