@@ -1,39 +1,50 @@
 <!-- src\components\inputsDir\vibeContainer.vue -->
 
 <template>
-    <div class="songs-container">
-      <h2>Add Songs You Like</h2>
-      <div v-for="index in 3" :key="`song-${index}`" class="input-group">
-        <input
-          type="text"
-          :placeholder="`Song ${index}`"
-          v-model="selectedSongs[index - 1]"
-        />
-      </div>
-      <button @click="goToNext">Next</button>
+  <div class="vibe-container">
+    <h2>Select Your Vibe</h2>
+    <div class="input-group">
+      <label for="mood">Mood:</label>
+      <select id="mood" v-model="selectedMood">
+        <!-- Options for mood -->
+      </select>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {
-        selectedSongs: ['', '', '']
-      };
-    },
-    methods: {
-      goToNext() {
-      this.$router.push({ name: 'Songs' });
-    }
-    }
-  };
-  </script>
-  
-  <style scoped>
-  .songs-container {
-    /* Styles for the container */
+    <div class="input-group">
+      <label for="activity">Activity:</label>
+      <select id="activity" v-model="selectedActivity">
+        <!-- Options for activity -->
+      </select>
+    </div>
+    <button @click="next">Next</button>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      selectedMood: null,
+      selectedActivity: null,
+      moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
+      activities: ['Working Out', 'Studying', 'Relaxing']
+    };
+  },
+  methods : {
+    next() {
+    this.$router.push({ name: 'Songs' });
   }
-  .input-group input {
-    /* Styles for input elements */
   }
-  </style>
+};
+</script>
+
+<style scoped>
+.vibe-container {
+  /* Styles for the container */
+}
+.input-group label {
+  /* Styles for labels */
+}
+.input-group select {
+  /* Styles for select elements */
+}
+</style>
