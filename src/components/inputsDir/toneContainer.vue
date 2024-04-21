@@ -132,7 +132,7 @@ export default {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  background: #FFF; /* Assuming white background */
+  background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 400px; /* Set a max-width for larger screens */

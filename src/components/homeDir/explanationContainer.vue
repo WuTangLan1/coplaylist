@@ -34,44 +34,44 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 800px; /* Max width for better readability */
-  margin: auto; /* Center the container */
+  max-width: 800px; 
+  margin: auto; 
   padding: 20px;
-  background: #F4F4F4; /* Light background to pop content */
-  border-radius: 8px; /* Slight rounding of corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border: 1px solid #blue; /* Thin blue border */
+  background: #F4F4F4; 
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  border: 1px solid blue;
 }
 
 .explanation-content h1 {
-  text-align: center; /* Center align the header */
-  color: #2D3047; /* A dark, rich color for headings */
+  text-align: center; 
+  color: #2D3047; 
   margin-bottom: 1rem;
 }
   
   .explanation-content {
     text-align: left;
-    line-height: 1.6; /* Improve line spacing */
-    color: #333; /* Darker text for better contrast */
+    line-height: 1.6; 
+    color: #333; 
   }
   
   h1 {
-    color: #2D3047; /* A dark, rich color for headings */
+    color: #2D3047; 
     margin-bottom: 1rem;
   }
   
   ul {
-    list-style: inside square; /* Stylish bullet points */
+    list-style: inside square; 
   }
   
   li strong {
-    color: #4c65af; /* Color coding for key terms */
+    color: #4c65af; 
   }
   
   .next-button {
     align-self: flex-end;
     padding: 10px 20px;
-    background-color: #4c56af; /* A vibrant color for action */
+    background-color: #4c56af; 
     color: white;
     border: none;
     cursor: pointer;
@@ -86,14 +86,46 @@ export default {
   }
   
   @media (max-width: 768px) {
-    .explanation-container {
+
+  .explanation-content {
+    text-align: center; /* Center text for better readability on small screens */
+  }
+
+  .explanation-content p,
+  .explanation-content ul,
+  .explanation-content li {
+    font-size: 14px; /* Adjust font size for small screens */
+  }
+  .explanation-container {
       padding: 10px;
     }
   
     .next-button {
-      width: 100%; /* Full-width button on smaller screens */
-      margin-top: 20px; /* Add space above the button */
+      width: 100%; 
+      margin-top: 20px; 
     }
+}
+
+/* Specific styles for very small viewports like 420px width */
+@media (max-width: 420px) {
+  .explanation-container {
+    padding: 10px; /* Adjust padding for small screens */
   }
+
+  .explanation-content h1 {
+    font-size: 20px; /* Adjust the header font size for small screens */
+  }
+
+  .explanation-content p,
+  .explanation-content ul,
+  .explanation-content li {
+    font-size: 12px; /* Further adjust font size for very small screens */
+  }
+
+  .next-button {
+    width: 100%; /* Make the button full-width for better accessibility */
+    padding: 12px 0; /* Adjust padding to be more proportionate */
+  }
+}
   </style>
   

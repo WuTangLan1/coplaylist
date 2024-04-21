@@ -74,8 +74,15 @@ export default {
 .logo {
   height: auto;
   width: auto;
-  max-height: clamp(40px, 10vw, 80px); 
+  max-height: clamp(22px, 9vw, 45px); 
 }
+
+@media (min-width: 450px) {
+  .logo {
+    max-height: clamp(22px, 7vw, 40px); 
+}
+}
+
 
 .navigation {
   display: flex;
@@ -92,7 +99,7 @@ export default {
 }
 
 .nav-icon {
-  height: clamp(25px, 6vw, 50px);
+  height: clamp(20px, 6vw, 45px);
   width: auto;
   transition: transform 0.3s ease;
 }
