@@ -21,14 +21,14 @@
     </div>
   </template>
   
-  <script setup>
-  import { useRouter } from 'vue-router';
-  
-  const router = useRouter();
-  
-  function goToNext() {
-    router.push({ name: 'nextRouteName' }); // Modify 'nextRouteName' to the actual route name you want to navigate to
-  }
+  <script>
+  export default {
+    methods: {
+      goToNext() {
+        this.$emit('next');
+      }
+    }
+  };
   </script>
   
   <style scoped>

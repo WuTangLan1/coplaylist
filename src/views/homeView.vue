@@ -1,27 +1,35 @@
-<!-- This is the code for the src\views\homeView.vue -->
-<script>
-
-export default {
-  name: 'HomeView',
-}
-</script>
-
+<!-- src/views/homeView.vue -->
 <template>
   <div class="home-view">
-        <p>this is where the homeview will display</p>
+    <explanation-container @next="goToTone"></explanation-container>
   </div>
 </template>
 
-<style scoped>
-  .home-view {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: #ffffff;
-    color: #333333;
-  }
-</style>
+<script>
+import ExplanationContainer from '@/components/homeDir/explanationContainer.vue';
 
+export default {
+  name: 'HomeView',
+  components: {
+    'explanation-container': ExplanationContainer
+  },
+  methods: {
+    goToTone() {
+      this.$router.push({ name: 'Tone' });
+    }
+  }
+}
+</script>
+
+<style scoped>
+.home-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #ffffff;
+  color: #333333;
+}
+</style>
 
 
 
