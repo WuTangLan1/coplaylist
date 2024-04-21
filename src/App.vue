@@ -100,5 +100,6 @@ export default {
     height: var(--router-view-height);
     transition: height 0.3s ease-in-out;
     overflow: auto;
+    margin: 0;
 }
 </style>

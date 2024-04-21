@@ -1,0 +1,9 @@
+/* src/assets/css/styles.css */
+:root {
+    --header-height: 45px; 
+    --router-view-height: calc(100vh - var(--header-height));
+  }
+  
+  button:hover {
+    transform : translateY(-2px)
+  }

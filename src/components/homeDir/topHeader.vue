@@ -30,7 +30,6 @@ export default {
 };
 </script>
 
-
 <template>
   <header class="top-header">
     <div class="logo-container">
@@ -56,10 +55,12 @@ export default {
 
 
 <style scoped>
+ @import '@/assets/css/styles.css';
 .top-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-height);
   background-color: #C3D7F8;
   width: 100%;
   color: black;

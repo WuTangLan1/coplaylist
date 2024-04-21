@@ -24,11 +24,14 @@ export default {
 <style scoped>
 .home-view {
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 100%; 
+  padding: 1rem;
   background-color: #ffffff;
   color: #333333;
 }
+
 </style>
 
 

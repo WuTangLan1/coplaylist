@@ -1,5 +1,13 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
-
+<script>
+export default {
+  methods: {
+    getStarted() {
+      this.$emit('next');
+    }
+  }
+};
+</script>
 
 <template>
     <div class="explanation-container">
@@ -17,55 +25,68 @@
         </ul>
         <p>Join us and redefine your music streaming experience, making it as unique as you are!</p>
       </div>
-      <button class="next-button" @click="goToNext">Next</button>
+      <button class="next-button" @click="getStarted">Lets get started !</button>
     </div>
   </template>
-  
-  <script>
-  export default {
-    methods: {
-      goToNext() {
-        this.$emit('next');
-      }
-    }
-  };
-  </script>
   
   <style scoped>
   .explanation-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    max-width: 800px; /* Max width for better readability */
+    margin: auto; /* Center the container */
     padding: 20px;
+    background: #F4F4F4; /* Light background to pop content */
+    border-radius: 8px; /* Slight rounding of corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   }
   
   .explanation-content {
     text-align: left;
+    line-height: 1.6; /* Improve line spacing */
+    color: #333; /* Darker text for better contrast */
   }
   
   h1 {
-    color: #123456; /* Customize your color */
+    color: #2D3047; /* A dark, rich color for headings */
+    margin-bottom: 1rem;
   }
   
   ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: inside square; /* Stylish bullet points */
   }
   
-  li {
-    margin-bottom: 10px;
+  li strong {
+    color: #4CAF50; /* Color coding for key terms */
   }
   
   .next-button {
     align-self: flex-end;
     padding: 10px 20px;
-    background-color: #4CAF50; /* Customize button color */
+    background-color: #4CAF50; /* A vibrant color for action */
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
+    transition: background-color 0.3s ease; /* Smooth background transition */
+  }
+  
+  .next-button:hover {
+    background-color: #367C39; /* Darker shade on hover */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Slight lift effect */
+  }
+  
+  @media (max-width: 768px) {
+    .explanation-container {
+      padding: 10px;
+    }
+  
+    .next-button {
+      width: 100%; /* Full-width button on smaller screens */
+      margin-top: 20px; /* Add space above the button */
+    }
   }
   </style>
   
