@@ -63,9 +63,10 @@ export default {
         <input type="password" id="confirmPassword" v-model="form.confirmPassword" required minlength="6" placeholder="Confirm your password">
       </div>
       <div class="form-group">
-        <label for="musicTaste">Music Taste</label>
-        <textarea id="musicTaste" v-model="form.musicTaste" required placeholder="Describe your music taste"></textarea>
-      </div>
+          <label for="musicTaste">Music Taste</label>
+          <textarea id="musicTaste" v-model="form.musicTaste" required 
+                    placeholder="Describe your music taste to us. What phase are you in ?" rows="6" class="music-taste-textarea"></textarea>
+        </div>
       <div class="btn-grp">
         <button type="submit" class="submit-button">Register</button>
       </div>
@@ -77,7 +78,7 @@ export default {
   <style scoped>
   .registration-container {
     background: #e1e8eb;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     max-height: 85vh;
@@ -90,9 +91,21 @@ export default {
     margin-bottom: 30px;
     text-align: center;
   }
+  .music-taste-textarea {
+    width: 100%; 
+    padding: 0.2rem;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    min-height: 120px; 
+    resize: vertical; 
+    box-sizing: border-box; 
+  }
   
   .form-group {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
   }
   
   .form-group label {
@@ -102,7 +115,7 @@ export default {
   }
   
   .form-group input {
-    padding: 10px;
+    padding: 0.5rem;
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 16px;
@@ -110,12 +123,12 @@ export default {
   
   .btn-grp {
     display: flex;
-    justify-content: flex-end; /* Aligns the button to the right */
-    margin-top: 10px; /* Space above the button */
+    justify-content: flex-end; 
+    margin-top: 10px; 
   }
   
   .submit-button {
-    padding: 15px;
+    padding: 0.5rem;
     background-color: #5c90b8;
     color: white;
     border: none;
