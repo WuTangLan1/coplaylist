@@ -75,16 +75,19 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.2rem;
-  background: #F4F4F4;
+  padding: 0.5rem;
+  background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 90%;
-  margin: auto;
+  max-width: 700px; 
+  margin: 0;
+  border: 2px solid #507cac; 
+  max-height: 85vh;
+  overflow-y: auto; 
 }
 
 form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,14 +101,14 @@ form {
 }
 
 .input-group {
+  width: 70%; 
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 1rem;
+  align-items: center;
 }
 
 .input-column {
-  width: 100%; /* Full width by default */
+  width: 100%; 
   padding: 0.5rem;
 }
 
