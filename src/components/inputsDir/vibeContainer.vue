@@ -3,10 +3,10 @@
 export default {
   data() {
     return {
-      selectedMood: null,
-      selectedActivity: null,
-      selectedFamiliarity: null,
-      selectedSetting: null,
+      selectedMood: '',
+      selectedActivity: '',
+      selectedFamiliarity: '',
+      selectedSetting: '',
       moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
       activities: ['Working Out', 'Studying', 'Relaxing'],
       familiarities: ['Famous', 'Known', 'Not Well Known'],

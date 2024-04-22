@@ -104,4 +104,14 @@ export default {
   padding: 0.5rem;
 }
 
+@media (min-width: 500px) {
+  .router-view-container {
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    height: calc(100vh - 60px); 
+    padding: 0.5rem;
+}
+}
+
 </style>
