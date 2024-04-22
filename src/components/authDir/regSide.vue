@@ -1,4 +1,4 @@
-<!-- This is the code for src\components\auth\regSide.vue -->
+<!-- src\components\auth\regSide.vue -->
 <script>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -7,10 +7,12 @@ export default {
   name: 'RegSide',
   setup() {
     const form = ref({
-      username: '',
+      email: '',
       fullName: '',
+      username: '',
       password: '',
-      confirmPassword: ''
+      confirmPassword: '',
+      musicTaste: ''
     });
 
     const authStore = useAuthStore();
@@ -22,11 +24,7 @@ export default {
       }
 
       try {
-        await authStore.registerUser({
-          username: form.value.username,
-          fullName: form.value.fullName,
-          password: form.value.password
-        });
+        await authStore.registerUser(form.value);
       } catch (error) {
         console.error(error);
       }
@@ -41,31 +39,40 @@ export default {
 </script>
 
 <template>
-    <div class="registration-container">
-      <form @submit.prevent="register" class="registration-form">
-        <h2>Registration</h2>
-        <div class="form-group">
-          <label for="username">Email</label>
-          <input type="email" id="username" v-model.trim="form.username" required placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-          <label for="fullName">Full Name</label>
-          <input type="text" id="fullName" v-model.trim="form.fullName" required placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" v-model="form.password" required minlength="6" placeholder="Enter a password">
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" v-model="form.confirmPassword" required minlength="6" placeholder="Confirm your password">
-        </div>
-        <div class="btn-grp">
-          <button type="submit" class="submit-button">Register</button>
-        </div>
-      </form>
-    </div>
-  </template> 
+  <div class="registration-container">
+    <form @submit.prevent="register" class="registration-form">
+      <h2>Registration</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" v-model.trim="form.email" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" v-model.trim="form.fullName" required placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" v-model.trim="form.username" required placeholder="Choose a username">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="form.password" required minlength="6" placeholder="Enter a password">
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required minlength="6" placeholder="Confirm your password">
+      </div>
+      <div class="form-group">
+        <label for="musicTaste">Music Taste</label>
+        <textarea id="musicTaste" v-model="form.musicTaste" required placeholder="Describe your music taste"></textarea>
+      </div>
+      <div class="btn-grp">
+        <button type="submit" class="submit-button">Register</button>
+      </div>
+    </form>
+  </div>
+</template>
+
     
   <style scoped>
   .registration-container {
@@ -73,7 +80,7 @@ export default {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    max-height: 70vh;
+    max-height: 85vh;
     margin-top: 0.5rem;
   }
   

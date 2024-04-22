@@ -10,9 +10,9 @@ export const useAuthStore = defineStore('auth', {
   }),
   actions: {
     async registerUser(details) {
-      const { username, fullName, password } = details;
+      const { email, fullName, username, password, musicTaste } = details;
       try {
-        const userCredential = await createUserWithEmailAndPassword(auth, username, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         await updateProfile(user, {
@@ -21,8 +21,9 @@ export const useAuthStore = defineStore('auth', {
 
         const userProfile = {
           full_name: fullName,
-          dayscomp: [],
-          highscore: 0
+          username: username,
+          playlists: [],  // Assuming this should be empty at registration
+          taste: musicTaste
         };
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);
