@@ -1,34 +1,47 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
-
-<script>
-export default {
-  data() {
-    return {
-      selectedSongs: ['', '', '']
-    };
-  },
-  methods: {
-    goToNext() {
-      // Logic to handle the next button action
-    }
-  }
-};
-</script>
-
 <template>
   <div class="songs-container">
     <h2>Add Songs You Like</h2>
-    <div v-for="index in 3" :key="`song-${index}`" class="input-group">
+    <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
+      <label for="song-name-{{ index }}">Song Name</label>
       <input
         type="text"
-        :placeholder="`Song ${index}`"
-        v-model="selectedSongs[index - 1]"
+        :id="`song-name-${index}`"
+        :placeholder="`Song ${index + 1} Name`"
+        v-model="song.name"
+        class="input-field"
+      />
+      <label for="artist-name-{{ index }}">Artist Name</label>
+      <input
+        type="text"
+        :id="`artist-name-${index}`"
+        :placeholder="`Artist ${index + 1} Name`"
+        v-model="song.artist"
         class="input-field"
       />
     </div>
     <button class="next-btn" @click="goToNext">Next</button>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      selectedSongs: [
+        { name: '', artist: '' },
+        { name: '', artist: '' },
+        { name: '', artist: '' }
+      ]
+    };
+  },
+  methods: {
+    goToNext() {
+      // logic here
+    }
+  }
+};
+</script>
 
 <style scoped>
 .songs-container {
@@ -39,11 +52,16 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px; 
+  max-width: 600px;
+  width: 70%;
   margin: auto;
   border: 2px solid #507cac;
 }
 
+.input-group label {
+  font-size: 14px;
+  color: #555;
+}
 .input-group {
   display: flex;
   flex-direction: column;
@@ -83,7 +101,6 @@ h2 {
   font-size: clamp(18px, 5vw, 24px);
 }
 
-/* Responsive adjustments */
 @media (max-width: 1000px) {
   .songs-container {
     max-width: 60%;
