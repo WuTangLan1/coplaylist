@@ -1,4 +1,3 @@
-// src/stores/usePromptStore.js
 import { defineStore } from 'pinia';
 
 export const usePromptStore = defineStore('prompt', {
@@ -20,18 +19,16 @@ export const usePromptStore = defineStore('prompt', {
     ]
   }),
   actions: {
-    // Vibe actions
     updateVibeSelection(type, value) {
       this.vibes[type] = value;
     },
     validateVibes() {
-      // Here you can implement the validation logic for vibes
-      // For simplicity, checking if all fields are filled
       const vibeValues = Object.values(this.vibes);
-      return vibeValues.every(value => value.trim() !== '');
+      const isVibesValid = vibeValues.every(value => value.trim() !== '');
+      if (!isVibesValid) console.log("Vibes validation failed", this.vibes);
+      return isVibesValid;
     },
 
-    // Tone actions
     toggleGenreSelection(genre) {
       const index = this.tones.selectedGenres.indexOf(genre);
       if (index !== -1) {
@@ -41,22 +38,24 @@ export const usePromptStore = defineStore('prompt', {
       }
     },
     validateTones() {
-      // Validate that at least one genre and one era are selected
-      return this.tones.selectedGenres.length > 0 && this.tones.selectedEra.length > 0;
+      const isTonesValid = this.tones.selectedGenres.length > 0 && this.tones.selectedEra.length > 0;
+      if (!isTonesValid) console.log("Tones validation failed", this.tones);
+      return isTonesValid;
     },
 
-    // Songs actions
     updateSong(index, field, value) {
       this.songs[index][field] = value;
     },
     validateSongs() {
-      // Validate that each song has a name and artist
-      return this.songs.every(song => song.name.trim() !== '' && song.artist.trim() !== '');
+      const isSongsValid = this.songs.every(song => song.name.trim() !== '' && song.artist.trim() !== '');
+      if (!isSongsValid) console.log("Songs validation failed", this.songs);
+      return isSongsValid;
     },
 
-    // General validation method
     validateAll() {
-      return this.validateVibes() && this.validateTones() && this.validateSongs();
+      const isAllValid = this.validateVibes() && this.validateTones() && this.validateSongs();
+      if (!isAllValid) console.log("Overall validation failed");
+      return isAllValid;
     }
   }
 });
