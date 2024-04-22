@@ -1,31 +1,23 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
-<template>
-  <div class="songs-container">
-    <h2>Add Songs You Like</h2>
-    <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
-      <label for="song-name-{{ index }}">Song Name</label>
-      <input
-        type="text"
-        :id="`song-name-${index}`"
-        :placeholder="`Song ${index + 1} Name`"
-        v-model="song.name"
-        class="input-field"
-      />
-      <label for="artist-name-{{ index }}">Artist Name</label>
-      <input
-        type="text"
-        :id="`artist-name-${index}`"
-        :placeholder="`Artist ${index + 1} Name`"
-        v-model="song.artist"
-        class="input-field"
-      />
-    </div>
-    <button class="next-btn" @click="goToNext">Next</button>
-  </div>
-</template>
-
 <script>
+import { usePromptStore } from '@/stores/usePromptStore';
 export default {
+  setup() {
+    const promptStore = usePromptStore();
+
+    const handleNext = () => {
+      if (!promptStore.validateAll()) {
+        alert('Please fill in all fields correctly.');
+        return;
+      }
+      // Proceed with the next step in your app
+    };
+
+    return {
+      // your component data and methods
+      handleNext
+    };
+  },
   data() {
     return {
       selectedSongs: [
@@ -43,25 +35,68 @@ export default {
 };
 </script>
 
+<template>
+  <div class="songs-container">
+    <h2>Add Songs You Like</h2>
+    <form @submit.prevent="goToNext">
+      <div class="inputs-wrapper">
+        <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
+          <div class="input-column">
+            <label :for="`song-name-${index}`" class="input-label">Song Name</label>
+            <input
+              type="text"
+              :id="`song-name-${index}`"
+              :placeholder="`Song ${index + 1} Name`"
+              v-model="song.name"
+              class="input-field"
+            />
+          </div>
+          <div class="input-column">
+            <label :for="`artist-name-${index}`" class="input-label">Artist Name</label>
+            <input
+              type="text"
+              :id="`artist-name-${index}`"
+              :placeholder="`Artist ${index + 1} Name`"
+              v-model="song.artist"
+              class="input-field"
+            />
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="button-container">
+        <button class="next-btn" @click="goToNext">Next</button>
+      </div>
+  </div>
+</template>
+
 <style scoped>
 .songs-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  background: #F4F4F4; 
+  padding: 0.2rem;
+  background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 600px;
-  width: 70%;
+  width: 90%;
   margin: auto;
-  border: 2px solid #507cac;
 }
 
-.input-group label {
-  font-size: 14px;
-  color: #555;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.inputs-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .input-group {
   display: flex;
   flex-direction: column;
@@ -69,17 +104,53 @@ export default {
   margin-bottom: 1rem;
 }
 
-.input-field {
+.input-column {
+  width: 100%; /* Full width by default */
   padding: 0.5rem;
+}
+
+@media (min-width: 550px) {
+  .input-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .input-column {
+    width: 48%; /* Adjusted width for two columns */
+  }
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: white;
-  margin-bottom: 1rem; 
-  font-size: clamp(12px, 2.5vw, 16px);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.input-field:focus {
+  border-color: #507cac;
+  outline: none;
+}
+
+.button-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .next-btn {
-  padding: 10px 20px;
+  padding: 0.5rem 1.5rem;
   background-color: #507cac;
   color: white;
   border: none;
@@ -87,30 +158,25 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   transition: background-color 0.3s ease;
-  align-self: flex-end;
-  margin-top: 1rem;
+  margin-top: auto;
 }
 
-.next-btn:hover {
+.next-btn:hover, .next-btn:focus {
   background-color: #345f8d;
 }
 
 h2 {
   color: #333;
-  margin-bottom: 1rem;
-  font-size: clamp(18px, 5vw, 24px);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 24px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 550px) {
   .songs-container {
-    max-width: 60%;
+    padding: 0.5rem;
+    width: 100%;
   }
 }
-
-@media (min-width: 1000px) {
-  .songs-container {
-    max-width: 30%;
-  }
-}
-
 </style>
+

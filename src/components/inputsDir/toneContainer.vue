@@ -1,7 +1,24 @@
 <!-- src\components\inputsDir\toneContainer.vue -->
   
 <script>
+import { usePromptStore } from '@/stores/usePromptStore';
 export default {
+  setup() {
+    const promptStore = usePromptStore();
+
+    const handleNext = () => {
+      if (!promptStore.validateAll()) {
+        alert('Please fill in all fields correctly.');
+        return;
+      }
+      // Proceed with the next step in your app
+    };
+
+    return {
+      // your component data and methods
+      handleNext
+    };
+  },
   data() {
     return {
       newGenre: '',
