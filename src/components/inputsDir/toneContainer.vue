@@ -1,93 +1,88 @@
 <!-- src\components\inputsDir\toneContainer.vue -->
-  
 <script>
+import { ref, computed } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
+
 export default {
   setup() {
     const promptStore = usePromptStore();
+    const newGenre = ref('');  
 
-    const handleNext = () => {
+    const selectedGenres = computed({
+      get() {
+        return promptStore.tones.selectedGenres;
+      },
+      set(genres) {
+        promptStore.tones.selectedGenres = genres;
+      }
+    });
+
+    const selectedEra = computed({
+      get() {
+        return promptStore.tones.selectedEra;
+      },
+      set(eras) {
+        promptStore.tones.selectedEra = eras;
+      }
+    });
+
+    function toggleGenreSelection(genre) {
+      promptStore.toggleGenreSelection(genre);
+    }
+
+    function toggleEraSelection(era) {
+      const index = selectedEra.value.indexOf(era);
+      if (index !== -1) {
+        selectedEra.value.splice(index, 1);
+      } else if (selectedEra.value.length < 3) {
+        selectedEra.value.push(era);
+      }
+    }
+
+    function addNewItem(type, item) {
+      if (type === 'genre' && item && selectedGenres.value.length < 3 && !selectedGenres.value.includes(item)) {
+        selectedGenres.value.push(item);
+        newGenre.value = '';  
+      }
+    }
+
+    function removeGenre(genre) {
+      selectedGenres.value = selectedGenres.value.filter(g => g !== genre);
+    }
+
+    function removeEra(era) {
+      selectedEra.value = selectedEra.value.filter(e => e !== era);
+    }
+
+    function handleNext() {
       if (!promptStore.validateAll()) {
         alert('Please fill in all fields correctly.');
         return;
       }
-      // Proceed with the next step in your app
-    };
+      this.$router.push({ name: 'Vibe' });
+    }
 
     return {
-      // your component data and methods
-      handleNext
-    };
-  },
-  data() {
-    return {
-      newGenre: '',
-      newEra: '',
-      selectedGenres: [],
-      selectedEra: [],
+      handleNext,
+      selectedGenres,
+      selectedEra,
+      newGenre,
+      toggleGenreSelection,
+      toggleEraSelection,
+      addNewItem,
+      removeGenre,
+      removeEra,
       commonGenres: ['Pop', 'Rock', 'Hip-Hop', 'Electronic', 'Country', 'Funk', 'Dance', 'Blues', 'Techno'],
       commonEras: ['60s', '70s', '80s', '90s', '2000s', '2010s'],
     };
   },
-  methods: {
-    toggleGenreSelection(genre) {
-      if (this.selectedGenres.includes(genre)) {
-        this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
-      } else if (this.selectedGenres.length < 3) {
-        this.selectedGenres.push(genre);
-      }
-    },
-    addGenre() {
-      if (
-        this.newGenre &&
-        !this.commonGenres.includes(this.newGenre) &&
-        this.selectedGenres.length < 3
-      ) {
-        this.selectedGenres.push(this.newGenre);
-        this.newGenre = ''; // Clear the input
-      }
-    },
-    removeGenre(genre) {
-      this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
-    },
-    goToNext() {
-      this.$router.push({ name: 'Vibe' });
-    },
-    toggleEraSelection(era) {
-      const index = this.selectedEra.indexOf(era);
-      if (index !== -1) {
-        this.selectedEra.splice(index, 1);
-      } else if (this.selectedEra.length < 3) {
-        this.selectedEra.push(era);
-      }
-    },
-    addNewItem(type, item) {
-      if (type === 'genre' && this.selectedGenres.length < 3 && item) {
-        this.selectedGenres.push(item);
-        this.newGenre = '';
-      } else if (type === 'era' && this.selectedEra.length < 3 && item) {
-        this.selectedEra.push(item);
-        this.newEra = '';
-      }
-    },
-    removeGenre(type, item) {
-      if (type === 'genre') {
-        this.selectedGenres = this.selectedGenres.filter(g => g !== item);
-      } else if (type === 'era') {
-        this.selectedEra = this.selectedEra.filter(e => e !== item);
-      }
-    },
-    removeEra(era) {
-      this.selectedEra = this.selectedEra.filter(e => e !== era);
-    },
-  }
 };
 </script>
+
 
 <template>
   <div class="tone-container">
     <h2>Define Your Tone</h2>
-
     <div class="genres-container">
       <div
         v-for="genre in commonGenres"
@@ -103,7 +98,7 @@ export default {
     <div v-if="selectedGenres.length === 0" class="placeholder">
       Select up to 3 genres
     </div>
-    
+
     <div class="selected-genres-container">
       <div
         v-for="genre in selectedGenres"
@@ -137,7 +132,7 @@ export default {
       </div>
     </div>
 
-    <div v-if="selectedGenres.length === 0" class="placeholder">
+    <div v-if="selectedEra.length === 0" class="placeholder">
       Select up to 3 eras
     </div>
     <div class="selected-eras-container">
@@ -151,8 +146,7 @@ export default {
       </div>
     </div>
 
-
-    <button class="next-btn" @click="goToNext">Next</button>
+    <button class="next-btn" @click="handleNext">Next</button>
   </div>
 </template>
 

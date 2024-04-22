@@ -79,7 +79,7 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px; 
+  max-width: 800px; 
   margin: 0;
   border: 2px solid #507cac; 
   max-height: 85vh;
@@ -101,7 +101,7 @@ form {
 }
 
 .input-group {
-  width: 90%; 
+  width: 70%; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -115,6 +115,7 @@ form {
 
 @media (min-width: 550px) {
   .input-group {
+    width: 90%;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start; 

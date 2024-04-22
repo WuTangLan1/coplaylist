@@ -1,71 +1,64 @@
 <!-- src\components\inputsDir\vibeContainer.vue -->
 <script>
 import { usePromptStore } from '@/stores/usePromptStore';
+
 export default {
   setup() {
     const promptStore = usePromptStore();
 
-    const handleNext = () => {
-      if (!promptStore.validateAll()) {
-        alert('Please fill in all fields correctly.');
-        return;
-      }
-      // Proceed with the next step in your app
+    const updateSelection = (type, value) => {
+      promptStore.updateVibeSelection(type, value);
     };
 
-    return {
-      // your component data and methods
-      handleNext
+    const validateAndNext = () => {
+      if (promptStore.validateVibes()) {
+        console.log('Valid vibes. Proceeding to next step...');
+      } else {
+        alert('Please fill in all fields correctly.');
+      }
     };
-  },
-  data() {
     return {
-      selectedMood: '',
-      selectedActivity: '',
-      selectedFamiliarity: '',
-      selectedSetting: '',
+      vibes: promptStore.vibes,
       moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
       activities: ['Working Out', 'Studying', 'Relaxing'],
       familiarities: ['Famous', 'Known', 'Not Well Known'],
-      settings: ['By Yourself','With Close Friends','At the Party']
+      settings: ['By Yourself', 'With Close Friends', 'At the Party'],
+      updateSelection,
+      validateAndNext
     };
   },
-  methods : {
-    next() {
-      this.$router.push({ name: 'Songs' });
-    }
-  }
 };
 </script>
+
 
 <template>
   <div class="vibe-container">
     <h2>Select Your Vibe</h2>
     <div class="input-group">
       <label for="mood">Mood:</label>
-      <select id="mood" v-model="selectedMood">
-        <option value="" disabled>{{ selectedMood ? '' : 'Click to select' }}</option>
+      <select id="mood" v-model="vibes.selectedMood" @change="updateSelection('selectedMood', $event.target.value)">
+        <option disabled value="">Select Mood</option>
         <option v-for="mood in moods" :key="mood" :value="mood">{{ mood }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="activity">Activity:</label>
-      <select id="activity" v-model="selectedActivity">
-        <option value="" disabled>{{ selectedActivity ? '' : 'Click to select' }}</option>
+      <select id="activity" v-model="vibes.selectedActivity" @change="updateSelection('selectedActivity', $event.target.value)">
+        <option disabled value="">Select Activity</option>
         <option v-for="activity in activities" :key="activity" :value="activity">{{ activity }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="familiarity">Familiarity:</label>
-      <select id="familiarity" v-model="selectedFamiliarity">
-        <option value="" disabled>{{ selectedFamiliarity ? '' : 'Click to select' }}</option>
+      <select id="familiarity" v-model="vibes.selectedFamiliarity" @change="updateSelection('selectedFamiliarity', $event.target.value)">
+        <option disabled value="">Select Familiarity</option>
         <option v-for="familiarity in familiarities" :key="familiarity" :value="familiarity">{{ familiarity }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="setting">Setting:</label>
-      <select id="setting" v-model="selectedSetting">
-        <option value="" disabled>{{ selectedSetting ? '' : 'Click to select' }}</option>
+      <select id="setting" v-model="vibes.selectedSetting" @change="updateSelection('selectedSetting', $event.target.value)">
+        <option disabled value="">Select Setting</option>
         <option v-for="setting in settings" :key="setting " :value="setting ">{{ setting }}</option>
       </select>
     </div>
