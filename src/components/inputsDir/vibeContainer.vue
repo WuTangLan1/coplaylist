@@ -27,28 +27,28 @@ export default {
     <div class="input-group">
       <label for="mood">Mood:</label>
       <select id="mood" v-model="selectedMood">
-        <option value="" disabled>Select mood</option>
+        <option value="" disabled>{{ selectedMood ? '' : 'Click to select' }}</option>
         <option v-for="mood in moods" :key="mood" :value="mood">{{ mood }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="activity">Activity:</label>
       <select id="activity" v-model="selectedActivity">
-        <option value="" disabled>Select activity</option>
+        <option value="" disabled>{{ selectedActivity ? '' : 'Click to select' }}</option>
         <option v-for="activity in activities" :key="activity" :value="activity">{{ activity }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="familiarity">Familiarity:</label>
       <select id="familiarity" v-model="selectedFamiliarity">
-        <option value="" disabled>Select familiarity</option>
+        <option value="" disabled>{{ selectedFamiliarity ? '' : 'Click to select' }}</option>
         <option v-for="familiarity in familiarities" :key="familiarity" :value="familiarity">{{ familiarity }}</option>
       </select>
     </div>
     <div class="input-group">
       <label for="setting">Setting:</label>
       <select id="setting" v-model="selectedSetting">
-        <option value="" disabled>Select setting</option>
+        <option value="" disabled>{{ selectedSetting ? '' : 'Click to select' }}</option>
         <option v-for="setting in settings" :key="setting " :value="setting ">{{ setting }}</option>
       </select>
     </div>
