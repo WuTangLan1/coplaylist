@@ -98,9 +98,9 @@ export default {
 
 .router-view-container {
   display: flex;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
-  height: calc(100vh - 60px); /* Adjust the height as necessary */
+  align-items: center; 
+  justify-content: center; 
+  height: calc(90vh - 60px); 
   padding: 0.5rem;
 }
 
