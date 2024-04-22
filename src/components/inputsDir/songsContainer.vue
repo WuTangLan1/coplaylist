@@ -101,7 +101,7 @@ form {
 }
 
 .input-group {
-  width: 70%; 
+  width: 90%; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,16 +112,23 @@ form {
   padding: 0.5rem;
 }
 
+
 @media (min-width: 550px) {
   .input-group {
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-start; 
   }
-  
+
   .input-column {
-    width: 48%; /* Adjusted width for two columns */
+    width: 48%; 
+  }
+
+  .input-column:first-child {
+    margin-right: 4%;
   }
 }
+
 
 .input-label {
   display: block;
