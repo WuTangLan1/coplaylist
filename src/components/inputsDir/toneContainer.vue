@@ -55,12 +55,13 @@ export default {
     }
 
     function handleNext() {
-      if (!promptStore.validateAll()) {
-        alert('Please fill in all fields correctly.');
-        return;
+        if (!promptStore.validateAll()) {
+          console.log("Failed to pass validation upon attempting to navigate to the next step.");
+          alert('Please fill in all fields correctly.');
+          return;
+        }
+        this.$router.push({ name: 'Vibe' });
       }
-      this.$router.push({ name: 'Vibe' });
-    }
 
     return {
       handleNext,

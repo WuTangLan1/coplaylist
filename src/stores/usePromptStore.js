@@ -33,12 +33,12 @@ export const usePromptStore = defineStore('prompt', {
       const index = this.tones.selectedGenres.indexOf(genre);
       if (index !== -1) {
         this.tones.selectedGenres.splice(index, 1);
-      } else {
+      } else if (this.tones.selectedGenres.length < 3) {
         this.tones.selectedGenres.push(genre);
       }
     },
     validateTones() {
-      const isTonesValid = this.tones.selectedGenres.length > 0 && this.tones.selectedEra.length > 0;
+      const isTonesValid = this.tones.selectedGenres.length <= 3 && this.tones.selectedEra.length <= 3;
       if (!isTonesValid) console.log("Tones validation failed", this.tones);
       return isTonesValid;
     },
@@ -47,7 +47,7 @@ export const usePromptStore = defineStore('prompt', {
       this.songs[index][field] = value;
     },
     validateSongs() {
-      const isSongsValid = this.songs.every(song => song.name.trim() !== '' && song.artist.trim() !== '');
+      const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length <= 3;
       if (!isSongsValid) console.log("Songs validation failed", this.songs);
       return isSongsValid;
     },
