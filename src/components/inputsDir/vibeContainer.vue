@@ -97,13 +97,16 @@ export default {
 }
 
 .input-group select {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-    margin-bottom: 1rem; 
-    font-size: clamp(12px, 2.5vw, 16px);
-  }
+  padding: 0.8rem; 
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: white;
+  margin-bottom: 1rem; 
+  font-size: clamp(12px, 2.5vw, 16px);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 
 .next-btn {
   padding: 10px 20px;
