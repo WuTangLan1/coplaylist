@@ -65,7 +65,7 @@ export default {
   width: 100%;
   color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .logo-container {

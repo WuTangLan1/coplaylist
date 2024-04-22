@@ -35,8 +35,8 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   max-width: 800px; 
-  max-height: 550px;
-  margin: auto; 
+  max-height: 600px;
+  margin: 0; 
   padding: 20px;
   background: #F4F4F4; 
   border-radius: 8px;
@@ -58,15 +58,15 @@ export default {
   }
 
   .explanation-content ul {
-  list-style-type: none; /* Removes default list styling */
-  padding-left: 0; /* Removes indentation */
-  margin-left: 0; /* Aligns with the paragraph text */
+  list-style-type: none; 
+  padding-left: 0; 
+  margin-left: 0;
 }
 
 .explanation-content li::before {
-  content: "• "; /* Adds a bullet point before each list item */
-  color: #4c65af; /* Same color as the strong elements for consistency */
-  font-weight: bold; /* Makes the bullet point bold */
+  content: "• "; 
+  color: #4c65af;
+  font-weight: bold; 
 }
   
   h1 {
@@ -103,13 +103,13 @@ export default {
   @media (max-width: 768px) {
 
   .explanation-content {
-    text-align: center; /* Center text for better readability on small screens */
+    text-align: center;
   }
 
   .explanation-content p,
   .explanation-content ul,
   .explanation-content li {
-    font-size: 14px; /* Adjust font size for small screens */
+    font-size: 16px; 
   }
   .explanation-container {
       padding: 10px;
@@ -121,25 +121,24 @@ export default {
     }
 }
 
-/* Specific styles for very small viewports like 420px width */
 @media (max-width: 420px) {
   .explanation-container {
-    padding: 10px; /* Adjust padding for small screens */
+    padding: 10px; 
   }
 
   .explanation-content h1 {
-    font-size: 20px; /* Adjust the header font size for small screens */
+    font-size: 20px;
   }
 
   .explanation-content p,
   .explanation-content ul,
   .explanation-content li {
-    font-size: 13px; /* Further adjust font size for very small screens */
+    font-size: 14px; 
   }
 
   .next-button {
-    width: 100%; /* Make the button full-width for better accessibility */
-    padding: 12px 0; /* Adjust padding to be more proportionate */
+    width: 100%; 
+    padding: 12px 0;
   }
 }
   </style>
