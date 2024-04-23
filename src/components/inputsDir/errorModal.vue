@@ -25,7 +25,7 @@
   </template>
   
 <style scoped>
-  .modal-backdrop {
+  .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -38,15 +38,15 @@
     align-items: center;
     z-index: 1000;
   }
-
+  
   .modal {
     background: white;
-    padding: 1.3rem;
-    border-radius: 5px;
+    padding: 1rem;
+    border-radius: 10px;
     width: auto;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
+    max-width: 80%;
+    max-height: 95vh;
+    overflow: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;

@@ -51,13 +51,14 @@ export const usePromptStore = defineStore('prompt', {
       }
     },
     validateTones() {
-      console.log('store this.tones.selectedGenres.length ', this.tones.selectedGenres.length)
-      console.log('store this.tones.selectedEras.length ', this.tones.selectedEra.length)
-      const isTonesValid = this.tones.selectedGenres.length <= 3 && this.tones.selectedEra.length <= 3;
-      if (!isTonesValid) console.log("Tones validation failed", this.tones);
-      return isTonesValid;
-    },
-
+      const hasGenres = this.tones.selectedGenres.length > 0;
+      const hasEras = this.tones.selectedEra.length > 0;
+      if (!hasGenres || !hasEras) {
+          this.showModal(`Please select at least one genre and one era.`);
+          return false;
+      }
+      return true;
+  },
     updateSong(index, field, value) {
       this.songs[index][field] = value;
     },

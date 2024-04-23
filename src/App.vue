@@ -5,13 +5,15 @@ import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
 import tokensModal from '@/components/tokensDir/tokensModal.vue'
 import infoModal from '@/components/homeDir/infoModal.vue'
+import errorModal from '@/components/inputsDir/errorModal.vue'
 
 export default { 
   components : {
     topHeader,
     authmodal,
     tokensModal,
-    infoModal
+    infoModal,
+    errorModal
   },
   setup() {
     const showAuthModal = ref(false);
@@ -79,6 +81,8 @@ export default {
      v-if="showTokensModal" 
      @closeModal="closeTokensModal"
      />
+
+     <errorModal></errorModal>
 
     <div class="router-view-container">
       <router-view/>

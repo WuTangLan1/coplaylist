@@ -29,11 +29,12 @@ export default {
     };
 
     const handleNext = () => {
-      if (validateSongs()) {
-        console.log('Songs are valid. Proceeding to next step...');
-        router.push({ name: 'Home' }); 
-      }
-    };
+        if (!validateSongs()) {
+          promptStore.showModal('Please enter at least one song with its artist.');
+          return;
+        }
+        router.push({ name: 'Home' });
+      };
 
     return {
       selectedSongs,

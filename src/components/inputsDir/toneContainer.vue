@@ -69,20 +69,16 @@ export default {
     }
 
     function handleNext() {
-      if (!promptStore.validateTones()) {
-        console.log("Failed to pass validation upon attempting to navigate to the next step.");
-        alert('Please fill in all fields correctly.');
-        return;
-      }
-
-      console.log("Selected Genres:", promptStore.tones.selectedGenres);
-      console.log("Selected Eras:", promptStore.tones.selectedEra);
-
-      router.push({ name: 'Vibe' }).catch(err => {
-        console.error(err);
-      });
+        if (!promptStore.validateTones()) {
+            // showModal is called within validateTones if validation fails
+            return;
+        }
+        console.log("Selected Genres:", promptStore.tones.selectedGenres);
+        console.log("Selected Eras:", promptStore.tones.selectedEra);
+        router.push({ name: 'Vibe' }).catch(err => {
+            console.error(err);
+        });
     }
-
 
     return {
       handleNext,
