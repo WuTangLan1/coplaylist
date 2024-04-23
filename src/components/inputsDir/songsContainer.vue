@@ -46,7 +46,9 @@ export default {
 <template>
   <div class="songs-container">
     <h2>Add Songs</h2>
-    <h3>Add up to three songs you like to guide the playlist generation</h3>
+    <h3 class="description">
+      Add up to three songs you like to guide the playlist generation (these will not be included in the generated playlist)
+    </h3>
     <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
       <div class="input-column">
         <label :for="`song-name-${index}`">Song Name</label>
@@ -90,6 +92,18 @@ export default {
   border: 2px solid #507cac;
   max-height: 85vh;
   overflow-y: auto;
+}
+
+h3.description {
+  color: #666666; 
+  font-size: 0.9rem; 
+  text-align: center;
+  margin: 0.5rem 0 1.5rem; 
+  font-weight: normal; 
+  max-width: 600px;
+  line-height: 1.4; 
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 .input-group {

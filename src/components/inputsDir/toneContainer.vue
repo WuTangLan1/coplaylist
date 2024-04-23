@@ -100,6 +100,9 @@ export default {
 <template>
   <div class="tone-container">
     <h2>Define Your Tone</h2>
+    <h3 class="description">
+      Select at least one genre and one era to create a base for your generated playlist
+    </h3>
     <div class="genres-container">
       <div
         v-for="genre in commonGenres"
@@ -189,6 +192,18 @@ export default {
   .tone-container {
     padding: 1.5rem;
   }
+}
+
+h3.description {
+  color: #666666; 
+  font-size: 0.9rem; 
+  text-align: center;
+  margin: 0.5rem 0 1.5rem; 
+  font-weight: normal; 
+  max-width: 600px;
+  line-height: 1.4; 
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 .placeholder {

@@ -81,7 +81,6 @@ export default {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    max-height: 80vh;
     overflow-y: auto;
     margin-top: 0.5rem;
   }

@@ -43,6 +43,9 @@ export default {
 <template>
   <div class="vibe-container">
     <h2>Select Your Vibe</h2>
+    <h3 class="description">
+      Select at least two of the below setting to guide the direction of your generated playlist.
+    </h3>
     <div class="input-group">
       <label for="mood">Mood:</label>
       <select id="mood" v-model="vibes.selectedMood" @change="updateSelection('selectedMood', $event.target.value)">
@@ -91,6 +94,18 @@ export default {
   max-width: 300px; 
   margin: auto;
   border: 2px solid #507cac;
+}
+
+h3.description {
+  color: #666666; 
+  font-size: 0.9rem; 
+  text-align: center;
+  margin: 0.5rem 0 1.5rem; 
+  font-weight: normal; 
+  max-width: 600px;
+  line-height: 1.4; 
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 @media (max-width: 1000px) {
