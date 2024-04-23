@@ -1,3 +1,4 @@
+//src\stores\usePromptStore.js
 import { defineStore } from 'pinia';
 
 export const usePromptStore = defineStore('prompt', {
@@ -7,6 +8,7 @@ export const usePromptStore = defineStore('prompt', {
       selectedActivity: '',
       selectedFamiliarity: '',
       selectedSetting: '',
+      selectedPlatform:''
     },
     tones: {
       selectedGenres: [],
@@ -24,7 +26,7 @@ export const usePromptStore = defineStore('prompt', {
   }),
   actions: {
     resetStore() {
-      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' };
+      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' , selectedPlatform};
       this.tones = { selectedGenres: [], selectedEra: [] };
       this.songs = [{ name: '', artist: '' }, { name: '', artist: '' }, { name: '', artist: '' }];
       this.modal = { show: false, message: '' };
