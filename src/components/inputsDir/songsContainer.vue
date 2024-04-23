@@ -65,124 +65,84 @@ export default {
   </div>
 </template>
 
+
 <style scoped>
 .songs-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
-  background: #F4F4F4; 
+  padding: 1rem; /* Increased outer padding */
+  background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 800px; 
-  margin: 0;
-  border: 2px solid #507cac; 
+  width: 80%;
+  max-width: 800px;
+  margin: auto; /* Center in the viewport */
+  border: 2px solid #507cac;
   max-height: 85vh;
-  overflow-y: auto; 
-}
-
-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.inputs-wrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow-y: auto;
 }
 
 .input-group {
-  width: 70%; 
+  width: 90%; /* Adjusted for better width handling */
   display: flex;
   flex-direction: column;
-  align-items: center;
+  margin-bottom: 1rem; /* Added space between input groups */
 }
 
 .input-column {
-  width: 100%; 
-  padding: 0.5rem;
-}
-
-
-@media (min-width: 550px) {
-  .input-group {
-    width: 90%;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start; 
-  }
-
-  .input-column {
-    width: 48%; 
-  }
-
-  .input-column:first-child {
-    margin-right: 4%;
-  }
-}
-
-
-.input-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #333;
-}
-
-.input-field {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: white;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  transition: border-color 0.2s ease-in-out;
+  margin-bottom: 0.25rem; /* Space below each input column */
 }
 
-.input-field:focus {
-  border-color: #507cac;
+.input-column label {
+  font-size: 0.9rem; /* Adjusted label size for better appearance */
+  color: #507cac; /* Color to match the theme */
+  margin-bottom: 0.5rem; /* Space between label and input field */
+}
+
+.input-column input {
+  padding: 0.75rem; /* Increased padding for larger touch area */
+  border: 1px solid #dcdcdc; /* Lighter border color */
+  border-radius: 4px; /* Rounded borders */
+  font-size: 1rem; /* Legible font size */
+  transition: border 0.3s, box-shadow 0.3s; /* Smooth transition for focus effects */
+}
+
+.input-column input:focus {
+  border-color: #507cac; /* Theme color on focus */
+  box-shadow: 0 0 0 2px #b0c4de; /* Subtle outer shadow on focus */
   outline: none;
 }
 
-.button-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .next-btn {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem; /* Adjusted padding for better proportion */
   background-color: #507cac;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 0.9rem; /* Adjusted font size for button */
+  align-self: flex-end; /* Align button to the right */
+  margin-top: auto; /* Push button to the bottom */
   transition: background-color 0.3s ease;
-  margin-top: auto;
 }
 
 .next-btn:hover, .next-btn:focus {
-  background-color: #345f8d;
+  background-color: #345f8d; /* Darker shade on hover/focus */
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 24px;
-}
+@media (min-width: 550px) {
+  .input-group {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 
-@media (max-width: 550px) {
-  .songs-container {
-    padding: 0.5rem;
-    width: 100%;
+  .input-column {
+    width: 48%; /* Adjust for side-by-side layout */
+    margin-bottom: 0; /* Remove bottom margin on wide screens */
   }
 }
 </style>
-
