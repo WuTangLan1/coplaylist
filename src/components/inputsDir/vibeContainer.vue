@@ -21,6 +21,10 @@ export default {
       }
     };
 
+    function goBack() {
+      router.push({ name: 'Tone' });
+    }
+
     return {
       vibes: promptStore.vibes,
       moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
@@ -28,7 +32,8 @@ export default {
       familiarities: ['Famous', 'Known', 'Not Well Known'],
       settings: ['By Yourself', 'With Close Friends', 'At the Party'],
       updateSelection,
-      validateAndNext
+      validateAndNext,
+      goBack
     };
   },
 };
@@ -67,6 +72,7 @@ export default {
       </select>
     </div>
     <button class="next-btn" @click="validateAndNext">Next</button>
+    <button class="prev-btn" @click="goBack">Previous</button>
   </div>
 </template>
 
@@ -138,6 +144,23 @@ export default {
 
 .next-btn:hover {
   background-color: #345f8d;
+}
+
+.prev-btn {
+  padding: 10px 20px;
+  background-color: #8b9dc3; /* Lighter shade for backward navigation */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.prev-btn:hover {
+  background-color: #3b5998;
 }
 
 h2 {

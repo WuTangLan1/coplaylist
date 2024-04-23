@@ -29,10 +29,15 @@ export default {
       }
     };
 
+    function goBack() {
+      router.push({ name: 'Vibe' });
+    }
+
     return {
       selectedSongs,
       updateSong,
-      handleNext
+      handleNext,
+      goBack
     };
   }
 };
@@ -61,7 +66,10 @@ export default {
         />
       </div>
     </div>
-    <button class="next-btn" @click="handleNext">Next</button>
+    <div class="button-group">
+      <button class="prev-btn" @click="goBack">Previous</button>
+      <button class="next-btn" @click="handleNext">Generate</button>
+    </div>
   </div>
 </template>
 
@@ -71,67 +79,82 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem; /* Increased outer padding */
+  padding: 1rem; 
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
   max-width: 800px;
-  margin: auto; /* Center in the viewport */
+  margin: auto; 
   border: 2px solid #507cac;
   max-height: 85vh;
   overflow-y: auto;
 }
 
 .input-group {
-  width: 90%; /* Adjusted for better width handling */
+  width: 90%; 
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem; /* Added space between input groups */
+  margin-bottom: 1rem; 
 }
 
 .input-column {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 0.25rem; /* Space below each input column */
+  margin-bottom: 0.25rem; 
 }
 
 .input-column label {
-  font-size: 0.9rem; /* Adjusted label size for better appearance */
-  color: #507cac; /* Color to match the theme */
-  margin-bottom: 0.5rem; /* Space between label and input field */
+  font-size: 0.9rem; 
+  color: #507cac; 
+  margin-bottom: 0.5rem; 
 }
 
 .input-column input {
-  padding: 0.75rem; /* Increased padding for larger touch area */
-  border: 1px solid #dcdcdc; /* Lighter border color */
-  border-radius: 4px; /* Rounded borders */
-  font-size: 1rem; /* Legible font size */
-  transition: border 0.3s, box-shadow 0.3s; /* Smooth transition for focus effects */
+  padding: 0.75rem; 
+  border: 1px solid #dcdcdc; 
+  border-radius: 4px;
+  font-size: 0.9rem; 
+  transition: border 0.3s, box-shadow 0.3s; 
 }
 
 .input-column input:focus {
-  border-color: #507cac; /* Theme color on focus */
-  box-shadow: 0 0 0 2px #b0c4de; /* Subtle outer shadow on focus */
+  border-color: #507cac; 
+  box-shadow: 0 0 0 2px #b0c4de; 
   outline: none;
 }
 
-.next-btn {
-  padding: 0.75rem 1.5rem; /* Adjusted padding for better proportion */
-  background-color: #507cac;
+.button-group {
+  display: flex;
+  justify-content: space-between; 
+  width: 100%; 
+  margin-top: 1rem; 
+}
+
+.next-btn, .prev-btn {
+  padding: 0.75rem 1.5rem; 
+  background-color: #507cac; 
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 0.9rem; /* Adjusted font size for button */
-  align-self: flex-end; /* Align button to the right */
-  margin-top: auto; /* Push button to the bottom */
+  font-size: 0.9rem; 
   transition: background-color 0.3s ease;
+  flex-grow: 0;
+  margin: 0; 
 }
 
-.next-btn:hover, .next-btn:focus {
-  background-color: #345f8d; /* Darker shade on hover/focus */
+.prev-btn {
+  background-color: #8b9dc3; 
+}
+
+.next-btn:hover, .prev-btn:hover {
+  background-color: #345f8d; 
+}
+
+.prev-btn:hover {
+  background-color: #3b5998; 
 }
 
 @media (min-width: 550px) {
@@ -141,8 +164,8 @@ export default {
   }
 
   .input-column {
-    width: 48%; /* Adjust for side-by-side layout */
-    margin-bottom: 0; /* Remove bottom margin on wide screens */
+    width: 48%; 
+    margin-bottom: 0;
   }
 }
 </style>
