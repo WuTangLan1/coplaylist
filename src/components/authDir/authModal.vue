@@ -71,12 +71,12 @@ export default {
 
   .modal {
     background: white;
-    padding: 30px;
+    padding: 1.3rem;
     border-radius: 5px;
     width: auto;
-    max-width: 90%;
-    max-height: 95vh;
-    overflow: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
@@ -94,10 +94,9 @@ export default {
   }
 
   .toggle-button {
-      /* Style adjustments */
-      background-color: #759acd; /* Light grey background */
-      color: #ffffff; /* Dark text color for contrast */
-      padding: 10px 20px;
+      background-color: #759acd; 
+      color: #ffffff;
+      padding: 0.3rem 0.5rem;
       border-radius: 5px;
       border: 1px solid #ccc; /* Light border */
       font-weight: bold; /* Make text bold */
