@@ -16,9 +16,21 @@ export const usePromptStore = defineStore('prompt', {
       { name: '', artist: '' },
       { name: '', artist: '' },
       { name: '', artist: '' }
-    ]
+    ],
+    modal: {
+      show: false,
+      message: ''
+    }
   }),
   actions: {
+    showModal(message) {
+      this.modal.show = true;
+      this.modal.message = message;
+    },
+    hideModal() {
+      this.modal.show = false;
+      this.modal.message = '';
+    },
     updateVibeSelection(type, value) {
       this.vibes[type] = value;
     },

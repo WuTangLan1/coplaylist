@@ -54,7 +54,7 @@ export default {
       if (type === 'genre' && item && selectedGenres.value.length < 3 && !selectedGenres.value.includes(item)) {
         selectedGenres.value.push(item);
         newGenre.value = '';
-        console.log(`New genre added via input: ${item}`);  // Logging new addition via input
+        console.log(`New genre added via input: ${item}`);  
       }
     }
 
