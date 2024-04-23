@@ -63,10 +63,12 @@ export const usePromptStore = defineStore('prompt', {
       this.songs[index][field] = value;
     },
     validateSongs() {
-      const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length <= 3;
-      console.log('all of the songs boss: ', this.songs)
-      if (!isSongsValid) console.log("Songs validation failed", this.songs);
-      return isSongsValid;
+      const isSongsValid = this.songs.some(song => song.name.trim() !== '' && song.artist.trim() !== '');
+      if (!isSongsValid) {
+        this.showModal('Please enter at least one song with its artist.');
+        return false;
+      }
+      return true;
     },
     validateAll() {
       const isTonesValid = this.validateTones();

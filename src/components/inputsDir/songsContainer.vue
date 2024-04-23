@@ -1,4 +1,5 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
+// src\components\inputsDir\songsContainer.vue
 <script>
 import { ref } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
@@ -7,7 +8,7 @@ import { useRouter } from 'vue-router';
 export default {
   setup() {
     const promptStore = usePromptStore();
-    const router = useRouter(); 
+    const router = useRouter();
     const selectedSongs = ref([
       { name: '', artist: '' },
       { name: '', artist: '' },
@@ -16,25 +17,16 @@ export default {
 
     function updateSong(index, field, value) {
       selectedSongs.value[index][field] = value;
-      promptStore.updateSong(index, field, value); 
+      promptStore.updateSong(index, field, value);  // Update store state
     }
 
-    const validateSongs = () => {
-      const isValid = selectedSongs.value.some(song => song.name.trim() !== '' && song.artist.trim() !== '');
-      if (!isValid) {
-        alert('Please enter at least one song with its artist.');
-        return false;
-      }
-      return true;
-    };
-
     const handleNext = () => {
-        if (!validateSongs()) {
-          promptStore.showModal('Please enter at least one song with its artist.');
-          return;
-        }
-        router.push({ name: 'Home' });
-      };
+      if (promptStore.validateSongs()) {
+        console.log('Songs are valid. Proceeding to next step...');
+        router.push({ name: 'Home' });  // Assuming 'Home' is the next route
+      }
+      // No need to else here as showModal will be triggered by validateSongs if invalid
+    };
 
     return {
       selectedSongs,
@@ -71,7 +63,6 @@ export default {
     <button class="next-btn" @click="handleNext">Next</button>
   </div>
 </template>
-
 
 <style scoped>
 .songs-container {
