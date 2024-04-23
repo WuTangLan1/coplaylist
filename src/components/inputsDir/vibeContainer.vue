@@ -13,13 +13,13 @@ export default {
     };
 
     const validateAndNext = () => {
-        if (promptStore.validateVibes()) {
-          console.log('Valid vibes. Proceeding to next step...');
-          router.push({ name: 'Songs' });
-        } else {
-          promptStore.showModal('Please ensure all vibe fields are filled out correctly.');
-        }
-      };
+      if (promptStore.validateVibes()) {
+        console.log('Valid vibes. Proceeding to next step...');
+        router.push({ name: 'Songs' });
+      } else {
+        // showModal is called within validateVibes if validation fails
+      }
+    };
 
     return {
       vibes: promptStore.vibes,
@@ -33,6 +33,7 @@ export default {
   },
 };
 </script>
+
 
 <template>
   <div class="vibe-container">

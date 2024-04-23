@@ -35,13 +35,13 @@ export const usePromptStore = defineStore('prompt', {
       this.vibes[type] = value;
     },
     validateVibes() {
-      const vibeValues = Object.values(this.vibes);
-      const isVibesValid = vibeValues.every(value => value.trim() !== '');
-      console.log('vibe values in store : ', vibeValues)
-      if (!isVibesValid) console.log("Vibes validation failed", this.vibes);
-      return isVibesValid;
+      const fieldsFilled = Object.values(this.vibes).filter(value => value.trim() !== '').length;
+      if (fieldsFilled < 2) {
+        this.showModal('Please fill at least two fields to proceed.');
+        return false;
+      }
+      return true;
     },
-
     toggleGenreSelection(genre) {
       const index = this.tones.selectedGenres.indexOf(genre);
       if (index !== -1) {
