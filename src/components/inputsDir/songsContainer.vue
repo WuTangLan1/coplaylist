@@ -68,7 +68,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="next-btn" @click="handleNext">Generate</button>
+      <button class="gen-btn" @click="handleNext">Generate</button>
     </div>
   </div>
 </template>
@@ -132,7 +132,7 @@ export default {
   margin-top: 1rem; 
 }
 
-.next-btn, .prev-btn {
+.gen-btn, .prev-btn {
   padding: 0.75rem 1.5rem; 
   background-color: #507cac; 
   color: white;
@@ -145,11 +145,11 @@ export default {
   margin: 0; 
 }
 
-.prev-btn {
-  background-color: #8b9dc3; 
+.gen-btn {
+  background-color: #9c62bd; 
 }
 
-.next-btn:hover, .prev-btn:hover {
+.gen-btn:hover, .prev-btn:hover {
   background-color: #345f8d; 
 }
 

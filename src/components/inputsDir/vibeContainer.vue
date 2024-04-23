@@ -149,10 +149,6 @@ export default {
   transition: background-color 0.3s ease;
 }
 
-.prev-btn {
-  background-color: #8b9dc3; 
-}
-
 .next-btn:hover, .prev-btn:hover {
   background-color: #345f8d; 
 }
