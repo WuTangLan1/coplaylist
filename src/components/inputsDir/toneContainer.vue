@@ -6,7 +6,7 @@ import { usePromptStore } from '@/stores/usePromptStore';
 export default {
   setup() {
     const promptStore = usePromptStore();
-    const newGenre = ref('');  
+    const newGenre = ref('');
 
     const selectedGenres = computed({
       get() {
@@ -27,41 +27,53 @@ export default {
     });
 
     function toggleGenreSelection(genre) {
-      promptStore.toggleGenreSelection(genre);
+      const index = selectedGenres.value.indexOf(genre);
+      if (index !== -1) {
+        selectedGenres.value.splice(index, 1);
+        console.log(`Genre removed: ${genre}`);  // Logging removal
+      } else if (selectedGenres.value.length < 3) {
+        selectedGenres.value.push(genre);
+        console.log(`Genre added: ${genre}`);  // Logging addition
+      }
     }
 
     function toggleEraSelection(era) {
       const index = selectedEra.value.indexOf(era);
       if (index !== -1) {
         selectedEra.value.splice(index, 1);
+        console.log(`Era removed: ${era}`);  // Logging removal
       } else if (selectedEra.value.length < 3) {
         selectedEra.value.push(era);
+        console.log(`Era added: ${era}`);  // Logging addition
       }
     }
 
     function addNewItem(type, item) {
       if (type === 'genre' && item && selectedGenres.value.length < 3 && !selectedGenres.value.includes(item)) {
         selectedGenres.value.push(item);
-        newGenre.value = '';  
+        newGenre.value = '';
+        console.log(`New genre added via input: ${item}`);  // Logging new addition via input
       }
     }
 
     function removeGenre(genre) {
       selectedGenres.value = selectedGenres.value.filter(g => g !== genre);
+      console.log(`Genre removed via X button: ${genre}`);  
     }
 
     function removeEra(era) {
       selectedEra.value = selectedEra.value.filter(e => e !== era);
+      console.log(`Era removed via X button: ${era}`);  
     }
 
     function handleNext() {
-        if (!promptStore.validateAll()) {
-          console.log("Failed to pass validation upon attempting to navigate to the next step.");
-          alert('Please fill in all fields correctly.');
-          return;
-        }
-        this.$router.push({ name: 'Vibe' });
+      if (!promptStore.validateAll()) {
+        console.log("Failed to pass validation upon attempting to navigate to the next step.");
+        alert('Please fill in all fields correctly.');
+        return;
       }
+      this.$router.push({ name: 'Vibe' });
+    }
 
     return {
       handleNext,
@@ -79,6 +91,7 @@ export default {
   },
 };
 </script>
+
 
 
 <template>
