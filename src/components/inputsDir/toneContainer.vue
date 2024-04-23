@@ -185,6 +185,12 @@ export default {
   overflow-y: auto; 
 }
 
+@media (min-width: 500px) {
+  .tone-container {
+    padding: 1.5rem;
+  }
+}
+
 .placeholder {
     text-align: center;
     color: #aaa; 
@@ -198,18 +204,17 @@ export default {
 .selected-eras-container {
   border: solid 1px #ccc; 
   border-radius: 10px;
-  height: 150px; /* Fixed height for the scrollable area */
-  width: 90%; /* Adjust width as needed */
+  height: 150px;
+  width: 90%; 
   margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: start; 
   gap: 0.5rem; 
   padding: 0.5rem;
-  align-content: flex-start; /* Aligns content to the top */
+  align-content: flex-start; 
   
 }
-
 
 .genres-container,
 .eras-container {
@@ -219,10 +224,10 @@ export default {
 }
 
 @media (min-width: 500px) {
-.genres-container,
-.eras-container {
-  grid-template-columns: repeat(4, 1fr); 
-}
+  .genres-container,
+  .eras-container {
+    grid-template-columns: repeat(4, 1fr); 
+  }
 }
 
 .genre-chip, .era-chip,
@@ -233,6 +238,7 @@ export default {
   align-items: center;
   text-align: center;
   align-content: center;
+  font-size: 1rem;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s, color 0.3s;

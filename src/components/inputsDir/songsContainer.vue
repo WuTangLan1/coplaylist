@@ -45,7 +45,8 @@ export default {
 
 <template>
   <div class="songs-container">
-    <h2>Add Songs You Like</h2>
+    <h2>Add Songs</h2>
+    <h3>Add up to three songs you like to guide the playlist generation</h3>
     <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
       <div class="input-column">
         <label :for="`song-name-${index}`">Song Name</label>
@@ -149,8 +150,8 @@ export default {
   background-color: #9c62bd; 
 }
 
-.gen-btn:hover, .prev-btn:hover {
-  background-color: #345f8d; 
+.gen-btn:hover{
+  background-color: #66138c; 
 }
 
 .prev-btn:hover {

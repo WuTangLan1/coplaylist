@@ -114,9 +114,8 @@ export default {
 
 .input-group label {
   margin-bottom: 0.5rem;
-  font-weight: bold;
   color: #333;
-  font-size: clamp(13px, 2.5vw, 16px);
+  font-size: clamp(14px, 3.2vw, 18px);
 }
 
 .input-group select {
@@ -125,7 +124,7 @@ export default {
   border-radius: 4px;
   background-color: white;
   margin-bottom: 1rem; 
-  font-size: clamp(12px, 2.5vw, 16px);
+  font-size: clamp(12px, 3vw, 16px);
   -webkit-appearance: none;
   appearance: none;
 }
@@ -143,7 +142,7 @@ export default {
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   flex: 1;
   margin: 0 0.5rem; 
   transition: background-color 0.3s ease;

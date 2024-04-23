@@ -133,7 +133,7 @@ export default {
   .explanation-content p,
   .explanation-content ul,
   .explanation-content li {
-    font-size: 14px; 
+    font-size: 1rem;
   }
 
   .next-button {
