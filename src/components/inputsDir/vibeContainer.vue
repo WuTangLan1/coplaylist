@@ -71,8 +71,10 @@ export default {
         <option v-for="setting in settings" :key="setting" :value="setting">{{ setting }}</option>
       </select>
     </div>
-    <button class="next-btn" @click="validateAndNext">Next</button>
-    <button class="prev-btn" @click="goBack">Previous</button>
+    <div class="button-group">
+      <button class="prev-btn" @click="goBack">Previous</button>
+      <button class="next-btn" @click="validateAndNext">Next</button>
+    </div>
   </div>
 </template>
 
@@ -128,39 +130,35 @@ export default {
   appearance: none;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 
-.next-btn {
-  padding: 10px 20px;
+.next-btn, .prev-btn {
+  padding: 0.75rem 1.5rem;
   background-color: #507cac;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 0.9rem;
+  flex: 1;
+  margin: 0 0.5rem; 
   transition: background-color 0.3s ease;
-  align-self: flex-end;
-  margin-top: 1rem;
-}
-
-.next-btn:hover {
-  background-color: #345f8d;
 }
 
 .prev-btn {
-  padding: 10px 20px;
-  background-color: #8b9dc3; /* Lighter shade for backward navigation */
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  align-self: flex-start;
-  margin-top: 1rem;
+  background-color: #8b9dc3; 
+}
+
+.next-btn:hover, .prev-btn:hover {
+  background-color: #345f8d; 
 }
 
 .prev-btn:hover {
-  background-color: #3b5998;
+  background-color: #3b5998; 
 }
 
 h2 {
