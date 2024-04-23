@@ -38,6 +38,8 @@ export const usePromptStore = defineStore('prompt', {
       }
     },
     validateTones() {
+      console.log('store this.tones.selectedGenres.length ', this.tones.selectedGenres.length)
+      console.log('store this.tones.selectedEras.length ', this.tones.selectedEra.length)
       const isTonesValid = this.tones.selectedGenres.length <= 3 && this.tones.selectedEra.length <= 3;
       if (!isTonesValid) console.log("Tones validation failed", this.tones);
       return isTonesValid;
@@ -51,11 +53,14 @@ export const usePromptStore = defineStore('prompt', {
       if (!isSongsValid) console.log("Songs validation failed", this.songs);
       return isSongsValid;
     },
-
     validateAll() {
-      const isAllValid = this.validateVibes() && this.validateTones() && this.validateSongs();
+      const isTonesValid = this.validateTones();
+      const isSongsValid = this.validateSongs(); 
+    
+      const isAllValid =  isTonesValid && isSongsValid;
       if (!isAllValid) console.log("Overall validation failed");
       return isAllValid;
     }
+    
   }
 });

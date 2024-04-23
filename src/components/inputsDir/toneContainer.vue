@@ -2,11 +2,13 @@
 <script>
 import { ref, computed } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const promptStore = usePromptStore();
     const newGenre = ref('');
+    const router = useRouter();
 
     const selectedGenres = computed({
       get() {
@@ -72,8 +74,15 @@ export default {
         alert('Please fill in all fields correctly.');
         return;
       }
-      this.$router.push({ name: 'Vibe' });
+      
+      console.log("Selected Genres:", promptStore.tones.selectedGenres);
+      console.log("Selected Eras:", promptStore.tones.selectedEra);
+
+      router.push({ name: 'Vibe' }).catch(err => {
+        console.error(err);
+      });
     }
+
 
     return {
       handleNext,
@@ -91,8 +100,6 @@ export default {
   },
 };
 </script>
-
-
 
 <template>
   <div class="tone-container">
@@ -120,7 +127,7 @@ export default {
         class="selected-genre-chip"
       >
         {{ genre }}
-        <button class="remove-genre" @click="removeGenre('genre', genre)">✕</button>
+        <button class="remove-genre" @click="removeGenre(genre)">✕</button>
       </div>
     </div>
 
@@ -163,6 +170,7 @@ export default {
     <button class="next-btn" @click="handleNext">Next</button>
   </div>
 </template>
+
 
   
 <style scoped>
