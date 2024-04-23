@@ -2,12 +2,14 @@
 <!-- src\components\homedir\topheader.vue -->
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
+import { usePromptStore } from '@/stores/usePromptStore';
 
 export default {
   name: 'TopHeader',
   emits: ['auth-modal-open', 'info-clicked', 'tokens-clicked'],
   setup(props, { emit }) {
     const authStore = useAuthStore();
+    const promptStore = usePromptStore();
 
     const handleAuthAction = () => {
       if (authStore.user) {
@@ -21,11 +23,15 @@ export default {
       emit('info-clicked');
     };
 
+    const homeClicked = () => {
+      promptStore.resetStore(); 
+    }
+
     const emitTokensClicked = () => {
       emit('tokens-clicked');
     };
 
-    return { authStore, handleAuthAction, emitInfoClicked, emitTokensClicked };
+    return { authStore, handleAuthAction, emitInfoClicked, emitTokensClicked, homeClicked };
   }
 };
 </script>
@@ -36,7 +42,7 @@ export default {
       <img src="@/assets/images/header/cp_logo.png" alt="Mapple Logo" class="logo"/>
     </div>
     <nav class="navigation">
-      <router-link to="/" class="nav-link">
+      <router-link to="/" class="nav-link" @click="homeClicked">
         <img src="@/assets/images/header/home.png" alt="Home" class="nav-icon"/>
       </router-link>
       <div class="nav-link" @click="emitInfoClicked">

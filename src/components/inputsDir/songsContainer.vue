@@ -1,5 +1,4 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
-// src\components\inputsDir\songsContainer.vue
 <script>
 import { ref } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
@@ -17,15 +16,17 @@ export default {
 
     function updateSong(index, field, value) {
       selectedSongs.value[index][field] = value;
-      promptStore.updateSong(index, field, value);  // Update store state
+      if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
+        promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
+        promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
+      }
     }
 
     const handleNext = () => {
       if (promptStore.validateSongs()) {
         console.log('Songs are valid. Proceeding to next step...');
-        router.push({ name: 'Home' });  // Assuming 'Home' is the next route
+        router.push({ name: 'Home' });  
       }
-      // No need to else here as showModal will be triggered by validateSongs if invalid
     };
 
     return {
