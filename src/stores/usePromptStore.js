@@ -26,7 +26,7 @@ export const usePromptStore = defineStore('prompt', {
   }),
   actions: {
     resetStore() {
-      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' , selectedPlatform};
+      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' , selectedPlatform:''};
       this.tones = { selectedGenres: [], selectedEra: [] };
       this.songs = [{ name: '', artist: '' }, { name: '', artist: '' }, { name: '', artist: '' }];
       this.modal = { show: false, message: '' };
