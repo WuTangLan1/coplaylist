@@ -24,7 +24,6 @@ export default {
 
     const handleNext = () => {
       if (promptStore.validateSongs()) {
-        console.log('Songs are valid. Proceeding to next step...');
         router.push({ name: 'Home' });  
       }
     };
@@ -90,8 +89,14 @@ export default {
   max-width: 800px;
   margin: auto; 
   border: 2px solid #507cac;
-  max-height: 85vh;
-  overflow-y: auto;
+  max-height: 80vh;
+  overflow-y: auto; 
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: clamp(22px, 5vw, 28px);
 }
 
 h3.description {
@@ -148,7 +153,7 @@ h3.description {
 }
 
 .gen-btn, .prev-btn {
-  padding: 0.75rem 1.5rem; 
+  padding: 0.9rem 1.5rem;
   background-color: #507cac; 
   color: white;
   border: none;

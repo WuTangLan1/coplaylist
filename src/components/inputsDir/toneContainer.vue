@@ -32,10 +32,8 @@ export default {
       const index = selectedGenres.value.indexOf(genre);
       if (index !== -1) {
         selectedGenres.value.splice(index, 1);
-        console.log(`Genre removed: ${genre}`);  // Logging removal
       } else if (selectedGenres.value.length < 3) {
         selectedGenres.value.push(genre);
-        console.log(`Genre added: ${genre}`);  // Logging addition
       }
     }
 
@@ -43,10 +41,8 @@ export default {
       const index = selectedEra.value.indexOf(era);
       if (index !== -1) {
         selectedEra.value.splice(index, 1);
-        console.log(`Era removed: ${era}`);  // Logging removal
       } else if (selectedEra.value.length < 3) {
         selectedEra.value.push(era);
-        console.log(`Era added: ${era}`);  // Logging addition
       }
     }
 
@@ -54,18 +50,15 @@ export default {
       if (type === 'genre' && item && selectedGenres.value.length < 3 && !selectedGenres.value.includes(item)) {
         selectedGenres.value.push(item);
         newGenre.value = '';
-        console.log(`New genre added via input: ${item}`);  
       }
     }
 
     function removeGenre(genre) {
       selectedGenres.value = selectedGenres.value.filter(g => g !== genre);
-      console.log(`Genre removed via X button: ${genre}`);  
     }
 
     function removeEra(era) {
       selectedEra.value = selectedEra.value.filter(e => e !== era);
-      console.log(`Era removed via X button: ${era}`);  
     }
 
     function handleNext() {
@@ -73,8 +66,6 @@ export default {
             // showModal is called within validateTones if validation fails
             return;
         }
-        console.log("Selected Genres:", promptStore.tones.selectedGenres);
-        console.log("Selected Eras:", promptStore.tones.selectedEra);
         router.push({ name: 'Vibe' }).catch(err => {
             console.error(err);
         });
@@ -184,7 +175,7 @@ export default {
   max-width: 700px; 
   margin: 0;
   border: 2px solid #507cac; 
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: auto; 
 }
 
@@ -192,6 +183,12 @@ export default {
   .tone-container {
     padding: 1.5rem;
   }
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: clamp(22px, 5vw, 28px);
 }
 
 h3.description {
@@ -313,16 +310,17 @@ h2 {
 }
 
 .next-btn {
-    align-self: flex-end;
-    padding: 10px 20px;
-    background-color: #4c56af; 
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease; 
-  }
+  padding: 0.75rem 1.5rem;
+  background-color: #507cac;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1rem;
+  align-self: flex-end;
+  margin: 0 0.5rem; 
+  transition: background-color 0.3s ease;
+}
   
   .next-btn:hover {
     background-color: #46367c; 

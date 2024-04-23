@@ -14,11 +14,8 @@ export default {
 
     const validateAndNext = () => {
       if (promptStore.validateVibes()) {
-        console.log('Valid vibes. Proceeding to next step...');
         router.push({ name: 'Songs' });
-      } else {
-        // showModal is called within validateVibes if validation fails
-      }
+      } 
     };
 
     function goBack() {
@@ -31,6 +28,7 @@ export default {
       activities: ['Working Out', 'Studying', 'Relaxing'],
       familiarities: ['Famous', 'Known', 'Not Well Known'],
       settings: ['By Yourself', 'With Close Friends', 'At the Party'],
+      platforms: ['Apple Music', 'Spotify', 'Youtube Music'],
       updateSelection,
       validateAndNext,
       goBack
@@ -74,6 +72,13 @@ export default {
         <option v-for="setting in settings" :key="setting" :value="setting">{{ setting }}</option>
       </select>
     </div>
+    <div class="input-group">
+      <label for="platform">Platform:</label>
+      <select id="platform" v-model="vibes.selectedPlatform" @change="updateSelection('selectedPlatform', $event.target.value)">
+        <option disabled value="">Select Platform</option>
+        <option v-for="platform in platforms" :key="platform" :value="platform">{{ platform }}</option>
+      </select>
+    </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
       <button class="next-btn" @click="validateAndNext">Next</button>
@@ -87,13 +92,15 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem;
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 300px; 
   margin: auto;
   border: 2px solid #507cac;
+  max-height: 80vh;
+  overflow-y: auto; 
 }
 
 h3.description {
@@ -174,7 +181,7 @@ h3.description {
 h2 {
   color: #333;
   margin-bottom: 1rem;
-  font-size: clamp(18px, 5vw, 24px);
+  font-size: clamp(22px, 5vw, 28px);
 }
 
 </style>

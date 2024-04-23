@@ -8,7 +8,7 @@ export const usePromptStore = defineStore('prompt', {
       selectedActivity: '',
       selectedFamiliarity: '',
       selectedSetting: '',
-      selectedPlatform:''
+      selectedPlatform: ''
     },
     tones: {
       selectedGenres: [],
