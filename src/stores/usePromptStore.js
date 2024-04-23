@@ -51,6 +51,7 @@ export const usePromptStore = defineStore('prompt', {
     },
     validateSongs() {
       const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length <= 3;
+      console.log('all of the songs boss: ', this.songs)
       if (!isSongsValid) console.log("Songs validation failed", this.songs);
       return isSongsValid;
     },

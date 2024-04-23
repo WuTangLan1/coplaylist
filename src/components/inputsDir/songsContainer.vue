@@ -1,36 +1,45 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
 <script>
+import { ref } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
+import { useRouter } from 'vue-router';
+
 export default {
   setup() {
     const promptStore = usePromptStore();
+    const router = useRouter(); 
+    const selectedSongs = ref([
+      { name: '', artist: '' },
+      { name: '', artist: '' },
+      { name: '', artist: '' }
+    ]);
+
+    function updateSong(index, field, value) {
+      selectedSongs.value[index][field] = value;
+      promptStore.updateSong(index, field, value); 
+    }
+
+    const validateSongs = () => {
+      const isValid = selectedSongs.value.some(song => song.name.trim() !== '' && song.artist.trim() !== '');
+      if (!isValid) {
+        alert('Please enter at least one song with its artist.');
+        return false;
+      }
+      return true;
+    };
 
     const handleNext = () => {
-      if (!promptStore.validateSongs()) {
-        alert('Please fill in all fields correctly.');
-        return;
+      if (validateSongs()) {
+        console.log('Songs are valid. Proceeding to next step...');
+        router.push({ name: 'Home' }); 
       }
-      // Proceed with the next step in your app
     };
 
     return {
-      // your component data and methods
+      selectedSongs,
+      updateSong,
       handleNext
     };
-  },
-  data() {
-    return {
-      selectedSongs: [
-        { name: '', artist: '' },
-        { name: '', artist: '' },
-        { name: '', artist: '' }
-      ]
-    };
-  },
-  methods: {
-    goToNext() {
-      // logic here
-    }
   }
 };
 </script>
@@ -38,37 +47,30 @@ export default {
 <template>
   <div class="songs-container">
     <h2>Add Songs You Like</h2>
-    <form @submit.prevent="goToNext">
-      <div class="inputs-wrapper">
-        <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
-          <div class="input-column">
-            <label :for="`song-name-${index}`" class="input-label">Song Name</label>
-            <input
-              type="text"
-              :id="`song-name-${index}`"
-              :placeholder="`Song ${index + 1} Name`"
-              v-model="song.name"
-              class="input-field"
-            />
-          </div>
-          <div class="input-column">
-            <label :for="`artist-name-${index}`" class="input-label">Artist Name</label>
-            <input
-              type="text"
-              :id="`artist-name-${index}`"
-              :placeholder="`Artist ${index + 1} Name`"
-              v-model="song.artist"
-              class="input-field"
-            />
-          </div>
-        </div>
+    <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
+      <div class="input-column">
+        <label :for="`song-name-${index}`">Song Name</label>
+        <input
+          :id="`song-name-${index}`"
+          v-model="song.name"
+          @input="updateSong(index, 'name', $event.target.value)"
+          placeholder="Enter Song Name"
+        />
       </div>
-    </form>
-    <div class="button-container">
-        <button class="next-btn" @click="goToNext">Next</button>
+      <div class="input-column">
+        <label :for="`artist-name-${index}`">Artist Name</label>
+        <input
+          :id="`artist-name-${index}`"
+          v-model="song.artist"
+          @input="updateSong(index, 'artist', $event.target.value)"
+          placeholder="Enter Artist Name"
+        />
       </div>
+    </div>
+    <button class="next-btn" @click="handleNext">Next</button>
   </div>
 </template>
+
 
 <style scoped>
 .songs-container {
