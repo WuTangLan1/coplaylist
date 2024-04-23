@@ -25,6 +25,7 @@ export const usePromptStore = defineStore('prompt', {
     validateVibes() {
       const vibeValues = Object.values(this.vibes);
       const isVibesValid = vibeValues.every(value => value.trim() !== '');
+      console.log('vibe values in store : ', vibeValues)
       if (!isVibesValid) console.log("Vibes validation failed", this.vibes);
       return isVibesValid;
     },

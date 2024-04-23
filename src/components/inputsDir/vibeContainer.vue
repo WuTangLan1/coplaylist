@@ -1,10 +1,12 @@
 <!-- src\components\inputsDir\vibeContainer.vue -->
 <script>
 import { usePromptStore } from '@/stores/usePromptStore';
+import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const promptStore = usePromptStore();
+    const router = useRouter(); 
 
     const updateSelection = (type, value) => {
       promptStore.updateVibeSelection(type, value);
@@ -13,10 +15,12 @@ export default {
     const validateAndNext = () => {
       if (promptStore.validateVibes()) {
         console.log('Valid vibes. Proceeding to next step...');
+        router.push({ name: 'Songs' }); 
       } else {
         alert('Please fill in all fields correctly.');
       }
     };
+
     return {
       vibes: promptStore.vibes,
       moods: ['Happy', 'Chill', 'Energetic', 'Sad'],
@@ -29,7 +33,6 @@ export default {
   },
 };
 </script>
-
 
 <template>
   <div class="vibe-container">
@@ -59,12 +62,13 @@ export default {
       <label for="setting">Setting:</label>
       <select id="setting" v-model="vibes.selectedSetting" @change="updateSelection('selectedSetting', $event.target.value)">
         <option disabled value="">Select Setting</option>
-        <option v-for="setting in settings" :key="setting " :value="setting ">{{ setting }}</option>
+        <option v-for="setting in settings" :key="setting" :value="setting">{{ setting }}</option>
       </select>
     </div>
-    <button class="next-btn" @click="next">Next</button>
+    <button class="next-btn" @click="validateAndNext">Next</button>
   </div>
 </template>
+
 
 <style scoped>
 .vibe-container {

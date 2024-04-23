@@ -6,7 +6,7 @@ export default {
     const promptStore = usePromptStore();
 
     const handleNext = () => {
-      if (!promptStore.validateAll()) {
+      if (!promptStore.validateSongs()) {
         alert('Please fill in all fields correctly.');
         return;
       }
