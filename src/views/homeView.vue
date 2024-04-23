@@ -30,6 +30,7 @@ export default {
   padding: 0.5rem;
   background-color: #ffffff;
   color: #333333;
+  max-height: 90vh;
 }
 </style>
 
