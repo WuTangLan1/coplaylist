@@ -22,11 +22,28 @@ export default {
       }
     }
 
-    const handleNext = () => {
-      if (promptStore.validateSongs()) {
-        router.push({ name: 'Home' });  
+    async function generatePlaylist() {
+      if (promptStore.validateSongs()){
+        const promptDetails = selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
+      try {
+        const response = await fetch('/generate-playlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompts: promptDetails })
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        const playlist = await response.json();
+        console.log('Generated Playlist:', playlist);
+        // Perform any actions with the generated playlist here, e.g., update UI
+      } catch (error) {
+        console.error('Error fetching playlist:', error);
+        // Handle error, e.g., show a notification to the user
       }
-    };
+      }
+    }
+
 
     function goBack() {
       router.push({ name: 'Vibe' });
@@ -35,7 +52,7 @@ export default {
     return {
       selectedSongs,
       updateSong,
-      handleNext,
+      generatePlaylist,
       goBack
     };
   }
@@ -70,7 +87,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" @click="handleNext">Generate</button>
+      <button class="gen-btn" @click="generatePlaylist">Generate</button>
     </div>
   </div>
 </template>
