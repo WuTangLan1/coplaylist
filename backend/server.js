@@ -7,7 +7,7 @@ const apiRoutes = require('./routes/api');
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:8080', // or wherever your frontend is hosted
+    origin: 'http://localhost:3000', 
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));

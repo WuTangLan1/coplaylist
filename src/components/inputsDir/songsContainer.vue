@@ -25,13 +25,14 @@ export default {
 
     async function submitData() {
       if (promptStore.validateSongs()) {
+        console.log('we atleast got here')
         try {
-          const response = await axios.post('http://localhost:3000/api/generate-playlist', {
+          const response = await axios.post('http://localhost:3000/backend/api/generate-playlist', {
             vibes: promptStore.vibes,
             tones: promptStore.tones,
             songs: promptStore.songs
           });
-          console.log(response.data); // Handle or display the generated playlist as needed
+          console.log(response.data); 
         } catch (error) {
           console.error('Error generating playlist:', error);
         }
