@@ -2,6 +2,7 @@
 <script>
 import { ref } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
+import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -22,11 +23,22 @@ export default {
       }
     }
 
-    const handleNext = () => {
+    async function submitData() {
       if (promptStore.validateSongs()) {
-        router.push({ name: 'Home' });  
+        try {
+          const response = await axios.post('http://localhost:3000/api/generate-playlist', {
+            vibes: promptStore.vibes,
+            tones: promptStore.tones,
+            songs: promptStore.songs
+          });
+          console.log(response.data); // Handle or display the generated playlist as needed
+        } catch (error) {
+          console.error('Error generating playlist:', error);
+        }
+      } else {
+        console.log('Validation failed');
       }
-    };
+    }
 
     function goBack() {
       router.push({ name: 'Vibe' });
@@ -35,7 +47,7 @@ export default {
     return {
       selectedSongs,
       updateSong,
-      handleNext,
+      submitData,
       goBack
     };
   }
@@ -70,7 +82,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" @click="handleNext">Generate</button>
+      <button class="gen-btn" @click="submitData">Generate</button>
     </div>
   </div>
 </template>
