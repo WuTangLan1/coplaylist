@@ -1,15 +1,24 @@
-//backend\routes\api.js
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
+function generatePrompt(data) {
+    // Construct a detailed prompt using the additional vibe and tone data
+    return `Create a playlist based on these details:
+            Songs: ${data.songs.map(song => `${song.name} by ${song.artist}`).join(', ')}
+            Mood: ${data.vibes.selectedMood}
+            Activity: ${data.vibes.selectedActivity}
+            Era: ${data.tones.selectedEra.join(', ')}
+            Genre: ${data.tones.selectedGenres.join(', ')}.`;
+}
+
 router.post('/generate-playlist', async (req, res) => {
-    const { songs } = req.body;
-    const prompt = generatePrompt(songs);
+    const { vibes, tones, songs } = req.body;
 
     try {
+        const prompt = generatePrompt({ vibes, tones, songs });
         const response = await axios.post('https://api.openai.com/v1/completions', {
-            model: "text-davinci-002", 
+            model: "text-davinci-002",
             prompt: prompt,
             max_tokens: 150
         }, {
@@ -26,9 +35,5 @@ router.post('/generate-playlist', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate playlist' });
     }
 });
-
-function generatePrompt(songs) {
-    return `Create a playlist based on these songs: ${songs.join(', ')}.`;
-}
 
 module.exports = router;
