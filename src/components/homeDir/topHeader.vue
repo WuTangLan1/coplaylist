@@ -106,7 +106,7 @@ export default {
 }
 
 .nav-icon {
-  height: clamp(20px, 6vw, 45px);
+  height: clamp(30px, 6vw, 45px);
   width: auto;
   transition: transform 0.3s ease;
 }

@@ -12,7 +12,9 @@ export default {
 <template>
     <div class="explanation-container">
       <div class="explanation-content">
-        <h1>Welcome to CoPlaylist!</h1>
+          <div class="explanation-header">
+            <h1>Welcome to CoPlaylist!</h1>
+          </div>
         <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
         <div class="features-container">
           <div class="feature-item">
@@ -63,12 +65,13 @@ export default {
     }
   }
 
-.explanation-content h1 {
-  text-align: center; 
-  color: #2D3047; 
+.expanation-header h1 {
+  text-align: center;
+  color: #b70000;
   margin-bottom: 1rem;
+  font-size: larger;
 }
-  
+
 .explanation-content {
   text-align: left;
   line-height: 1.6; 
