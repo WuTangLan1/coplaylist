@@ -26,6 +26,7 @@ export default {
       if (promptStore.validateSongs()){
         const promptDetails = selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
       try {
+        console.log('details for prompt in songsContainer',promptDetails)
         const response = await fetch('/generate-playlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -36,10 +37,8 @@ export default {
         }
         const playlist = await response.json();
         console.log('Generated Playlist:', playlist);
-        // Perform any actions with the generated playlist here, e.g., update UI
       } catch (error) {
         console.error('Error fetching playlist:', error);
-        // Handle error, e.g., show a notification to the user
       }
       }
     }

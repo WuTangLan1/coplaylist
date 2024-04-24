@@ -6,10 +6,7 @@ const path = require('path');
 
 const app = express();
 
-
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
-
-
 
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/dist/index.html');
@@ -17,6 +14,7 @@ app.get('*', function (req, res) {
 
 app.post('/generate-playlist', async (req, res) => {
     const { prompts } = req.body; 
+    console.log('prompts in server.js :', prompts)
     try {
         const response = await fetch("https://api.openai.com/v1/completions", {
             method: "POST",
@@ -25,7 +23,7 @@ app.post('/generate-playlist', async (req, res) => {
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
             },
             body: JSON.stringify({
-                model: "text-davinci-004", 
+                model: "GPT-4", 
                 prompt: `Generate a playlist of 10 songs based on these vibes and tones: ${prompts}`,
                 max_tokens: 150
             })
