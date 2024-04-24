@@ -1,4 +1,4 @@
-// File: server/routes/api.js
+//backend\routes\api.js
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
@@ -9,7 +9,7 @@ router.post('/generate-playlist', async (req, res) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/completions', {
-            model: "text-davinci-002", // Choose the model appropriate for your needs
+            model: "text-davinci-002", 
             prompt: prompt,
             max_tokens: 150
         }, {
