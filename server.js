@@ -9,7 +9,7 @@ const axios = require('axios'); // Axios for making HTTP requests
 const app = express();
 
 const corsOptions = {
-    origin: 'http://localhost:8080', // Make sure this matches your frontend's address
+    origin: 'http://localhost:8080', 
     optionsSuccessStatus: 200,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -20,45 +20,43 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
-app.use('/', serveStatic(path.join(__dirname, '/dist'))); // Serve static files
+app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html')); // Handle SPA routing by redirecting all to index.html
+    res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.post('/generate-playlist', async (req, res) => {
     const { prompts } = req.body;
-    console.log('Prompts in server.js:', prompts);
+    console.log('Received prompts:', prompts);
 
-    const apiEndpoint = "https://api.openai.com/v1/completions";
-    const model = "text-davinci-003"; // Update model to the latest version if necessary
+    // Adjust the endpoint for chat completions
+    const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+    const model = "gpt-4"; 
 
     try {
         const response = await axios.post(apiEndpoint, {
-            model: model,
-            prompt: `Generate a playlist of 10 songs based on these vibes and tones: ${prompts}`,
-            max_tokens: 150,
-            temperature: 0.5
+            model: "gpt-4-turbo",  // Make sure the model name is supported and correctly spelled.
+            messages: [
+                { role: "system", content: "You are a helpful assistant." },
+                { role: "user", content: `Generate a playlist of 10 songs based on these vibes and tones: ${prompts}` }
+            ]
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`  // Ensure your API key is correctly being fetched from environment variables.
             }
         });
 
         const data = response.data;
         console.log('API Response:', data);
-
-        if (!data.choices || data.choices.length === 0 || !data.choices[0].text) {
-            throw new Error('No valid response or choices returned from the API');
-        }
-        res.json(data.choices[0].text); // Send the first choice's text as the response
+        // Extract the assistant's message from the choices
+        res.json(data.choices[0].message.content);
     } catch (error) {
         console.error('Error generating playlist:', error);
         res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');
     }
 });
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));

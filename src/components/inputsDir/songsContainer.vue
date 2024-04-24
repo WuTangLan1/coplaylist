@@ -23,10 +23,7 @@ export default {
     }
 
     async function generatePlaylist() {
-      if (promptStore.validateSongs()) {
-        const promptDetails = selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
-        console.log('Details for prompt in songsContainer:', promptDetails);
-
+        const promptDetails = "Tom waits, beyonce, eminem, dr dre" + selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
         try {
           const response = await fetch('http://localhost:3000/generate-playlist', {
             method: 'POST',
@@ -42,10 +39,8 @@ export default {
           console.log('Generated Playlist:', playlist);
         } catch (error) {
           console.error('Error fetching playlist:', error);
-          alert(`Error: ${error.message}`);
         }
       }
-    }
 
 
     function goBack() {
