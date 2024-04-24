@@ -1,6 +1,7 @@
 //src\stores\usePromptStore.js
 import { defineStore } from 'pinia';
 import axios from 'axios'; 
+import { usePlaylistStore } from './usePlaylistStore';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -88,26 +89,28 @@ export const usePromptStore = defineStore('prompt', {
       return isAllValid;
     },
     async generatePlaylist() {
-        if (!this.vibes || !this.songs.length) {
-            console.error("Vibes and at least one song must be specified");
-            return;
-        }
-    
-        const playlistDetails = {
-            vibes: this.vibes,
-            tones: {
-                genres: this.tones.selectedGenres || [],
-                eras: this.tones.selectedEra || []
-            },
-            songs: this.songs.filter(song => song.name && song.artist) // Only include songs with both name and artist filled
-        };
-    
-        try {
-            const response = await axios.post('http://localhost:3000/generate-playlist', playlistDetails);
-            console.log('Generated Playlist:', response.data);
-        } catch (error) {
-            console.error('Error fetching playlist:', error);
-        }
+      if (!this.vibes || !this.songs.length) {
+        console.error("Vibes and at least one song must be specified");
+        return;
+      }
+  
+      const playlistDetails = {
+        vibes: this.vibes,
+        tones: {
+          genres: this.tones.selectedGenres || [],
+          eras: this.tones.selectedEra || []
+        },
+        songs: this.songs.filter(song => song.name && song.artist) // Only include songs with both name and artist filled
+      };
+  
+      try {
+        const response = await axios.post('http://localhost:3000/generate-playlist', playlistDetails);
+        console.log('Generated Playlist:', response.data);
+        const playlistStore = usePlaylistStore();
+        playlistStore.setPlaylistDetails(response.data); // Save the playlist data
+      } catch (error) {
+        console.error('Error fetching playlist:', error);
+      }
     }
   }
 });
