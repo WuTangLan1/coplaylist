@@ -6,8 +6,12 @@ const apiRoutes = require('./routes/api');
 
 const app = express();
 
-// Middleware to handle CORS and JSON data
-app.use(cors());
+const corsOptions = {
+    origin: 'http://localhost:8080', // or wherever your frontend is hosted
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // Mount the API routes

@@ -13,12 +13,14 @@ function generatePrompt(data) {
 }
 
 router.post('/generate-playlist', async (req, res) => {
+    console.log('Request received on /generate-playlist');
     const { vibes, tones, songs } = req.body;
 
-    const model = "text-davinci-003"; // Update to the latest model version here
+    const model = "gpt-4"; 
 
     try {
         const prompt = generatePrompt({ vibes, tones, songs });
+        console.log("Sending prompt to OpenAI:", prompt); 
         const response = await axios.post('https://api.openai.com/v1/completions', {
             model: model,
             prompt: prompt,
@@ -37,5 +39,6 @@ router.post('/generate-playlist', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate playlist' });
     }
 });
+
 
 module.exports = router;
