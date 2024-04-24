@@ -29,9 +29,13 @@ app.get('*', function (req, res) {
 app.post('/generate-playlist', async (req, res) => {
     const { prompts } = req.body;
     console.log('Prompts in server.js:', prompts);
+
+    const apiEndpoint = "https://api.openai.com/v1/completions";
+    const model = "text-davinci-003"; // Update model to the latest version if necessary
+
     try {
-        const response = await axios.post("https://api.openai.com/v1/completions", {
-            model: "text-davinci-002", // Adjust the model as necessary
+        const response = await axios.post(apiEndpoint, {
+            model: model,
             prompt: `Generate a playlist of 10 songs based on these vibes and tones: ${prompts}`,
             max_tokens: 150,
             temperature: 0.5
@@ -41,17 +45,20 @@ app.post('/generate-playlist', async (req, res) => {
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
             }
         });
+
         const data = response.data;
         console.log('API Response:', data);
+
         if (!data.choices || data.choices.length === 0 || !data.choices[0].text) {
             throw new Error('No valid response or choices returned from the API');
         }
         res.json(data.choices[0].text); // Send the first choice's text as the response
     } catch (error) {
         console.error('Error generating playlist:', error);
-        res.status(500).send('Failed to generate playlist');
+        res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');
     }
 });
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));

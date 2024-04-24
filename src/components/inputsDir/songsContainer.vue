@@ -23,23 +23,27 @@ export default {
     }
 
     async function generatePlaylist() {
-      if (promptStore.validateSongs()){
+      if (promptStore.validateSongs()) {
         const promptDetails = selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
-      try {
-        console.log('details for prompt in songsContainer',promptDetails)
-        const response = await fetch('http://localhost:3000/generate-playlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompts: promptDetails })
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
+        console.log('Details for prompt in songsContainer:', promptDetails);
+
+        try {
+          const response = await fetch('http://localhost:3000/generate-playlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompts: promptDetails })
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const playlist = await response.json();
+          console.log('Generated Playlist:', playlist);
+        } catch (error) {
+          console.error('Error fetching playlist:', error);
+          alert(`Error: ${error.message}`);
         }
-        const playlist = await response.json();
-        console.log('Generated Playlist:', playlist);
-      } catch (error) {
-        console.error('Error fetching playlist:', error);
-      }
       }
     }
 
