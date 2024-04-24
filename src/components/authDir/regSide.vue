@@ -141,7 +141,7 @@ export default {
   }
   
   .submit-button:hover, .submit-button:focus {
-    background-color: #4cae4c;
+    background-color: #291a8d;
   }
   
   h2 {
@@ -152,22 +152,19 @@ export default {
 @media (min-width: 600px) {
   .registration-form {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Creates two columns of equal width */
-    grid-gap: 20px; /* Adds some space between the columns */
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 20px; 
   }
 
-  /* Center the Registration heading above both columns */
   .registration-form h2 {
-    grid-column: 1 / -1; /* Ensures the heading spans both columns */
-    justify-self: center; /* Centers the heading */
+    grid-column: 1 / -1; 
+    justify-self: center; 
   }
 
-  /* Set the form groups to take one column each */
   .registration-form .form-group {
     grid-column: span 1;
   }
 
-  /* Make sure the music taste textarea and button group span both columns */
   .music-taste-textarea,
   .btn-grp {
     grid-column: 1 / -1;
