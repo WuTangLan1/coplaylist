@@ -30,17 +30,17 @@ app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
     const { vibes, tones, songs } = req.body;
 
-    // Safely accessing genres and eras with default empty arrays if undefined
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
 
-    // Check if any critical information is missing to construct a meaningful prompt
     if (!vibes || !songs) {
         return res.status(400).send("Vibes or songs data are missing in the request");
     }
 
     const prompt = `
-        Generate a playlist of 10 songs that matches the following details:
+        Generate a playlist of 10 songs with a playlist name (which must adhere to the following structure : "song title - artist name : release year") 
+        that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
+        user with how accurate and responsive to their input it is :  
         Mood: ${vibes.selectedMood || 'any'},
         Activity: ${vibes.selectedActivity || 'any'},
         Familiarity: ${vibes.selectedFamiliarity || 'any'},
@@ -55,7 +55,7 @@ app.post('/generate-playlist', async (req, res) => {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 
             messages: [
-                { role: "system", content: "You are a helpful assistant." },
+                { role: "system", content: "You are an expert in music and creating 10 song music playlists for users based on their requests." },
                 { role: "user", content: prompt.trim() }
             ]
         }, {
