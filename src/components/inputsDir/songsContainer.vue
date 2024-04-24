@@ -14,34 +14,18 @@ export default {
       { name: '', artist: '' }
     ]);
 
+    // Update each song in the local state and the store
     function updateSong(index, field, value) {
       selectedSongs.value[index][field] = value;
       if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
-        promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
-        promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
+        promptStore.updateSong(index, field, selectedSongs.value[index][field]);
       }
     }
 
+    // Call the generatePlaylist action from the store
     async function generatePlaylist() {
-        const promptDetails = "Tom waits, beyonce, eminem, dr dre" + selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
-        try {
-          const response = await fetch('http://localhost:3000/generate-playlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompts: promptDetails })
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const playlist = await response.json();
-          console.log('Generated Playlist:', playlist);
-        } catch (error) {
-          console.error('Error fetching playlist:', error);
-        }
-      }
-
+      await promptStore.generatePlaylist();
+    }
 
     function goBack() {
       router.push({ name: 'Vibe' });
