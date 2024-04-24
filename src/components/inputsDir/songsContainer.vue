@@ -27,7 +27,7 @@ export default {
         const promptDetails = selectedSongs.value.map(song => `${song.name} by ${song.artist}`).join(', ');
       try {
         console.log('details for prompt in songsContainer',promptDetails)
-        const response = await fetch('/generate-playlist', {
+        const response = await fetch('http://localhost:3000/generate-playlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ prompts: promptDetails })

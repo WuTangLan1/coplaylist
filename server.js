@@ -1,10 +1,21 @@
 // server.js which manages deployment to heroku
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const serveStatic = require('serve-static');
 const path = require('path');
 
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:8080', 
+    optionsSuccessStatus: 200,
+    credentials: true, 
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    methods: ['GET', 'POST', 'OPTIONS'] 
+};
+
+app.use(cors(corsOptions));
 
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
@@ -37,6 +48,6 @@ app.post('/generate-playlist', async (req, res) => {
 });
 
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 app.listen(port);
 console.log('Server started on port ' + port);
