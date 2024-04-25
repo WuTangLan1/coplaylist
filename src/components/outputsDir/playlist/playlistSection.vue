@@ -1,12 +1,15 @@
 <!-- src\components\outputsDir\playlist\playlistSection.vue -->
 
 <script>
+import { usePlaylistStore } from '@/stores/usePlaylistStore';
+import { computed } from 'vue';
+
 export default {
-  props: {
-    playlist: {
-      type: Array,
-      default: () => []  
-    }
+  setup() {
+    const playlistStore = usePlaylistStore();
+    const playlistName = computed(() => playlistStore.playlistName);
+    const playlist = computed(() => playlistStore.playlistDetails);
+    return { playlist, playlistName };
   }
 };
 </script>
