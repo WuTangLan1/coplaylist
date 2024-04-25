@@ -8,8 +8,16 @@ const axios = require('axios');
 
 const app = express();
 
+const allowedOrigins = ['http://localhost:8080', 'https://coplaylist-3481ef838394.herokuapp.com'];
+
 const corsOptions = {
-    origin: 'http://localhost:8080', 
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     optionsSuccessStatus: 200,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],

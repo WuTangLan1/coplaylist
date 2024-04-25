@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios'; 
 import { usePlaylistStore } from './usePlaylistStore';
+import { useRouter } from 'vue-router';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -106,7 +107,7 @@ export const usePromptStore = defineStore('prompt', {
           genres: this.tones.selectedGenres || [],
           eras: this.tones.selectedEra || []
         },
-        songs: this.songs.filter(song => song.name.trim() && song.artist.trim()) // Ensure both name and artist are present
+        songs: this.songs.filter(song => song.name.trim() && song.artist.trim())
       };
     
       try {
@@ -114,9 +115,11 @@ export const usePromptStore = defineStore('prompt', {
         console.log('Generated Playlist:', response.data);
         const playlistStore = usePlaylistStore();
         playlistStore.setPlaylistDetails(response.data);
+        const router = useRouter();
+        router.push({ name: 'Output' }); 
       } catch (error) {
         console.error('Error fetching playlist:', error);
       }
-    }    
+    }  
   }
 });
