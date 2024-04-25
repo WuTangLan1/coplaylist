@@ -2,7 +2,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios'; 
 import { usePlaylistStore } from './usePlaylistStore';
-import { useRouter } from 'vue-router';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -111,7 +110,8 @@ export const usePromptStore = defineStore('prompt', {
       };
     
       try {
-        const response = await axios.post('http://localhost:3000/generate-playlist', playlistDetails);
+        const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+        const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
         console.log('Generated Playlist:', response.data);
     
         const formattedPlaylist = this.formatPlaylist(response.data);
