@@ -127,8 +127,8 @@ export const usePromptStore = defineStore('prompt', {
             return [];
         }
     
-        const lines = playlistString.split('\n').filter(line => line.trim() && line.includes('-'));
-        return lines.map(line => {
+        const songLines = playlistString.split('\n').filter(line => line.includes('-') && line.includes(':'));
+        return songLines.map(line => {
             try {
                 const [titleArtist, releaseYear] = line.split(':');
                 const [title, artist] = titleArtist.split(' - ');
@@ -138,6 +138,6 @@ export const usePromptStore = defineStore('prompt', {
                 return null;
             }
         }).filter(song => song !== null);
-    }
+    }  
   }
 });
