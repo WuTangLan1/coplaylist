@@ -115,8 +115,6 @@ export const usePromptStore = defineStore('prompt', {
         console.log('Generated Playlist:', response.data);
         const playlistStore = usePlaylistStore();
         playlistStore.setPlaylistDetails(response.data);
-        const router = useRouter();
-        router.push({ name: 'Output' }); 
       } catch (error) {
         console.error('Error fetching playlist:', error);
       }

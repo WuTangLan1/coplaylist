@@ -25,6 +25,8 @@ export default {
       }
     async function generatePlaylist() {
       await promptStore.generatePlaylist();
+      router.push({ name: 'Output' }); 
+
     }
 
     function goBack() {
