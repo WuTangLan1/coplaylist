@@ -95,20 +95,20 @@ export default {
 }
 
 .submit-button {
-  padding: 15px;
-  background-color: #5c90b8;
-  color: white;
-  border: none;
-  width:50%;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 18px;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
+    padding: 0.5rem;
+    background-color: #5c90b8;
+    color: white;
+    border: none;
+    width:50%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
 
 .submit-button:hover, .submit-button:focus {
-  background-color: #4cae4c;
+  background-color: #311e86;
 }
 
 h2 {

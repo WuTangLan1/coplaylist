@@ -15,14 +15,12 @@ export default {
     ]);
 
     function updateSong(index, field, value) {
-        console.log(`Attempting to update song at index ${index} field ${field} with value '${value}'`);
         selectedSongs.value[index][field] = value;
 
         // Check if both fields are non-empty before updating
         if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
           promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
           promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
-          console.log(`Both fields are present. Updated store with:`, JSON.parse(JSON.stringify(promptStore.songs)));
         }
       }
     async function generatePlaylist() {

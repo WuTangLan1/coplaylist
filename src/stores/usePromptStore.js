@@ -71,7 +71,6 @@ export const usePromptStore = defineStore('prompt', {
     },
     validateSongs() {
         const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length;
-        console.log('validateSongs - Number of valid songs:', isSongsValid);
         if (isSongsValid === 0 || isSongsValid > 3) {
             this.showModal('Please enter between 1 and 3 songs, each with a name and an artist.');
             return false;
@@ -82,18 +81,14 @@ export const usePromptStore = defineStore('prompt', {
       if (index >= 0 && index < this.songs.length) {
         const song = {...this.songs[index], [field]: value}; // Create a new song object with updated field
         this.songs.splice(index, 1, song); // Replace the old song object with the new one in a reactive way
-        console.log(`Song at index ${index} updated:`, this.songs[index]);
       } else {
         console.error('Invalid song index:', index);
       }
     },
     validateAll() {
       const isTonesValid = this.validateTones();
-      console.log("tones valid : ", isTonesValid);
       const isSongsValid = this.validateSongs(); 
-      console.log("songs valid : ", isSongsValid);
       const isVibeValid = this.validateVibes();
-      console.log("vibes valid : ", isVibeValid);
     
       const isAllValid =  isTonesValid && isSongsValid && isVibeValid;
       if (!isAllValid) console.log("Overall validation failed");

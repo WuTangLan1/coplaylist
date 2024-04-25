@@ -141,7 +141,7 @@ export default {
   }
   
   .submit-button:hover, .submit-button:focus {
-    background-color: #4cae4c;
+    background-color: #351983;
   }
   
   h2 {

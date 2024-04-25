@@ -81,12 +81,12 @@ export default {
 .logo {
   height: auto;
   width: auto;
-  max-height: clamp(22px, 9vw, 45px); 
+  max-height: clamp(22px, 8vw, 45px); 
 }
 
 @media (min-width: 450px) {
   .logo {
-    max-height: clamp(22px, 7vw, 40px); 
+    max-height: clamp(22px, 9vw, 40px); 
       }
 }
 
@@ -106,16 +106,17 @@ export default {
 }
 
 .nav-icon {
-  height: clamp(20px, 6vw, 45px);
+  height: clamp(30px, 6vw, 45px);
   width: auto;
   transition: transform 0.3s ease;
 }
 
-@media (min-width: 450px) {
+@media (max-width: 400px) {
   .nav-icon {
-      height: clamp(15px, 5vw, 30px);
+      height: clamp(25px, 5vw, 45px);
     }
 }
+
 
 .nav-link:hover .nav-icon {
   transform: scale(1.3); 
