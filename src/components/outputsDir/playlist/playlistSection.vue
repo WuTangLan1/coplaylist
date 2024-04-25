@@ -1,27 +1,28 @@
 <!-- src\components\outputsDir\playlist\playlistSection.vue -->
 
-<template>
-    <div class="playlist-section">
-      <h2>Generated Playlist</h2>
-      <ol>
-        <li v-for="(song, index) in playlist" :key="index">
-          <strong>{{ song.title }}</strong> - {{ song.artist }} : {{ song.releaseYear }}
-        </li>
-      </ol>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    props: {
-      playlist: {
-        type: Array,
-        required: true
-      }
+<script>
+export default {
+  props: {
+    playlist: {
+      type: Array,
+      required: true
     }
-  };
-  </script>
-  
+  }
+};
+</script>
+
+<template>
+  <div class="playlist-section">
+    <h2>Generated Playlist</h2>
+    <ol v-if="playlist && playlist.length">
+      <li v-for="(song, index) in playlist" :key="index">
+        <strong>{{ song.title }}</strong> - {{ song.artist }} : {{ song.releaseYear }}
+      </li>
+    </ol>
+    <p v-else>No songs available. Please generate a playlist.</p>
+  </div>
+</template>
+   
   <style scoped>
   .playlist-section {
     margin-bottom: 1.5rem;

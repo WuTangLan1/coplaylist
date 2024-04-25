@@ -7,8 +7,13 @@ export const usePlaylistStore = defineStore('playlist', {
   }),
   actions: {
     setPlaylistDetails(details) {
-      this.playlistDetails = details;
-    },
+      const parsedDetails = details.split('\n').map(line => {
+          const [titleArtist, releaseYear] = line.split(':');
+          const [title, artist] = titleArtist.split(' - ');
+          return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+      });
+      this.playlistDetails = parsedDetails;
+  },
     clearPlaylistDetails() {
       this.playlistDetails = null;
     }
