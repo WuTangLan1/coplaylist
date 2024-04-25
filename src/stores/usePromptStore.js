@@ -44,14 +44,6 @@ export const usePromptStore = defineStore('prompt', {
     updateVibeSelection(type, value) {
       this.vibes[type] = value;
     },
-    validateVibes() {
-      const fieldsFilled = Object.values(this.vibes).filter(value => value.trim() !== '').length;
-      if (fieldsFilled < 2) {
-        this.showModal('Please fill at least two fields to proceed.');
-        return false;
-      }
-      return true;
-    },
     toggleGenreSelection(genre) {
       const index = this.tones.selectedGenres.indexOf(genre);
       if (index !== -1) {
@@ -60,57 +52,76 @@ export const usePromptStore = defineStore('prompt', {
         this.tones.selectedGenres.push(genre);
       }
     },
-    validateTones() {
-      const hasGenres = this.tones.selectedGenres.length > 0;
-      const hasEras = this.tones.selectedEra.length > 0;
-      if (!hasGenres || !hasEras) {
-          this.showModal(`Please select at least one genre and one era.`);
-          return false;
-      }
-      return true;
-  },
-    updateSong(index, field, value) {
-      this.songs[index][field] = value;
-    },
-    validateSongs() {
-      const isSongsValid = this.songs.some(song => song.name.trim() !== '' && song.artist.trim() !== '');
-      if (!isSongsValid) {
-        this.showModal('Please enter at least one song with its artist.');
+    validateVibes() {
+      const fieldsFilled = Object.values(this.vibes).filter(value => value.trim() !== '').length;
+      if (fieldsFilled < 2) {
+        this.showModal('Please fill at least two fields to proceed.');
         return false;
       }
       return true;
     },
+    validateTones() {
+        const hasGenres = this.tones.selectedGenres.length > 0;
+        const hasEras = this.tones.selectedEra.length > 0;
+        if (!hasGenres || !hasEras) {
+            this.showModal(`Please select at least one genre and one era.`);
+            return false;
+        }
+        return true;
+    },
+    validateSongs() {
+        const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length;
+        console.log('validateSongs - Number of valid songs:', isSongsValid);
+        if (isSongsValid === 0 || isSongsValid > 3) {
+            this.showModal('Please enter between 1 and 3 songs, each with a name and an artist.');
+            return false;
+        }
+        return true;
+    },
+    updateSong(index, field, value) {
+      if (index >= 0 && index < this.songs.length) {
+        const song = {...this.songs[index], [field]: value}; // Create a new song object with updated field
+        this.songs.splice(index, 1, song); // Replace the old song object with the new one in a reactive way
+        console.log(`Song at index ${index} updated:`, this.songs[index]);
+      } else {
+        console.error('Invalid song index:', index);
+      }
+    },
     validateAll() {
       const isTonesValid = this.validateTones();
+      console.log("tones valid : ", isTonesValid);
       const isSongsValid = this.validateSongs(); 
+      console.log("songs valid : ", isSongsValid);
+      const isVibeValid = this.validateVibes();
+      console.log("vibes valid : ", isVibeValid);
     
-      const isAllValid =  isTonesValid && isSongsValid;
+      const isAllValid =  isTonesValid && isSongsValid && isVibeValid;
       if (!isAllValid) console.log("Overall validation failed");
       return isAllValid;
     },
     async generatePlaylist() {
-      if (!this.vibes || !this.songs.length) {
-        console.error("Vibes and at least one song must be specified");
+      if (!this.validateAll()) {
+        console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
       }
-  
+    
       const playlistDetails = {
         vibes: this.vibes,
         tones: {
           genres: this.tones.selectedGenres || [],
           eras: this.tones.selectedEra || []
         },
-        songs: this.songs.filter(song => song.name && song.artist) // Only include songs with both name and artist filled
+        songs: this.songs.filter(song => song.name.trim() && song.artist.trim()) // Ensure both name and artist are present
       };
-  
+    
       try {
         const response = await axios.post('http://localhost:3000/generate-playlist', playlistDetails);
         console.log('Generated Playlist:', response.data);
         const playlistStore = usePlaylistStore();
-        playlistStore.setPlaylistDetails(response.data); // Save the playlist data
+        playlistStore.setPlaylistDetails(response.data);
       } catch (error) {
         console.error('Error fetching playlist:', error);
       }
-    }
+    }    
   }
 });

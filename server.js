@@ -51,6 +51,8 @@ app.post('/generate-playlist', async (req, res) => {
         Songs: ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist}` : 'Not specified').join(', ')}
     `;
 
+    console.log('prompt being sent : ', prompt)
+
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 
