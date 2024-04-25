@@ -1,13 +1,13 @@
 <!-- src\components\outputsDir\playlist\controlSection.vue -->
 
 <template>
-    <div class="control-section">
-      <button class="control-btn" @click="regenerate">Regenerate</button>
-      <button class="control-btn" @click="save">Save</button>
-      <button class="control-btn" @click="share">Share</button>
-    </div>
-  </template>
-  
+  <div class="control-section">
+    <button class="regen-btn" @click="regenerate">⟳ Regenerate</button>
+    <button class="save-btn" @click="save">💾 Save</button>
+    <button class="share-btn" @click="share">🔗 Share</button>
+  </div>
+</template>
+
   <script>
   export default {
     methods: {
@@ -27,22 +27,51 @@
   <style scoped>
   .control-section {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 1.5rem;
+    width:100%
   }
-  
-  .control-btn {
-    padding: 0.75rem 1.5rem;
-    background-color: #507cac;
+
+  .save-btn  {
+    padding: 0.5rem 1rem;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    background-color: #0d7a25;
   }
   
-  .control-btn:hover {
-    background-color: #3b5998;
+  .save-btn:hover {
+    background-color: #15662d;
+  }
+
+  .regen-btn  {
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #3b558d;
+  }
+  
+  .regen-btn:hover {
+    background-color: #1e315a;
+  }
+
+  .share-btn  {
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    background-color: #73288a;
+  }
+  
+  .share-btn:hover {
+    background-color: #2f1470;
   }
   </style>
   

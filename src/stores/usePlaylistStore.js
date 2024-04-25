@@ -3,11 +3,15 @@ import { defineStore } from 'pinia';
 
 export const usePlaylistStore = defineStore('playlist', {
   state: () => ({
-    playlistDetails: null,  // This will hold the playlist data
+    playlistDetails: null, 
+    playlistName: '',
   }),
   actions: {
-    setPlaylistDetails(details) {
-      if (typeof details === 'string') {
+    setPlaylistDetails(responseData) {
+      if (typeof responseData === 'string' && responseData.includes('Playlist Name:')) {
+        const sections = responseData.split('\n\n');  // Assuming there are two line breaks between the name and the songs.
+        const nameLine = sections.shift(); // This removes the first section which is supposed to be the name.
+        this.playlistName = nameLine.replace('### Playlist Name: ', '').trim();  
           const parsedDetails = details.split('\n').map(line => {
               const [titleArtist, releaseYear] = line.split(':');
               const [title, artist] = titleArtist.split(' - ');
