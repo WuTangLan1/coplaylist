@@ -5,23 +5,26 @@ export default {
   props: {
     playlist: {
       type: Array,
-      required: true
+      default: () => []  
     }
   }
 };
 </script>
 
 <template>
-  <div class="playlist-section">
+  <div class="playlist-section" v-if="playlist && playlist.length">
     <h2>Generated Playlist</h2>
-    <ol v-if="playlist && playlist.length">
+    <ol>
       <li v-for="(song, index) in playlist" :key="index">
         <strong>{{ song.title }}</strong> - {{ song.artist }} : {{ song.releaseYear }}
       </li>
     </ol>
-    <p v-else>No songs available. Please generate a playlist.</p>
+  </div>
+  <div v-else>
+    <p>No songs available. Please generate a playlist.</p>
   </div>
 </template>
+
    
   <style scoped>
   .playlist-section {

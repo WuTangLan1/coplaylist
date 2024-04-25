@@ -113,11 +113,31 @@ export const usePromptStore = defineStore('prompt', {
       try {
         const response = await axios.post('http://localhost:3000/generate-playlist', playlistDetails);
         console.log('Generated Playlist:', response.data);
+    
+        const formattedPlaylist = this.formatPlaylist(response.data);
         const playlistStore = usePlaylistStore();
-        playlistStore.setPlaylistDetails(response.data);
+        playlistStore.setPlaylistDetails(formattedPlaylist);  
       } catch (error) {
         console.error('Error fetching playlist:', error);
       }
-    }  
+    },
+    formatPlaylist(playlistString) {
+        if (!playlistString) {
+            console.error("Received empty playlist string");
+            return [];
+        }
+    
+        const lines = playlistString.split('\n').filter(line => line.trim() && line.includes('-'));
+        return lines.map(line => {
+            try {
+                const [titleArtist, releaseYear] = line.split(':');
+                const [title, artist] = titleArtist.split(' - ');
+                return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+            } catch (error) {
+                console.error("Error parsing line: ", line, error);
+                return null;
+            }
+        }).filter(song => song !== null);
+    }
   }
 });

@@ -49,15 +49,28 @@ app.post('/generate-playlist', async (req, res) => {
         Generate a playlist of 10 songs with a playlist name (which must adhere to the following structure : "song title - artist name : release year") 
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
-        Mood: ${vibes.selectedMood || 'any'},
-        Activity: ${vibes.selectedActivity || 'any'},
-        Familiarity: ${vibes.selectedFamiliarity || 'any'},
-        Setting: ${vibes.selectedSetting || 'any'},
-        Platform: ${vibes.selectedPlatform || 'any platform'},
-        Genres: ${genres},
-        Eras: ${eras},
-        Songs: ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist}` : 'Not specified').join(', ')}
-    `;
+        Mood (please ensure the songs you submit all achieve the following mood): ${vibes.selectedMood || 'any'},
+        Activity (please ensure the songs you submit all achieve the following activity): ${vibes.selectedActivity || 'any'},
+        Familiarity (please can you ensure that the playlist yopu generate and the songs generated have the following level of fame/knownness): ${vibes.selectedFamiliarity || 'any'},
+        Setting (please ensure the songs you submit all achieve the following settign): ${vibes.selectedSetting || 'any'},
+        Platform (please ensure the songs are available on the following selected platform): ${vibes.selectedPlatform || 'any platform'},
+        Genres (please ensure the songs you submit are from the following genre(s) ): ${genres},
+        Eras (please ensure the songs you submit are from the following era(s)): ${eras},
+        Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist}` : 'Not specified').join(', ')},
+        'Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
+        a playlist :
+        Playlist Name : Alpha Grooving
+        1. A Team - Ed Sheeran: 2011
+        2. Can't Stop the Feeling! - Justin Timberlake: 2016
+        3. Happy - Pharrell Williams: 2013
+        4. Shake It Off - Taylor Swift: 2014
+        5. Uptown Funk - Mark Ronson ft. Bruno Mars: 2014
+        6. Stronger (What Doesn’t Kill You) - Kelly Clarkson: 2011
+        7. Roar - Katy Perry: 2013
+        8. Titanium - David Guetta ft. Sia: 2011
+        9. Eye of the Tiger - Survivor: 1982
+        10. Don't Stop Me Now - Queen: 1978'
+        please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.    `;
 
     console.log('prompt being sent : ', prompt)
 

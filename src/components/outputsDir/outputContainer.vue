@@ -1,33 +1,37 @@
 <!-- src\components\outputsDir\playlist\outputSection.vue -->
 
 <script>
+// Importing necessary components and stores
 import PlaylistSection from '@/components/outputsDir/playlist/playlistSection.vue';
 import ControlSection from '@/components/outputsDir/playlist/controlSection.vue';
+import { usePlaylistStore } from '@/stores/usePlaylistStore';
+import { computed } from 'vue';
 
 export default {
   components: {
     PlaylistSection,
     ControlSection
   },
-  props: {
-    playlist: {
-      type: Array,
-      required: true
-    }
-  },
-  methods: {
-    regeneratePlaylist() {
-      // Implement playlist regeneration logic here
-    },
-    savePlaylist() {
-      // Implement playlist saving logic here
-    },
-    sharePlaylist() {
-      // Implement playlist sharing logic here
-    }
+  setup() {
+    const playlistStore = usePlaylistStore();
+    const playlist = computed(() => playlistStore.playlistDetails);
+
+    // Define the methods used in your template
+    const regeneratePlaylist = () => {
+      // Add logic for regenerating the playlist
+    };
+    const savePlaylist = () => {
+      // Add logic for saving the playlist
+    };
+    const sharePlaylist = () => {
+      // Add logic for sharing the playlist
+    };
+
+    return { playlist, regeneratePlaylist, savePlaylist, sharePlaylist };
   }
 };
 </script>
+
 
 <template>
   <div class="output-container">
