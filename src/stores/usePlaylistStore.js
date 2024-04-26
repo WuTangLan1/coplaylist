@@ -8,25 +8,39 @@ export const usePlaylistStore = defineStore('playlist', {
   }),
   actions: {
     setPlaylistDetails(responseData) {
-      if (typeof responseData === 'string' && responseData.includes('Playlist Name:')) {
-        const sections = responseData.split('\n\n');  // Assuming there are two line breaks between the name and the songs.
-        const nameLine = sections.shift(); // This removes the first section which is supposed to be the name.
-        this.playlistName = nameLine.replace('Playlist Name: ', '').trim();
-        console.log(this.playlistDetails)
-        const details = sections.join('\n'); // Join the remaining sections back to form the details string if multiple sections.
-        const parsedDetails = details.split('\n').map(line => {
+      if (typeof responseData === 'string') {
+        const nameMatch = responseData.match(/^Playlist Name: (.+)$/m); // Use regex to find the name
+        if (nameMatch && nameMatch[1]) {
+          this.playlistName = nameMatch[1].trim();
+          console.log('playlist name : ', this.playlistName)
+        }
+      }
+
+      if (typeof responseData === 'string' && responseData.includes('\n')) {
+        const sections = responseData.split('\n\n');  
+        sections.shift(); 
+        const details = sections.join('\n'); 
+        const parsedDetails = this.parsePlaylistDetails(details);
+        this.playlistDetails = parsedDetails.filter(detail => detail !== null); 
+      } else if (Array.isArray(responseData)) {
+        this.playlistDetails = responseData;
+      } else {
+        console.error("Invalid details format:", responseData);
+        this.playlistDetails = [];
+      }
+    },
+    parsePlaylistDetails(detailsString) {
+      const songLines = detailsString.split('\n').filter(line => line.includes('-') && line.includes(':'));
+      return songLines.map(line => {
+        try {
           const [titleArtist, releaseYear] = line.split(':');
           const [title, artist] = titleArtist.split(' - ');
           return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
-        });
-        this.playlistDetails = parsedDetails;
-      } else if (Array.isArray(responseData)) {
-          // Directly setting details if already parsed
-          this.playlistDetails = responseData;
-      } else {
-          console.error("Invalid details format:", responseData);
-          this.playlistDetails = [];
-      }
+        } catch (error) {
+          console.error("Error parsing line:", line, error);
+          return null;
+        }
+      });
     },
     clearPlaylistDetails() {
       this.playlistDetails = null;

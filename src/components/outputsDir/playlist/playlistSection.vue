@@ -9,11 +9,12 @@ export default {
     const playlistStore = usePlaylistStore();
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
+
+    onMounted(() => {
+      console.log('Playlist Name:', playlistStore.playlistName); // Check if the playlistName is correctly set
+    });
+
     return { playlist, playlistName };
-  },
-  onMounted() {
-    console.log('playlist name : ', this.playlistName)
-    console.log('playlist name : ', this.playlistDetails)
   }
 };
 </script>
@@ -35,60 +36,77 @@ export default {
     <p>No songs available. Please generate a playlist.</p>
   </div>
 </template>
-
-   
-  <style scoped>
- .playlist-section {
-  padding: 1rem;
+ 
+<style scoped>
+.playlist-section {
   background-color: #fff;
-  border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  max-width: 80vw;
   max-width: 750px;
+  margin: 2rem auto;
+  overflow: hidden;
 }
 
 .playlist-title {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 1rem;
-  border-bottom: 2px solid #507cac;
-  padding-bottom: 0.5rem;
+  padding: 1rem;
+  text-align: center;
+  background-color: #507cac;
+  color: #fff;
+}
+
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .song-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
+  display: flex;
   align-items: center;
-  padding: 0.5rem 0;
-  border-top: 1px solid #eee;
-  transition: background-color 0.3s;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e1e1e1;
+  transition: background-color 0.3s ease;
+}
+
+.song-item:last-child {
+  border-bottom: none;
 }
 
 .song-item:hover {
-  background-color: #f8f9fa;
+  background-color: #f4f4f8;
 }
 
 .song-details {
+  flex-grow: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 .song-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #507cac;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-right: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.song-artist {
-  font-size: 0.9rem;
-  color: #666;
-}
-
+.song-artist,
 .song-year {
   font-size: 0.9rem;
   color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.song-year {
   margin-left: auto;
 }
 
@@ -96,5 +114,20 @@ export default {
   text-align: center;
   color: #999;
   padding: 2rem;
+}
+
+@media (max-width: 599px) {
+  .playlist-section {
+    margin: 1rem;
+  }
+
+  .song-name {
+    font-size: 0.9rem;
+  }
+
+  .song-artist,
+  .song-year {
+    font-size: 0.8rem;
+  }
 }
 </style>
