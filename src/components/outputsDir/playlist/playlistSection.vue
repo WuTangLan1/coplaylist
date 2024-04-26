@@ -2,7 +2,7 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 export default {
   setup() {
@@ -10,6 +10,10 @@ export default {
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
     return { playlist, playlistName };
+  },
+  onMounted() {
+    console.log('playlist name : ', this.playlistName)
+    console.log('playlist name : ', this.playlistDetails)
   }
 };
 </script>
@@ -34,55 +38,63 @@ export default {
 
    
   <style scoped>
-  .playlist-section {
-    margin-bottom: 1.5rem;
-    border: 1px solid #ccc; 
-    border-radius: 0.8rem;
-    color: #fff;
-    background-color: rgb(255, 247, 247);
-  }
+ .playlist-section {
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  max-width: 80vw;
+  max-width: 750px;
+}
 
 .playlist-title {
-  font-weight: bold;
-  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #507cac;
+  padding-bottom: 0.5rem;
 }
 
 .song-item {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
   align-items: center;
-  margin-bottom: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  padding: 0.5rem 0;
+  border-top: 1px solid #eee;
+  transition: background-color 0.3s;
 }
 
 .song-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.song-index {
-  min-width: 2rem;
-  color: #000000;
+  background-color: #f8f9fa;
 }
 
 .song-details {
-  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .song-name {
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #507cac;
 }
 
 .song-artist {
-  font-size: 0.9em;
-  color: #000000;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .song-year {
-  color: #000000;
+  font-size: 0.9rem;
+  color: #666;
+  margin-left: auto;
 }
 
 .empty-playlist {
   text-align: center;
-  color: #b3b3b3;
+  color: #999;
+  padding: 2rem;
 }
 </style>
