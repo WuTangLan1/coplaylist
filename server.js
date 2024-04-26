@@ -8,7 +8,12 @@ const axios = require('axios');
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:8080', 'https://coplaylist-3481ef838394.herokuapp.com','http://www.coplaylist.com/'];
+const allowedOrigins = [
+    'http://localhost:8080',
+    'https://coplaylist-3481ef838394.herokuapp.com',
+    'http://coplaylist.com',
+    'http://www.coplaylist.com'
+  ];
 
 const corsOptions = {
     origin: function (origin, callback) {
