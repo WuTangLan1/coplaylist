@@ -11,7 +11,7 @@ export default {
     const playlist = computed(() => playlistStore.playlistDetails);
 
     onMounted(() => {
-      console.log('Playlist Name:', playlistStore.playlistName); // Check if the playlistName is correctly set
+      console.log('Playlist Name:', playlistStore.playlistName); 
     });
 
     return { playlist, playlistName };
@@ -40,94 +40,100 @@ export default {
 <style scoped>
 .playlist-section {
   background-color: #fff;
-  border-radius: 0.25rem;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  max-width: 750px;
-  margin: 2rem auto;
-  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 1rem 0;
+  overflow-y: auto;
 }
 
 .playlist-title {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  text-align: center;
-  background-color: #507cac;
+  font-size: 2rem;
+  background-color: #4a76a8;
   color: #fff;
+  padding: 1.5rem;
+  margin: 0;
+  text-align: center;
 }
 
 ol {
-  list-style: none;
-  padding: 0;
+  list-style-type: none;
   margin: 0;
+  padding: 0;
 }
 
 .song-item {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e1e1e1;
-  transition: background-color 0.3s ease;
-}
-
-.song-item:last-child {
-  border-bottom: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e6e6e6;
+  transition: background-color 0.2s ease-in-out;
 }
 
 .song-item:hover {
-  background-color: #f4f4f8;
+  background-color: #f8f9fa;
 }
 
 .song-details {
-  flex-grow: 1;
   display: flex;
-  align-items: center;
-  overflow: hidden;
+  flex-direction: column;
 }
 
 .song-name {
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 600;
   color: #333;
-  margin-right: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 0.25rem;
 }
 
-.song-artist,
+.song-artist {
+  font-size: 1.1rem;
+  color: #607D8B;
+}
+
 .song-year {
   font-size: 0.9rem;
-  color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.song-year {
-  margin-left: auto;
+  color: #777;
+  align-self: flex-end;
+  margin-top: -1.5rem; /* Align with the bottom of the artist name */
 }
 
 .empty-playlist {
   text-align: center;
-  color: #999;
-  padding: 2rem;
+  color: #bbb;
+  padding: 3rem;
 }
 
-@media (max-width: 599px) {
+/* Adding some playful colors for the hover effect */
+.song-item:nth-child(odd):hover {
+  background-color: #e3f2fd;
+}
+
+.song-item:nth-child(even):hover {
+  background-color: #fce4ec;
+}
+
+@media (max-width: 768px) {
   .playlist-section {
-    margin: 1rem;
+    margin: 2rem auto;
   }
 
-  .song-name {
-    font-size: 0.9rem;
-  }
-
-  .song-artist,
   .song-year {
-    font-size: 0.8rem;
+    align-self: auto;
+    margin-top: 0.5rem;
+  }
+
+  .song-name,
+  .song-artist {
+    font-size: 1rem;
+  }
+
+  .song-artist {
+    color: #607D8B; /* slightly different color for mobile for fun */
   }
 }
 </style>
