@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios'; 
 import { usePlaylistStore } from './usePlaylistStore';
+import { useAuthStore } from './useAuthStore';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
