@@ -112,6 +112,7 @@ export const usePromptStore = defineStore('prompt', {
       try {
         const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
         const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+        console.log('used the following url : ', apiUrl)
         console.log('Generated Playlist:', response.data);
     
         const formattedPlaylist = this.formatPlaylist(response.data);
