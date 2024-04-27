@@ -7,7 +7,9 @@ import { auth, db } from '@/components/fbDir/fbInit';
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null, 
+    isAuthenticated: false,
   }),
+  
   actions: {
     async registerUser(details) {
       const { email, fullName, username, password, musicTaste } = details;
@@ -72,12 +74,13 @@ export const useAuthStore = defineStore('auth', {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           this.user = user;
-          this.fetchUserProfile();  
+          this.fetchUserProfile();
+          this.isAuthenticated = true; // Set isAuthenticated to true when the user is logged in
         } else {
           this.isAuthenticated = false;
           this.user = null;
         }
       });
-    },
+    },    
   }
 });

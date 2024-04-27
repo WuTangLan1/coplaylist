@@ -3,6 +3,7 @@
 import { ref } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   setup() {
@@ -14,6 +15,9 @@ export default {
       { name: '', artist: '' }
     ]);
 
+    const authStore = useAuthStore();
+    console.log("Auth Store:", authStore);
+    console.log("Is Authenticated:", authStore.isAuthenticated)
     function updateSong(index, field, value) {
         selectedSongs.value[index][field] = value;
 
@@ -24,6 +28,10 @@ export default {
         }
       }
     async function generatePlaylist() {
+      if (!authStore.isAuthenticated) {
+        console.error("User is not logged in. Cannot generate playlist.");
+        return;
+      }
       await promptStore.generatePlaylist();
       router.push({ name: 'Output' }); 
 
@@ -37,7 +45,8 @@ export default {
       selectedSongs,
       updateSong,
       generatePlaylist,
-      goBack
+      goBack,
+      authStore
     };
   }
 };
@@ -71,7 +80,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" @click="generatePlaylist">Generate</button>
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated" @click="generatePlaylist">Generate</button>
     </div>
   </div>
 </template>
@@ -151,6 +160,12 @@ h3.description {
   justify-content: space-between; 
   width: 100%; 
   margin-top: 1rem; 
+}
+
+button:disabled {
+  background-color: #ccc; /* Light gray background */
+  color: #666; /* Darker text color for contrast */
+  cursor: not-allowed; /* Shows a 'not allowed' cursor on hover */
 }
 
 .gen-btn, .prev-btn {
