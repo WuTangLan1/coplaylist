@@ -80,7 +80,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated" @click="generatePlaylist">Generate</button>
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">Generate</button>
     </div>
   </div>
 </template>

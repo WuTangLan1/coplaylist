@@ -54,10 +54,18 @@ export const useAuthStore = defineStore('auth', {
       const docRef = doc(db, "profiles", this.user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        this.user = { ...this.user, ...docSnap.data() };  // Ensure reactive update
+        this.user = { ...this.user, ...docSnap.data() };  
       } else {
         console.error("No such profile!");
       }
+    },
+    async updateUserTokens(newTokenCount) {
+      if (!this.user) return;
+      const userDocRef = doc(db, 'profiles', this.user.uid);
+      await updateDoc(userDocRef, {
+        tokens: newTokenCount
+      });
+      this.user.tokens = newTokenCount;  
     },
     async updateHighScore(newScore) {
       if (!this.user) return;

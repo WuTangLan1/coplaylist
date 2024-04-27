@@ -95,31 +95,36 @@ export const usePromptStore = defineStore('prompt', {
       return isAllValid;
     },
     async generatePlaylist() {
+      const authStore = useAuthStore(); // Ensure you have access to the auth store
       if (!this.validateAll()) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
       }
-    
-      const playlistDetails = {
-        vibes: this.vibes,
-        tones: {
-          genres: this.tones.selectedGenres || [],
-          eras: this.tones.selectedEra || []
-        },
-        songs: this.songs.filter(song => song.name.trim() && song.artist.trim())
-      };
-    
-      try {
-        const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-        const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-        console.log('used the following url : ', apiUrl)
-        console.log('Generated Playlist:', response.data);
-    
-        const formattedPlaylist = this.formatPlaylist(response.data);
-        const playlistStore = usePlaylistStore();
-        playlistStore.setPlaylistDetails(formattedPlaylist);  
-      } catch (error) {
-        console.error('Error fetching playlist:', error);
+  
+      if (authStore.user && authStore.user.tokens >= 2) {
+        const playlistDetails = {
+          vibes: this.vibes,
+          tones: {
+            genres: this.tones.selectedGenres || [],
+            eras: this.tones.selectedEra || []
+          },
+          songs: this.songs.filter(song => song.name.trim() && song.artist.trim())
+        };
+  
+        try {
+          const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+          const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+          console.log('Generated Playlist:', response.data);
+  
+          const formattedPlaylist = this.formatPlaylist(response.data);
+          const playlistStore = usePlaylistStore();
+          playlistStore.setPlaylistDetails(formattedPlaylist);  
+          await authStore.updateUserTokens(authStore.user.tokens - 2); // Deduct 2 tokens
+        } catch (error) {
+          console.error('Error fetching playlist:', error);
+        }
+      } else {
+        this.showModal("Insufficient tokens to generate a playlist.");
       }
     },
     formatPlaylist(playlistString) {
