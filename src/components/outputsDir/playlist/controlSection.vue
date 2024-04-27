@@ -28,7 +28,7 @@
   .control-section {
     display: flex;
     justify-content: space-between;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
     width:100%
   }
 
