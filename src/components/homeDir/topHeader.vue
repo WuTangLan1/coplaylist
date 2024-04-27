@@ -48,7 +48,7 @@ export default {
       <div class="nav-link" @click="emitInfoClicked">
         <img src="@/assets/images/header/info.png" alt="Info" class="nav-icon"/>
       </div>
-      <div class="nav-link" @click="emitTokensClicked">
+      <div v-if="authStore.isAuthenticated" class="nav-link" @click="emitTokensClicked">
         <img src="@/assets/images/header/tokens.png" alt="Tokens" class="nav-icon"/>
       </div>
       <div class="nav-link" @click="handleAuthAction">

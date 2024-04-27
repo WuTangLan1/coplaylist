@@ -151,7 +151,7 @@ ul {
   }
 
   .explanation-content h1 {
-    font-size: 20px;
+    font-size: 26px;
   }
 
   .explanation-content p,
