@@ -4,7 +4,6 @@
   <div class="control-section">
     <button class="regen-btn" @click="regenerate">⟳ Regenerate</button>
     <button class="save-btn" @click="save">💾 Save</button>
-    <button class="share-btn" @click="share">🔗 Share</button>
   </div>
 </template>
 
@@ -16,9 +15,6 @@
       },
       save() {
         this.$emit('save');
-      },
-      share() {
-        this.$emit('share');
       }
     }
   };

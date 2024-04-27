@@ -115,7 +115,7 @@ ol {
 
 @media (max-width: 768px) {
   .playlist-section {
-    margin: 2rem auto;
+    margin: 1rem auto;
   }
 
   .song-year {
