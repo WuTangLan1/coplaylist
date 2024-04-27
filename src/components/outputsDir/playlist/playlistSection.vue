@@ -21,7 +21,6 @@ export default {
 
 <template>
   <div class="playlist-section" v-if="playlist && playlist.length">
-    <h2 class="playlist-title">{{ playlistName }}</h2>
     <ol>
       <li v-for="(song, index) in playlist" :key="index" class="song-item">
         <div class="song-details">
@@ -36,6 +35,7 @@ export default {
     <p>No songs available. Please generate a playlist.</p>
   </div>
 </template>
+
  
 <style scoped>
 .playlist-section {
@@ -44,8 +44,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
-  margin: 3rem auto;
-  padding: 1rem 0;
+  margin: 1rem auto;
   overflow-y: auto;
 }
 
@@ -66,9 +65,8 @@ ol {
 
 .song-item {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between; /* This line ensures that items are spaced across the main axis */
+  align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e6e6e6;
   transition: background-color 0.2s ease-in-out;
@@ -98,8 +96,6 @@ ol {
 .song-year {
   font-size: 0.9rem;
   color: #777;
-  align-self: flex-end;
-  margin-top: -1.5rem; /* Align with the bottom of the artist name */
 }
 
 .empty-playlist {
