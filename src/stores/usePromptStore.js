@@ -101,22 +101,27 @@ export const usePromptStore = defineStore('prompt', {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
       }
-  
+    
       if (authStore.user && authStore.user.tokens >= 2) {
+        // Fetch user profile to get the taste
+        await authStore.fetchUserProfile();  // Ensure fetchUserProfile updates the user state with all profile info
+        const userTaste = authStore.user.taste || "General"; // Default to "General" if no specific taste is defined
+    
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
             genres: this.tones.selectedGenres || [],
             eras: this.tones.selectedEra || []
           },
-          songs: this.songs.filter(song => song.name.trim() && song.artist.trim())
+          songs: this.songs.filter(song => song.name.trim() && song.artist.trim()),
+          userTaste: userTaste  // Include the user's taste in the request
         };
-  
+    
         try {
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
           console.log('Generated Playlist:', response.data);
-  
+    
           const formattedPlaylist = this.formatPlaylist(response.data);
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
@@ -127,7 +132,7 @@ export const usePromptStore = defineStore('prompt', {
       } else {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
-    },
+    },    
     formatPlaylist(playlistString) {
         if (!playlistString) {
             console.error("Received empty playlist string");

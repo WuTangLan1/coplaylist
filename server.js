@@ -41,7 +41,7 @@ app.get('*', function (req, res) {
 
 app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
-    const { vibes, tones, songs } = req.body;
+    const { vibes, tones, songs, userTaste } = req.body;
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
@@ -54,6 +54,7 @@ app.post('/generate-playlist', async (req, res) => {
         Generate a playlist of 10 songs with a playlist name (which must adhere to the following structure : "song title - artist name : release year") 
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
+        User Taste (This defines the user and hence has a lot of value in generating the playlist): ${userTaste},
         Mood (please ensure the songs you submit all achieve the following mood): ${vibes.selectedMood || 'any'},
         Activity (please ensure the songs you submit all achieve the following activity): ${vibes.selectedActivity || 'any'},
         Familiarity (please can you ensure that the playlist yopu generate and the songs generated have the following level of fame/knownness): ${vibes.selectedFamiliarity || 'any'},
