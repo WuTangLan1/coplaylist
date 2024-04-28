@@ -6,7 +6,7 @@ import { usePromptStore } from '@/stores/usePromptStore';
 
 export default {
   name: 'TopHeader',
-  emits: ['auth-modal-open', 'info-clicked', 'tokens-clicked'],
+  emits: ['auth-modal-open', 'info-clicked', 'playlists-clicked'],
   setup(props, { emit }) {
     const authStore = useAuthStore();
     const promptStore = usePromptStore();
@@ -27,11 +27,11 @@ export default {
       promptStore.resetStore(); 
     }
 
-    const emitTokensClicked = () => {
-      emit('tokens-clicked');
+    const emitPlaylistsClicked = () => {
+      emit('playlists-clicked');
     };
 
-    return { authStore, handleAuthAction, emitInfoClicked, emitTokensClicked, homeClicked };
+    return { authStore, handleAuthAction, emitInfoClicked, emitPlaylistsClicked, homeClicked };
   }
 };
 </script>
@@ -48,8 +48,8 @@ export default {
       <div class="nav-link" @click="emitInfoClicked">
         <img src="@/assets/images/header/info.png" alt="Info" class="nav-icon"/>
       </div>
-      <div v-if="authStore.isAuthenticated" class="nav-link" @click="emitTokensClicked">
-        <img src="@/assets/images/header/tokens.png" alt="Tokens" class="nav-icon"/>
+      <div v-if="authStore.isAuthenticated" class="nav-link" @click="emitPlaylistsClicked">
+        <img src="@/assets/images/header/playlist.png" alt="playlist" class="nav-icon"/>
       </div>
       <div class="nav-link" @click="handleAuthAction">
         <img v-if="authStore.user" src="@/assets/images/header/logout.png" alt="Logout" class="nav-icon"/>

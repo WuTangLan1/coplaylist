@@ -140,6 +140,7 @@ export const usePromptStore = defineStore('prompt', {
             createdAt: new Date()
           });
           
+          
           console.log('Playlist saved with ID:', playlistRef.id);
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  

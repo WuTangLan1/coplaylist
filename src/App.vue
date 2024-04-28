@@ -3,22 +3,22 @@
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
-import tokensModal from '@/components/tokensDir/tokensModal.vue'
 import infoModal from '@/components/homeDir/infoModal.vue'
 import errorModal from '@/components/inputsDir/errorModal.vue'
+import PlaylistContainer from './components/homeDir/my-playlists/playlistContainer.vue';
 
 export default { 
   components : {
     topHeader,
     authmodal,
-    tokensModal,
+    PlaylistContainer,
     infoModal,
     errorModal
   },
   setup() {
     const showAuthModal = ref(false);
     const showinfoModal = ref(false);
-    const showTokensModal = ref(false);
+    const showPlaylists = ref(false);
 
     function openinfoModal() {
       showinfoModal.value = true;
@@ -28,12 +28,12 @@ export default {
       showinfoModal.value = false;
     }
 
-    function openTokensModal() {
-      showTokensModal.value = true;
+    function openPlaylists() {
+      showPlaylists.value = true;
     }
 
-    function closeTokensModal() {
-      showTokensModal.value = false;
+    function closePlaylists() {
+      showPlaylists.value = false;
     }
 
     function openAuthModal() {
@@ -50,9 +50,9 @@ export default {
       showinfoModal,
       openinfoModal,
       closeinfoModal,
-      showTokensModal,
-      openTokensModal,
-      closeTokensModal,
+      showPlaylists,
+      openPlaylists,
+      closePlaylists,
       openAuthModal,
       closeAuthModal}
   }
@@ -64,7 +64,7 @@ export default {
     <top-Header
       @auth-modal-open="openAuthModal"
       @info-clicked="openinfoModal"
-      @tokens-clicked="openTokensModal"
+      @playlists-clicked="openPlaylists"
     />
 
     <authmodal 
@@ -77,9 +77,9 @@ export default {
     @closeModal="closeinfoModal"
     />
 
-    <tokensModal
-     v-if="showTokensModal" 
-     @closeModal="closeTokensModal"
+    <PlaylistContainer
+     v-if="showPlaylists" 
+     @closeModal="closePlaylists"
      />
 
      <errorModal></errorModal>
