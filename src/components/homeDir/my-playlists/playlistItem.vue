@@ -46,6 +46,9 @@ export default {
         <li v-for="(song, index) in visibleSongs" :key="index">
           <font-awesome-icon icon="music" /> {{ song.title }} - {{ song.artist }}
         </li>
+        <li v-if="hiddenSongs.length > 0" class="blurred-songs">
+          <font-awesome-icon icon="ellipsis-h" /> {{ hiddenSongs.length }} more songs...
+        </li>
       </ul>
       <div class="playlist-footer">
         <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
@@ -56,7 +59,7 @@ export default {
 
 <style scoped>
 .playlist-card {
-  background: linear-gradient(135deg, #d9d8e7, #b8a7d6);
+  background: linear-gradient(135deg, #d9d8e7, #7b7fbd);
   color: rgb(0, 0, 0);
   padding: 20px;
   margin: 0.5rem;
@@ -128,7 +131,7 @@ export default {
 }
 
 .toggle-button {
-  background-color: #51a36e;
+  background-color: #549954;
   color: white;
   border: none;
   border-radius: 5px;

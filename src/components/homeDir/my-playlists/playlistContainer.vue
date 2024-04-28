@@ -104,7 +104,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #9799b6;
+  background-color: #d6cee4;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
