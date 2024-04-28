@@ -132,6 +132,15 @@ export const usePromptStore = defineStore('prompt', {
           console.log('Generated Playlist:', response.data);
     
           const formattedPlaylist = this.formatPlaylist(response.data);
+
+          const playlistsCollection = collection(db, 'playlists');
+          const playlistRef = await addDoc(playlistsCollection, {
+            creatorId: authStore.user.uid,
+            details: formattedPlaylist,
+            createdAt: new Date()
+          });
+          
+          console.log('Playlist saved with ID:', playlistRef.id);
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
