@@ -97,12 +97,12 @@
     }
   }
 
-  .modal-header {
+.modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #9799b6;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }

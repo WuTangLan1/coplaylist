@@ -56,8 +56,8 @@ export default {
 
 <style scoped>
 .playlist-card {
-  background: linear-gradient(135deg, #655ea7, #411f81);
-  color: white;
+  background: linear-gradient(135deg, #d9d8e7, #b8a7d6);
+  color: rgb(0, 0, 0);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -89,7 +89,7 @@ export default {
 
 .created-at {
   font-size: 14px;
-  color: #b3b3b3;
+  color: #000000;
 }
 
 .song-list {
@@ -100,11 +100,11 @@ export default {
 
 .song-list li {
   margin-bottom: 10px;
-  color: #b3b3b3;
+  color: #000000;
 }
 
 .blurred-songs {
-  color: #b3b3b3;
+  color: #000000;
   font-style: italic;
   position: relative;
 }
@@ -124,10 +124,10 @@ export default {
 }
 
 .toggle-button {
-  background-color: #1DB954;
+  background-color: #51a36e;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
