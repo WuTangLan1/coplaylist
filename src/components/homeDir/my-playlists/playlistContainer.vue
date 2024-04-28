@@ -69,10 +69,9 @@
 
   .modal {
     background: white;
-    padding: 1rem;
     border-radius: 10px;
     width: auto;
-    max-width: 90%;
+    max-width: 90vw;
     max-height: 95vh;
     overflow: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
@@ -99,7 +98,7 @@
 
   .playlist-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       grid-gap: 20px;
     }
   </style>
