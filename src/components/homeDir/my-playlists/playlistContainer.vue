@@ -51,7 +51,7 @@
         <div v-if="loading">Loading playlists...</div>
         <div v-else-if="error">Error: {{ error }}</div>
         <div v-else-if="playlists.length === 0">No playlists found.</div>
-        <div class="playlist-grid" v-else>
+        <div v-else>
           <playlist-item v-for="(playlist, index) in playlists" :key="index" :playlist="playlist" />
         </div>
       </div>
@@ -80,6 +80,8 @@
     background: white;
     border-radius: 10px;
     width: auto;
+    padding: 1rem;
+    width: 80%;
     max-width: 90vw;
     max-height: 90vh;
     overflow-y: auto;
@@ -105,8 +107,7 @@
   align-items: center;
   padding: 20px;
   background-color: #d6cee4;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 0.5rem;
 }
 
 .modal-title {
@@ -124,12 +125,5 @@
   .playlist-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
   }
-
-  .playlist-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      grid-gap: 20px;
-    }
   </style>
