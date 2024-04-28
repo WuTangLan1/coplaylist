@@ -28,10 +28,31 @@
   </script>
   
   <style scoped>
-  .playlist-item {
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  </style>
+.playlist-item {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.playlist-item ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.playlist-item li {
+  margin-bottom: 5px;
+}
+
+.playlist-item p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #888;
+}
+</style>

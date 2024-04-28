@@ -43,7 +43,7 @@
         <div v-if="loading">Loading playlists...</div>
         <div v-else-if="error">Error: {{ error }}</div>
         <div v-else-if="playlists.length === 0">No playlists found.</div>
-        <div v-else>
+        <div class="playlist-grid" v-else>
           <playlist-item v-for="(playlist, index) in playlists" :key="index" :playlist="playlist" />
         </div>
       </div>
@@ -96,4 +96,10 @@
     margin: 0 auto;
     padding: 20px;
   }
+
+  .playlist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-gap: 20px;
+    }
   </style>
