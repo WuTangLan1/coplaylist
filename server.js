@@ -61,7 +61,7 @@ app.post('/generate-playlist', async (req, res) => {
         Setting (please ensure the songs you submit all achieve the following settign): ${vibes.selectedSetting || 'any'},
         Platform (please ensure the songs are available on the following selected platform): ${vibes.selectedPlatform || 'any platform'},
         Genres (please ensure the songs you submit are from the following genre(s) ): ${genres},
-        Eras (please ensure the songs you submit are from the following era(s)): ${eras},
+        Eras :IT IS OF THE UTMOST IMPORTANCE THAT THE SONGS YOU GENERATE ARE FROM THE FOLLOWING ERAS : ${eras} PLEASE PLEASE PLEASE CAN YOU BE PRECISE ABOUT THIS AND IF THE USER HAS SPECIFIED ERAS PLEASE FOLLOW THEIR SPECIFICATIONS !!!,
         Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
         'Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
