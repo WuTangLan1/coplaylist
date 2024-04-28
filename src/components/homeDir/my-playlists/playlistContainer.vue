@@ -31,15 +31,22 @@
           this.loading = false;
         }
       }
+    },
+    methods : {
+      closeModal() {
+      this.$emit('closeModal');
+    }
     }
   }
   </script>
-
 <template>
   <div class="modal-backdrop">
     <div class="modal">
-      <div class="playlist-container">
+      <div class="modal-header">
         <h2>My Playlists</h2>
+        <font-awesome-icon icon="fas fa-times" class="close-icon" @click="closeModal" />
+      </div>
+      <div class="playlist-container">
         <div v-if="loading">Loading playlists...</div>
         <div v-else-if="error">Error: {{ error }}</div>
         <div v-else-if="playlists.length === 0">No playlists found.</div>
@@ -89,6 +96,21 @@
       opacity: 1;
     }
   }
+
+  .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+  .close-icon {
+  font-size: 24px;
+  cursor: pointer;
+}
 
   .playlist-container {
     max-width: 800px;

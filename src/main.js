@@ -3,9 +3,15 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { useAuthStore } from './stores/useAuthStore';
-import { createPinia } from 'pinia'; // Import createPinia
+import { createPinia } from 'pinia'; 
 
-// Debounce function
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+library.add(fas, far);
+
 const debounce = (callback, delay) => {
   let timeoutId;
   return (...args) => {
@@ -16,7 +22,6 @@ const debounce = (callback, delay) => {
   };
 };
 
-// Extending ResizeObserver with a debounced callback
 const OriginalResizeObserver = window.ResizeObserver;
 window.ResizeObserver = class extends OriginalResizeObserver {
   constructor(callback) {
@@ -25,6 +30,7 @@ window.ResizeObserver = class extends OriginalResizeObserver {
 };
 
 const app = createApp(App);
+app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(createPinia());
 
 const authStore = useAuthStore();

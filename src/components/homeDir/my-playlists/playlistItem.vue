@@ -28,27 +28,27 @@ export default {
   <div class="playlist-card">
     <div class="playlist-header">
       <h3>{{ playlist.name }}</h3>
-      <p class="created-at"><i class="far fa-calendar-alt"></i> {{ formatDate(playlist.createdAt) }}</p>
+      <p class="created-at"><font-awesome-icon icon="far fa-calendar-alt" /> {{ formatDate(playlist.createdAt) }}</p>
     </div>
     <div class="playlist-body">
       <ul class="song-list">
         <li v-for="(song, index) in visibleSongs" :key="index">
-          <i class="fas fa-music"></i> {{ song.title }} - {{ song.artist }}
+          <font-awesome-icon icon="fas fa-music" /> {{ song.title }} - {{ song.artist }}
         </li>
         <li v-if="hiddenSongs.length > 0" class="blurred-songs">
-          <i class="fas fa-ellipsis-h"></i> {{ hiddenSongs.length }} more songs...
+          <font-awesome-icon icon="fas fa-ellipsis-h" /> {{ hiddenSongs.length }} more songs...
         </li>
       </ul>
     </div>
     <div class="playlist-footer">
-      <button class="open-button"><i class="fas fa-play"></i> Open</button>
+      <button class="open-button"><font-awesome-icon icon="fas fa-play" /> Open</button>
     </div>
   </div>
 </template>
 
 <style scoped>
 .playlist-card {
-  background: linear-gradient(135deg, #554abe, #250b55);
+  background: linear-gradient(135deg, #655ea7, #411f81);
   color: white;
   padding: 20px;
   border-radius: 8px;
