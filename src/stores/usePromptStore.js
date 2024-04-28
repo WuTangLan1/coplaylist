@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 import axios from 'axios'; 
 import { usePlaylistStore } from './usePlaylistStore';
 import { useAuthStore } from './useAuthStore';
+import { collection, addDoc } from 'firebase/firestore';
+import { db, auth } from '@/components/fbDir/fbInit.js';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -118,8 +120,13 @@ export const usePromptStore = defineStore('prompt', {
           })).filter(song => song.name && song.artist),
           userTaste: userTaste  
         };
+
     
         try {
+          const promptsCollection = collection(db, 'prompts');
+          const docRef = await addDoc(promptsCollection, playlistDetails);
+          console.log('Prompt saved with ID:', docRef.id);
+
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
           console.log('Generated Playlist:', response.data);

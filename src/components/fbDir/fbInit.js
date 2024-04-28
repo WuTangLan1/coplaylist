@@ -1,7 +1,7 @@
 // src\components\fbDir\fbInit.js
 
 import { initializeApp } from 'firebase/app';
-import { getFirestore} from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 import fbConfig from './fbConfig';
