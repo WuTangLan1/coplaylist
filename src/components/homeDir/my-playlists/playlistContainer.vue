@@ -1,16 +1,5 @@
 <!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
-<template>
-    <div class="playlist-container">
-      <h2>My Playlists</h2>
-      <div v-if="loading">Loading playlists...</div>
-      <div v-else-if="error">Error: {{ error }}</div>
-      <div v-else-if="playlists.length === 0">No playlists found.</div>
-      <div v-else>
-        <playlist-item v-for="(playlist, index) in playlists" :key="index" :playlist="playlist" />
-      </div>
-    </div>
-  </template>
-  
+ 
   <script>
   import { useAuthStore } from '@/stores/useAuthStore';
   import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -45,8 +34,63 @@
     }
   }
   </script>
+
+<template>
+  <div class="modal-backdrop">
+    <div class="modal">
+      <div class="playlist-container">
+        <h2>My Playlists</h2>
+        <div v-if="loading">Loading playlists...</div>
+        <div v-else-if="error">Error: {{ error }}</div>
+        <div v-else-if="playlists.length === 0">No playlists found.</div>
+        <div v-else>
+          <playlist-item v-for="(playlist, index) in playlists" :key="index" :playlist="playlist" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
   
   <style scoped>
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    width: auto;
+    max-width: 90%;
+    max-height: 95vh;
+    overflow: auto;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    animation: dropAnimation 1s ease-in-out forwards;
+    position: relative;
+  }
+
+  @keyframes dropAnimation {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
   .playlist-container {
     max-width: 800px;
     margin: 0 auto;

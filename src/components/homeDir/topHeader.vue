@@ -4,6 +4,7 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 
+
 export default {
   name: 'TopHeader',
   emits: ['auth-modal-open', 'info-clicked', 'playlists-clicked'],
