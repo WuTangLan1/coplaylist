@@ -7,17 +7,28 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      isOpen: false
+    };
+  },
   computed: {
     visibleSongs() {
-      return this.playlist.details.slice(0, 3);
+      return this.isOpen ? this.playlist.details : this.playlist.details.slice(0, 3);
     },
     hiddenSongs() {
       return this.playlist.details.slice(3);
+    },
+    buttonText() {
+      return this.isOpen ? 'Close' : 'Open';
     }
   },
   methods: {
     formatDate(timestamp) {
       return new Date(timestamp.seconds * 1000).toLocaleString();
+    },
+    toggleOpen() {
+      this.isOpen = !this.isOpen;
     }
   }
 }
@@ -25,7 +36,7 @@ export default {
 
 
 <template>
-  <div class="playlist-card">
+  <div class="playlist-card" :class="{ 'open': isOpen }">
     <div class="playlist-header">
       <h3>{{ playlist.name }}</h3>
       <p class="created-at"><font-awesome-icon icon="far fa-calendar-alt" /> {{ formatDate(playlist.createdAt) }}</p>
@@ -35,13 +46,10 @@ export default {
         <li v-for="(song, index) in visibleSongs" :key="index">
           <font-awesome-icon icon="fas fa-music" /> {{ song.title }} - {{ song.artist }}
         </li>
-        <li v-if="hiddenSongs.length > 0" class="blurred-songs">
-          <font-awesome-icon icon="fas fa-ellipsis-h" /> {{ hiddenSongs.length }} more songs...
-        </li>
       </ul>
-    </div>
-    <div class="playlist-footer">
-      <button class="open-button"><font-awesome-icon icon="fas fa-play" /> Open</button>
+        <div class="playlist-footer">
+          <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
+        </div>
     </div>
   </div>
 </template>
@@ -53,7 +61,13 @@ export default {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+  max-height: 220px;
+}
+
+.playlist-card.open {
+  max-height: 420px; 
 }
 
 .playlist-card:hover {
@@ -109,7 +123,7 @@ export default {
   text-align: right;
 }
 
-.open-button {
+.toggle-button {
   background-color: #1DB954;
   color: white;
   border: none;
@@ -119,9 +133,10 @@ export default {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  margin-top: 10px;
 }
 
-.open-button:hover {
+.toggle-button:hover {
   background-color: #1ED760;
 }
 </style>

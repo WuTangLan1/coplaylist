@@ -79,8 +79,8 @@
     border-radius: 10px;
     width: auto;
     max-width: 90vw;
-    max-height: 95vh;
-    overflow: auto;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
