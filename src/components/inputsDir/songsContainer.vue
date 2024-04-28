@@ -9,15 +9,14 @@ export default {
   setup() {
     const promptStore = usePromptStore();
     const router = useRouter();
+    const authStore = useAuthStore();
+
     const selectedSongs = ref([
-      { name: '', artist: '' },
-      { name: '', artist: '' },
-      { name: '', artist: '' }
+      { name: '', artist: '', influence: 50 },
+      { name: '', artist: '', influence: 50 },
+      { name: '', artist: '', influence: 50 }
     ]);
 
-    const authStore = useAuthStore();
-    console.log("Auth Store:", authStore);
-    console.log("Is Authenticated:", authStore.isAuthenticated)
     function updateSong(index, field, value) {
         selectedSongs.value[index][field] = value;
 
@@ -25,16 +24,17 @@ export default {
         if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
           promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
           promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
+          promptStore.updateSong(index, 'influence', selectedSongs.value[index].influence);
         }
-      }
+    }
+
     async function generatePlaylist() {
       if (!authStore.isAuthenticated) {
         console.error("User is not logged in. Cannot generate playlist.");
         return;
       }
       await promptStore.generatePlaylist();
-      router.push({ name: 'Output' }); 
-
+      router.push({ name: 'Output' });
     }
 
     function goBack() {
@@ -51,6 +51,8 @@ export default {
   }
 };
 </script>
+
+
 
 <template>
   <div class="songs-container">
@@ -76,6 +78,11 @@ export default {
           @input="updateSong(index, 'artist', $event.target.value)"
           placeholder="Enter Artist Name"
         />
+      </div>
+      <div class="input-column">
+        <label :for="`influence-${index}`">Influence Weight</label>
+        <input type="range" :id="`influence-${index}`" v-model="song.influence" min="0" max="100" />
+        <span>{{ song.influence }}%</span>
       </div>
     </div>
     <div class="button-group">

@@ -62,7 +62,7 @@ app.post('/generate-playlist', async (req, res) => {
         Platform (please ensure the songs are available on the following selected platform): ${vibes.selectedPlatform || 'any platform'},
         Genres (please ensure the songs you submit are from the following genre(s) ): ${genres},
         Eras (please ensure the songs you submit are from the following era(s)): ${eras},
-        Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist}` : 'Not specified').join(', ')},
+        Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
         'Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
         Playlist Name : Alpha Grooving

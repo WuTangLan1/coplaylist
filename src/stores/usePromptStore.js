@@ -18,9 +18,9 @@ export const usePromptStore = defineStore('prompt', {
       selectedEra: [],
     },
     songs: [
-      { name: '', artist: '' },
-      { name: '', artist: '' },
-      { name: '', artist: '' }
+      { name: '', artist: '', influence: 50 },
+      { name: '', artist: '', influence: 50 },
+      { name: '', artist: '', influence: 50 }
     ],
     modal: {
       show: false,
@@ -80,8 +80,7 @@ export const usePromptStore = defineStore('prompt', {
     },
     updateSong(index, field, value) {
       if (index >= 0 && index < this.songs.length) {
-        const song = {...this.songs[index], [field]: value}; // Create a new song object with updated field
-        this.songs.splice(index, 1, song); // Replace the old song object with the new one in a reactive way
+        this.songs[index][field] = value;
       } else {
         console.error('Invalid song index:', index);
       }
@@ -96,16 +95,15 @@ export const usePromptStore = defineStore('prompt', {
       return isAllValid;
     },
     async generatePlaylist() {
-      const authStore = useAuthStore(); // Ensure you have access to the auth store
+      const authStore = useAuthStore(); 
       if (!this.validateAll()) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
       }
     
       if (authStore.user && authStore.user.tokens >= 2) {
-        // Fetch user profile to get the taste
-        await authStore.fetchUserProfile();  // Ensure fetchUserProfile updates the user state with all profile info
-        const userTaste = authStore.user.taste || "General"; // Default to "General" if no specific taste is defined
+        await authStore.fetchUserProfile();  
+        const userTaste = authStore.user.taste || "General"; 
     
         const playlistDetails = {
           vibes: this.vibes,
@@ -113,8 +111,12 @@ export const usePromptStore = defineStore('prompt', {
             genres: this.tones.selectedGenres || [],
             eras: this.tones.selectedEra || []
           },
-          songs: this.songs.filter(song => song.name.trim() && song.artist.trim()),
-          userTaste: userTaste  // Include the user's taste in the request
+          songs: this.songs.map(song => ({
+            name: song.name.trim(),
+            artist: song.artist.trim(),
+            influence: song.influence
+          })).filter(song => song.name && song.artist),
+          userTaste: userTaste  
         };
     
         try {
@@ -125,7 +127,7 @@ export const usePromptStore = defineStore('prompt', {
           const formattedPlaylist = this.formatPlaylist(response.data);
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
-          await authStore.updateUserTokens(authStore.user.tokens - 2); // Deduct 2 tokens
+          await authStore.updateUserTokens(authStore.user.tokens - 2); 
         } catch (error) {
           console.error('Error fetching playlist:', error);
         }
