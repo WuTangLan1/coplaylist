@@ -23,48 +23,74 @@ export default {
 }
 </script>
 
+
 <template>
-  <div class="playlist-item">
-    <h3>{{ playlist.name }}</h3>
-    <ul>
-      <li v-for="(song, index) in visibleSongs" :key="index">
-        <i class="fas fa-music"></i> {{ song.title }} - {{ song.artist }}
-      </li>
-      <li v-if="hiddenSongs.length > 0" class="blurred-songs">
-        <i class="fas fa-ellipsis-h"></i> {{ hiddenSongs.length }} more songs...
-      </li>
-    </ul>
-    <p><i class="far fa-calendar-alt"></i> Created at: {{ formatDate(playlist.createdAt) }}</p>
+  <div class="playlist-card">
+    <div class="playlist-header">
+      <h3>{{ playlist.name }}</h3>
+      <p class="created-at"><i class="far fa-calendar-alt"></i> {{ formatDate(playlist.createdAt) }}</p>
+    </div>
+    <div class="playlist-body">
+      <ul class="song-list">
+        <li v-for="(song, index) in visibleSongs" :key="index">
+          <i class="fas fa-music"></i> {{ song.title }} - {{ song.artist }}
+        </li>
+        <li v-if="hiddenSongs.length > 0" class="blurred-songs">
+          <i class="fas fa-ellipsis-h"></i> {{ hiddenSongs.length }} more songs...
+        </li>
+      </ul>
+    </div>
+    <div class="playlist-footer">
+      <button class="open-button"><i class="fas fa-play"></i> Open</button>
+    </div>
   </div>
 </template>
-  
+
 <style scoped>
-.playlist-item {
-  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+.playlist-card {
+  background: linear-gradient(135deg, #554abe, #250b55);
+  color: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
-.playlist-item h3 {
-  font-size: 20px;
+
+.playlist-card:hover {
+  transform: translateY(-5px);
+}
+
+.playlist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.playlist-header h3 {
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  margin: 0;
 }
 
-.playlist-item li {
-  margin-bottom: 5px;
-  color: #555;
-}
-
-.playlist-item p {
-  margin-top: 10px;
+.created-at {
   font-size: 14px;
-  color: #888;
+  color: #b3b3b3;
+}
+
+.song-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.song-list li {
+  margin-bottom: 10px;
+  color: #b3b3b3;
 }
 
 .blurred-songs {
-  color: #888;
+  color: #b3b3b3;
   font-style: italic;
   position: relative;
 }
@@ -76,5 +102,26 @@ export default {
   left: 0;
   right: 0;
   height: 20px;
+}
+
+.playlist-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.open-button {
+  background-color: #1DB954;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.open-button:hover {
+  background-color: #1ED760;
 }
 </style>
