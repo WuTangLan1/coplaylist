@@ -83,7 +83,7 @@
     padding: 1rem;
     width: 80%;
     max-width: 90vw;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;

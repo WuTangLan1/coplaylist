@@ -50,10 +50,10 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
+  max-height: 75vh;
   max-width: 700px; 
   margin: 0 auto;
   border: 2px solid #507cac; 
-  max-height: 75vh;
   overflow-y: auto; 
 }
 </style>

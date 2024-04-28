@@ -52,7 +52,7 @@ export default {
           <div class="song-duration">{{ song.duration }}</div>
         </li>
       </ul>
-      <div v-if="hiddenSongs.length > 0" class="blurred-songs">
+      <div v-if="hiddenSongs.length > 0 && !this.isOpen" class="blurred-songs">
         <font-awesome-icon icon="ellipsis-h" /> {{ hiddenSongs.length }} more songs...
       </div>
     </div>
@@ -61,12 +61,12 @@ export default {
 
 <style scoped>
 .playlist-card {
-  background: linear-gradient(135deg, #d9d8e7, #97abd6);
+  background: linear-gradient(135deg, #f6f6fa, #f4f5f9);
   color: rgb(0, 0, 0);
   padding: 1rem;
   margin: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
   max-height: 400px;
@@ -93,6 +93,7 @@ export default {
   font-weight: bold;
   margin: 0;
   color: #333333;
+  text-decoration: underline;
 }
 
 .created-at {
