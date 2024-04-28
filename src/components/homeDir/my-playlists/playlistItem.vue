@@ -38,18 +38,18 @@ export default {
 <template>
   <div class="playlist-card" :class="{ 'open': isOpen }">
     <div class="playlist-header">
-      <h3>{{ playlist.name }}</h3>
-      <p class="created-at"><font-awesome-icon icon="far fa-calendar-alt" /> {{ formatDate(playlist.createdAt) }}</p>
+      <h3 class="playlist-name">{{ playlist.name }}</h3>
+      <p class="created-at"><font-awesome-icon icon="calendar-alt" /> {{ formatDate(playlist.createdAt) }}</p>
     </div>
     <div class="playlist-body">
       <ul class="song-list">
         <li v-for="(song, index) in visibleSongs" :key="index">
-          <font-awesome-icon icon="fas fa-music" /> {{ song.title }} - {{ song.artist }}
+          <font-awesome-icon icon="music" /> {{ song.title }} - {{ song.artist }}
         </li>
       </ul>
-        <div class="playlist-footer">
-          <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
-        </div>
+      <div class="playlist-footer">
+        <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
+      </div>
     </div>
   </div>
 </template>
@@ -59,15 +59,16 @@ export default {
   background: linear-gradient(135deg, #d9d8e7, #b8a7d6);
   color: rgb(0, 0, 0);
   padding: 20px;
+  margin: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: max-height 0.5s ease-in-out;
-  max-height: 220px;
+  max-height: 250px;
 }
 
 .playlist-card.open {
-  max-height: 420px; 
+  max-height: 500px; 
 }
 
 .playlist-card:hover {
@@ -81,11 +82,14 @@ export default {
   margin-bottom: 20px;
 }
 
+
 .playlist-header h3 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
   margin: 0;
+  color: #333333;
 }
+
 
 .created-at {
   font-size: 14px;
@@ -134,6 +138,7 @@ export default {
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   margin-top: 10px;
+  margin-bottom: 0.5rem;
 }
 
 .toggle-button:hover {

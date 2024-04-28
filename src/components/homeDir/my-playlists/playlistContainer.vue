@@ -39,12 +39,13 @@
     }
   }
   </script>
+
 <template>
   <div class="modal-backdrop">
     <div class="modal">
       <div class="modal-header">
-        <h2>My Playlists</h2>
-        <font-awesome-icon icon="fas fa-times" class="close-icon" @click="closeModal" />
+        <h2 class="modal-title">My Playlists</h2>
+        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
       </div>
       <div class="playlist-container">
         <div v-if="loading">Loading playlists...</div>
@@ -57,6 +58,7 @@
     </div>
   </div>
 </template>
+
   
   <style scoped>
 
@@ -105,6 +107,13 @@
   background-color: #9799b6;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+
+.modal-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
 }
 
   .close-icon {
