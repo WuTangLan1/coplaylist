@@ -89,8 +89,6 @@ export default {
 }
 
 .playlist-header h3 {
-  font-size: 24px;
-  font-weight: bold;
   margin: 0;
   color: #333333;
   text-decoration: underline;
@@ -161,7 +159,7 @@ export default {
 }
 
 .toggle-button {
-  background-color: #51a36e;
+  background-color: #6780b9;
   color: white;
   border: none;
   border-radius: 5px;
@@ -175,6 +173,6 @@ export default {
 }
 
 .toggle-button:hover {
-  background-color: #1ED760;
+  background-color: #2b1783;
 }
 </style>

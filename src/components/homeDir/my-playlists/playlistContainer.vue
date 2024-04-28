@@ -1,44 +1,56 @@
 <!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
- 
-  <script>
-  import { useAuthStore } from '@/stores/useAuthStore';
-  import { collection, query, where, getDocs } from 'firebase/firestore';
-  import { db } from '@/components/fbDir/fbInit';
-  import PlaylistItem from './playlistItem.vue';
-  
-  export default {
-    components: {
-      PlaylistItem
-    },
-    data() {
-      return {
-        playlists: [],
-        loading: true,
-        error: null
-      };
-    },
-    async created() {
-      const authStore = useAuthStore();
-      if (authStore.user) {
-        try {
-          const playlistsCollection = collection(db, 'playlists');
-          const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
-          const querySnapshot = await getDocs(q);
-          this.playlists = querySnapshot.docs.map(doc => doc.data());
-        } catch (error) {
-          this.error = error.message;
-        } finally {
-          this.loading = false;
-        }
+<script>
+import { useAuthStore } from '@/stores/useAuthStore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/components/fbDir/fbInit';
+import PlaylistItem from './playlistItem.vue';
+
+export default {
+  components: {
+    PlaylistItem
+  },
+  data() {
+    return {
+      playlists: [],
+      loading: true,
+      error: null,
+      filterBy: 'all'
+    };
+  },
+  computed: {
+    filteredPlaylists() {
+      if (this.filterBy === 'all') {
+        return this.playlists;
+      } else if (this.filterBy === 'favourited') {
+        return this.playlists.filter(playlist => playlist.favourited);
+      } else if (this.filterBy === 'date') {
+        return this.playlists.slice().sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
       }
-    },
-    methods : {
-      closeModal() {
+      return this.playlists;
+    }
+  },
+  async created() {
+    const authStore = useAuthStore();
+    if (authStore.user) {
+      try {
+        const playlistsCollection = collection(db, 'playlists');
+        const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
+        const querySnapshot = await getDocs(q);
+        this.playlists = querySnapshot.docs.map(doc => doc.data());
+      } catch (error) {
+        this.error = error.message;
+      } finally {
+        this.loading = false;
+      }
+    }
+  },
+  methods: {
+    closeModal() {
       this.$emit('closeModal');
     }
-    }
   }
-  </script>
+}
+</script>
 
 <template>
   <div class="modal-backdrop">
@@ -47,17 +59,26 @@
         <h2 class="modal-title">My Playlists</h2>
         <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
       </div>
+      <div class="filter-container">
+        <label for="filter">Filter by:</label>
+        <select id="filter" v-model="filterBy">
+          <option value="all">All</option>
+          <option value="favourited">Favourited</option>
+          <option value="date">Date</option>
+        </select>
+      </div>
       <div class="playlist-container">
         <div v-if="loading">Loading playlists...</div>
         <div v-else-if="error">Error: {{ error }}</div>
-        <div v-else-if="playlists.length === 0">No playlists found.</div>
+        <div v-else-if="filteredPlaylists.length === 0">No playlists found.</div>
         <div v-else>
-          <playlist-item v-for="(playlist, index) in playlists" :key="index" :playlist="playlist" />
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" />
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
   
   <style scoped>
@@ -126,4 +147,28 @@
     max-width: 800px;
     margin: 0 auto;
   }
+
+  .filter-container {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center horizontally */
+  margin-bottom: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
+
+label {
+  margin-right: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
   </style>
