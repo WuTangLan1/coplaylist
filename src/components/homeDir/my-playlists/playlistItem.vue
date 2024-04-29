@@ -1,6 +1,13 @@
 <!-- src\components\homeDir\my-playlists\playlistItem.vue -->
 <script>
+import confirmdelModal from './confirmdelModal.vue'
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/components/fbDir/fbInit';
+
 export default {
+  components : {
+    confirmdelModal
+  },
   props: {
     playlist: {
       type: Object,
@@ -9,7 +16,8 @@ export default {
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      showConfirmModal: false
     };
   },
   computed: {
@@ -29,6 +37,29 @@ export default {
     },
     toggleOpen() {
       this.isOpen = !this.isOpen;
+    },
+    async toggleFavourite() {
+      try {
+        const newFavourited = !this.playlist.favourited;
+        const playlistRef = doc(db, 'playlists', this.playlist.id);
+        await updateDoc(playlistRef, { favourited: newFavourited });
+        this.playlist.favourited = newFavourited; // Update local state
+      } catch (error) {
+        console.error('Error updating favourited status:', error);
+      }
+    },
+    openConfirmModal() {
+      this.showConfirmModal = true;
+    },
+    closeConfirmModal() {
+      this.showConfirmModal = false;
+    },
+    confirmDelete() {
+      this.$emit('delete', this.playlist.id);
+      this.showConfirmModal = false;
+    },
+    exportToSpotify() {
+      // Add logic to export the playlist to Spotify
     }
   }
 }
@@ -38,6 +69,11 @@ export default {
   <div class="playlist-card" :class="{ 'open': isOpen }">
     <div class="playlist-header">
       <h3 class="playlist-name">{{ playlist.name }}</h3>
+      <font-awesome-icon 
+          :icon="[playlist.favourited ? 'fas' : 'far', 'heart']" 
+          class="heart-icon" 
+          @click="toggleFavourite"
+        />
       <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
     </div>
     <div class="playlist-body">
@@ -49,13 +85,17 @@ export default {
               <div class="song-artist">{{ song.artist }}</div>
             </div>
           </div>
-          <div class="song-duration">{{ song.duration }}</div>
         </li>
       </ul>
+      <div v-if="isOpen" class="playlist-actions">
+        <button class="action-button remove-button" @click="openConfirmModal">Remove</button>
+        <button class="action-button export-button" @click="exportToSpotify">Export to Spotify</button>
+      </div>
       <div v-if="hiddenSongs.length > 0 && !this.isOpen" class="blurred-songs">
         <font-awesome-icon icon="ellipsis-h" /> {{ hiddenSongs.length }} more songs...
       </div>
     </div>
+    <confirmdelModal v-if="showConfirmModal" @close="closeConfirmModal" @confirm="confirmDelete" />
   </div>
 </template>
 
@@ -94,9 +134,39 @@ export default {
   text-decoration: underline;
 }
 
-.created-at {
+.playlist-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.action-button {
+  padding: 8px 16px;
   font-size: 14px;
-  color: #000000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  margin-right: 10px;
+}
+
+.remove-button:hover {
+  background-color: #e60000;
+}
+
+.export-button {
+  background-color: #1db954;
+  color: white;
+  border: none;
+}
+
+.export-button:hover {
+  background-color: #1ed760;
 }
 
 .song-list {
@@ -174,4 +244,17 @@ export default {
 .toggle-button:hover {
   background-color: #2b1783;
 }
+
+.heart-icon {
+    cursor: pointer;
+    color: rgb(243, 0, 0);
+    height: 10%;
+    width: 10%;
+    font-size: 24px;
+  }
+
+  .fas.fa-heart { /* Filled heart when favourited */
+    color: red;
+  }
+
 </style>

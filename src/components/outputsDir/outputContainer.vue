@@ -50,7 +50,6 @@ export default {
       this.showSaveModal = false;
     },
     async confirmSavePlaylist(playlistName) {
-      console.log('playlist name : ', playlistName)
       try {
         const authStore = useAuthStore();
         const playlistStore = usePlaylistStore();
@@ -77,6 +76,7 @@ export default {
 
 <template>
   <div class="output-container">
+    <h3>We generated the following:</h3>
     <PlaylistSection :playlist="playlist" />
     <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
     <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
