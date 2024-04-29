@@ -2,6 +2,7 @@
 <script>
 import confirmdelModal from './confirmdelModal.vue'
 import { updateDoc, doc } from 'firebase/firestore';
+import { db } from '@/components/fbDir/fbInit';
 
 export default {
   components : {
@@ -68,8 +69,12 @@ export default {
   <div class="playlist-card" :class="{ 'open': isOpen }">
     <div class="playlist-header">
       <h3 class="playlist-name">{{ playlist.name }}</h3>
+      <font-awesome-icon 
+          :icon="[playlist.favourited ? 'fas' : 'far', 'heart']" 
+          class="heart-icon" 
+          @click="toggleFavourite"
+        />
       <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
-      <i :class="['heart-icon', playlist.favourited ? 'fa-heart' : 'fa-heart']" @click="toggleFavourite"></i>
     </div>
     <div class="playlist-body">
       <ul class="song-list">
@@ -243,8 +248,9 @@ export default {
 .heart-icon {
     cursor: pointer;
     color: rgb(243, 0, 0);
+    height: 10%;
+    width: 10%;
     font-size: 24px;
-    margin-left: 10px; /* Adjust as needed */
   }
 
   .fas.fa-heart { /* Filled heart when favourited */
