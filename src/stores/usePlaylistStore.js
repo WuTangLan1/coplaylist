@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 
 export const usePlaylistStore = defineStore('playlist', {
   state: () => ({
-    playlistDetails: null, 
+    playlistDetails: [],
     playlistName: '',
   }),
   actions: {
@@ -12,7 +12,6 @@ export const usePlaylistStore = defineStore('playlist', {
         const nameMatch = responseData.match(/^Playlist Name: (.+)$/m); // Use regex to find the name
         if (nameMatch && nameMatch[1]) {
           this.playlistName = nameMatch[1].trim();
-          console.log('playlist name : ', this.playlistName)
         }
       }
 
@@ -42,8 +41,15 @@ export const usePlaylistStore = defineStore('playlist', {
         }
       });
     },
+    updatePlaylistDetails(newDetails) {
+          if (Array.isArray(newDetails)) {
+              this.playlistDetails = newDetails;
+          } else {
+              console.error("Attempted to update playlist details with non-array data");
+          }
+      },
     clearPlaylistDetails() {
-      this.playlistDetails = null;
+      this.playlistDetails = [];
     }
   }
 });

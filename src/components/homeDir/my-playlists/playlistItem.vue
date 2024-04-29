@@ -42,7 +42,7 @@ export default {
       this.showConfirmModal = false;
     },
     confirmDelete() {
-      // Add logic to delete the playlist
+      this.$emit('delete', this.playlist.id);
       this.showConfirmModal = false;
     },
     exportToSpotify() {

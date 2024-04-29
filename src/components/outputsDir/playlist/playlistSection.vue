@@ -10,10 +10,6 @@ export default {
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
 
-    onMounted(() => {
-      console.log('Playlist Name:', playlistStore.playlistName); 
-    });
-
     return { playlist, playlistName };
   }
 };

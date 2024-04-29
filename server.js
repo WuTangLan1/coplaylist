@@ -52,7 +52,7 @@ app.post('/generate-playlist', async (req, res) => {
     }
 
     const prompt = `
-        Generate a playlist of 10 songs with a playlist name (which must adhere to the following structure : "song title - artist name : release year") 
+        Generate a playlist of between 8-13 songs with a playlist name (which must adhere to the following structure : "song title - artist name : release year") 
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
         User Taste (This defines the user and hence has a lot of value in generating the playlist): ${userTaste},
@@ -65,20 +65,21 @@ app.post('/generate-playlist', async (req, res) => {
         Eras :IT IS OF THE UTMOST IMPORTANCE THAT THE SONGS YOU GENERATE ARE FROM THE FOLLOWING ERAS : ${eras} PLEASE PLEASE PLEASE CAN YOU BE PRECISE ABOUT THIS AND IF THE USER HAS SPECIFIED ERAS PLEASE FOLLOW THEIR SPECIFICATIONS !!!,
         Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
         ${exclusionString},
-        'Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
+        Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
         Playlist Name : Alpha Grooving
-        1. A Team - Ed Sheeran: 2011
-        2. Can't Stop the Feeling! - Justin Timberlake: 2016
-        3. Happy - Pharrell Williams: 2013
-        4. Shake It Off - Taylor Swift: 2014
-        5. Uptown Funk - Mark Ronson ft. Bruno Mars: 2014
-        6. Stronger (What Doesn’t Kill You) - Kelly Clarkson: 2011
-        7. Roar - Katy Perry: 2013
-        8. Titanium - David Guetta ft. Sia: 2011
-        9. Eye of the Tiger - Survivor: 1982
-        10. Don't Stop Me Now - Queen: 1978'
-        please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.    `;
+        A Team - Ed Sheeran: 2011
+        Can't Stop the Feeling! - Justin Timberlake: 2016
+        Happy - Pharrell Williams: 2013
+        Shake It Off - Taylor Swift: 2014
+        Uptown Funk - Mark Ronson ft. Bruno Mars: 2014
+        Stronger (What Doesn’t Kill You) - Kelly Clarkson: 2011
+        Roar - Katy Perry: 2013
+        Titanium - David Guetta ft. Sia: 2011
+        Eye of the Tiger - Survivor: 1982
+        Don't Stop Me Now - Queen: 1978
+        please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
+        PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
     console.log('prompt being sent : ', prompt)
     console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY ? 'Available' : 'Not Available');
@@ -87,7 +88,7 @@ app.post('/generate-playlist', async (req, res) => {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 
             messages: [
-                { role: "system", content: "You are an expert in music and creating 10 song music playlists for users based on their requests." },
+                { role: "system", content: "You are an expert in music and creating song music playlists for users based on their requests." },
                 { role: "user", content: prompt.trim() }
             ]
         }, {

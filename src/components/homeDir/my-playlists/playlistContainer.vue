@@ -1,7 +1,7 @@
 <!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import {collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
 
@@ -29,25 +29,39 @@ export default {
       return this.playlists;
     }
   },
-  async created() {
-    const authStore = useAuthStore();
-    if (authStore.user) {
-      try {
-        const playlistsCollection = collection(db, 'playlists');
-        const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
-        const querySnapshot = await getDocs(q);
-        this.playlists = querySnapshot.docs.map(doc => doc.data());
-      } catch (error) {
-        this.error = error.message;
-      } finally {
-        this.loading = false;
-      }
-    }
-  },
   methods: {
     closeModal() {
       this.$emit('closeModal');
-    }
+    },
+    async fetchPlaylists() {
+      const authStore = useAuthStore();
+      if (authStore.user) {
+        try {
+          const playlistsCollection = collection(db, 'playlists');
+          const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
+          const querySnapshot = await getDocs(q);
+          this.playlists = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+          this.error = error.message;
+        } finally {
+          this.loading = false;
+        }
+      }
+    },
+    async deletePlaylist(playlistId) {
+        console.log('Attempting to delete playlist with ID:', playlistId); // Add this line
+        try {
+          const playlistRef = doc(db, 'playlists', playlistId);
+          await deleteDoc(playlistRef);
+          console.log('Playlist deleted successfully');
+          this.fetchPlaylists();
+        } catch (error) {
+          console.error('Error deleting playlist:', error);
+        }
+      }
+  },
+  created() {
+    this.fetchPlaylists();
   }
 }
 </script>
@@ -72,7 +86,7 @@ export default {
         <div v-else-if="error">Error: {{ error }}</div>
         <div v-else-if="filteredPlaylists.length === 0">No playlists found.</div>
         <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" />
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist"/>
         </div>
       </div>
     </div>

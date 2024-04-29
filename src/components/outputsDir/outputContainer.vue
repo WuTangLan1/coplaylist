@@ -50,7 +50,6 @@ export default {
       this.showSaveModal = false;
     },
     async confirmSavePlaylist(playlistName) {
-      console.log('playlist name : ', playlistName)
       try {
         const authStore = useAuthStore();
         const playlistStore = usePlaylistStore();
