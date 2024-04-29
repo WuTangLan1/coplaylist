@@ -1,6 +1,10 @@
 <!-- src\components\homeDir\my-playlists\playlistItem.vue -->
 <script>
+import confirmdelModal from './confirmdelModal.vue'
 export default {
+  components : {
+    confirmdelModal
+  },
   props: {
     playlist: {
       type: Object,
@@ -9,7 +13,8 @@ export default {
   },
   data() {
     return {
-      isOpen: false
+      isOpen: false,
+      showConfirmModal: false
     };
   },
   computed: {
@@ -29,6 +34,19 @@ export default {
     },
     toggleOpen() {
       this.isOpen = !this.isOpen;
+    },
+    openConfirmModal() {
+      this.showConfirmModal = true;
+    },
+    closeConfirmModal() {
+      this.showConfirmModal = false;
+    },
+    confirmDelete() {
+      // Add logic to delete the playlist
+      this.showConfirmModal = false;
+    },
+    exportToSpotify() {
+      // Add logic to export the playlist to Spotify
     }
   }
 }
@@ -49,13 +67,17 @@ export default {
               <div class="song-artist">{{ song.artist }}</div>
             </div>
           </div>
-          <div class="song-duration">{{ song.duration }}</div>
         </li>
       </ul>
+      <div v-if="isOpen" class="playlist-actions">
+        <button class="action-button remove-button" @click="openConfirmModal">Remove</button>
+        <button class="action-button export-button" @click="exportToSpotify">Export to Spotify</button>
+      </div>
       <div v-if="hiddenSongs.length > 0 && !this.isOpen" class="blurred-songs">
         <font-awesome-icon icon="ellipsis-h" /> {{ hiddenSongs.length }} more songs...
       </div>
     </div>
+    <confirmdelModal v-if="showConfirmModal" @close="closeConfirmModal" @confirm="confirmDelete" />
   </div>
 </template>
 
@@ -94,9 +116,39 @@ export default {
   text-decoration: underline;
 }
 
-.created-at {
+.playlist-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.action-button {
+  padding: 8px 16px;
   font-size: 14px;
-  color: #000000;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  margin-right: 10px;
+}
+
+.remove-button:hover {
+  background-color: #e60000;
+}
+
+.export-button {
+  background-color: #1db954;
+  color: white;
+  border: none;
+}
+
+.export-button:hover {
+  background-color: #1ed760;
 }
 
 .song-list {
