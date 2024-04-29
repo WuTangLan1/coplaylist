@@ -8,6 +8,8 @@ import SaveplaylistModal from '@/components/outputsDir/playlist/saveplaylistModa
 import { useAuthStore } from '@/stores/useAuthStore';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { usePromptStore } from '@/stores/usePromptStore';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../fbDir/fbInit';
 import { computed } from 'vue';
 
 export default {
@@ -48,7 +50,7 @@ export default {
       this.showSaveModal = false;
     },
     async confirmSavePlaylist(playlistName) {
-      console.log("clicked here : outputContainer")
+      console.log('playlist name : ', playlistName)
       try {
         const authStore = useAuthStore();
         const playlistStore = usePlaylistStore();

@@ -3,7 +3,7 @@
 <template>
   <div class="control-section">
     <button class="regen-btn" @click="regenerate">Regenerate</button>
-    <button class="save-btn" @click="savePlaylist">💾 Save</button>
+    <button class="save-btn" @click="save">💾 Save</button>
   </div>
 </template>
 
@@ -13,9 +13,9 @@
       regenerate() {
         this.$emit('regenerate');
       },
-      savePlaylist() {
+      save() {
         console.log("clicked here : constrolsec")
-        this.$emit('savePlaylist');
+        this.$emit('save');
       }
     }
   };
