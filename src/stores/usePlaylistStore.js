@@ -1,6 +1,8 @@
 // src/stores/usePlaylistStore.js
 import { defineStore } from 'pinia';
 import { useAuthStore } from './useAuthStore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '@/components/fbDir/fbInit';
 
 export const usePlaylistStore = defineStore('playlist', {
   state: () => ({
@@ -42,24 +44,31 @@ export const usePlaylistStore = defineStore('playlist', {
         }
       });
     },
-    fetchUserPlaylists() {
-      const authStore = useAuthStore();
-      if (authStore.user) {
-        try {
-          const playlistsCollection = collection(db, 'playlists');
-          const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
-          const querySnapshot = getDocs(q);
-          this.playlists = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        } catch (error) {
-          this.error = error.message;
-        } finally {
-          this.loading = false;
-        }
-      }},
+    async fetchUserPlaylists(userId) {
+      const playlistCollection = collection(db, 'playlists');
+      const q = query(playlistCollection, where('creatorId', '==', userId));
+      try {
+        const querySnapshot = await getDocs(q);
+        let playlists = [];
+        querySnapshot.forEach((doc) => {
+          const playlistData = doc.data();
+          if (playlistData.details) {
+            playlists.push(playlistData.details.map(song => `${song.title} - ${song.artist}`));
+          }
+        });
+        this.previousSongs = playlists.flat();
+        return this.previousSongs; // make sure to return something meaningful or handle it correctly
+      } catch (error) {
+        console.error("Error fetching playlists:", error);
+        return []; // Return an empty array on error
+      }
+    },
       async fetchAndStoreUserPlaylists(userId) {
         try {
-          const playlists = await this.fetchUserPlaylists(userId);
-          this.previousSongs = playlists.map(playlist => playlist.details.map(song => `${song.title} - ${song.artist}`)).flat();
+          const playlists = await this.fetchUserPlaylists(userId); // Ensure fetchUserPlaylists is awaited
+          this.previousSongs = playlists.map(playlist =>
+            playlist.details.map(song => `${song.title} - ${song.artist}`)
+          ).flat();
         } catch (error) {
           console.error("Failed to fetch user playlists:", error);
         }

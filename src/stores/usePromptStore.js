@@ -106,12 +106,10 @@ export const usePromptStore = defineStore('prompt', {
       if (authStore.user && authStore.user.tokens >= 2) {
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General"; 
-        const { previousSongs } = usePlaylistStore();
-        const history = previousSongs;
+        const playlistStore = usePlaylistStore();
 
-        console.log('history : ', history)
+        const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
 
-    
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -124,8 +122,7 @@ export const usePromptStore = defineStore('prompt', {
             influence: song.influence
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
-          excludeSongs: previousSongs,
-          history: history  
+          excludeSongs: previousSongs 
         };
 
     
