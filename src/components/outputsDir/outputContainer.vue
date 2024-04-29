@@ -59,6 +59,7 @@ export default {
         await addDoc(playlistsCollection, {
           creatorId: authStore.user.uid,
           name: playlistName,
+          favourited: false,
           details: playlistStore.playlistDetails,
           createdAt: new Date()
         });
