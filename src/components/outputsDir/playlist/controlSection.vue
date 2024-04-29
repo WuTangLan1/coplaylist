@@ -2,7 +2,7 @@
 
 <template>
   <div class="control-section">
-    <button class="regen-btn" @click="regenerate">⟳ Regenerate</button>
+    <button class="regen-btn" @click="regenerate">Regenerate</button>
     <button class="save-btn" @click="save">💾 Save</button>
   </div>
 </template>

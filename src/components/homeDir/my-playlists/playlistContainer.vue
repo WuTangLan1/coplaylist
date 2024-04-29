@@ -90,7 +90,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,7 +105,6 @@ export default {
     width: 80%;
     max-width: 90vw;
     max-height: 80vh;
-    overflow-y: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
@@ -127,7 +126,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #d6cee4;
+  background-color: #f3f3f4;
   border-radius: 0.5rem;
 }
 
@@ -146,6 +145,8 @@ export default {
   .playlist-container {
     max-width: 800px;
     margin: 0 auto;
+    max-height: 60vh;
+    overflow-y: auto;
   }
 
   .filter-container {

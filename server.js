@@ -41,7 +41,8 @@ app.get('*', function (req, res) {
 
 app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
-    const { vibes, tones, songs, userTaste } = req.body;
+    const { vibes, tones, songs, userTaste, excludeSongs = [] } = req.body;
+    const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
@@ -63,6 +64,7 @@ app.post('/generate-playlist', async (req, res) => {
         Genres (please ensure the songs you submit are from the following genre(s) ): ${genres},
         Eras :IT IS OF THE UTMOST IMPORTANCE THAT THE SONGS YOU GENERATE ARE FROM THE FOLLOWING ERAS : ${eras} PLEASE PLEASE PLEASE CAN YOU BE PRECISE ABOUT THIS AND IF THE USER HAS SPECIFIED ERAS PLEASE FOLLOW THEIR SPECIFICATIONS !!!,
         Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
+        ${exclusionString},
         'Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
         Playlist Name : Alpha Grooving

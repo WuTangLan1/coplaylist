@@ -5,6 +5,7 @@
 import PlaylistSection from '@/components/outputsDir/playlist/playlistSection.vue';
 import ControlSection from '@/components/outputsDir/playlist/controlSection.vue';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
+import { usePromptStore } from '@/stores/usePromptStore';
 import { computed } from 'vue';
 
 export default {
@@ -14,12 +15,14 @@ export default {
   },
   setup() {
     const playlistStore = usePlaylistStore();
+    const promptStore = usePromptStore();
     const playlist = computed(() => playlistStore.playlistDetails);
 
-    // Define the methods used in your template
+
     const regeneratePlaylist = () => {
-      // Add logic for regenerating the playlist
+      promptStore.regeneratePlaylist();
     };
+
     const savePlaylist = () => {
       // Add logic for saving the playlist
     };
@@ -36,7 +39,7 @@ export default {
 <template>
   <div class="output-container">
     <PlaylistSection :playlist="playlist" />
-    <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" @share="sharePlaylist" />
+    <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
   </div>
 </template>
 

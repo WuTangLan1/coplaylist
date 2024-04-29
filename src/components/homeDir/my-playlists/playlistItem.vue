@@ -114,6 +114,7 @@ export default {
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.1);
   transition: background-color 0.3s ease;
+  border-bottom: 1px solid #eee;
 }
 
 .song-item:hover {
@@ -132,7 +133,6 @@ export default {
 
 .song-title {
   font-size: 16px;
-  font-weight: bold;
   color: #000000;
 }
 
@@ -165,7 +165,6 @@ export default {
   border-radius: 5px;
   padding: 10px 20px;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
   margin-top: 10px;

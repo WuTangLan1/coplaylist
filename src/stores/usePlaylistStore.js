@@ -29,6 +29,19 @@ export const usePlaylistStore = defineStore('playlist', {
         this.playlistDetails = [];
       }
     },
+    updatePlaylist(newPlaylistData) {
+        const playlistsCollection = collection(db, 'playlists');
+        const playlistRef = doc(playlistsCollection, this.lastGeneratedPlaylistId); // Ensure you track the last generated playlist ID somewhere in your store
+        updateDoc(playlistRef, {
+            details: newPlaylistData,
+            updatedAt: new Date() // Optionally track when it was updated
+        }).then(() => {
+            console.log('Playlist updated successfully');
+            this.setPlaylistDetails(newPlaylistData);
+        }).catch(error => {
+            console.error('Error updating playlist:', error);
+        });
+    },
     parsePlaylistDetails(detailsString) {
       const songLines = detailsString.split('\n').filter(line => line.includes('-') && line.includes(':'));
       return songLines.map(line => {
