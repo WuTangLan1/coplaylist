@@ -1,16 +1,33 @@
 <!-- src\components\outputsDir\playlist\saveplaylistModal.vue -->
-
-<script> 
-
+<script>
+export default {
+  data() {
+    return {
+      playlistName: ''
+    };
+  },
+  methods: {
+    closeModal() {
+      this.$emit('close');
+    },
+    confirmSave() {
+      if (this.playlistName.trim() !== '' && this.playlistName.length <= 15) {
+        this.$emit('confirm', this.playlistName.trim());
+      }
+    }
+  }
+};
 </script>
 
 <template>
     <div class="modal-backdrop" @click.self="closeModal">
       <div class="modal">
-       
+        <h3>Save Playlist</h3>
+        <input type="text" v-model="playlistName" placeholder="Enter playlist name" maxlength="15" />
+        <button @click="confirmSave">Confirm</button>
       </div>
     </div>
-
+  </template>
 
 <style scoped>
 .modal-backdrop {

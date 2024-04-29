@@ -4,6 +4,8 @@
 // Importing necessary components and stores
 import PlaylistSection from '@/components/outputsDir/playlist/playlistSection.vue';
 import ControlSection from '@/components/outputsDir/playlist/controlSection.vue';
+import SaveplaylistModal from '@/components/outputsDir/playlist/saveplaylistModal.vue';
+import { useAuthStore } from '@/stores/useAuthStore';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { computed } from 'vue';
@@ -11,7 +13,8 @@ import { computed } from 'vue';
 export default {
   components: {
     PlaylistSection,
-    ControlSection
+    ControlSection,
+    SaveplaylistModal
   },
   setup() {
     const playlistStore = usePlaylistStore();
@@ -31,6 +34,39 @@ export default {
     };
 
     return { playlist, regeneratePlaylist, savePlaylist, sharePlaylist };
+  },
+  data() {
+    return {
+      showSaveModal: false
+    };
+  },
+  methods : {
+    savePlaylist() {
+      this.showSaveModal = true;
+    },
+    closeSaveModal() {
+      this.showSaveModal = false;
+    },
+    async confirmSavePlaylist(playlistName) {
+      console.log("clicked here : outputContainer")
+      try {
+        const authStore = useAuthStore();
+        const playlistStore = usePlaylistStore();
+
+        const playlistsCollection = collection(db, 'playlists');
+        await addDoc(playlistsCollection, {
+          creatorId: authStore.user.uid,
+          name: playlistName,
+          details: playlistStore.playlistDetails,
+          createdAt: new Date()
+        });
+
+        console.log('Playlist saved successfully');
+        this.showSaveModal = false;
+      } catch (error) {
+        console.error('Error saving playlist:', error);
+      }
+    }
   }
 };
 </script>
@@ -40,6 +76,7 @@ export default {
   <div class="output-container">
     <PlaylistSection :playlist="playlist" />
     <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
+    <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
   </div>
 </template>
 

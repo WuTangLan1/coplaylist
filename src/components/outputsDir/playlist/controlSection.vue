@@ -14,6 +14,7 @@
         this.$emit('regenerate');
       },
       savePlaylist() {
+        console.log("clicked here : constrolsec")
         this.$emit('savePlaylist');
       }
     }
