@@ -145,7 +145,7 @@ export const usePromptStore = defineStore('prompt', {
     },    
     async regeneratePlaylist() {
           const authStore = useAuthStore();
-          const playlistStore = usePlaylistStore();
+          const playlistStore = usePlaylistStore();  // Ensure you have access to usePlaylistStore
       
           if (!this.validateAll()) {
               console.error("Validation failed. Make sure all required fields are filled correctly.");
@@ -155,9 +155,8 @@ export const usePromptStore = defineStore('prompt', {
           if (authStore.user && authStore.user.tokens >= 2) {
               await authStore.fetchUserProfile();  
               const userTaste = authStore.user.taste || "General";
-              
-              // Debugging: Output current state of playlist details
-              console.log("Current playlist details:", playlistStore.playlistDetails);
+      
+              console.log("Current playlist details before regeneration:", playlistStore.playlistDetails);
       
               if (!Array.isArray(playlistStore.playlistDetails)) {
                   console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
@@ -166,7 +165,7 @@ export const usePromptStore = defineStore('prompt', {
               }
       
               const excludeSongs = playlistStore.playlistDetails.map(song => `${song.title} - ${song.artist}`);
-              const newDetails = {
+              const playlistDetails = {
                   vibes: this.vibes,
                   tones: {
                       genres: this.tones.selectedGenres || [],
@@ -183,8 +182,9 @@ export const usePromptStore = defineStore('prompt', {
       
               try {
                   const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-                  const response = await axios.post(`${apiUrl}/generate-playlist`, newDetails);
-                  this.updatePlaylist(response.data);
+                  const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+                  playlistStore.setPlaylistDetails(this.formatPlaylist(response.data));  // Correct method to update playlist details
+                  console.log('Playlist regenerated and updated successfully');
               } catch (error) {
                   console.error('Error regenerating playlist:', error);
                   this.showModal("Failed to regenerate playlist.");
@@ -192,7 +192,7 @@ export const usePromptStore = defineStore('prompt', {
           } else {
               this.showModal("Insufficient tokens to regenerate a playlist.");
           }
-      },
+      },  
   
     formatPlaylist(playlistString) {
         if (!playlistString) {

@@ -1,6 +1,8 @@
 <!-- src\components\homeDir\my-playlists\playlistItem.vue -->
 <script>
 import confirmdelModal from './confirmdelModal.vue'
+import { updateDoc, doc } from 'firebase/firestore';
+
 export default {
   components : {
     confirmdelModal
@@ -35,6 +37,16 @@ export default {
     toggleOpen() {
       this.isOpen = !this.isOpen;
     },
+    async toggleFavourite() {
+      try {
+        const newFavourited = !this.playlist.favourited;
+        const playlistRef = doc(db, 'playlists', this.playlist.id);
+        await updateDoc(playlistRef, { favourited: newFavourited });
+        this.playlist.favourited = newFavourited; // Update local state
+      } catch (error) {
+        console.error('Error updating favourited status:', error);
+      }
+    },
     openConfirmModal() {
       this.showConfirmModal = true;
     },
@@ -57,6 +69,7 @@ export default {
     <div class="playlist-header">
       <h3 class="playlist-name">{{ playlist.name }}</h3>
       <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
+      <i :class="['heart-icon', playlist.favourited ? 'fa-heart' : 'fa-heart']" @click="toggleFavourite"></i>
     </div>
     <div class="playlist-body">
       <ul class="song-list">
@@ -226,4 +239,16 @@ export default {
 .toggle-button:hover {
   background-color: #2b1783;
 }
+
+.heart-icon {
+    cursor: pointer;
+    color: rgb(243, 0, 0);
+    font-size: 24px;
+    margin-left: 10px; /* Adjust as needed */
+  }
+
+  .fas.fa-heart { /* Filled heart when favourited */
+    color: red;
+  }
+
 </style>
