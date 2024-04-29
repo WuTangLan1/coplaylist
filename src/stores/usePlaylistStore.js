@@ -1,5 +1,6 @@
 // src/stores/usePlaylistStore.js
 import { defineStore } from 'pinia';
+import { useAuthStore } from './useAuthStore';
 
 export const usePlaylistStore = defineStore('playlist', {
   state: () => ({
@@ -41,6 +42,28 @@ export const usePlaylistStore = defineStore('playlist', {
         }
       });
     },
+    fetchUserPlaylists() {
+      const authStore = useAuthStore();
+      if (authStore.user) {
+        try {
+          const playlistsCollection = collection(db, 'playlists');
+          const q = query(playlistsCollection, where('creatorId', '==', authStore.user.uid));
+          const querySnapshot = getDocs(q);
+          this.playlists = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        } catch (error) {
+          this.error = error.message;
+        } finally {
+          this.loading = false;
+        }
+      }},
+      async fetchAndStoreUserPlaylists(userId) {
+        try {
+          const playlists = await this.fetchUserPlaylists(userId);
+          this.previousSongs = playlists.map(playlist => playlist.details.map(song => `${song.title} - ${song.artist}`)).flat();
+        } catch (error) {
+          console.error("Failed to fetch user playlists:", error);
+        }
+      },
     updatePlaylistDetails(newDetails) {
           if (Array.isArray(newDetails)) {
               this.playlistDetails = newDetails;

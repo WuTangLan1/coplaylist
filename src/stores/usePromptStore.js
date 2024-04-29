@@ -106,6 +106,11 @@ export const usePromptStore = defineStore('prompt', {
       if (authStore.user && authStore.user.tokens >= 2) {
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General"; 
+        const { previousSongs } = usePlaylistStore();
+        const history = previousSongs;
+
+        console.log('history : ', history)
+
     
         const playlistDetails = {
           vibes: this.vibes,
@@ -118,7 +123,9 @@ export const usePromptStore = defineStore('prompt', {
             artist: song.artist.trim(),
             influence: song.influence
           })).filter(song => song.name && song.artist),
-          userTaste: userTaste  
+          userTaste: userTaste,
+          excludeSongs: previousSongs,
+          history: history  
         };
 
     
@@ -163,8 +170,10 @@ export const usePromptStore = defineStore('prompt', {
                   this.showModal("Error: No existing playlist details found.");
                   return;
               }
-      
+              
+              const { previousSongs } = usePlaylistStore();
               const excludeSongs = playlistStore.playlistDetails.map(song => `${song.title} - ${song.artist}`);
+              excludeSongs += previousSongs;
               const playlistDetails = {
                   vibes: this.vibes,
                   tones: {

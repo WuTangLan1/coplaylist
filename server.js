@@ -41,7 +41,7 @@ app.get('*', function (req, res) {
 
 app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
-    const { vibes, tones, songs, userTaste, excludeSongs = [] } = req.body;
+    const { vibes, tones, songs, userTaste, excludeSongs, history = [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';

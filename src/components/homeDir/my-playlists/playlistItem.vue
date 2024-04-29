@@ -131,7 +131,6 @@ export default {
 .playlist-header h3 {
   margin: 0;
   color: #333333;
-  text-decoration: underline;
 }
 
 .playlist-actions {
