@@ -4,7 +4,7 @@ import axios from 'axios';
 import { usePlaylistStore } from './usePlaylistStore';
 import { useAuthStore } from './useAuthStore';
 import { collection, addDoc } from 'firebase/firestore';
-import { db, auth } from '@/components/fbDir/fbInit.js';
+import { db } from '@/components/fbDir/fbInit.js';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -13,7 +13,7 @@ export const usePromptStore = defineStore('prompt', {
       selectedActivity: '',
       selectedFamiliarity: '',
       selectedSetting: '',
-      selectedPlatform: ''
+      selectedPlatform: '',
     },
     tones: {
       selectedGenres: [],
@@ -153,43 +153,50 @@ export const usePromptStore = defineStore('prompt', {
       }
     },    
     async regeneratePlaylist() {
-      if (!this.validateAll()) {
-        console.error("Validation failed. Make sure all required fields are filled correctly.");
-        return;
-      }
-    
-      const authStore = useAuthStore();
-      if (authStore.user && authStore.user.tokens >= 2) {
-        await authStore.fetchUserProfile();  
-        const userTaste = authStore.user.taste || "General";
-
-        const playlistDetails = {
-          vibes: this.vibes,
-          tones: {
-            genres: this.tones.selectedGenres || [],
-            eras: this.tones.selectedEra || []
-          },
-          songs: this.songs.map(song => ({
-            name: song.name.trim(),
-            artist: song.artist.trim(),
-            influence: song.influence
-          })).filter(song => song.name && song.artist),
-          userTaste: userTaste ,
-          excludeSongs: this.playlistDetails.map(song => `${song.title} - ${song.artist}`)
-        };
-
-        try {
-          const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-          const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-          this.updatePlaylist(response.data); // Update the playlist details
-        } catch (error) {
-          console.error('Error regenerating playlist:', error);
-          this.showModal("Failed to regenerate playlist.");
+        if (!this.validateAll()) {
+          console.error("Validation failed. Make sure all required fields are filled correctly.");
+          return;
         }
-      } else {
-        this.showModal("Insufficient tokens to regenerate a playlist.");
-      }
-    },
+    
+        const authStore = useAuthStore();
+        if (authStore.user && authStore.user.tokens >= 2) {
+          await authStore.fetchUserProfile();  
+          const userTaste = authStore.user.taste || "General";
+    
+          // Ensure playlistDetails is an array before mapping
+          if (!Array.isArray(this.playlistDetails)) {
+            console.error("Playlist details is not an array");
+            this.showModal("Error: No existing playlist details found.");
+            return;
+          }
+    
+          const playlistDetails = {
+            vibes: this.vibes,
+            tones: {
+              genres: this.tones.selectedGenres || [],
+              eras: this.tones.selectedEra || []
+            },
+            songs: this.songs.map(song => ({
+              name: song.name.trim(),
+              artist: song.artist.trim(),
+              influence: song.influence
+            })).filter(song => song.name && song.artist),
+            userTaste: userTaste,
+            excludeSongs: this.playlistDetails.map(song => `${song.title} - ${song.artist}`)
+          };
+    
+          try {
+            const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+            const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+            this.updatePlaylist(response.data); // Update the playlist details
+          } catch (error) {
+            console.error('Error regenerating playlist:', error);
+            this.showModal("Failed to regenerate playlist.");
+          }
+        } else {
+          this.showModal("Insufficient tokens to regenerate a playlist.");
+        }
+      },  
     formatPlaylist(playlistString) {
         if (!playlistString) {
             console.error("Received empty playlist string");

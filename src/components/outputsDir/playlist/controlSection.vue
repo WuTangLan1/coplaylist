@@ -3,7 +3,7 @@
 <template>
   <div class="control-section">
     <button class="regen-btn" @click="regenerate">Regenerate</button>
-    <button class="save-btn" @click="save">💾 Save</button>
+    <button class="save-btn" @click="savePlaylist">💾 Save</button>
   </div>
 </template>
 
@@ -13,8 +13,8 @@
       regenerate() {
         this.$emit('regenerate');
       },
-      save() {
-        this.$emit('save');
+      savePlaylist() {
+        this.$emit('savePlaylist');
       }
     }
   };
