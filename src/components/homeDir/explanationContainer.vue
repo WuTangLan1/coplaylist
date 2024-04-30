@@ -12,7 +12,7 @@ export default {
 <template>
     <div class="explanation-container">
       <div class="explanation-content">
-        <h1>Welcome to CoPlaylist!</h1>
+        <h1><span>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></span></h1>
         <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
         <div class="features-container">
           <div class="feature-item">
@@ -64,12 +64,28 @@ export default {
     }
   }
 
-.explanation-content h1 {
+  .explanation-content h1 {
   text-align: center; 
   color: #2D3047; 
   margin-bottom: 1rem;
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  width: 100%;
 }
-  
+
+.explanation-content h1 span {
+  display: inline-flex; 
+  align-items: center;
+}
+
+.logo {
+  height: auto;
+  max-height: 1.5em; 
+  margin-left: 0.5em;
+  border-radius: 0.5rem;
+}
+
 .explanation-content {
   text-align: left;
   line-height: 1.6; 
