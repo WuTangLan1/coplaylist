@@ -1,15 +1,39 @@
 <!-- src\components\authDir\account\accountModal.vue -->
-<script>
 
+<script>
+import userinfoSide from './userinfoSide.vue';
+import tokenSide from './tokenSide.vue';
+
+export default {
+  components: {
+    userinfoSide,
+    tokenSide
+  },
+  data() {
+    return {
+      activeTab: 'userinfo'
+    };
+  },
+  methods: {
+    closeModal() {
+      this.$emit('closeModal');
+    }
+  }
+};
 </script>
 
 <template>
-    <div class="modal-backdrop">
-      <div class="modal">
-
+  <div class="modal-backdrop" @click.self="closeModal">
+    <div class="modal">
+      <div class="tabs">
+        <button :class="{active: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
+        <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
       </div>
+      <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
     </div>
-  </template>
+  </div>
+</template>
+
   
   <style scoped>
   .modal-backdrop {

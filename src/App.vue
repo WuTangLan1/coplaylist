@@ -6,6 +6,7 @@ import authmodal from '@/components/authDir/authModal.vue'
 import infoModal from '@/components/homeDir/infoModal.vue'
 import errorModal from '@/components/inputsDir/errorModal.vue'
 import PlaylistContainer from './components/homeDir/my-playlists/playlistContainer.vue';
+import accountModal from '@/components/authDir/account/accountModal.vue'
 
 export default { 
   components : {
@@ -13,12 +14,14 @@ export default {
     authmodal,
     PlaylistContainer,
     infoModal,
-    errorModal
+    errorModal,
+    accountModal
   },
   setup() {
     const showAuthModal = ref(false);
     const showinfoModal = ref(false);
     const showPlaylists = ref(false);
+    const showAccountModal = ref(false); 
 
     function openinfoModal() {
       showinfoModal.value = true;
@@ -44,6 +47,14 @@ export default {
       showAuthModal.value = false;
     }
 
+    function openAccountModal() {  
+      showAccountModal.value = true;
+    }
+
+    function closeAccountModal() {  
+      showAccountModal.value = false;
+    }
+
 
     return {
       showAuthModal,
@@ -54,7 +65,10 @@ export default {
       openPlaylists,
       closePlaylists,
       openAuthModal,
-      closeAuthModal}
+      closeAuthModal,
+      showAccountModal,
+      openAccountModal,
+      closeAccountModal}
   }
 }
 </script>
@@ -65,6 +79,7 @@ export default {
       @auth-modal-open="openAuthModal"
       @info-clicked="openinfoModal"
       @playlists-clicked="openPlaylists"
+      @account-modal-open="openAccountModal"
     />
 
     <authmodal 
@@ -83,6 +98,11 @@ export default {
      />
 
      <errorModal></errorModal>
+
+     <accountModal
+      v-if="showAccountModal"
+      @closeModal="closeAccountModal" 
+    />
 
     <div class="router-view-container">
       <router-view/>

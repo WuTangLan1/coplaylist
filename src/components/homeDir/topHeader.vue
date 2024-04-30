@@ -7,14 +7,14 @@ import { usePromptStore } from '@/stores/usePromptStore';
 
 export default {
   name: 'TopHeader',
-  emits: ['auth-modal-open', 'info-clicked', 'playlists-clicked'],
+  emits: ['auth-modal-open', 'info-clicked', 'playlists-clicked', 'account-modal-open'],
   setup(props, { emit }) {
     const authStore = useAuthStore();
     const promptStore = usePromptStore();
 
     const handleAuthAction = () => {
       if (authStore.user) {
-        authStore.logout();
+        emit('account-modal-open');
       } else {
         emit('auth-modal-open');
       }
