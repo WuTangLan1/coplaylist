@@ -24,9 +24,14 @@ export const useAuthStore = defineStore('auth', {
         const userProfile = {
           full_name: fullName,
           username: username,
-          playlists: [],  // Assuming this should be empty at registration
-          taste: musicTaste
+          playlists: [], 
+          taste: musicTaste,
+          likes_artists: [],
+          dislikes_artists: [],
+          likes_songs: [],
+          dislikes_songs: []
         };
+        
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);
         return user;
@@ -63,7 +68,8 @@ export const useAuthStore = defineStore('auth', {
       if (!this.user) return;
       const userDocRef = doc(db, 'profiles', this.user.uid);
       await updateDoc(userDocRef, {
-        tokens: newTokenCount
+        tokens: newTokenCount,
+        preferences
       });
       this.user.tokens = newTokenCount;  
     },

@@ -1,23 +1,30 @@
 <!-- src\components\authDir\account\userinfoSide.vue -->
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   setup() {
     const authStore = useAuthStore();
-    const fullName = ref(authStore.user.full_name);
-    const musicTaste = ref(authStore.user.taste);
+    const fullName = ref(authStore.user.full_name || '');
+    const musicTaste = ref(authStore.user.taste || '');
+    const isFormValid = computed(() => fullName.value.trim() !== '' && musicTaste.value.trim() !== '');
 
     function updateUserProfile() {
-      authStore.updateUserProfile({ fullName: fullName.value, musicTaste: musicTaste.value });
+      if (isFormValid.value) {
+        authStore.updateUserProfile({ fullName: fullName.value, musicTaste: musicTaste.value });
+        alert('Profile updated successfully!');
+      } else {
+        alert('Please fill in all fields.');
+      }
     }
 
     return {
       fullName,
       musicTaste,
-      updateUserProfile
+      updateUserProfile,
+      isFormValid
     };
   }
 };
@@ -27,14 +34,14 @@ export default {
     <div class="userinfo">
       <h2>User Profile</h2>
       <div>
-        <label>Full Name:</label>
-        <input v-model="fullName" placeholder="Enter your full name"/>
+        <label for="full-name">Full Name:</label>
+        <input id="full-name" v-model="fullName" placeholder="Enter your full name" />
       </div>
       <div>
-        <label>Music Taste:</label>
-        <textarea v-model="musicTaste" placeholder="Describe your music taste"></textarea>
+        <label for="music-taste">Music Taste:</label>
+        <textarea id="music-taste" v-model="musicTaste" placeholder="Describe your music taste"></textarea>
       </div>
-      <button @click="updateUserProfile">Update Profile</button>
+      <button :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
     </div>
   </template>
   

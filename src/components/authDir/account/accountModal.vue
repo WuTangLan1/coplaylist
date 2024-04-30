@@ -35,36 +35,33 @@ export default {
 </template>
 
   
-  <style scoped>
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
+<style scoped>
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75); /* Darker backdrop */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-  .modal {
-    background: white;
-    padding: 1.3rem;
-    border-radius: 5px;
-    width: auto;
-    max-width: 700px; 
-    max-height: 75vh;
-    width: 80%;
-    overflow-y: auto;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-    animation: dropAnimation 1s ease-in-out forwards;
-    position: relative;
-  }
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
 
-  @keyframes dropAnimation {
+@keyframes dropAnimation {
     0% {
       transform: translateY(-100%);
       opacity: 0;
@@ -75,4 +72,28 @@ export default {
     }
   }
 
-  </style>
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #507cac;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button.active {
+  background-color: #406fa1;
+}
+
+button:hover {
+  background-color: #355981;
+}
+</style>
