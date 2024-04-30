@@ -43,7 +43,7 @@ export default {
       </div>
       <button :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
     </div>
-  </template>
+</template>
   
   <style scoped>
   .userinfo {

@@ -1,8 +1,23 @@
 <!-- src\components\authDir\account\accountModal.vue -->
 
+<template>
+  <div class="modal-backdrop" @click.self="closeModal">
+    <div class="modal">
+      <button class="close-btn" @click="closeModal">X</button>
+      <div class="tabs">
+        <button :class="{active: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
+        <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
+        <button @click="logout">Logout</button> <!-- Logout button -->
+      </div>
+      <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
+    </div>
+  </div>
+</template>
+
 <script>
 import userinfoSide from './userinfoSide.vue';
 import tokenSide from './tokenSide.vue';
+import { useAuthStore } from '@/stores/useAuthStore'; // Import AuthStore
 
 export default {
   components: {
@@ -17,24 +32,16 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal');
+    },
+    logout() {
+      const authStore = useAuthStore();
+      authStore.logout();
+      this.closeModal();
     }
   }
 };
 </script>
 
-<template>
-  <div class="modal-backdrop" @click.self="closeModal">
-    <div class="modal">
-      <div class="tabs">
-        <button :class="{active: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
-        <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
-      </div>
-      <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
-    </div>
-  </div>
-</template>
-
-  
 <style scoped>
 .modal-backdrop {
   position: fixed;
@@ -42,7 +49,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.75); /* Darker backdrop */
+  background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,21 +68,11 @@ export default {
   position: relative;
 }
 
-@keyframes dropAnimation {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
 .tabs {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 20px;
+  margin-top: 2rem;
 }
 
 button {
@@ -95,5 +92,20 @@ button.active {
 
 button:hover {
   background-color: #355981;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  border: none;
+  background: none;
+  color: #333;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #000;
 }
 </style>
