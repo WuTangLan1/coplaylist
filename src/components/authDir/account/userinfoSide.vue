@@ -50,9 +50,10 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin: auto;
   }
   input, textarea {
-    width: 100%;
+    width: 90%;
     padding: 8px;
     margin-top: 4px;
   }

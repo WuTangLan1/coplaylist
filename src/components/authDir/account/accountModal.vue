@@ -5,9 +5,9 @@
     <div class="modal">
       <button class="close-btn" @click="closeModal">X</button>
       <div class="tabs">
-        <button :class="{active: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
+        <button :class="{active: activeTab === 'userinfo', enlarged: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
         <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
-        <button @click="logout">Logout</button> <!-- Logout button -->
+        <button class="logout-button" @click="logout">Logout</button> <!-- Styled logout button -->
       </div>
       <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
     </div>
@@ -26,7 +26,7 @@ export default {
   },
   data() {
     return {
-      activeTab: 'userinfo'
+      activeTab: 'userinfo' // Default active tab set to 'userinfo'
     };
   },
   methods: {
@@ -86,12 +86,21 @@ button {
   transition: background-color 0.3s;
 }
 
-button.active {
+button.active, .enlarged {
+  font-size: 1.2rem; /* Larger font size for active/enlarged button */
   background-color: #406fa1;
 }
 
 button:hover {
   background-color: #355981;
+}
+
+.logout-button {
+  background-color: #d9534f; /* Red background for logout button */
+}
+
+.logout-button:hover {
+  background-color: #c9302c;
 }
 
 .close-btn {
@@ -109,3 +118,4 @@ button:hover {
   color: #000;
 }
 </style>
+

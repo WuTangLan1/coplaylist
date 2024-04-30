@@ -56,7 +56,8 @@ export default {
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password" required minlength="6" placeholder="Enter a password">
+        <input type="password" id="password" v-model="form.password" required
+          minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter a password">
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
