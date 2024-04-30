@@ -116,10 +116,11 @@ export default {
   border-radius: 10px;
   padding: 1rem;
   width: auto;
-  max-width: 90vw; /* Allow modal to adjust based on viewport width */
+  max-width: 90vw;
   max-height: 80vh;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   position: relative;
+  overflow:hidden;
 }
 
   @keyframes dropAnimation {
@@ -152,6 +153,29 @@ export default {
   .close-icon {
   font-size: 24px;
   cursor: pointer;
+}
+
+.playlist-container {
+  position: relative; /* Needed to position the gradient overlay correctly */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px;
+  padding: 10px;
+  overflow-y: auto; /* Enables scrolling */
+  max-height: 65vh; /* Adjust height to prevent overflow outside the modal */
+}
+
+/* Gradient overlay at the bottom */
+.playlist-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50px; /* Height of the gradient effect */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  pointer-events: none; /* Ensures interactions with playlist cards are not blocked */
 }
 
 .playlist-card {

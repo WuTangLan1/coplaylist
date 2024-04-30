@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
+const session = require('express-session');
 const path = require('path');
 const axios = require('axios'); 
 
@@ -115,27 +116,67 @@ app.get('/login', (req, res) => {
         '&redirect_uri=' + encodeURIComponent(your_redirect_uri));
 });
 
+app.use(session({
+    secret: 'your_secret_key', 
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true } 
+}));
+
 app.get('/callback', async (req, res) => {
     const code = req.query.code || null;
-    const response = await axios({
-        url: 'https://accounts.spotify.com/api/token',
-        method: 'post',
-        params: {
-            code: code,
-            redirect_uri: your_redirect_uri,
-            grant_type: 'authorization_code'
-        },
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer.from(your_spotify_client_id + ':' + your_spotify_client_secret).toString('base64')),
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    });
-    const accessToken = response.data.access_token;
-    const refreshToken = response.data.refresh_token;
-    // Store the tokens securely and manage token refresh
-    res.redirect(`/your-frontend-url?access_token=${accessToken}`);
+    try {
+        const response = await axios({
+            url: 'https://accounts.spotify.com/api/token',
+            method: 'post',
+            params: {
+                code: code,
+                redirect_uri: process.env.SPOTIFY_REDIRECT_URI, // Ensure this is set in your environment variables
+                grant_type: 'authorization_code'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        
+        // Store tokens in session
+        req.session.accessToken = response.data.access_token;
+        req.session.refreshToken = response.data.refresh_token;
+        req.session.expiresIn = response.data.expires_in;
+
+        res.redirect('/'); // Redirect to home or dashboard page
+    } catch (error) {
+        console.error('Error during Spotify callback:', error);
+        res.status(500).send('Authentication failed');
+    }
 });
 
+// Refresh token endpoint
+app.get('/refresh_token', async (req, res) => {
+    try {
+        const refreshToken = req.session.refreshToken;
+        const response = await axios({
+            url: 'https://accounts.spotify.com/api/token',
+            method: 'post',
+            params: {
+                refresh_token: refreshToken,
+                grant_type: 'refresh_token'
+            },
+            headers: {
+                'Authorization': 'Basic ' + (Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')),
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+
+        req.session.accessToken = response.data.access_token;
+        req.session.expiresIn = response.data.expires_in;
+        res.json({ accessToken: req.session.accessToken, expiresIn: req.session.expiresIn });
+    } catch (error) {
+        console.error('Error refreshing Spotify token:', error);
+        res.status(500).send('Failed to refresh token');
+    }
+});
 
 
 const port = process.env.PORT || 3000;
