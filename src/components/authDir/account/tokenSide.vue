@@ -19,7 +19,9 @@ export default {
 <template>
     <div class="token-management">
       <h2>Token Management</h2>
-      <p>Current Tokens: {{ tokens }}</p>
+      <h2>Coming Soon</h2>
+      <p>This feature is under development and will be available soon. Our team is working hard to bring you new and exciting functionalities.</p>
+      <p>Stay tuned for updates, and thank you for your patience!</p>
     </div>
   </template>
   
@@ -28,6 +30,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    text-align: center;
   }
   </style>
   
