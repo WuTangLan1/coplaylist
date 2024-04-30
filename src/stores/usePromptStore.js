@@ -149,7 +149,7 @@ export const usePromptStore = defineStore('prompt', {
     },    
     async regeneratePlaylist() {
           const authStore = useAuthStore();
-          const playlistStore = usePlaylistStore();  // Ensure you have access to usePlaylistStore
+          const playlistStore = usePlaylistStore(); 
       
           if (!this.validateAll()) {
               console.error("Validation failed. Make sure all required fields are filled correctly.");
