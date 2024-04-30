@@ -2,15 +2,30 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed, onMounted } from 'vue';
+import axios from 'axios';
+import { computed } from 'vue';
 
 export default {
   setup() {
     const playlistStore = usePlaylistStore();
-    const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
 
-    return { playlist, playlistName };
+    const playSong = async (spotifyUri) => {
+      const accessToken = 'Your_Access_Token'; 
+      try {
+        await axios({
+          method: 'PUT',
+          url: 'https://api.spotify.com/v1/me/player/play',
+          data: { uris: [spotifyUri] },
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        console.log('Playback started');
+      } catch (error) {
+        console.error('Error playing song:', error);
+      }
+    };
+
+    return { playlist, playSong };
   }
 };
 </script>
@@ -24,6 +39,7 @@ export default {
           <div class="song-artist">{{ song.artist }}</div>
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
+        <img src="@/assets/images/music_icons/PlayMe.png" @click="playSong(song.spotifyUri)" alt="Play">
       </li>
     </ol>
   </div>
@@ -31,6 +47,7 @@ export default {
     <p>No songs available. Please generate a playlist.</p>
   </div>
 </template>
+
 
  
 <style scoped>

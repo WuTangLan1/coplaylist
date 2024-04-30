@@ -112,17 +112,15 @@ export default {
   }
 
   .modal {
-    background: white;
-    border-radius: 10px;
-    width: auto;
-    padding: 1rem;
-    width: 80%;
-    max-width: 90vw;
-    max-height: 80vh;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-    animation: dropAnimation 1s ease-in-out forwards;
-    position: relative;
-  }
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: auto;
+  max-width: 90vw; /* Allow modal to adjust based on viewport width */
+  max-height: 80vh;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
 
   @keyframes dropAnimation {
     0% {
@@ -156,12 +154,36 @@ export default {
   cursor: pointer;
 }
 
+.playlist-card {
+  flex: 1 1 350px; /* Flex grow, flex shrink, and flex-basis */
+  margin-bottom: 20px; /* Space below each card */
+  max-width: 350px; /* Maximum width for each card */
+}
+
+@media (min-width: 720px) and (max-width: 1023px) {
   .playlist-container {
-    max-width: 800px;
-    margin: 0 auto;
-    max-height: 60vh;
-    overflow-y: auto;
+    justify-content: space-around; /* Adjusts spacing around items for better fit */
   }
+}
+
+@media (min-width: 1024px) {
+  .playlist-container {
+    justify-content: space-between; /* Evenly distributes space between cards */
+  }
+}
+
+/* Further responsive settings for smaller screens */
+@media (max-width: 719px) {
+  .playlist-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .playlist-card {
+    width: 90%; /* Wider cards on smaller screens */
+  }
+}
+
 
   .filter-container {
   display: flex;

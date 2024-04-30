@@ -106,6 +106,37 @@ app.post('/generate-playlist', async (req, res) => {
     }
 });
 
+app.get('/login', (req, res) => {
+    const scope = 'streaming user-read-email';
+    res.redirect('https://accounts.spotify.com/authorize' +
+        '?response_type=code' +
+        '&client_id=' + your_spotify_client_id +
+        (scope ? '&scope=' + encodeURIComponent(scope) : '') +
+        '&redirect_uri=' + encodeURIComponent(your_redirect_uri));
+});
+
+app.get('/callback', async (req, res) => {
+    const code = req.query.code || null;
+    const response = await axios({
+        url: 'https://accounts.spotify.com/api/token',
+        method: 'post',
+        params: {
+            code: code,
+            redirect_uri: your_redirect_uri,
+            grant_type: 'authorization_code'
+        },
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer.from(your_spotify_client_id + ':' + your_spotify_client_secret).toString('base64')),
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
+    const accessToken = response.data.access_token;
+    const refreshToken = response.data.refresh_token;
+    // Store the tokens securely and manage token refresh
+    res.redirect(`/your-frontend-url?access_token=${accessToken}`);
+});
+
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
