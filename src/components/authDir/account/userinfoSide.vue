@@ -9,12 +9,14 @@ export default {
     const fullName = ref(authStore.user.full_name || '');
     const musicTaste = ref(authStore.user.taste || '');
     const isFormValid = computed(() => fullName.value.trim() !== '' && musicTaste.value.trim() !== '');
+    const isUpdatedSuccessfully = ref(false); 
 
     async function updateUserProfile() {
       if (isFormValid.value) {
         try {
           await authStore.updateUserProfile({ full_name: fullName.value, taste: musicTaste.value });
-          alert('Profile updated successfully!');
+          isUpdatedSuccessfully.value = true; 
+          setTimeout(() => isUpdatedSuccessfully.value = false, 3000); 
         } catch (error) {
           alert('Failed to update profile: ' + error.message);
         }
@@ -27,7 +29,8 @@ export default {
       fullName,
       musicTaste,
       updateUserProfile,
-      isFormValid
+      isFormValid,
+      isUpdatedSuccessfully 
     };
   }
 };
@@ -44,7 +47,7 @@ export default {
       <label for="music-taste">Music Taste:</label>
       <textarea id="music-taste" v-model="musicTaste" placeholder="Describe your music taste"></textarea>
     </div>
-    <button :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
+    <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
   </div>
 </template>
 
@@ -56,14 +59,27 @@ export default {
   }
 
   input, textarea {
-    width: 100%; 
+    width: 95%; 
     padding: 8px;
     margin-top: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    align-items: center;
+    align-self: center;
+    align-content: center;
   }
+
   textarea {
-  height: 120px; /* Increases the height of the textarea */
+  height: 120px; 
+  }
+
+  .update-successful {
+    animation: glow 1s ease-in-out 3; 
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 8px 2px #28a745; } 
   }
 
   button {
@@ -73,6 +89,7 @@ export default {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
 
   button:hover {

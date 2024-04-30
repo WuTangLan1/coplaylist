@@ -1,23 +1,9 @@
 <!-- src\components\authDir\account\accountModal.vue -->
 
-<template>
-  <div class="modal-backdrop" @click.self="closeModal">
-    <div class="modal">
-      <button class="close-btn" @click="closeModal">X</button>
-      <div class="tabs">
-        <button :class="{active: activeTab === 'userinfo', enlarged: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
-        <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
-        <button class="logout-button" @click="logout">Logout</button> <!-- Styled logout button -->
-      </div>
-      <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
-    </div>
-  </div>
-</template>
-
 <script>
 import userinfoSide from './userinfoSide.vue';
 import tokenSide from './tokenSide.vue';
-import { useAuthStore } from '@/stores/useAuthStore'; // Import AuthStore
+import { useAuthStore } from '@/stores/useAuthStore'; 
 
 export default {
   components: {
@@ -25,8 +11,10 @@ export default {
     tokenSide
   },
   data() {
+    const authStore = useAuthStore();
     return {
-      activeTab: 'userinfo' // Default active tab set to 'userinfo'
+      activeTab: 'userinfo', 
+      username: authStore.user ? authStore.user.full_name : 'User' 
     };
   },
   methods: {
@@ -41,6 +29,23 @@ export default {
   }
 };
 </script>
+
+<template>
+  <div class="modal-backdrop" @click.self="closeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Welcome, {{ username }}</h2>
+        <button class="close-btn" @click="closeModal">X</button>
+      </div>
+      <div class="tabs">
+        <button :class="{active: activeTab === 'userinfo', enlarged: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
+        <button :class="{active: activeTab === 'tokens'}" @click="activeTab = 'tokens'">Tokens</button>
+        <button class="logout-button" @click="logout">Logout</button>
+      </div>
+      <component :is="activeTab === 'userinfo' ? 'userinfo-side' : 'token-side'"></component>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .modal-backdrop {
@@ -76,18 +81,19 @@ export default {
 }
 
 button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  padding: 6px 15px;
+  font-size: 0.9rem; 
   background-color: #507cac;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-}
+  }
+
 
 button.active, .enlarged {
-  font-size: 1.2rem; /* Larger font size for active/enlarged button */
+  font-size: 1.05rem; /* Larger font size for active/enlarged button */
   background-color: #406fa1;
 }
 
