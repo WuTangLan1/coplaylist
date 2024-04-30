@@ -26,10 +26,6 @@ export const useAuthStore = defineStore('auth', {
           username: username,
           playlists: [], 
           taste: musicTaste,
-          likes_artists: [],
-          dislikes_artists: [],
-          likes_songs: [],
-          dislikes_songs: []
         };
         
 
@@ -48,6 +44,18 @@ export const useAuthStore = defineStore('auth', {
       } catch (error) {
         console.error('Error logging in', error);
         throw error;
+      }
+    },
+    async updateUserProfile(profileData) {
+      if (!this.user) return;
+      const userDocRef = doc(db, 'profiles', this.user.uid);
+      try {
+        await updateDoc(userDocRef, profileData);
+        this.user = {...this.user, ...profileData};
+        return true; 
+      } catch (error) {
+        console.error('Failed to update user profile', error);
+        throw error; 
       }
     },
     async logout() {
@@ -89,7 +97,7 @@ export const useAuthStore = defineStore('auth', {
         if (user) {
           this.user = user;
           this.fetchUserProfile();
-          this.isAuthenticated = true; // Set isAuthenticated to true when the user is logged in
+          this.isAuthenticated = true; 
         } else {
           this.isAuthenticated = false;
           this.user = null;
