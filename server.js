@@ -43,6 +43,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
+
+app.get('/google123456789abcd.html', function(req, res) {
+  res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
+});
+
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
