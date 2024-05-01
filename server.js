@@ -10,26 +10,17 @@ const SpotifyWebApi = require('spotify-web-api-node');
 // Create an instance of Express
 const app = express();
 
-const redirectUris = {
-  development: 'http://localhost:3000/callback',
-  production: 'https://www.coplaylist.com/output',
-  staging: 'https://yourstagingurl.com/callback'
-};
-
-// Use the correct URI based on NODE_ENV
-const currentEnvironment = process.env.NODE_ENV || 'development';
-const currentRedirectUri = redirectUris[currentEnvironment];
+const redirectUris = 'http://localhost:3000/callback'
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: currentRedirectUri
+  redirectUri: redirectUris
 });
 
-// Redirect to Spotify login
 app.get('/login', (req, res) => {
   const scopes = ['user-read-private', 'user-read-email', 'streaming'];
-  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'state-of-auth');
+  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'state-of-auth', { show_dialog: true });
   res.redirect(authorizeURL);
 });
 
@@ -38,15 +29,22 @@ app.get('/callback', async (req, res) => {
   const { code } = req.query;
   try {
     const data = await spotifyApi.authorizationCodeGrant(code);
-    spotifyApi.setAccessToken(data.body['access_token']);
-    spotifyApi.setRefreshToken(data.body['refresh_token']);
-    res.redirect('/#'); 
+    const accessToken = data.body['access_token'];
+    const refreshToken = data.body['refresh_token'];
+
+    // Set the access token and refresh token on the API object
+    spotifyApi.setAccessToken(accessToken);
+    spotifyApi.setRefreshToken(refreshToken);
+
+    // Store the new refresh token securely
+    process.env.SPOTIFY_REFRESH_TOKEN = refreshToken;
+
+    res.redirect('/#');
   } catch (error) {
     console.error('Error during Spotify authentication:', error);
-    res.redirect('/#/error'); // Redirect on error
+    res.redirect('/#/error');
   }
 });
-
 
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
@@ -89,7 +87,7 @@ app.get('/google123456789abcd.html', function(req, res) {
 });
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 async function refreshAccessToken() {
@@ -124,7 +122,6 @@ async function getSpotifyPreviewUrls(songs) {
       console.error('Could not refresh the access token', error);
       return [];
     }
-  }
 
   try {
     const trackSearchQuery = songs.map(song => `track:${song.name} artist:${song.artist}`).join(" OR ");
@@ -139,6 +136,7 @@ async function getSpotifyPreviewUrls(songs) {
     console.error('Spotify API Error:', error);
     return [];
   }
+}
 
 
 app.post('/generate-playlist', async (req, res) => {
