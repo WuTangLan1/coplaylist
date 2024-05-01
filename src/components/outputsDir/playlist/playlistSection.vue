@@ -14,7 +14,6 @@ export default {
   }
 };
 </script>
-
 <template>
   <div class="playlist-section" v-if="playlist && playlist.length">
     <ol>
@@ -24,6 +23,7 @@ export default {
           <div class="song-artist">{{ song.artist }}</div>
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
+        <img src="@/assets/images/music_icons/PlayMe.png" alt="Play" class="play-icon">
       </li>
     </ol>
   </div>
@@ -32,7 +32,6 @@ export default {
   </div>
 </template>
 
- 
 <style scoped>
 .playlist-section {
   background-color: #fff;
@@ -44,15 +43,6 @@ export default {
   overflow-y: auto;
 }
 
-.playlist-title {
-  font-size: 2rem;
-  background-color: #4a76a8;
-  color: #fff;
-  padding: 1.5rem;
-  margin: 0;
-  text-align: center;
-}
-
 ol {
   list-style-type: none;
   margin: 0;
@@ -61,20 +51,17 @@ ol {
 
 .song-item {
   display: flex;
-  justify-content: space-between; /* This line ensures that items are spaced across the main axis */
+  justify-content: space-between; /* Ensure items are spaced across the main axis */
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e6e6e6;
   transition: background-color 0.2s ease-in-out;
 }
 
-.song-item:hover {
-  background-color: #f8f9fa;
-}
-
 .song-details {
   display: flex;
   flex-direction: column;
+  flex: 1; /* Takes remaining space pushing the icon to the far right */
 }
 
 .song-name {
@@ -84,14 +71,19 @@ ol {
   margin-bottom: 0.25rem;
 }
 
-.song-artist {
+.song-artist, .song-year {
   font-size: 1.1rem;
   color: #607D8B;
 }
 
 .song-year {
-  font-size: 0.9rem;
   color: #777;
+  margin-right: 1rem; /* Ensures space between the date and the icon */
+}
+
+.play-icon {
+  width: 24px; /* Set appropriate size for the icon */
+  height: 24px; /* Maintain aspect ratio */
 }
 
 .empty-playlist {
@@ -100,32 +92,13 @@ ol {
   padding: 3rem;
 }
 
-/* Adding some playful colors for the hover effect */
-.song-item:nth-child(odd):hover {
-  background-color: #e3f2fd;
-}
-
-.song-item:nth-child(even):hover {
-  background-color: #fce4ec;
-}
-
 @media (max-width: 768px) {
-  .playlist-section {
-    margin: 1rem auto;
-  }
-
   .song-year {
-    align-self: auto;
-    margin-top: 0.5rem;
+    align-self: center; /* Center the date on smaller screens */
   }
 
-  .song-name,
-  .song-artist {
+  .song-name, .song-artist {
     font-size: 1rem;
-  }
-
-  .song-artist {
-    color: #607D8B; /* slightly different color for mobile for fun */
   }
 }
 </style>
