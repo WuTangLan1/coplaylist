@@ -8,21 +8,29 @@ const axios = require('axios');
 
 const app = express();
 
+app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    } else {
+      next();
+    }
+  });
+
 const allowedOrigins = [
     'http://localhost:8080',
     'https://coplaylist-3481ef838394.herokuapp.com',
-    'http://coplaylist.com',
-    'http://www.coplaylist.com'
+    'https://coplaylist.com',
+    'https://www.coplaylist.com'
   ];
 
 const corsOptions = {
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-            callback(null, true);
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+          callback(new Error('Not allowed by CORS'));
         }
-    },
+      },
     optionsSuccessStatus: 200,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
