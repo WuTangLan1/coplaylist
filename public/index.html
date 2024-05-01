@@ -5,12 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    
+
     <!-- SEO Meta Tags -->
     <title>CoPlaylist: Tailored Music Playlists</title>
     <meta name="description" content="Discover music that fits your mood and preferences with CoPlaylist. Create and share custom playlists crafted from your unique taste and situational needs.">
     <meta name="keywords" content="CoPlaylist, music streaming, personalized playlists, music preferences, playlist generator">
     <meta name="author" content="CoPlaylist Team">
+
+    <!-- Security Policies -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://www.coplaylist.com; script-src 'self' 'sha256-x...'; style-src 'self' 'unsafe-inline';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=63072000; includeSubDomains; preload">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content="CoPlaylist: Tailored Music Playlists">
@@ -27,10 +33,21 @@
     <meta name="twitter:image" content="<%= BASE_URL %>social-share.png">
     <meta name="twitter:site" content="@CoPlaylist">
     <meta name="twitter:creator" content="@CoPlaylist">
+
+    <!-- Structured Data: JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "MusicPlaylist",
+        "name": "CoPlaylist",
+        "description": "Personalized music playlists based on user preferences."
+    }
+    </script>
 </head>
 <body>
     <noscript>
         <strong>We're sorry but CoPlaylist doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <p>CoPlaylist is an innovative music streaming application that personalizes playlists to the unique tastes and situational preferences of each user. Discover and share music that fits your mood and personal taste.</p>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
