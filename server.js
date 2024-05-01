@@ -4,9 +4,35 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const path = require('path');
-const axios = require('axios'); 
+const axios = require('axios');
+const SpotifyWebApi = require('spotify-web-api-node');
 
-const app = express();
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: 'http://localhost:3000/callback' // Adjust based on your actual redirect URI
+});
+
+// Redirect to Spotify login
+app.get('/login', (req, res) => {
+  const scopes = ['user-read-private', 'user-read-email', 'streaming'];
+  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'state-of-auth');
+  res.redirect(authorizeURL);
+});
+
+// Callback service parsing the authorization token and asking for the access token
+app.get('/callback', async (req, res) => {
+  const { code } = req.query;
+  try {
+    const data = await spotifyApi.authorizationCodeGrant(code);
+    spotifyApi.setAccessToken(data.body['access_token']);
+    spotifyApi.setRefreshToken(data.body['refresh_token']);
+    res.redirect('/#'); // Redirect to main app or a confirmation page
+  } catch (error) {
+    console.error('Error during Spotify authentication:', error);
+    res.redirect('/#/error'); // Redirect on error
+  }
+});
 
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
@@ -14,7 +40,8 @@ app.use((req, res, next) => {
     } else {
       next();
     }
-  });
+});
+
 
 const allowedOrigins = [
     'http://localhost:8080',
@@ -23,14 +50,14 @@ const allowedOrigins = [
     'https://www.coplaylist.com'
   ];
 
-const corsOptions = {
+  const corsOptions = {
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
           callback(new Error('Not allowed by CORS'));
         }
-      },
+    },
     optionsSuccessStatus: 200,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -38,9 +65,8 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 
