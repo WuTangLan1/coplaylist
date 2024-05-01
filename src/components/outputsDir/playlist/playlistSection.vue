@@ -2,18 +2,31 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 
 export default {
   setup() {
     const playlistStore = usePlaylistStore();
-    const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
+    const currentAudio = ref(null);
 
-    return { playlist, playlistName };
+    function playSnippet(previewUrl) {
+      if (currentAudio.value) {
+        currentAudio.value.pause();
+      }
+      if (previewUrl) {
+        currentAudio.value = new Audio(previewUrl);
+        currentAudio.value.play();
+      } else {
+        alert("Preview not available for this track.");
+      }
+    }
+
+    return { playlist, playSnippet };
   }
 };
 </script>
+
 <template>
   <div class="playlist-section" v-if="playlist && playlist.length">
     <ol>
@@ -23,7 +36,7 @@ export default {
           <div class="song-artist">{{ song.artist }}</div>
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
-        <img src="@/assets/images/music_icons/PlayMe.png" alt="Play" class="play-icon">
+        <img src="@/assets/images/music_icons/PlayMe.png" alt="Play" class="play-icon" @click="playSnippet(song.preview_url)">
       </li>
     </ol>
   </div>
@@ -31,6 +44,7 @@ export default {
     <p>No songs available. Please generate a playlist.</p>
   </div>
 </template>
+
 
 <style scoped>
 .playlist-section {

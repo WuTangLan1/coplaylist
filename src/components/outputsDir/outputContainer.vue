@@ -77,6 +77,9 @@ export default {
 <template>
   <div class="output-container">
     <h3>We generated the following:</h3>
+    <p class="description">
+      You can listen to the preview by clicking the play icon next to each song. To save this playlist to your account, please give it a name and use the "Save" button, where it will be available in your playlists.
+    </p>
     <PlaylistSection :playlist="playlist" />
     <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
     <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
@@ -98,5 +101,13 @@ export default {
   margin: 0 auto;
   border: 2px solid #507cac; 
   overflow-y: auto; 
+}
+
+.description {
+  text-align: justify;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  padding: 0 1rem;
 }
 </style>

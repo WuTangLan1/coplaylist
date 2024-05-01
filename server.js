@@ -7,10 +7,23 @@ const path = require('path');
 const axios = require('axios');
 const SpotifyWebApi = require('spotify-web-api-node');
 
+// Create an instance of Express
+const app = express();
+
+const redirectUris = {
+  development: 'http://localhost:3000/callback',
+  production: 'https://www.coplaylist.com/output',
+  staging: 'https://yourstagingurl.com/callback'
+};
+
+// Use the correct URI based on NODE_ENV
+const currentEnvironment = process.env.NODE_ENV || 'development';
+const currentRedirectUri = redirectUris[currentEnvironment];
+
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: 'http://localhost:3000/callback' // Adjust based on your actual redirect URI
+  redirectUri: currentRedirectUri
 });
 
 // Redirect to Spotify login
@@ -27,12 +40,13 @@ app.get('/callback', async (req, res) => {
     const data = await spotifyApi.authorizationCodeGrant(code);
     spotifyApi.setAccessToken(data.body['access_token']);
     spotifyApi.setRefreshToken(data.body['refresh_token']);
-    res.redirect('/#'); // Redirect to main app or a confirmation page
+    res.redirect('/#'); 
   } catch (error) {
     console.error('Error during Spotify authentication:', error);
     res.redirect('/#/error'); // Redirect on error
   }
 });
+
 
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
@@ -78,9 +92,58 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
+async function refreshAccessToken() {
+  try {
+    const response = await axios.post('https://accounts.spotify.com/api/token', null, {
+      params: {
+        grant_type: 'refresh_token',
+        refresh_token: process.env.SPOTIFY_REFRESH_TOKEN,
+        client_id: process.env.SPOTIFY_CLIENT_ID,
+        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    spotifyApi.setAccessToken(response.data.access_token);
+    console.log('Access token refreshed successfully');
+  } catch (error) {
+    console.error('Error refreshing access token:', error);
+    throw error;
+  }
+}
+
+async function getSpotifyPreviewUrls(songs) {
+    try {
+      await refreshAccessToken();
+      const data = await spotifyApi.refreshAccessToken();
+      spotifyApi.setAccessToken(data.body['access_token']);
+      console.log('The access token has been refreshed!');
+    } catch (error) {
+      console.error('Could not refresh the access token', error);
+      return [];
+    }
+  }
+
+  try {
+    const trackSearchQuery = songs.map(song => `track:${song.name} artist:${song.artist}`).join(" OR ");
+    const tracksResponse = await spotifyApi.searchTracks(trackSearchQuery);
+    return tracksResponse.body.tracks.items.map(track => ({
+      name: track.name,
+      artist: track.artists.map(artist => artist.name).join(", "),
+      preview_url: track.preview_url || "Preview unavailable",
+      id: track.id
+    }));
+  } catch (error) {
+    console.error('Spotify API Error:', error);
+    return [];
+  }
+
+
 app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
-    const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;
+    const { vibes, tones, songs, userTaste, excludeSongs = [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
@@ -124,25 +187,31 @@ app.post('/generate-playlist', async (req, res) => {
     console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY ? 'Available' : 'Not Available');
 
     try {
-        const response = await axios.post("https://api.openai.com/v1/chat/completions", {
-            model: "gpt-4-turbo", 
-            messages: [
-                { role: "system", content: "You are an expert in music and creating song music playlists for users based on their requests." },
-                { role: "user", content: prompt.trim() }
-            ]
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-            }
-        });
+      const openAiResponse = await axios.post("https://api.openai.com/v1/chat/completions", {
+          model: "gpt-4-turbo", 
+          messages: [
+              { role: "system", content: "You are an expert in music and creating song music playlists for users based on their requests." },
+              { role: "user", content: prompt.trim() }
+          ]
+      }, {
+          headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+          }
+      });
 
-        const data = response.data;
-        res.json(data.choices[0].message.content);
-    } catch (error) {
-        console.error('Error generating playlist:', error);
-        res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');
-    }
+      const parsedSongs = songs.map(song => ({ name: song.name, artist: song.artist })); // Adapt based on actual data structure
+      const spotifyPreviews = await getSpotifyPreviewUrls(parsedSongs);
+
+      res.json({
+          playlist: openAiResponse.data.choices[0].message.content,
+          previews: spotifyPreviews
+      });
+
+  } catch (error) {
+      console.error('Error generating playlist:', error);
+      res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');
+  }
 });
 
 
