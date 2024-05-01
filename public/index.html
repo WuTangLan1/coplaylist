@@ -1,17 +1,38 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
+<html lang="en">
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
+    
+    <!-- SEO Meta Tags -->
+    <title>CoPlaylist: Tailored Music Playlists</title>
+    <meta name="description" content="Discover music that fits your mood and preferences with CoPlaylist. Create and share custom playlists crafted from your unique taste and situational needs.">
+    <meta name="keywords" content="CoPlaylist, music streaming, personalized playlists, music preferences, playlist generator">
+    <meta name="author" content="CoPlaylist Team">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="CoPlaylist: Tailored Music Playlists">
+    <meta property="og:description" content="Discover music that fits your mood and preferences with CoPlaylist. Create and share custom playlists crafted from your unique taste and situational needs.">
+    <meta property="og:image" content="<%= BASE_URL %>social-share.png">
+    <meta property="og:url" content="https://www.coplaylist.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="CoPlaylist">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CoPlaylist: Tailored Music Playlists">
+    <meta name="twitter:description" content="Discover music that fits your mood and preferences with CoPlaylist. Create and share custom playlists crafted from your unique taste and situational needs.">
+    <meta name="twitter:image" content="<%= BASE_URL %>social-share.png">
+    <meta name="twitter:site" content="@CoPlaylist">
+    <meta name="twitter:creator" content="@CoPlaylist">
+</head>
+<body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+        <strong>We're sorry but CoPlaylist doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+</body>
 </html>
