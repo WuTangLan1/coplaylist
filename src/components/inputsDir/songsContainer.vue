@@ -106,7 +106,7 @@ export default {
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px; 
+  max-width: 800px; 
   max-height: 75vh;
   margin: auto; 
   border: 2px solid #507cac;

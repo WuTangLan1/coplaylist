@@ -5,11 +5,10 @@ import { usePlaylistStore } from './usePlaylistStore';
 import { useAuthStore } from './useAuthStore';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit.js';
-import { ref } from 'vue';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
-    regenerateAttempts: ref(0),
+    regenerateAttempts: 0,
     vibes: {
       selectedMood: '',
       selectedActivity: '',
@@ -151,7 +150,7 @@ export const usePromptStore = defineStore('prompt', {
     },    
     async regeneratePlaylist() {
 
-      if (this.regenerateAttempts.value >= 2) {
+      if (this.regenerateAttempts >= 2) {
         this.showModal("Regeneration limit reached.");
         return;
       }
@@ -198,7 +197,7 @@ export const usePromptStore = defineStore('prompt', {
               const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
               const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
               playlistStore.setPlaylistDetails(this.formatPlaylist(response.data)); 
-              this.regenerateAttempts.value++;
+              this.regenerateAttempts++;
               console.log('Playlist regenerated and updated successfully');
           } catch (error) {
               console.error('Error regenerating playlist:', error);
