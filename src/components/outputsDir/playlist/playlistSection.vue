@@ -14,20 +14,20 @@ export default {
   },
   methods : {
     async playSongPreview(song) {
-      try {
-        const response = await fetch(`/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
-        const data = await response.json();
-        const previewUrl = data.previewUrl;
-        if (previewUrl) {
-          const audio = new Audio(previewUrl);
-          audio.play();
-        } else {
-          console.log('No preview available for this song.');
+        try {
+            const baseUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+            const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+            const data = await response.json();
+            if (data.previewUrl) {
+                const audio = new Audio(data.previewUrl);
+                audio.play();
+            } else {
+                console.log('No preview available for this song.');
+            }
+        } catch (error) {
+            console.error('Error playing song preview:', error);
         }
-      } catch (error) {
-        console.error('Error playing song preview:', error);
-      }
-    },
+    }
   }
 };
 </script>

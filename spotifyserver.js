@@ -25,21 +25,17 @@ spotifyApi.clientCredentialsGrant().then(
 );
 
 app.get('/preview', async (req, res) => {
-  const { title, artist } = req.query;
-  try {
-    const data = await spotifyApi.searchTracks(`track:${title} artist:${artist}`);
-    const tracks = data.body.tracks.items;
-    if (tracks.length > 0) {
-      const previewUrl = tracks[0].preview_url;
+    const { title, artist } = req.query;
+    console.log('Received preview request for:', title, artist);
+    try {
+      // ... (existing code)
+      console.log('Sending preview URL:', previewUrl);
       res.json({ previewUrl });
-    } else {
-      res.json({ previewUrl: null });
+    } catch (err) {
+      console.error('Error searching for track:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
     }
-  } catch (err) {
-    console.error('Error searching for track:', err);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+  });
 
 
 module.exports = app;

@@ -43,21 +43,20 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
+const spotifyServer = require('./spotifyserver.js');
+app.use('/spotify', spotifyServer);
+
 
 app.get('/google123456789abcd.html', function(req, res) {
   res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });
 
 app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-
-const spotifyServer = require('./spotifyserver.js');
-app.use('/spotify', spotifyServer);
-
 app.post('/generate-playlist', async (req, res) => {
-    console.log(req.body); // Logging the entire body to debug
+    console.log(req.body); 
     const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
 
