@@ -9,7 +9,7 @@ export default {
 <template>
   <div class="tos-section">
     <h1>Terms of Service</h1>
-    <p>Last updated: [Date]</p>
+    <p>Last updated: 2024/05/02</p>
     <h2>1. Agreement to Terms</h2>
     <p>
       By accessing and using the CoPlaylist app, you agree to be bound by these Terms of Service and all terms incorporated by reference. If you do not agree to all of these terms, do not use this application.
