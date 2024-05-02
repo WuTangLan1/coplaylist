@@ -19,12 +19,17 @@ export const usePlaylistStore = defineStore('playlist', {
 
       if (typeof responseData === 'string' && responseData.includes('\n')) {
         const sections = responseData.split('\n\n');  
-        sections.shift(); 
+        sections.shift(); // Assume the first section is always the playlist name
         const details = sections.join('\n'); 
-        const parsedDetails = this.parsePlaylistDetails(details);
-        this.playlistDetails = parsedDetails.filter(detail => detail !== null); 
+        this.playlistDetails = this.parsePlaylistDetails(details);
       } else if (Array.isArray(responseData)) {
-        this.playlistDetails = responseData;
+        this.playlistDetails = responseData.map(song => ({
+          title: song.title,
+          artist: song.artist,
+          releaseYear: song.releaseYear,
+          previewUrl: song.previewUrl || null // Include previewUrl in the details
+        }));
+        console.log(this.playlistDetails);
       } else {
         console.error("Invalid details format:", responseData);
         this.playlistDetails = [];
@@ -36,7 +41,12 @@ export const usePlaylistStore = defineStore('playlist', {
         try {
           const [titleArtist, releaseYear] = line.split(':');
           const [title, artist] = titleArtist.split(' - ');
-          return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+          return {
+            title: title.trim(),
+            artist: artist.trim(),
+            releaseYear: releaseYear.trim(),
+            previewUrl: null // Initialize with null, actual value should be set in an update function
+          };
         } catch (error) {
           console.error("Error parsing line:", line, error);
           return null;
@@ -56,29 +66,22 @@ export const usePlaylistStore = defineStore('playlist', {
           }
         });
         this.previousSongs = playlists.flat();
-        return this.previousSongs; // make sure to return something meaningful or handle it correctly
+        return this.previousSongs; // Ensure meaningful data is returned or handled correctly
       } catch (error) {
         console.error("Error fetching playlists:", error);
         return []; // Return an empty array on error
       }
     },
-      async fetchAndStoreUserPlaylists(userId) {
-        try {
-          const playlists = await this.fetchUserPlaylists(userId); // Ensure fetchUserPlaylists is awaited
-          this.previousSongs = playlists.map(playlist =>
-            playlist.details.map(song => `${song.title} - ${song.artist}`)
-          ).flat();
-        } catch (error) {
-          console.error("Failed to fetch user playlists:", error);
-        }
-      },
     updatePlaylistDetails(newDetails) {
-          if (Array.isArray(newDetails)) {
-              this.playlistDetails = newDetails;
-          } else {
-              console.error("Attempted to update playlist details with non-array data");
-          }
-      },
+      if (Array.isArray(newDetails)) {
+        this.playlistDetails = newDetails.map(song => ({
+          ...song,
+          previewUrl: song.previewUrl || null // Ensure previewUrl is updated correctly
+        }));
+      } else {
+        console.error("Attempted to update playlist details with non-array data");
+      }
+    },
     clearPlaylistDetails() {
       this.playlistDetails = [];
     }
