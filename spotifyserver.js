@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 
 app.get('/preview', async (req, res) => {
     console.log('Reached /preview route');
-    const { title, artist, markets = 'US,GB,CA,AU' } = req.query;
+    const { title, artist, markets = 'US,CA,MX,BR,AR,CL,CO,PE,ES,PT,IE,GB,FR,BE,NL,DE,IT,SE,NO,DK,FI,AU,NZ,JP,TW,PH,HK,SG,MY,ID' } = req.query;
     const marketArray = markets.split(',');
     console.log(`Attempting to fetch preview for: ${title} by ${artist} in markets ${marketArray}`);
   
