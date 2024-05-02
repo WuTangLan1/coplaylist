@@ -52,6 +52,10 @@ app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
+
+const spotifyServer = require('./spotifyserver.js');
+app.use('/spotify', spotifyServer);
+
 app.post('/generate-playlist', async (req, res) => {
     console.log(req.body); // Logging the entire body to debug
     const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;

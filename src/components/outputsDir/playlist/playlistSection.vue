@@ -2,7 +2,7 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed, onMounted } from 'vue';
+import { computed} from 'vue';
 
 export default {
   setup() {
@@ -11,6 +11,23 @@ export default {
     const playlist = computed(() => playlistStore.playlistDetails);
 
     return { playlist, playlistName };
+  },
+  methods : {
+    async playSongPreview(song) {
+      try {
+        const response = await fetch(`/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+        const data = await response.json();
+        const previewUrl = data.previewUrl;
+        if (previewUrl) {
+          const audio = new Audio(previewUrl);
+          audio.play();
+        } else {
+          console.log('No preview available for this song.');
+        }
+      } catch (error) {
+        console.error('Error playing song preview:', error);
+      }
+    },
   }
 };
 </script>
@@ -24,6 +41,11 @@ export default {
           <div class="song-artist">{{ song.artist }}</div>
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
+        <img
+          class="spotify-icon"
+          src="@/assets/images/music_icons/spotify.png"
+          @click="playSongPreview(song)"
+        />
       </li>
     </ol>
   </div>
@@ -92,6 +114,13 @@ ol {
 .song-year {
   font-size: 0.9rem;
   color: #777;
+}
+
+.spotify-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 1rem;
 }
 
 .empty-playlist {
