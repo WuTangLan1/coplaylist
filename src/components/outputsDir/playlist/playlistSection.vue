@@ -14,22 +14,26 @@ export default {
   },
   methods : {
     async playSongPreview(song) {
-      try {
-        console.log('Attempting to play preview for:', song.title, 'by', song.artist);
-        const response = await fetch(`http://localhost:3000/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
-        console.log('Response from /preview:', response);
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Response data:', data);
-          const audio = new Audio(data.previewUrl);
-          audio.play();
-        } else {
-          console.error('Error fetching preview:', response.status, response.statusText);
+        try {
+          console.log('Attempting to play preview for:', song.title, 'by', song.artist);
+          const response = await fetch(`http://localhost:3000/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+          console.log('Response from /preview:', response);
+          if (response.ok) {
+            const data = await response.json();
+            console.log('Response data:', data);
+            const audio = new Audio(data.previewUrl);
+            audio.play();
+          } else {
+            console.error('Error fetching preview:', response.status, response.statusText);
+            // Display an error message to the user
+            alert('Failed to play the song preview. Please try again later.');
+          }
+        } catch (error) {
+          console.error('Error playing song preview:', error);
+          // Display an error message to the user
+          alert('An error occurred while trying to play the song preview. Please try again later.');
         }
-      } catch (error) {
-        console.error('Error playing song preview:', error);
-      }
-    }
+}
   }
 };
 </script>

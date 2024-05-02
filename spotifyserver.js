@@ -38,14 +38,23 @@ app.use((req, res, next) => {
 
 app.get('/preview', async (req, res) => {
     console.log('Reached /preview route');
-    const { title, artist, market = 'US' } = req.query;
-    console.log(`Attempting to fetch preview for: ${title} by ${artist} in market ${market}`);
+    const { title, artist, markets = 'US,GB,CA,AU' } = req.query;
+    const marketArray = markets.split(',');
+    console.log(`Attempting to fetch preview for: ${title} by ${artist} in markets ${marketArray}`);
+  
     try {
-      const response = await spotifyApi.searchTracks(`track:${title} artist:${artist}`, { market });
-      console.log("Spotify API Response:", JSON.stringify(response.body, null, 2)); // Log the entire response
-      if (response.body.tracks.items.length > 0) {
-        const track = response.body.tracks.items[0];
-        console.log("Track Details:", JSON.stringify(track, null, 2)); // Log the track details
+      let track = null;
+      for (const market of marketArray) {
+        const response = await spotifyApi.searchTracks(`track:${title} artist:${artist}`, { market });
+        console.log(`Spotify API Response for market ${market}:`, JSON.stringify(response.body, null, 2));
+        if (response.body.tracks.items.length > 0) {
+          track = response.body.tracks.items[0];
+          console.log(`Found track in market ${market}:`, JSON.stringify(track, null, 2));
+          break;
+        }
+      }
+  
+      if (track) {
         if (track.preview_url) {
           const previewUrl = track.preview_url;
           console.log(`Preview URL: ${previewUrl}`);
@@ -55,7 +64,7 @@ app.get('/preview', async (req, res) => {
           res.status(404).json({ error: 'Preview URL not available' });
         }
       } else {
-        console.log(`No tracks found for: ${title} by ${artist}`);
+        console.log(`No tracks found for: ${title} by ${artist} in markets ${marketArray}`);
         res.status(404).json({ error: 'Track not found' });
       }
     } catch (err) {
