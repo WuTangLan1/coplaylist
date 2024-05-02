@@ -109,7 +109,9 @@ export const usePromptStore = defineStore('prompt', {
         const userTaste = authStore.user.taste || "General"; 
         const playlistStore = usePlaylistStore();
 
-        const previousSongs = newMusic ? [] : await playlistStore.fetchUserPlaylists(authStore.user.uid);
+        // Change the condition here: fetch previous songs when `newMusic` is true
+        const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
+        console.log(`New Music Only is ${newMusic}: Fetching previous songs`, previousSongs);
 
         const playlistDetails = {
           vibes: this.vibes,
@@ -123,7 +125,7 @@ export const usePromptStore = defineStore('prompt', {
             influence: song.influence
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
-          excludeSongs: previousSongs 
+          excludeSongs: previousSongs.map(song => `${song.title} - ${song.artist}`)
         };
 
     

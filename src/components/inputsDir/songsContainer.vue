@@ -1,6 +1,6 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
 <script>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -18,6 +18,11 @@ export default {
       { name: '', artist: '', influence: 50 },
       { name: '', artist: '', influence: 50 }
     ]);
+
+    watch(newMusic, (newValue) => {
+      console.log('New Music Only:', newValue);
+    });
+
 
     function updateSong(index, field, value) {
         selectedSongs.value[index][field] = value;
@@ -93,7 +98,7 @@ export default {
       </div>
       <div class="checkbox-group">
         <input type="checkbox" id="newMusic" v-model="newMusic" />
-        <label for="newMusic">New Music Only</label>
+<label for="newMusic">New Music Only</label>
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>

@@ -1,6 +1,5 @@
 // src/stores/usePlaylistStore.js
 import { defineStore } from 'pinia';
-import { useAuthStore } from './useAuthStore';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 
@@ -57,6 +56,7 @@ export const usePlaylistStore = defineStore('playlist', {
           }
         });
         this.previousSongs = playlists.flat();
+        console.log('fetched previous songs : ', this.previousSongs)
         return this.previousSongs; // make sure to return something meaningful or handle it correctly
       } catch (error) {
         console.error("Error fetching playlists:", error);

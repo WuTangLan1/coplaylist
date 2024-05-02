@@ -77,6 +77,11 @@ export default {
 <template>
   <div class="output-container">
     <h3>We generated the following:</h3>
+    <p class="instructions">
+      Use the controls below to personalize your playlist experience. 
+      Click <strong>Save</strong> to give your playlist a name and add it to your library, 
+      or click <strong>Regenerate</strong> to create a new playlist based on the same prompt.
+    </p>
     <PlaylistSection :playlist="playlist" />
     <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
     <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
@@ -99,4 +104,12 @@ export default {
   border: 2px solid #507cac; 
   overflow-y: auto; 
 }
+
+.instructions {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 </style>
+
