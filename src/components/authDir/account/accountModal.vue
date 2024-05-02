@@ -34,8 +34,8 @@ export default {
   <div class="modal-backdrop" @click.self="closeModal">
     <div class="modal">
       <div class="modal-header">
-        <h2>Welcome, {{ username }}</h2>
-        <button class="close-btn" @click="closeModal">X</button>
+        <h2 class="modal-title">Welcome, {{ username }}</h2>
+        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
       </div>
       <div class="tabs">
         <button :class="{active: activeTab === 'userinfo', enlarged: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
@@ -71,6 +71,27 @@ export default {
   overflow-y: auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   position: relative;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #f3f3f4;
+  border-radius: 0.5rem;
+}
+
+.modal-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+
+  .close-icon {
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .tabs {
@@ -109,19 +130,5 @@ button:hover {
   background-color: #c9302c;
 }
 
-.close-btn {
-  position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
-  border: none;
-  background: none;
-  color: #333;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.close-btn:hover {
-  color: #000;
-}
 </style>
 

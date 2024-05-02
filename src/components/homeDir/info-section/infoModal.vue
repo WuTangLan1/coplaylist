@@ -39,11 +39,8 @@ export default {
   <div class="modal-backdrop" @click.self="closeModal">
     <div class="modal">
       <div class="modal-header">
-        <div class="header-content">
-          <img src="@/assets/images/header/info.png" alt="Info" class="info-icon"/>
           <h2 class="modal-title">Information Center</h2>
-        </div>
-        <button @click="closeModal" class="close-button">✕</button>
+        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
       </div>
       <div class="navigation">
         <button v-for="item in components" :key="item.component" @click="changeComponent(item.component)">
@@ -75,7 +72,7 @@ export default {
   
   .modal {
     background: white;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 10px;
     width: auto;
     max-width: 80%;
@@ -102,17 +99,25 @@ export default {
     max-height: 54vh;
   }
   
-  .modal-header {
+.modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem;
-  position: relative;
+  padding: 20px;
+  background-color: #f3f3f4;
+  border-radius: 0.5rem;
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
+.modal-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #000000;
+  margin: 0;
+}
+
+  .close-icon {
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .navigation {
@@ -149,20 +154,5 @@ export default {
     height: 60px; 
   }
   
-  .close-button {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    background: none;
-    border: none;
-    font-size: 1.4rem;
-    color: #507cac; 
-    cursor: pointer;
-    transition: color 0.2s ease-in-out;
-  }
-  
-  .close-button:hover {
-    color: #345f8d; 
-  }
   </style>
   
