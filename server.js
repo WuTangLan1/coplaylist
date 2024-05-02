@@ -93,9 +93,6 @@ app.post('/generate-playlist', async (req, res) => {
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
-    console.log('prompt being sent : ', prompt)
-    console.log('Using OpenAI API Key:', process.env.OPENAI_API_KEY ? 'Available' : 'Not Available');
-
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 

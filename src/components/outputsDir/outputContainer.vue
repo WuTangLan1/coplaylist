@@ -28,14 +28,7 @@ export default {
       promptStore.regeneratePlaylist();
     };
 
-    const savePlaylist = () => {
-      // Add logic for saving the playlist
-    };
-    const sharePlaylist = () => {
-      // Add logic for sharing the playlist
-    };
-
-    return { playlist, regeneratePlaylist, savePlaylist, sharePlaylist };
+    return { playlist, regeneratePlaylist};
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
 <script>
-import { ref, watch } from 'vue';
+import { ref} from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -18,11 +18,6 @@ export default {
       { name: '', artist: '', influence: 50 },
       { name: '', artist: '', influence: 50 }
     ]);
-
-    watch(newMusic, (newValue) => {
-      console.log('New Music Only:', newValue);
-    });
-
 
     function updateSong(index, field, value) {
         selectedSongs.value[index][field] = value;

@@ -5,7 +5,7 @@ import { computed } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 
 export default {
-  setup() {
+  setup(_, { emit }) {
     const promptStore = usePromptStore();
 
     const regenerateDisabled = computed(() => {
@@ -18,7 +18,7 @@ export default {
       },
       regenerateDisabled,
       save() {
-        this.$emit('save');
+        emit('save');
       }
     };
   }

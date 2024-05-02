@@ -109,10 +109,11 @@ export const usePromptStore = defineStore('prompt', {
         const userTaste = authStore.user.taste || "General"; 
         const playlistStore = usePlaylistStore();
 
-        // Change the condition here: fetch previous songs when `newMusic` is true
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
-        console.log(`New Music Only is ${newMusic}: Fetching previous songs`, previousSongs);
-
+        const excludeSongs = previousSongs.map(song => {
+              return song.title;
+          });
+      
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -125,18 +126,14 @@ export const usePromptStore = defineStore('prompt', {
             influence: song.influence
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
-          excludeSongs: previousSongs.map(song => `${song.title} - ${song.artist}`)
+          excludeSongs: excludeSongs
         };
 
     
         try {
-          const promptsCollection = collection(db, 'prompts');
-          const docRef = await addDoc(promptsCollection, playlistDetails);
-          console.log('Prompt saved with ID:', docRef.id);
 
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-          console.log('Generated Playlist:', response.data);
     
           const formattedPlaylist = this.formatPlaylist(response.data);
 
@@ -169,7 +166,6 @@ export const usePromptStore = defineStore('prompt', {
           await authStore.fetchUserProfile();  
           const userTaste = authStore.user.taste || "General";
   
-          console.log("Current playlist details before regeneration:", playlistStore.playlistDetails);
   
           if (!Array.isArray(playlistStore.playlistDetails)) {
               console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
@@ -200,7 +196,6 @@ export const usePromptStore = defineStore('prompt', {
               const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
               playlistStore.setPlaylistDetails(this.formatPlaylist(response.data)); 
               this.regenerateAttempts++;
-              console.log('Playlist regenerated and updated successfully');
           } catch (error) {
               console.error('Error regenerating playlist:', error);
               this.showModal("Failed to regenerate playlist.");
