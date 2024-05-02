@@ -4,44 +4,65 @@ const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const app = express();
 
-const spotifyApi = new SpotifyWebApi({
-    clientId: process.env.SPOTIFY_CLIENT_ID,
-    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  });
-  
-spotifyApi.clientCredentialsGrant().then(
-  data => {
-    console.log('The access token expires in ' + data.body['expires_in']);
-    console.log('The access token is ' + data.body['access_token']);
+const clientId = "e04cea25e1c64a279bea6ba94dd6cfaa"
+const clientSecret = "d16fc8e9f2744fc8be0ef1e38a4a6951"
 
-    // Save the access token so that it's used in future calls
-    spotifyApi.setAccessToken(data.body['access_token']);
-  },
-  err => {
-    console.error('Something went wrong when retrieving an access token', err);
-  }
-);
+
+// Initialize Spotify API library with your credentials
+const spotifyApi = new SpotifyWebApi({
+    clientId: clientId,
+    clientSecret: clientSecret,
+});
+
+// Attempt to retrieve an access token
+spotifyApi.clientCredentialsGrant().then(
+    data => {
+      console.log('Access Token Successfully Retrieved:', data.body['access_token']);
+      spotifyApi.setAccessToken(data.body['access_token']);
+    },
+    err => {
+      console.error('Error retrieving Spotify access token:', err);
+    }
+  );  
+
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
+
+app.use((req, res, next) => {
+    console.log(`Request received: ${req.method} ${req.url}`);
+    next();
+});
 
 app.get('/preview', async (req, res) => {
-    const { title, artist } = req.query;
-    console.log(`Searching for: ${title} by ${artist}`);
+    console.log('Reached /preview route');
+    const { title, artist, market = 'US' } = req.query;
+    console.log(`Attempting to fetch preview for: ${title} by ${artist} in market ${market}`);
     try {
-      const data = await spotifyApi.searchTracks(`track:${title} artist:${artist}`);
-      console.log(JSON.stringify(data.body.tracks.items, null, 2));  // Detailed log of track items
-      const tracks = data.body.tracks.items;
-      if (tracks.length > 0 && tracks[0].preview_url) {
-        const previewUrl = tracks[0].preview_url;
-        console.log(`Found preview URL: ${previewUrl}`);
-        res.json({ previewUrl });
+      const response = await spotifyApi.searchTracks(`track:${title} artist:${artist}`, { market });
+      console.log("Spotify API Response:", JSON.stringify(response.body, null, 2)); // Log the entire response
+      if (response.body.tracks.items.length > 0) {
+        const track = response.body.tracks.items[0];
+        console.log("Track Details:", JSON.stringify(track, null, 2)); // Log the track details
+        if (track.preview_url) {
+          const previewUrl = track.preview_url;
+          console.log(`Preview URL: ${previewUrl}`);
+          res.json({ previewUrl });
+        } else {
+          console.log(`No preview URL found for: ${title} by ${artist}`);
+          res.status(404).json({ error: 'Preview URL not available' });
+        }
       } else {
-        console.log(`No preview URL available for: ${title} by ${artist}`);
-        res.status(404).json({ error: 'Preview URL not available' });
+        console.log(`No tracks found for: ${title} by ${artist}`);
+        res.status(404).json({ error: 'Track not found' });
       }
     } catch (err) {
-      console.error(`Error searching for track: ${title} by ${artist}`, err);
+      console.error(`Error while searching Spotify tracks: ${err.message}`, err);
       res.status(500).json({ error: 'Internal Server Error', details: err });
     }
-});
+  });
 
 
 module.exports = app;

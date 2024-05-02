@@ -16,6 +16,9 @@ app.use((req, res, next) => {
     }
   });
 
+const spotifyServer = require('./spotifyserver.js');
+app.use('/spotify', spotifyServer);
+
 const allowedOrigins = [
     'http://localhost:8080',
     'https://coplaylist-3481ef838394.herokuapp.com',
@@ -43,16 +46,17 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
-const spotifyServer = require('./spotifyserver.js');
-app.use('/spotify', spotifyServer);
-
-
 app.get('/google123456789abcd.html', function(req, res) {
   res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
+
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
 });
 
 app.post('/generate-playlist', async (req, res) => {
