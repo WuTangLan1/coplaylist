@@ -79,7 +79,7 @@ export default {
     border-radius: 10px;
     width: auto;
     max-width: 80%;
-    max-height: 95vh;
+    max-height: 75vh;
     overflow: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
@@ -99,14 +99,14 @@ export default {
 
   .modal-body {
     overflow-y: auto;
-    max-height: 60vh;
+    max-height: 54vh;
   }
   
   .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem;
   position: relative;
 }
 
