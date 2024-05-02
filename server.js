@@ -10,41 +10,44 @@ const SpotifyWebApi = require('spotify-web-api-node');
 // Create an instance of Express
 const app = express();
 
-const redirectUris = 'http://localhost:3000/callback'
-
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: redirectUris
+  redirectUri: 'http://localhost:3000/callback'
 });
 
+if (process.env.SPOTIFY_REFRESH_TOKEN) {
+  spotifyApi.setRefreshToken(process.env.SPOTIFY_REFRESH_TOKEN);
+}
+
 app.get('/login', (req, res) => {
-  const scopes = ['user-read-private', 'user-read-email', 'streaming'];
-  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'state-of-auth', { show_dialog: true });
+  const scopes = ['user-read-private', 'user-read-email', 'streaming']; 
+  const state = 'SKkIvOODhIsjcjsiJqqkcoNAUCOANhNlOuVcRdDDfkjN'; 
+  const authorizeURL = spotifyApi.createAuthorizeURL(scopes, state, { show_dialog: true });
   res.redirect(authorizeURL);
 });
 
-// Callback service parsing the authorization token and asking for the access token
+
 app.get('/callback', async (req, res) => {
   const { code } = req.query;
+  if (!code) {
+    return res.status(400).send('No code provided');
+  }
   try {
     const data = await spotifyApi.authorizationCodeGrant(code);
-    const accessToken = data.body['access_token'];
-    const refreshToken = data.body['refresh_token'];
+    const { access_token, refresh_token, expires_in } = data.body;
+    process.env.SPOTIFY_REFRESH_TOKEN = refresh_token;
 
-    // Set the access token and refresh token on the API object
-    spotifyApi.setAccessToken(accessToken);
-    spotifyApi.setRefreshToken(refreshToken);
+    spotifyApi.setAccessToken(access_token);
 
-    // Store the new refresh token securely
-    process.env.SPOTIFY_REFRESH_TOKEN = refreshToken;
-
-    res.redirect('/#');
+    res.redirect('/output');
   } catch (error) {
     console.error('Error during Spotify authentication:', error);
-    res.redirect('/#/error');
+    res.status(500).send(`Authentication error: ${error.message}`);
   }
 });
+
+
 
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
@@ -57,6 +60,7 @@ app.use((req, res, next) => {
 
 const allowedOrigins = [
     'http://localhost:8080',
+    'http://localhost:3000',
     'https://coplaylist-3481ef838394.herokuapp.com',
     'https://coplaylist.com',
     'https://www.coplaylist.com'
@@ -92,36 +96,38 @@ app.get('*', function (req, res) {
 
 async function refreshAccessToken() {
   try {
-    const response = await axios.post('https://accounts.spotify.com/api/token', null, {
-      params: {
-        grant_type: 'refresh_token',
-        refresh_token: process.env.SPOTIFY_REFRESH_TOKEN,
-        client_id: process.env.SPOTIFY_CLIENT_ID,
-        client_secret: process.env.SPOTIFY_CLIENT_SECRET,
-      },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
+    const data = await spotifyApi.refreshAccessToken();
+    const access_token = data.body['access_token'];
 
-    spotifyApi.setAccessToken(response.data.access_token);
-    console.log('Access token refreshed successfully');
+    console.log('The access token has been refreshed!');
+
+    // Save the new access token
+    spotifyApi.setAccessToken(access_token);
+
+    // Update the refresh token if a new one is returned
+    if (data.body['refresh_token']) {
+      process.env.SPOTIFY_REFRESH_TOKEN = data.body['refresh_token'];
+    }
+
+    return access_token;
   } catch (error) {
-    console.error('Error refreshing access token:', error);
+    console.error('Could not refresh access token', error);
     throw error;
   }
 }
 
-async function getSpotifyPreviewUrls(songs) {
-    try {
-      await refreshAccessToken();
-      const data = await spotifyApi.refreshAccessToken();
-      spotifyApi.setAccessToken(data.body['access_token']);
-      console.log('The access token has been refreshed!');
-    } catch (error) {
-      console.error('Could not refresh the access token', error);
-      return [];
-    }
+
+async function getSpotifyPreviewUrls(songs, res) {
+  try {
+    await refreshAccessToken();
+    const data = await spotifyApi.refreshAccessToken();
+    spotifyApi.setAccessToken(data.body['access_token']);
+    console.log('The access token has been refreshed!');
+  } catch (error) {
+    console.error('Could not refresh the access token', error);
+    res.redirect('/login'); // Redirect to login if refresh token is invalid
+    return [];
+  }
 
   try {
     const trackSearchQuery = songs.map(song => `track:${song.name} artist:${song.artist}`).join(" OR ");
@@ -198,13 +204,17 @@ app.post('/generate-playlist', async (req, res) => {
           }
       });
 
-      const parsedSongs = songs.map(song => ({ name: song.name, artist: song.artist })); // Adapt based on actual data structure
-      const spotifyPreviews = await getSpotifyPreviewUrls(parsedSongs);
+      const parsedSongs = songs.map(song => ({ name: song.name, artist: song.artist }));
+      const spotifyPreviews = await getSpotifyPreviewUrls(parsedSongs, res);
 
+      if (spotifyPreviews.length === 0) {
+        return;
+      }
       res.json({
-          playlist: openAiResponse.data.choices[0].message.content,
-          previews: spotifyPreviews
+        playlist: openAiResponse.data.choices[0].message.content,
+        previews: spotifyPreviews
       });
+  
 
   } catch (error) {
       console.error('Error generating playlist:', error);
