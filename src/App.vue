@@ -3,7 +3,7 @@
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
 import authmodal from '@/components/authDir/authModal.vue'
-import infoModal from '@/components/homeDir/infoModal.vue'
+import infoModal from '@/components/homeDir/info-section/infoModal.vue'
 import errorModal from '@/components/inputsDir/errorModal.vue'
 import PlaylistContainer from './components/homeDir/my-playlists/playlistContainer.vue';
 import accountModal from '@/components/authDir/account/accountModal.vue'
