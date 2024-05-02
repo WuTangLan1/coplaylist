@@ -9,7 +9,7 @@ export default {
     const promptStore = usePromptStore();
 
     const regenerateDisabled = computed(() => {
-      return promptStore.regenerateAttempts.value >= 2;
+      return promptStore.regenerateAttempts >= 2;
     });
 
     return {
@@ -27,9 +27,11 @@ export default {
 
 <template>
   <div class="control-section">
-    <button class="regen-btn" @click="regenerate" :disabled="regenerateDisabled">
-    <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Regenerate
-  </button>
+    <button class="regen-btn" 
+            @click="regenerate" 
+            :disabled="regenerateDisabled">
+      <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Regenerate
+    </button>
     <button class="save-btn" @click="save">💾 Save</button>
   </div>
 </template>
@@ -67,9 +69,10 @@ export default {
   }
 
   .regen-btn[disabled] {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   
   .regen-btn:hover {
     background-color: #1e315a;
