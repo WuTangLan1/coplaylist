@@ -69,18 +69,17 @@ app.post('/generate-playlist', async (req, res) => {
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
         User Taste (This defines the user and hence has a lot of value in generating the playlist): ${userTaste},
-        Mood (please ensure the songs you submit all achieve the following mood) IMPORTANT : PLEASE CAN YOU ENSURE THE GENRE(S) THAT FOLLOW HEAVILY INFLUENCE THE PLAYLIST AND PLEASE ENSURE THE SONGS GENERATED ARE DIRECTLY ASSOSCIATED TO THE FOLLOWING INPUTED GENRE(S): ${vibes.selectedMood || 'any'},
+        Mood (please ensure the songs you submit all achieve the following mood) IMPORTANT :  ${vibes.selectedMood || 'any'},
         Activity (please ensure the songs you submit all achieve the following activity): ${vibes.selectedActivity || 'any'},
         Familiarity (please can you ensure that the playlist yopu generate and the songs generated have the following level of fame/knownness): ${vibes.selectedFamiliarity || 'any'},
         Setting (please ensure the songs you submit all achieve the following settign): ${vibes.selectedSetting || 'any'},
         Platform (please ensure the songs are available on the following selected platform): ${vibes.selectedPlatform || 'any platform'},
-        Genres (please ensure the songs you submit are from the following genre(s) ): ${genres},
+        Genres: PLEASE CAN YOU ENSURE THE GENRE(S) THAT FOLLOW HEAVILY INFLUENCE THE PLAYLIST AND PLEASE ENSURE THE SONGS GENERATED ARE DIRECTLY ASSOSCIATED TO THE FOLLOWING INPUTED GENRE(S): ${genres},
         Eras :IT IS OF THE UTMOST IMPORTANCE THAT THE SONGS YOU GENERATE ARE FROM THE FOLLOWING ERAS : ${eras} PLEASE PLEASE PLEASE CAN YOU BE PRECISE ABOUT THIS AND IF THE USER HAS SPECIFIED ERAS PLEASE FOLLOW THEIR SPECIFICATIONS !!!,
         Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
         ${exclusionString},
         Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
-        Playlist Name : Alpha Grooving
         A Team - Ed Sheeran: 2011
         Can't Stop the Feeling! - Justin Timberlake: 2016
         Happy - Pharrell Williams: 2013
