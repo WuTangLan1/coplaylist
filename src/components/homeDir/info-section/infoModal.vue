@@ -155,7 +155,7 @@ export default {
     right: 0px;
     background: none;
     border: none;
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: #507cac; 
     cursor: pointer;
     transition: color 0.2s ease-in-out;
