@@ -80,11 +80,13 @@ export default {
         />
       </div>
       <div class="input-column">
-        <label :for="`influence-${index}`">Influence Weight</label>
-        <input type="range" :id="`influence-${index}`" v-model="song.influence" min="0" max="100" />
-        <span>{{ song.influence }}%</span>
+          <label :for="`influence-${index}`">Influence Weight</label>
+          <div class="slider-container">
+            <input type="range" :id="`influence-${index}`" v-model="song.influence" min="0" max="100" />
+            <span class="influence-label">{{ song.influence }}%</span>
+          </div>
+        </div>
       </div>
-    </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
       <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">Generate</button>
@@ -138,8 +140,28 @@ h3.description {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 0.25rem; 
+  margin-bottom: 1rem;
 }
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.input-column input[type="range"] {
+  flex-grow: 1; /* Allows the slider to fill available space */
+  margin-right: 10px; /* Adds spacing between the slider and the label */
+}
+
+.influence-label {
+  width: 50px; /* Fixed width for the label */
+  text-align: right; /* Right-aligns the text */
+  font-size: 0.9rem; /* Ensures the font size matches other inputs */
+  color: #333; /* Color for the percentage text */
+}
+
 
 .input-column label {
   font-size: 0.9rem; 
@@ -148,7 +170,7 @@ h3.description {
 }
 
 .input-column input {
-  padding: 0.75rem; 
+  padding: 0.5rem; 
   border: 1px solid #dcdcdc; 
   border-radius: 4px;
   font-size: 0.9rem; 
@@ -164,8 +186,9 @@ h3.description {
 .button-group {
   display: flex;
   justify-content: space-between; 
-  width: 100%; 
+  width: 95%; 
   margin-top: 1rem; 
+  margin: auto;
 }
 
 button:disabled {
@@ -175,7 +198,7 @@ button:disabled {
 }
 
 .gen-btn, .prev-btn {
-  padding: 0.9rem 1.5rem;
+  padding: 0.75rem 1rem;
   background-color: #507cac; 
   color: white;
   border: none;
