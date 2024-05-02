@@ -168,7 +168,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.5rem;
+  padding: 0.3rem;
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -278,7 +278,7 @@ h3.description {
 .input-group {
   display: flex;
   justify-content: space-between;
-  width: 100%; 
+  width: 95%; 
   margin-bottom: 1rem;
 }
 
@@ -291,9 +291,9 @@ h3.description {
 }
 
 .input-group button {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.8rem;
   cursor: pointer;
-  background-color: #507cac;
+  background-color: #459537;
   color: white;
   border: none;
   border-radius: 4px;
@@ -310,7 +310,7 @@ h2 {
 }
 
 .next-btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   background-color: #507cac;
   color: white;
   border: none;

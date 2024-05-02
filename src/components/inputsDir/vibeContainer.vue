@@ -92,7 +92,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 0.3rem;
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -119,7 +119,7 @@ h3.description {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 95%;
   margin-bottom: 1rem;
   padding: 0.5rem;
 }
@@ -132,25 +132,41 @@ h3.description {
 }
 
 .input-group select {
-  padding: 0.8rem;
-  border: 1px solid #ccc;
+  padding: 0.3rem;
+  border: 2px solid #507cac;
   border-radius: 4px;
   background-color: white;
   font-size: clamp(12px, 3vw, 16px);
+  width: 100%;
   -webkit-appearance: none;
   appearance: none;
-  flex-grow: 1;
-  text-align-last: center; /* Centers the text inside the dropdown */
+  position: relative;
+  cursor: pointer;
 }
+
+/* Custom dropdown arrow */
+.input-group select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 1em;
+}
+
+.input-group select:focus, .input-group select:hover {
+  border-color: #345f8d;
+  outline: none;
+}
+
 
 .button-group {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-bottom: 0.2rem;
 }
 
 .next-btn, .prev-btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 0.5rem;
   background-color: #507cac;
   color: white;
   border: none;
