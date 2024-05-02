@@ -4,8 +4,8 @@ const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const app = express();
 
-const clientId = "e04cea25e1c64a279bea6ba94dd6cfaa"
-const clientSecret = "d16fc8e9f2744fc8be0ef1e38a4a6951"
+const clientId = process.env.SPOTIFY_CLIENT_ID
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
 
 
 // Initialize Spotify API library with your credentials

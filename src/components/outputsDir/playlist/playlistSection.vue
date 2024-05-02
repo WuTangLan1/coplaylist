@@ -2,7 +2,7 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed} from 'vue';
+import { computed } from 'vue';
 
 export default {
   setup() {
@@ -10,13 +10,17 @@ export default {
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
 
-    return { playlist, playlistName };
+    // Base URL from environment variables
+    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+
+    return { playlist, playlistName, baseUrl };
   },
   methods : {
     async playSongPreview(song) {
       try {
         console.log('Attempting to play preview for:', song.title, 'by', song.artist);
-        const response = await fetch(`http://localhost:3000/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+        // Use baseUrl for the request
+        const response = await fetch(`${this.baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
         console.log('Response from /preview:', response);
         if (response.ok) {
           const data = await response.json();
@@ -39,6 +43,7 @@ export default {
   }
 };
 </script>
+
 
 <template>
   <div class="playlist-section" v-if="playlist && playlist.length">
