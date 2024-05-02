@@ -113,7 +113,7 @@ export default {
 }
 
 .playlist-card.open {
-  max-height: 1000px;
+  max-height: 1200px;
 }
 
 .playlist-card:hover {

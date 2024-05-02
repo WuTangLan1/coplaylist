@@ -89,7 +89,9 @@ export default {
       </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">Generate</button>
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">
+        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Generate
+      </button>
     </div>
   </div>
 </template>
@@ -195,6 +197,12 @@ button:disabled {
   background-color: #ccc; /* Light gray background */
   color: #666; /* Darker text color for contrast */
   cursor: not-allowed; /* Shows a 'not allowed' cursor on hover */
+}
+.token-icon {
+  width: 20px;  /* Adjust size as necessary */
+  height: auto;
+  margin-right: 5px; /* Space between the icon and the text */
+  vertical-align: middle;
 }
 
 .gen-btn, .prev-btn {

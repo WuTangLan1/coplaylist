@@ -1,26 +1,39 @@
 <!-- src\components\outputsDir\playlist\controlSection.vue -->
 
+<script>
+import { computed } from 'vue';
+import { usePromptStore } from '@/stores/usePromptStore';
+
+export default {
+  setup() {
+    const promptStore = usePromptStore();
+
+    const regenerateDisabled = computed(() => {
+      return promptStore.regenerateAttempts.value >= 2;
+    });
+
+    return {
+      regenerate() {
+        promptStore.regeneratePlaylist();
+      },
+      regenerateDisabled,
+      save() {
+        this.$emit('save');
+      }
+    };
+  }
+};
+</script>
+
 <template>
   <div class="control-section">
-    <button class="regen-btn" @click="regenerate">Regenerate</button>
+    <button class="regen-btn" @click="regenerate" :disabled="regenerateDisabled">
+    <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Regenerate
+  </button>
     <button class="save-btn" @click="save">💾 Save</button>
   </div>
 </template>
 
-  <script>
-  export default {
-    methods: {
-      regenerate() {
-        this.$emit('regenerate');
-      },
-      save() {
-        console.log("clicked here : constrolsec")
-        this.$emit('save');
-      }
-    }
-  };
-  </script>
-  
   <style scoped>
   .control-section {
     display: flex;
@@ -52,10 +65,22 @@
     transition: background-color 0.3s ease;
     background-color: #3b558d;
   }
+
+  .regen-btn[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   
   .regen-btn:hover {
     background-color: #1e315a;
   }
+
+  .token-icon {
+      width: 20px;  /* Adjust size as necessary */
+      height: auto;
+      margin-right: 5px; /* Space between the icon and the text */
+      vertical-align: middle;
+    }
 
   .share-btn  {
     padding: 0.5rem 1rem;

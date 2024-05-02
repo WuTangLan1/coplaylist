@@ -46,6 +46,14 @@ export const useAuthStore = defineStore('auth', {
         throw error;
       }
     },
+    deductTokens(amount) {
+      if (!this.user || this.user.tokens < amount) {
+        throw new Error("Insufficient tokens");
+      }
+      this.user.tokens -= amount; // Deduct the tokens
+      const userDocRef = doc(db, 'profiles', this.user.uid);
+      return updateDoc(userDocRef, { tokens: this.user.tokens });
+    },
     async updateUserProfile(profileData) {
       if (!this.user) return;
       const userDocRef = doc(db, 'profiles', this.user.uid);
