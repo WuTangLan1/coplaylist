@@ -97,7 +97,7 @@ export const usePromptStore = defineStore('prompt', {
       if (!isAllValid) console.log("Overall validation failed");
       return isAllValid;
     },
-    async generatePlaylist() {
+    async generatePlaylist(newMusic) {
       const authStore = useAuthStore(); 
       if (!this.validateAll()) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
@@ -109,7 +109,7 @@ export const usePromptStore = defineStore('prompt', {
         const userTaste = authStore.user.taste || "General"; 
         const playlistStore = usePlaylistStore();
 
-        const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
+        const previousSongs = newMusic ? [] : await playlistStore.fetchUserPlaylists(authStore.user.uid);
 
         const playlistDetails = {
           vibes: this.vibes,

@@ -10,6 +10,8 @@ export default {
     const promptStore = usePromptStore();
     const router = useRouter();
     const authStore = useAuthStore();
+    const newMusic = ref(false);
+    const showTooltip = ref(false);
 
     const selectedSongs = ref([
       { name: '', artist: '', influence: 50 },
@@ -33,7 +35,7 @@ export default {
         console.error("User is not logged in. Cannot generate playlist.");
         return;
       }
-      await promptStore.generatePlaylist();
+      await promptStore.generatePlaylist(newMusic.value);
       router.push({ name: 'Output' });
     }
 
@@ -46,7 +48,9 @@ export default {
       updateSong,
       generatePlaylist,
       goBack,
-      authStore
+      authStore,
+      newMusic,
+      showTooltip
     };
   }
 };
@@ -87,6 +91,10 @@ export default {
           </div>
         </div>
       </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="newMusic" v-model="newMusic" />
+        <label for="newMusic">New Music Only</label>
+    </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
       <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">
@@ -185,11 +193,29 @@ h3.description {
   outline: none;
 }
 
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.help-icon {
+  display: inline-block;
+  margin-left: 5px;
+  color: #507cac;
+  cursor: help;
+  font-weight: bold;
+  font-size: larger;
+}
+
 .button-group {
   display: flex;
   justify-content: space-between; 
   width: 95%; 
   margin-top: 1rem; 
+
   margin: auto;
 }
 
