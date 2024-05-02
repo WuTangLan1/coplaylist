@@ -115,7 +115,7 @@ export default {
     background: white;
     border-radius: 10px;
     width: auto;
-    padding: 1rem;
+    padding: 0.4rem;
     width: 80%;
     max-width: 90vw;
     max-height: 80vh;

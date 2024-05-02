@@ -103,8 +103,8 @@ export default {
 .playlist-card {
   background: linear-gradient(135deg, #f6f6fa, #f4f5f9);
   color: rgb(0, 0, 0);
-  padding: 1.5rem;
-  margin: 1.5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   overflow: hidden;

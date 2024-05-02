@@ -122,13 +122,11 @@ export default {
     </div>
 
     <div class="input-group">
-      <input
-        type="text"
-        placeholder="Add Genre"
-        v-model="newGenre"
-        @keyup.enter="addNewItem('genre', newGenre)"
-      />
-      <button @click="addNewItem('genre', newGenre)">Submit</button>
+      <input type="text" placeholder="Add Genre" v-model="newGenre"
+             @keyup.enter="addNewItem('genre', newGenre)" maxlength="25">
+      <button @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3">
+        Submit
+      </button>
     </div>
 
     <div class="eras-container">
@@ -298,6 +296,12 @@ h3.description {
   border: none;
   border-radius: 4px;
   transition: background-color 0.3s;
+}
+
+.input-group button:disabled {
+  background-color: #ccc; /* Light gray background to indicate it's disabled */
+  color: #666; /* Darker text color for better contrast and readability */
+  cursor: not-allowed; /* Cursor to indicate that the button is not clickable */
 }
 
 .input-group button:hover {

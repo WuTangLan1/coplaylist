@@ -76,8 +76,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.user) return;
       const userDocRef = doc(db, 'profiles', this.user.uid);
       await updateDoc(userDocRef, {
-        tokens: newTokenCount,
-        preferences
+        tokens: newTokenCount
       });
       this.user.tokens = newTokenCount;  
     },
