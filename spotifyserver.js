@@ -4,16 +4,11 @@ const express = require('express');
 const SpotifyWebApi = require('spotify-web-api-node');
 const app = express();
 
-// Spotify API credentials
-const clientId = 'e04cea25e1c64a279bea6ba94dd6cfaa';  // Replace with your client ID
-const clientSecret = 'd16fc8e9f2744fc8be0ef1e38a4a6951';  // Replace with your client secret
-
 const spotifyApi = new SpotifyWebApi({
-  clientId,
-  clientSecret,
-});
-
-// Retrieve an access token
+    clientId: process.env.SPOTIFY_CLIENT_ID,
+    clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  });
+  
 spotifyApi.clientCredentialsGrant().then(
   data => {
     console.log('The access token expires in ' + data.body['expires_in']);

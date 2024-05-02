@@ -14,20 +14,17 @@ export default {
   },
   methods : {
     async playSongPreview(song) {
-        try {
-            const baseUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-            const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
-            const data = await response.json();
-            if (data.previewUrl) {
-                const audio = new Audio(data.previewUrl);
-                audio.play();
-            } else {
-                console.log('No preview available for this song.');
-            }
-        } catch (error) {
-            console.error('Error playing song preview:', error);
+        if (!song.previewUrl) {
+          console.log('No preview available for this song.');
+          return;
         }
-    }
+        try {
+          const audio = new Audio(song.previewUrl);
+          audio.play();
+        } catch (error) {
+          console.error('Error playing song preview:', error);
+        }
+      }
   }
 };
 </script>
@@ -42,9 +39,11 @@ export default {
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
         <img
+          v-if="song.previewUrl" 
           class="spotify-icon"
           src="@/assets/images/music_icons/spotify.png"
           @click="playSongPreview(song)"
+          alt="Play preview"
         />
       </li>
     </ol>
