@@ -1,6 +1,7 @@
 <!-- src\components\auth\regSide.vue -->
 <script>
 import { ref } from 'vue';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'RegSide',
@@ -14,6 +15,8 @@ export default {
       musicTaste: '',
       dislikedArtists: ['', '', '', '', ''],
     });
+
+    const authStore = useAuthStore();
 
     const showPassword = ref(false);
     const showConfirmPassword = ref(false);
@@ -72,7 +75,7 @@ export default {
         <label for="password">Password</label>
         <div class="input-group">
           <input :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required
-            minlength="8" pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
             placeholder="Enter a password">
           <span class="toggle-visibility" @click="toggleShowPassword">
