@@ -155,7 +155,8 @@ export default {
   border-radius: 8px;
   border: 1px solid #ddd;
   font-size: 16px;
-  background-color: #f7f9fc;
+  background-color: #f7f9fc; 
+   max-width: 93%;
 }
 
 .form-group ul {
@@ -216,46 +217,41 @@ export default {
 @media (min-width: 600px) {
   .registration-form {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Creates two columns of equal width */
-    grid-gap: 20px; /* Adds some space between the columns */
+    grid-template-columns: repeat(2, 1fr); 
+    grid-gap: 20px; 
   }
 
-  /* Center the Registration heading above both columns */
   .registration-form h2 {
-    grid-column: 1 / -1; /* Ensures the heading spans both columns */
-    justify-self: center; /* Centers the heading */
+    grid-column: 1 / -1; 
+    justify-self: center;
   }
 
-  /* Set the form groups to take one column each */
   .registration-form .form-group {
     grid-column: span 1;
   }
 
-  /* Make sure the music taste textarea and button group span both columns */
   .music-taste-textarea,
   .btn-grp {
     grid-column: 1 / -1;
   }
 
-  /* Adjust the button group to center the button */
   .btn-grp {
     justify-content: center;
   }
   
-  /* Additional styles for better alignment and spacing */
   .form-group label {
     align-self: start;
-    padding-top: 0.5rem; /* Adjust to align labels with inputs */
+    padding-top: 0.5rem; 
   }
   
   .form-group input,
   .music-taste-textarea {
-    width: 100%; /* Full width of the grid column */
+    width: 100%; 
   }
 
   .submit-button {
-    width: auto; /* Allows the button to size according to its padding and content */
-    justify-self: center; /* Center the button within its grid area */
+    width: auto; 
+    justify-self: center; 
   }
 }
 

@@ -108,7 +108,8 @@ export default {
 
 .form-group input {
   padding: 10px;
-  border-radius: 8px; /* Softer rounder input corners */
+  border-radius: 8px; 
+  max-width: 93%;
   border: 1px solid #ddd;
   font-size: 16px;
   background-color: #f7f9fc; /* Lighter background for inputs */
