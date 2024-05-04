@@ -55,12 +55,10 @@ app.get('*', function (req, res) {
 });
 
 app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
   next();
 });
 
 app.post('/generate-playlist', async (req, res) => {
-    console.log(req.body); 
     const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
 

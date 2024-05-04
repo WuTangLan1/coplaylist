@@ -106,12 +106,8 @@ export const usePromptStore = defineStore('prompt', {
         const userTaste = authStore.user.taste || "General"; 
         const playlistStore = usePlaylistStore();
 
-        console.log("new music : ", newMusic)
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
-        console.log('previous songs : ', previousSongs)
         const excludeSongs = previousSongs.filter(Boolean)
-
-        console.log('excluded songs : ', excludeSongs)
       
         const playlistDetails = {
           vibes: this.vibes,
