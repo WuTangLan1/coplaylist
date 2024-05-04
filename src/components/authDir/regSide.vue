@@ -33,11 +33,7 @@ export default {
         return;
       }
 
-      try {
-        // Replace with your registration logic
-      } catch (error) {
-        console.error(error);
-      }
+      // Your registration logic here
     };
 
     return {
@@ -71,8 +67,8 @@ export default {
       <div class="form-group">
         <label for="password">Password</label>
         <div class="input-group">
-          <input type="password" :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required
-            minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+          <input :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required
+            minlength="8" pattern="(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
             placeholder="Enter a password">
           <span class="toggle-visibility" @click="toggleShowPassword">
@@ -83,7 +79,7 @@ export default {
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <div class="input-group">
-          <input type="password" :type="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" v-model="form.confirmPassword" required
+          <input :type="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" v-model="form.confirmPassword" required
             minlength="6" placeholder="Confirm your password">
           <span class="toggle-visibility" @click="toggleShowConfirmPassword">
             <font-awesome-icon :icon="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" />
