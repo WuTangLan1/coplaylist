@@ -1,7 +1,6 @@
 <!-- src\components\auth\regSide.vue -->
 <script>
 import { ref } from 'vue';
-import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'RegSide',
@@ -13,10 +12,20 @@ export default {
       password: '',
       confirmPassword: '',
       musicTaste: '',
-      dislikedArtists: ['', '', '', '', ''], // Initialize with 5 empty slots
+      dislikedArtists: ['', '', '', '', ''],
     });
 
-    const authStore = useAuthStore();
+    // State for toggling password visibility
+    const showPassword = ref(false);
+    const showConfirmPassword = ref(false);
+
+    // Toggle visibility functions
+    const toggleShowPassword = () => {
+      showPassword.value = !showPassword.value;
+    };
+    const toggleShowConfirmPassword = () => {
+      showConfirmPassword.value = !showConfirmPassword.value;
+    };
 
     const register = async () => {
       if (form.value.password !== form.value.confirmPassword) {
@@ -24,8 +33,9 @@ export default {
         return;
       }
 
+      // Call the auth store to register the user
       try {
-        await authStore.registerUser(form.value);
+        // Replace with your registration logic
       } catch (error) {
         console.error(error);
       }
@@ -33,14 +43,18 @@ export default {
 
     return {
       form,
-      register
+      register,
+      showPassword,
+      showConfirmPassword,
+      toggleShowPassword,
+      toggleShowConfirmPassword
     };
   }
 };
 </script>
 
 <template>
-  <div class="card">
+  <div class="registration-container">
     <form @submit.prevent="register" class="registration-form">
       <h2>Registration</h2>
       <div class="form-group">
@@ -57,15 +71,25 @@ export default {
       </div>
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" v-model="form.password" required
-          minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-          title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
-          placeholder="Enter a password">
+        <div class="input-group">
+          <input type="password" :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required
+            minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+            title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
+            placeholder="Enter a password">
+          <span class="toggle-visibility" @click="toggleShowPassword">
+            <font-awesome-icon :icon="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" />
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required
-          minlength="6" placeholder="Confirm your password">
+        <div class="input-group">
+          <input type="password" :type="showConfirmPassword ? 'text' : 'password'" id="confirmPassword" v-model="form.confirmPassword" required
+            minlength="6" placeholder="Confirm your password">
+          <span class="toggle-visibility" @click="toggleShowConfirmPassword">
+            <font-awesome-icon :icon="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" />
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <label for="musicTaste">Music Taste</label>
@@ -157,6 +181,18 @@ export default {
 
 .form-group ul li input {
   width: 100%;
+}
+
+.input-group {
+  position: relative;
+}
+
+.toggle-visibility {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
   
