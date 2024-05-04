@@ -109,9 +109,7 @@ export const usePromptStore = defineStore('prompt', {
         console.log("new music : ", newMusic)
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         console.log('previous songs : ', previousSongs)
-        const excludeSongs = previousSongs.map(song => {
-              return song.title;
-          });
+        const excludeSongs = previousSongs.filter(Boolean)
 
         console.log('excluded songs : ', excludeSongs)
       
@@ -175,7 +173,7 @@ export const usePromptStore = defineStore('prompt', {
           }
           
           const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
-          const excludeSongs = [...playlistStore.playlistDetails.map(song => `${song.title} - ${song.artist}`), ...previousSongs];
+          const excludeSongs = previousSongs.filter(Boolean)
           const playlistDetails = {
               vibes: this.vibes,
               tones: {

@@ -16,7 +16,7 @@ export default {
 
     // Toggle visibility function
     const toggleShowPassword = () => {
-      showPassword.value = !showPassword.value; // Toggle true/false
+      showPassword.value = !showPassword.value;
     };
 
     const authStore = useAuthStore();
@@ -71,28 +71,33 @@ export default {
 
 <style scoped>
 .login-container {
-  background: #e1e8eb;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  max-height: 70vh;
-  margin-top: 0.5rem;
+  background: #ffffff; 
+  padding: 0.3rem;
+  border-radius: 15px; 
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15); 
+  width: 90%;
+  max-width: 500px; 
+  margin: 20px auto;
+  border: 1px solid #e1e8eb;
 }
 
 .login-form h2 {
-  font-size: 24px;
+  font-size: 28px;
   color: #333;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
+  font-weight: bold;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 5px;
   color: #666;
 }
 
@@ -103,9 +108,11 @@ export default {
 
 .form-group input {
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px; /* Softer rounder input corners */
   border: 1px solid #ddd;
   font-size: 16px;
+  background-color: #f7f9fc; /* Lighter background for inputs */
+  width: 100%;
 }
 
 .toggle-visibility {
@@ -118,20 +125,18 @@ export default {
 
 .btn-grp {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .submit-button {
-  padding: 0.5rem;
+  padding: 0.7rem 2rem;
   background-color: #5c90b8;
   color: white;
   border: none;
-  width: 50%;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 18px;
-  margin-top: 10px;
   transition: background-color 0.3s ease;
 }
 
@@ -144,3 +149,4 @@ h2 {
   margin-bottom: 20px;
 }
 </style>
+
