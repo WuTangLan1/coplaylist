@@ -15,16 +15,16 @@ export default {
       dislikedArtists: ['', '', '', '', ''],
     });
 
-    // State for toggling password visibility
+    // States for toggling password visibility
     const showPassword = ref(false);
     const showConfirmPassword = ref(false);
 
     // Toggle visibility functions
     const toggleShowPassword = () => {
-      showPassword.value = !showPassword.value;
+      showPassword.value = !showPassword.value; // Toggle true/false
     };
     const toggleShowConfirmPassword = () => {
-      showConfirmPassword.value = !showConfirmPassword.value;
+      showConfirmPassword.value = !showConfirmPassword.value; // Toggle true/false
     };
 
     const register = async () => {
@@ -33,7 +33,6 @@ export default {
         return;
       }
 
-      // Call the auth store to register the user
       try {
         // Replace with your registration logic
       } catch (error) {
@@ -73,7 +72,7 @@ export default {
         <label for="password">Password</label>
         <div class="input-group">
           <input type="password" :type="showPassword ? 'text' : 'password'" id="password" v-model="form.password" required
-            minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+            minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
             title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
             placeholder="Enter a password">
           <span class="toggle-visibility" @click="toggleShowPassword">
@@ -110,8 +109,8 @@ export default {
     </form>
   </div>
 </template>
-    
-  <style scoped>
+  
+<style scoped>
 
 .card {
   background: #e1e8eb;

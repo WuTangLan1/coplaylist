@@ -28,7 +28,6 @@ export default {
       activities : ['Sleeping', 'Meditating', 'Relaxing', 'Reading', 'Cooking', 'Commuting', 'Studying', 'Party', 'Working Out'],
       familiarities : ['Famous', 'Classics', 'Old Favorites', 'Known', 'New Discoveries', 'Not Well Known', 'Emerging Artists'],
       settings : ['By Yourself', 'Quiet Evening', 'Family Gathering', 'With Close Friends', 'Work Environment', 'Outdoor Activities', 'At the Party'],
-      platforms : ['Amazon Music', 'Apple Music', 'Bandcamp', 'SoundCloud', 'Spotify', 'Tidal', 'Youtube Music'],
       updateSelection,
       validateAndNext,
       goBack
@@ -70,13 +69,6 @@ export default {
       <select id="setting" v-model="vibes.selectedSetting" @change="updateSelection('selectedSetting', $event.target.value)">
         <option disabled value="">Select Setting</option>
         <option v-for="setting in settings" :key="setting" :value="setting">{{ setting }}</option>
-      </select>
-    </div>
-    <div class="input-group">
-      <label for="platform">Select an accessible platform:</label>
-      <select id="platform" v-model="vibes.selectedPlatform" @change="updateSelection('selectedPlatform', $event.target.value)">
-        <option disabled value="">Select Platform</option>
-        <option v-for="platform in platforms" :key="platform" :value="platform">{{ platform }}</option>
       </select>
     </div>
     <div class="button-group">

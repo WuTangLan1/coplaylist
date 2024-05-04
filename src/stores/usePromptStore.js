@@ -3,8 +3,6 @@ import { defineStore } from 'pinia';
 import axios from 'axios'; 
 import { usePlaylistStore } from './usePlaylistStore';
 import { useAuthStore } from './useAuthStore';
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@/components/fbDir/fbInit.js';
 
 export const usePromptStore = defineStore('prompt', {
   state: () => ({
@@ -14,7 +12,6 @@ export const usePromptStore = defineStore('prompt', {
       selectedActivity: '',
       selectedFamiliarity: '',
       selectedSetting: '',
-      selectedPlatform: '',
     },
     tones: {
       selectedGenres: [],
@@ -32,7 +29,7 @@ export const usePromptStore = defineStore('prompt', {
   }),
   actions: {
     resetStore() {
-      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' , selectedPlatform:''};
+      this.vibes = { selectedMood: '', selectedActivity: '', selectedFamiliarity: '', selectedSetting: '' };
       this.tones = { selectedGenres: [], selectedEra: [] };
       this.songs = [{ name: '', artist: '' }, { name: '', artist: '' }, { name: '', artist: '' }];
       this.modal = { show: false, message: '' };
