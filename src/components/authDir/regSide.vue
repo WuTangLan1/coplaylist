@@ -108,22 +108,16 @@ export default {
   
 <style scoped>
 
-.card {
-  background: #e1e8eb;
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  max-height: 75vh;
-  overflow-y: auto;
-  margin: auto;
-}
-
 .registration-container {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 0.5rem;
+    margin-top: 0.3rem;
+    max-width: 550px;
+    max-height: 75vh;
+    background: #e1e8eb;
+    overflow-y: auto;
+    margin: auto;
 }
 
   .registration-form h2 {

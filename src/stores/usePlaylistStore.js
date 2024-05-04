@@ -66,17 +66,17 @@ export const usePlaylistStore = defineStore('playlist', {
           }
         });
         this.previousSongs = playlists.flat();
-        return this.previousSongs; // Ensure meaningful data is returned or handled correctly
+        return this.previousSongs; 
       } catch (error) {
         console.error("Error fetching playlists:", error);
-        return []; // Return an empty array on error
+        return []; 
       }
     },
     updatePlaylistDetails(newDetails) {
       if (Array.isArray(newDetails)) {
         this.playlistDetails = newDetails.map(song => ({
           ...song,
-          previewUrl: song.previewUrl || null // Ensure previewUrl is updated correctly
+          previewUrl: song.previewUrl || null 
         }));
       } else {
         console.error("Attempted to update playlist details with non-array data");

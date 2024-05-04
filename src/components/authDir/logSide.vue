@@ -1,15 +1,23 @@
 <!-- src/components/authDir/logSide.vue -->
 <script>
-import { ref, nextTick } from 'vue';
+import { ref } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'LogSide',
-  setup(_, {emit}) {
+  setup(_, { emit }) {
     const loginForm = ref({
       email: '',
-      password: ''
+      password: '',
     });
+
+    // State for toggling password visibility
+    const showPassword = ref(false);
+
+    // Toggle visibility function
+    const toggleShowPassword = () => {
+      showPassword.value = !showPassword.value; // Toggle true/false
+    };
 
     const authStore = useAuthStore();
 
@@ -17,11 +25,10 @@ export default {
       try {
         await authStore.loginUser({
           username: loginForm.value.email,
-          password: loginForm.value.password
+          password: loginForm.value.password,
         });
-        loginForm.value = { email: '', password: '' }; 
-        await nextTick();
-        emit('closeModal'); 
+        loginForm.value = { email: '', password: '' };
+        emit('closeModal');
       } catch (error) {
         console.error(error);
       }
@@ -29,30 +36,38 @@ export default {
 
     return {
       loginForm,
-      login
+      login,
+      showPassword,
+      toggleShowPassword,
     };
-  }
+  },
 };
 </script>
 
 <template>
-    <div class="login-container">
-      <form @submit.prevent="login" class="login-form">
-        <h2>Login</h2>
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" v-model.trim="loginForm.email" required placeholder="Enter your email">
+  <div class="login-container">
+    <form @submit.prevent="login" class="login-form">
+      <h2>Login</h2>
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" v-model.trim="loginForm.email" required placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <div class="input-group">
+          <input :type="showPassword ? 'text' : 'password'" id="loginPassword" v-model="loginForm.password" required minlength="6"
+            placeholder="Enter your password">
+          <span class="toggle-visibility" @click="toggleShowPassword">
+            <font-awesome-icon :icon="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" />
+          </span>
         </div>
-        <div class="form-group">
-          <label for="loginPassword">Password</label>
-          <input type="password" id="loginPassword" v-model="loginForm.password" required minlength="6" placeholder="Enter your password">
-        </div>
-        <div class="btn-grp">
-          <button type="submit" class="submit-button">Login</button>
-        </div>
-      </form>
-    </div>
-  </template>
+      </div>
+      <div class="btn-grp">
+        <button type="submit" class="submit-button">Login</button>
+      </div>
+    </form>
+  </div>
+</template>
 
 <style scoped>
 .login-container {
@@ -65,7 +80,7 @@ export default {
 }
 
 .login-form h2 {
-    font-size: 24px;
+  font-size: 24px;
   color: #333;
   margin-bottom: 30px;
   text-align: center;
@@ -81,6 +96,11 @@ export default {
   color: #666;
 }
 
+.input-group {
+  position: relative;
+  display: flex;
+}
+
 .form-group input {
   padding: 10px;
   border-radius: 5px;
@@ -88,32 +108,39 @@ export default {
   font-size: 16px;
 }
 
+.toggle-visibility {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
 .btn-grp {
   display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
-  margin-top: 10px; /* Space above the button */
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 .submit-button {
-    padding: 0.5rem;
-    background-color: #5c90b8;
-    color: white;
-    border: none;
-    width:50%;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-  }
+  padding: 0.5rem;
+  background-color: #5c90b8;
+  color: white;
+  border: none;
+  width: 50%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
 
 .submit-button:hover, .submit-button:focus {
   background-color: #311e86;
 }
 
 h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
+  text-align: center;
+  margin-bottom: 20px;
+}
 </style>
