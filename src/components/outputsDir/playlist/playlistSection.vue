@@ -13,20 +13,29 @@ export default {
     // Base URL from environment variables
     const baseUrl = process.env.VUE_APP_API_BASE_URL;
 
-    return { playlist, playlistName, baseUrl };
-  },
-  methods : {
-    async playSongPreview(song) {
+    // Global audio object to ensure only one audio is playing at a time
+    let currentAudio = null;
+
+    // Method to handle playing a preview
+    async function playSongPreview(song) {
       try {
         console.log('Attempting to play preview for:', song.title, 'by', song.artist);
-        // Use baseUrl for the request
-        const response = await fetch(`${this.baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0; 
+        }
+
+        const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
         console.log('Response from /preview:', response);
+
         if (response.ok) {
           const data = await response.json();
           console.log('Response data:', data);
-          const audio = new Audio(data.previewUrl);
-          audio.play();
+          
+          // Create new Audio object and play it
+          currentAudio = new Audio(data.previewUrl);
+          currentAudio.play();
         } else {
           console.error('Error fetching preview:', response.status, response.statusText);
           if (response.status === 404) {
@@ -40,7 +49,13 @@ export default {
         alert('An error occurred while trying to play the song preview. Please try again later.');
       }
     }
-  }
+
+    return {
+      playlist,
+      playlistName,
+      playSongPreview,
+    };
+  },
 };
 </script>
 
@@ -55,11 +70,11 @@ export default {
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
         <img
-            class="spotify-icon"
-            src="@/assets/images/music_icons/spotify.png"
-            @click="playSongPreview(song)"
-            alt="Play preview"
-          />
+          class="spotify-icon"
+          src="@/assets/images/music_icons/spotify.png"
+          @click="playSongPreview(song)"
+          alt="Play preview"
+        />
       </li>
     </ol>
   </div>
