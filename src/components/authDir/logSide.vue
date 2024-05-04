@@ -11,10 +11,8 @@ export default {
       password: '',
     });
 
-    // State for toggling password visibility
     const showPassword = ref(false);
 
-    // Toggle visibility function
     const toggleShowPassword = () => {
       showPassword.value = !showPassword.value;
     };
@@ -71,7 +69,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background: #ffffff; 
+  background: #e1e8eb;
   padding: 0.3rem;
   border-radius: 15px; 
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15); 

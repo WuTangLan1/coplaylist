@@ -15,7 +15,6 @@ export default {
       dislikedArtists: ['', '', '', '', ''],
     });
 
-    // States for toggling password visibility
     const showPassword = ref(false);
     const showConfirmPassword = ref(false);
 
@@ -33,7 +32,12 @@ export default {
         return;
       }
 
-      // Your registration logic here
+      try {
+        await authStore.registerUser(form.value);
+      }
+      catch(error) {
+        console.log(error)
+      }
     };
 
     return {
@@ -127,20 +131,24 @@ export default {
     text-align: center;
   }
   .music-taste-textarea {
-    width: 100%; 
-    padding: 0.2rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    min-height: 120px; 
-    resize: vertical; 
-    box-sizing: border-box; 
-  }
-  
-  .form-group {
+  width: 100%; 
+  padding: 0.2rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  min-height: 120px; 
+  resize: vertical; 
+  box-sizing: border-box; 
+}
+
+.form-group {
   margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+}
+
+.form-group input {
+  width: 94%; 
 }
 
 .form-group label {
@@ -155,14 +163,14 @@ export default {
   border-radius: 8px;
   border: 1px solid #ddd;
   font-size: 16px;
-  background-color: #f7f9fc; 
-   max-width: 93%;
+  background-color: #f7f9fc;
 }
 
 .form-group ul {
   padding: 0;
   margin: 0;
   list-style: none;
+  width: 94%; 
 }
 
 .form-group ul li {
@@ -185,7 +193,6 @@ export default {
   cursor: pointer;
 }
 
-  
   .btn-grp {
     display: flex;
     justify-content: flex-end; 
