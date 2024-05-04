@@ -26,6 +26,7 @@ export const useAuthStore = defineStore('auth', {
           username: username,
           playlists: [], 
           taste: musicTaste,
+          disliked_artists: details.dislikedArtists.filter(Boolean),
         };
         
 

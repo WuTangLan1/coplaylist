@@ -12,7 +12,8 @@ export default {
       username: '',
       password: '',
       confirmPassword: '',
-      musicTaste: ''
+      musicTaste: '',
+      dislikedArtists: ['', '', '', '', ''], // Initialize with 5 empty slots
     });
 
     const authStore = useAuthStore();
@@ -64,10 +65,18 @@ export default {
         <input type="password" id="confirmPassword" v-model="form.confirmPassword" required minlength="6" placeholder="Confirm your password">
       </div>
       <div class="form-group">
-          <label for="musicTaste">Music Taste</label>
-          <textarea id="musicTaste" v-model="form.musicTaste" required 
-                    placeholder="Describe your music taste to us. What phase are you in ?" rows="6" class="music-taste-textarea"></textarea>
-        </div>
+        <label for="musicTaste">Music Taste</label>
+        <textarea id="musicTaste" v-model="form.musicTaste" required 
+          placeholder="Describe your music taste to us. What phase are you in?" rows="6" class="music-taste-textarea"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Disliked Artists</label>
+        <ul>
+          <li v-for="(artist, index) in form.dislikedArtists" :key="index">
+            <input type="text" v-model="form.dislikedArtists[index]" :placeholder="'Artist ' + (index + 1)">
+          </li>
+        </ul>
+      </div>
       <div class="btn-grp">
         <button type="submit" class="submit-button">Register</button>
       </div>
@@ -82,6 +91,7 @@ export default {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    max-height: 75vh;
     overflow-y: auto;
     margin-top: 0.5rem;
   }
