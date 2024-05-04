@@ -40,7 +40,7 @@ export default {
 </script>
 
 <template>
-  <div class="registration-container">
+  <div class="card">
     <form @submit.prevent="register" class="registration-form">
       <h2>Registration</h2>
       <div class="form-group">
@@ -58,16 +58,19 @@ export default {
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="form.password" required
-          minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter a password">
+          minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+          title="Must contain at least one number and one uppercase/lowercase letter, and at least 8 characters"
+          placeholder="Enter a password">
       </div>
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required minlength="6" placeholder="Confirm your password">
+        <input type="password" id="confirmPassword" v-model="form.confirmPassword" required
+          minlength="6" placeholder="Confirm your password">
       </div>
       <div class="form-group">
         <label for="musicTaste">Music Taste</label>
-        <textarea id="musicTaste" v-model="form.musicTaste" required 
-          placeholder="Describe your music taste to us. What phase are you in?" rows="6" class="music-taste-textarea"></textarea>
+        <textarea id="musicTaste" v-model="form.musicTaste" required
+          placeholder="Describe your music taste. What phase are you in?" rows="6" class="music-taste-textarea"></textarea>
       </div>
       <div class="form-group">
         <label>Disliked Artists</label>
@@ -83,19 +86,27 @@ export default {
     </form>
   </div>
 </template>
-
     
   <style scoped>
-  .registration-container {
-    background: #e1e8eb;
+
+.card {
+  background: #e1e8eb;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  max-height: 75vh;
+  overflow-y: auto;
+  margin: auto;
+}
+
+.registration-container {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    max-height: 75vh;
-    overflow-y: auto;
     margin-top: 0.5rem;
-  }
-  
+}
+
   .registration-form h2 {
     font-size: 24px;
     color: #333;
@@ -114,23 +125,40 @@ export default {
   }
   
   .form-group {
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
-  .form-group input {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-  }
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.form-group input,
+.music-taste-textarea {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  background-color: #f7f9fc;
+}
+
+.form-group ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.form-group ul li {
+  margin-bottom: 8px;
+}
+
+.form-group ul li input {
+  width: 100%;
+}
+
   
   .btn-grp {
     display: flex;
