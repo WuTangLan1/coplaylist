@@ -1,8 +1,6 @@
 <!-- src\components\outputsDir\loadingModal.vue -->
-
 <script>
 export default {
-  name : "loadingModal",
   props: {
     show: {
       type: Boolean,
@@ -13,13 +11,13 @@ export default {
 </script>
 
 <template>
-    <div v-if="show" class="modal-overlay">
-      <div class="modal-content">
-        <img src="@/assets/images/loading/loading.gif" alt="Loading" />
-        <p>Generating Playlist...</p>
-      </div>
+  <div v-if="show" class="modal-overlay">
+    <div class="modal-content">
+      <img src="@/assets/images/loading/loading.gif" alt="Loading" />
+      <p>Generating Playlist...</p>
     </div>
-  </template>
+  </div>
+</template>
   
   <style scoped>
   .modal-overlay {

@@ -15,7 +15,6 @@ export default {
     const router = useRouter();
     const authStore = useAuthStore();
     const newMusic = ref(false);
-    const showTooltip = ref(false);
     const showLoadingModal = ref(false);
 
     const selectedSongs = ref([
@@ -62,7 +61,7 @@ export default {
       goBack,
       authStore,
       newMusic,
-      showTooltip
+      showLoadingModal
     };
   }
 };
@@ -113,6 +112,7 @@ export default {
         <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Generate
       </button>
     </div>
+    <loadingModal :show="showLoadingModal" />
   </div>
 </template>
 
