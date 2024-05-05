@@ -49,11 +49,9 @@ export default {
       }
     },
     async deletePlaylist(playlistId) {
-        console.log('Attempting to delete playlist with ID:', playlistId); // Add this line
         try {
           const playlistRef = doc(db, 'playlists', playlistId);
           await deleteDoc(playlistRef);
-          console.log('Playlist deleted successfully');
           this.fetchPlaylists();
         } catch (error) {
           console.error('Error deleting playlist:', error);

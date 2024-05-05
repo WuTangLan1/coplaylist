@@ -56,7 +56,6 @@ export default {
           createdAt: new Date()
         });
 
-        console.log('Playlist saved successfully');
         this.showSaveModal = false;
       } catch (error) {
         console.error('Error saving playlist:', error);

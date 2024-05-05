@@ -19,7 +19,6 @@ export default {
     // Method to handle playing a preview
     async function playSongPreview(song) {
       try {
-        console.log('Attempting to play preview for:', song.title, 'by', song.artist);
 
         if (currentAudio) {
           currentAudio.pause();
@@ -27,11 +26,9 @@ export default {
         }
 
         const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
-        console.log('Response from /preview:', response);
 
         if (response.ok) {
           const data = await response.json();
-          console.log('Response data:', data);
           
           // Create new Audio object and play it
           currentAudio = new Audio(data.previewUrl);

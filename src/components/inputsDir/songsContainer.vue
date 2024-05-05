@@ -34,7 +34,10 @@ export default {
       if (!authStore.isAuthenticated) {
         console.error("User is not logged in. Cannot generate playlist.");
         return;
-      }
+      }        
+      if (!promptStore.validateTones()) {
+            return;
+        }
       await promptStore.generatePlaylist(newMusic.value);
       router.push({ name: 'Output' });
     }

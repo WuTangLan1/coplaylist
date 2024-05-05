@@ -63,7 +63,6 @@ export default {
 
     function handleNext() {
         if (!promptStore.validateTones()) {
-            // showModal is called within validateTones if validation fails
             return;
         }
         router.push({ name: 'Vibe' }).catch(err => {

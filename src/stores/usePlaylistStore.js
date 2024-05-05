@@ -19,7 +19,7 @@ export const usePlaylistStore = defineStore('playlist', {
 
       if (typeof responseData === 'string' && responseData.includes('\n')) {
         const sections = responseData.split('\n\n');  
-        sections.shift(); // Assume the first section is always the playlist name
+        sections.shift(); 
         const details = sections.join('\n'); 
         this.playlistDetails = this.parsePlaylistDetails(details);
       } else if (Array.isArray(responseData)) {
@@ -27,9 +27,8 @@ export const usePlaylistStore = defineStore('playlist', {
           title: song.title,
           artist: song.artist,
           releaseYear: song.releaseYear,
-          previewUrl: song.previewUrl || null // Include previewUrl in the details
+          previewUrl: song.previewUrl || null 
         }));
-        console.log(this.playlistDetails);
       } else {
         console.error("Invalid details format:", responseData);
         this.playlistDetails = [];
