@@ -12,14 +12,25 @@ const spotifyApi = new SpotifyWebApi({
     clientSecret: clientSecret,
 });
 
-spotifyApi.clientCredentialsGrant().then(
-    data => {
-      spotifyApi.setAccessToken(data.body['access_token']);
-    },
-    err => {
-      console.error('Error retrieving Spotify access token:', err);
-    }
-  );  
+async function refreshSpotifyToken() {
+  try {
+    const data = await spotifyApi.clientCredentialsGrant();
+    const accessToken = data.body['access_token'];
+    console.log('Successfully refreshed Spotify access token:', accessToken);
+    spotifyApi.setAccessToken(accessToken);
+  } catch (err) {
+    console.error('Error refreshing Spotify access token:', err);
+  }
+}
+
+refreshSpotifyToken();
+setInterval(refreshSpotifyToken, 3600 * 1000); 
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
   app.use((req, res, next) => {
     const allowedOrigins = ['http://localhost:8080', 'https://coplaylist.com', 'https://www.coplaylist.com'];
