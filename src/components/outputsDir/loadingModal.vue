@@ -1,6 +1,16 @@
 <!-- src\components\outputsDir\loadingModal.vue -->
 
-<!-- src/components/outputsDir/loadingModal.vue -->
+<script>
+export default {
+  name : "loadingModal",
+  props: {
+    show: {
+      type: Boolean,
+      required: true
+    }
+  }
+};
+</script>
 
 <template>
     <div v-if="show" class="modal-overlay">
@@ -10,17 +20,6 @@
       </div>
     </div>
   </template>
-  
-  <script>
-  export default {
-    props: {
-      show: {
-        type: Boolean,
-        required: true
-      }
-    }
-  };
-  </script>
   
   <style scoped>
   .modal-overlay {

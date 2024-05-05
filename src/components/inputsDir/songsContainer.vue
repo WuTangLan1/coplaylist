@@ -4,14 +4,19 @@ import { ref} from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore';
+import loadingModal from '@/components/outputsDir/loadingModal.vue';
 
 export default {
+  components : {
+    loadingModal
+  },
   setup() {
     const promptStore = usePromptStore();
     const router = useRouter();
     const authStore = useAuthStore();
     const newMusic = ref(false);
     const showTooltip = ref(false);
+    const showLoadingModal = ref(false);
 
     const selectedSongs = ref([
       { name: '', artist: '', influence: 50 },
@@ -38,8 +43,12 @@ export default {
       if (!promptStore.validateTones()) {
             return;
         }
-      await promptStore.generatePlaylist(newMusic.value);
-      router.push({ name: 'Output' });
+        showLoadingModal.value = true;
+        try {
+          await promptStore.generatePlaylist(newMusic.value);
+          router.push({ name: 'Output' });
+        } finally {showLoadingModal.value=false}
+
     }
 
     function goBack() {
