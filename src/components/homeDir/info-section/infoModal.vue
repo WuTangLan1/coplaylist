@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      currentComponent: 'AboutSection',
+      // Remove 'currentComponent' from here if it's passed as a prop
       components: [
         { name: 'About', component: 'AboutSection' },
         { name: 'ToS', component: 'TosSection' },
@@ -30,11 +30,13 @@ export default {
       this.$emit('closeModal');
     },
     changeComponent(componentName) {
-      this.currentComponent = componentName;
+      // Correctly update prop without local state interference
+      this.$emit('update:currentComponent', componentName);
     }
   }
 };
 </script>
+
 
 <template>
   <div class="modal-backdrop" @click.self="closeModal">

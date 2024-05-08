@@ -97,10 +97,12 @@ export default {
     />
 
     <infoModal 
-        v-if="showinfoModal"
-        :current-component="currentInfoComponent"
-        @closeModal="closeinfoModal"
-      />
+      v-if="showinfoModal"
+      :current-component="currentInfoComponent"
+      @update:currentComponent="component => currentInfoComponent.value = component"
+      @closeModal="closeinfoModal"
+    />
+
 
     <PlaylistContainer
      v-if="showPlaylists" 
