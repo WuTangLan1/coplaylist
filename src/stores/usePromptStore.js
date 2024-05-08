@@ -95,6 +95,7 @@ export const usePromptStore = defineStore('prompt', {
     },
     async generatePlaylist(newMusic) {
       const authStore = useAuthStore(); 
+      const playlistStore = usePlaylistStore();
       if (!this.validateAll()) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
@@ -103,7 +104,6 @@ export const usePromptStore = defineStore('prompt', {
       if (authStore.user && authStore.user.tokens >= 2) {
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General"; 
-        const playlistStore = usePlaylistStore();
     
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
@@ -141,62 +141,61 @@ export const usePromptStore = defineStore('prompt', {
       }
     },     
     async regeneratePlaylist() {
-
       if (this.regenerateAttempts >= 2) {
         this.showModal("Regeneration limit reached.");
         return;
       }
-
+    
       const authStore = useAuthStore();
       const playlistStore = usePlaylistStore(); 
-  
+    
       if (!this.validateAll()) {
-          console.error("Validation failed. Make sure all required fields are filled correctly.");
+        console.error("Validation failed. Make sure all required fields are filled correctly.");
+        return;
+      }
+    
+      if (authStore.user && authStore.user.tokens >= 2) {
+        await authStore.fetchUserProfile();  
+        const userTaste = authStore.user.taste || "General";
+        if (!Array.isArray(playlistStore.playlistDetails)) {
+          console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
+          this.showModal("Error: No existing playlist details found.");
           return;
       }
-  
-      if (authStore.user && authStore.user.tokens >= 2) {
-          await authStore.fetchUserProfile();  
-          const userTaste = authStore.user.taste || "General";
-  
-  
-          if (!Array.isArray(playlistStore.playlistDetails)) {
-              console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
-              this.showModal("Error: No existing playlist details found.");
-              return;
-          }
-          
-          const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
-          const excludeSongs = previousSongs.filter(Boolean)
-          const playlistDetails = {
-              vibes: this.vibes,
-              tones: {
-                  genres: this.tones.selectedGenres || [],
-                  eras: this.tones.selectedEra || []
-              },
-              songs: this.songs.map(song => ({
-                  name: song.name.trim(),
-                  artist: song.artist.trim(),
-                  influence: song.influence
-              })).filter(song => song.name && song.artist),
-              userTaste: userTaste,
-              excludeSongs: excludeSongs
-          };
-  
-          try {
-            await authStore.deductTokens(2);
-              const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-              const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-              playlistStore.setPlaylistDetails(this.formatPlaylist(response.data)); 
-              this.regenerateAttempts++;
-          } catch (error) {
-              console.error('Error regenerating playlist:', error);
-              this.showModal("Failed to regenerate playlist.");
-          }
+        const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
+        const excludeSongs = previousSongs.filter(Boolean);
+        const playlistDetails = {
+          vibes: this.vibes,
+          tones: {
+            genres: this.tones.selectedGenres || [],
+            eras: this.tones.selectedEra || []
+          },
+          songs: this.songs.map(song => ({
+            name: song.name.trim(),
+            artist: song.artist.trim(),
+            influence: song.influence
+          })).filter(song => song.name && song.artist),
+          userTaste: userTaste,
+          excludeSongs: excludeSongs,
+          dislikedArtists: authStore.user.disliked_artists || [] // Include disliked artists
+        };
+
+        console.log(playlistDetails)
+    
+        try {
+          await authStore.deductTokens(2);
+          const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+          const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+          playlistStore.setPlaylistDetails(this.formatPlaylist(response.data)); 
+          this.regenerateAttempts++;
+        } catch (error) {
+          console.error('Error regenerating playlist:', error);
+          this.showModal("Failed to regenerate playlist.");
+        }
       } else {
-          this.showModal("Insufficient tokens to regenerate a playlist.");
+        this.showModal("Insufficient tokens to regenerate a playlist.");
       }
-  },  
+    },    
   
     formatPlaylist(playlistString) {
         if (!playlistString) {
