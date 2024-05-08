@@ -57,6 +57,10 @@ export default {
       showAccountModal.value = false;
     }
 
+    function handleModalOpen(component) {
+      currentInfoComponent.value = component;
+      showinfoModal.value = true;
+    }
 
     return {
       showAuthModal,
@@ -70,7 +74,8 @@ export default {
       closeAuthModal,
       showAccountModal,
       openAccountModal,
-      closeAccountModal}
+      closeAccountModal,
+     handleModalOpen}
   }
 }
 </script>
@@ -111,8 +116,7 @@ export default {
       <router-view/>
     </div>
 
-    <bottomFooter></bottomFooter>
-
+    <bottomFooter @openModal="handleModalOpen"/>
   </div>
 </template>
 

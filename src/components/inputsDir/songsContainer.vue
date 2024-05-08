@@ -71,7 +71,10 @@ export default {
 
 <template>
   <div class="songs-container">
-    <h2>Add Songs</h2>
+    <div class="step-heading">
+      <div class="step-number">3</div> 
+      <h2>Add Songs</h2>
+    </div>
     <h3 class="description">
       Add up to three songs you like to guide the playlist generation (these will not be included in the generated playlist)
     </h3>
@@ -126,11 +129,31 @@ export default {
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 800px; 
-  max-height: 75vh;
+  max-width: 750px; 
   margin: auto; 
-  border: 2px solid #507cac;
   overflow-y: auto; 
+}
+
+.step-heading {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.step-number {
+  color: #507cac;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #e5e1f2;
+  border-radius: 10%;  
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border: 2px solid #ccc;
 }
 
 h2 {
