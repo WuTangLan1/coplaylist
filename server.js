@@ -97,7 +97,6 @@ app.post('/generate-playlist', async (req, res) => {
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
-        console.log('prompt : ', prompt)
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 
@@ -122,4 +121,3 @@ app.post('/generate-playlist', async (req, res) => {
 
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server started on port ${port}`));

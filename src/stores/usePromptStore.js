@@ -91,7 +91,6 @@ export const usePromptStore = defineStore('prompt', {
       const isVibeValid = this.validateVibes();
     
       const isAllValid =  isTonesValid && isSongsValid && isVibeValid;
-      if (!isAllValid) console.log("Overall validation failed");
       return isAllValid;
     },
     async generatePlaylist(newMusic) {

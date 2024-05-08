@@ -16,7 +16,6 @@ async function refreshSpotifyToken() {
   try {
     const data = await spotifyApi.clientCredentialsGrant();
     const accessToken = data.body['access_token'];
-    console.log('Successfully refreshed Spotify access token:', accessToken);
     spotifyApi.setAccessToken(accessToken);
   } catch (err) {
     console.error('Error refreshing Spotify access token:', err);
@@ -44,7 +43,6 @@ app.use((req, res, next) => {
   
 
 app.use((req, res, next) => {
-    console.log(`Request received: ${req.method} ${req.url}`);
     next();
 });
 

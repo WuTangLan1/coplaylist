@@ -85,15 +85,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0.5rem;
   background: #F4F4F4; 
-  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-height: 75vh;
   max-width: 700px; 
   margin: 0 auto;
-  border: 2px solid #507cac; 
   overflow-y: auto; 
 }
 

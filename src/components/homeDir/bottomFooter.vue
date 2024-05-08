@@ -9,9 +9,7 @@ export default {
     const currentInfoComponent = ref('AboutSection'); 
 
     function openModal(component) {
-      console.log('footer link clicked')
       currentInfoComponent.value = component;
-      console.log('current component', component)
       showinfoModal.value = true;
     }
 
