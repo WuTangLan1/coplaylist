@@ -127,8 +127,10 @@ export default {
   display: flex;
   align-items: center; 
   justify-content: center; 
-  width: 100%;
-  padding: 0.5rem;
+  align-content: center;
+  align-self: center;
+  width:100%;
+  overflow-y: auto;
 }
 
 @media (min-width: 500px) {
