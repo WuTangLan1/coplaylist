@@ -130,6 +130,7 @@ export default {
   align-content: center;
   align-self: center;
   width:100%;
+  min-height: 70vh;
   overflow-y: auto;
 }
 

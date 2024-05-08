@@ -89,9 +89,7 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 700px;
-  max-height: 75vh;
   margin: auto;
-  border: 2px solid #507cac;
   overflow-y: auto;
 }
 
@@ -165,6 +163,7 @@ h3.description {
   cursor: pointer;
   border-radius: 5px;
   font-size: 1rem;
+  max-width: 20vw;
   flex: 1;
   margin: 0 0.5rem;
   transition: background-color 0.3s ease, transform 0.3s ease;
