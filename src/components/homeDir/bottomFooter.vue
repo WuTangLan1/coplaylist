@@ -94,7 +94,7 @@ export default {
   }
   
   .social-media-icons img {
-    width: 24px; /* Smaller size for icons */
+    width: 3rem; /* Smaller size for icons */
     height: auto; /* Maintain aspect ratio */
   }
   

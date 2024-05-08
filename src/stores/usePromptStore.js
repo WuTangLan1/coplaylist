@@ -141,13 +141,12 @@ export const usePromptStore = defineStore('prompt', {
       }
     },     
     async regeneratePlaylist() {
+      const authStore = useAuthStore();
+      const playlistStore = usePlaylistStore(); 
       if (this.regenerateAttempts >= 2) {
         this.showModal("Regeneration limit reached.");
         return;
       }
-    
-      const authStore = useAuthStore();
-      const playlistStore = usePlaylistStore(); 
     
       if (!this.validateAll()) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
@@ -155,6 +154,7 @@ export const usePromptStore = defineStore('prompt', {
       }
     
       if (authStore.user && authStore.user.tokens >= 2) {
+        this.modal.show = true;  
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General";
         if (!Array.isArray(playlistStore.playlistDetails)) {
@@ -177,10 +177,8 @@ export const usePromptStore = defineStore('prompt', {
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
           excludeSongs: excludeSongs,
-          dislikedArtists: authStore.user.disliked_artists || [] // Include disliked artists
+          dislikedArtists: authStore.user.disliked_artists || []
         };
-
-        console.log(playlistDetails)
     
         try {
           await authStore.deductTokens(2);
@@ -191,6 +189,8 @@ export const usePromptStore = defineStore('prompt', {
         } catch (error) {
           console.error('Error regenerating playlist:', error);
           this.showModal("Failed to regenerate playlist.");
+        } finally {
+          this.modal.show = false;  // Hide loading modal
         }
       } else {
         this.showModal("Insufficient tokens to regenerate a playlist.");
