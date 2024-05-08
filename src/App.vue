@@ -24,6 +24,7 @@ export default {
     const showinfoModal = ref(false);
     const showPlaylists = ref(false);
     const showAccountModal = ref(false); 
+    const currentInfoComponent = ref('AboutSection');
 
     function openinfoModal() {
       showinfoModal.value = true;
@@ -75,6 +76,7 @@ export default {
       showAccountModal,
       openAccountModal,
       closeAccountModal,
+      currentInfoComponent,
      handleModalOpen}
   }
 }
