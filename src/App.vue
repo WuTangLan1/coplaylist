@@ -90,9 +90,10 @@ export default {
     />
 
     <infoModal 
-    v-if="showinfoModal" 
-    @closeModal="closeinfoModal"
-    />
+        v-if="showinfoModal"
+        :current-component="currentInfoComponent"
+        @closeModal="closeinfoModal"
+      />
 
     <PlaylistContainer
      v-if="showPlaylists" 

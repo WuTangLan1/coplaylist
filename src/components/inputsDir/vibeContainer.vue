@@ -39,7 +39,10 @@ export default {
 
 <template>
   <div class="vibe-container">
-    <h2>Select Your Vibe</h2>
+    <div class="step-heading">
+      <div class="step-number">2</div> 
+      <h2>Select Your Vibe</h2>
+    </div>
     <h3 class="description">
       Select at least two of the below setting to guide the direction of your generated playlist.
     </h3>
@@ -91,6 +94,28 @@ export default {
   max-width: 700px;
   margin: auto;
   overflow-y: auto;
+}
+
+.step-heading {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.step-number {
+  color: #507cac;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #e5e1f2;
+  border-radius: 10%;  /* Slight rounding, adjust as needed */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border: 2px solid #ccc;
 }
 
 h3.description {

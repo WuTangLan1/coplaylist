@@ -7,6 +7,7 @@ import PrivacySection from './privacySection.vue';
 import PromptGuideSection from './promptguideSection.vue';
 
 export default {
+  props: ['currentComponent'],
   components: {
     AboutSection,
     TosSection,

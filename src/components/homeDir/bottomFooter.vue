@@ -1,18 +1,42 @@
 <!-- src\components\homeDir\bottomFooter.vue -->
 
 <script>
+import { ref } from 'vue';
+
 export default {
-  name: 'BottomFooter'
-};
+  setup() {
+    const showinfoModal = ref(false);
+    const currentInfoComponent = ref('AboutSection'); 
+
+    function openModal(component) {
+      console.log('footer link clicked')
+      currentInfoComponent.value = component;
+      console.log('current component', component)
+      showinfoModal.value = true;
+    }
+
+    function closeinfoModal() {
+      showinfoModal.value = false;
+    }
+
+    return {
+      showinfoModal,
+      currentInfoComponent,
+      openModal,
+      closeinfoModal,
+    };
+  }
+}
+
 </script>
 
 <template>
     <footer class="bottom-footer">
       <div class="footer-content">
         <div class="footer-links">
-          <router-link to="/about">About Us</router-link>
-          <router-link to="/terms">Terms of Service</router-link>
-          <router-link to="/privacy">Privacy Policy</router-link>
+          <router-link @click.native="$emit('openModal', 'AboutSection')" to="#">About Us</router-link>
+          <router-link @click.native="$emit('openModal', 'TosSection')" to="#">Terms of Service</router-link>
+          <router-link @click.native="$emit('openModal', 'PrivacySection')" to="#">Privacy Policy</router-link>
         </div>
         <div class="social-media-icons">
           <a href="https://twitter.com/CoPlaylist" target="_blank">
