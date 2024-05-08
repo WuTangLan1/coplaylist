@@ -60,7 +60,7 @@ app.use((req, res, next) => {
 
 app.post('/generate-playlist', async (req, res) => {
     const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;
-    const exclusionString = excludeSongs.length > 0 ? `Exclude these songs: ${excludeSongs.join(', ')}` : '';
+    const exclusionString = excludeSongs.length > 0 ? `Please ensure that none of the following songs are used in the result these songs: ${excludeSongs.join(', ')}` : '';
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
@@ -97,6 +97,7 @@ app.post('/generate-playlist', async (req, res) => {
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
+        console.log('prompt : ', prompt)
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
             model: "gpt-4-turbo", 

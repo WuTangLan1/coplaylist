@@ -2,6 +2,7 @@
 <script>
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
+import bottomFooter from '@/components/homeDir/bottomFooter.vue'
 import authmodal from '@/components/authDir/authModal.vue'
 import infoModal from '@/components/homeDir/info-section/infoModal.vue'
 import errorModal from '@/components/inputsDir/errorModal.vue'
@@ -15,7 +16,8 @@ export default {
     PlaylistContainer,
     infoModal,
     errorModal,
-    accountModal
+    accountModal,
+    bottomFooter
   },
   setup() {
     const showAuthModal = ref(false);
@@ -107,6 +109,8 @@ export default {
     <div class="router-view-container">
       <router-view/>
     </div>
+
+    <bottomFooter></bottomFooter>
 
   </div>
 </template>
