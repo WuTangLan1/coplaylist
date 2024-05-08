@@ -76,11 +76,12 @@ export const useAuthStore = defineStore('auth', {
       const docRef = doc(db, "profiles", this.user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        this.user = { ...this.user, ...docSnap.data() };  
+        const data = docSnap.data();
+        this.user = { ...this.user, ...data, disliked_artists: data.disliked_artists || [] };
       } else {
         console.error("No such profile!");
       }
-    },
+    },    
     async updateUserTokens(newTokenCount) {
       if (!this.user) return;
       const userDocRef = doc(db, 'profiles', this.user.uid);

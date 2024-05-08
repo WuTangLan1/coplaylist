@@ -68,7 +68,12 @@ export default {
 
 <template>
   <div class="output-container">
-    <h3>We generated the following:</h3>
+    <div class="step-heading">
+      <h2>Add Songs</h2>
+      <div class="step-number">
+        <img src="@/assets/images/output/output.png" alt="Output Image" class="heading-image">
+      </div>
+    </div>
     <p class="instructions">
       Use the controls below to personalize your playlist experience. 
       Click <strong>Save</strong> to give your playlist a name and add it to your library, 
@@ -91,6 +96,27 @@ export default {
   max-width: 700px; 
   margin: 0 auto;
   overflow-y: auto; 
+}
+.step-heading {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.step-number {
+  color: #507cac;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #e5e1f2;
+  border-radius: 10%;  
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border: 2px solid #ccc;
 }
 
 .instructions {

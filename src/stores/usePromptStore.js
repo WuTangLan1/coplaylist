@@ -104,10 +104,10 @@ export const usePromptStore = defineStore('prompt', {
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General"; 
         const playlistStore = usePlaylistStore();
-
+    
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
-        const excludeSongs = previousSongs.filter(Boolean)
-      
+        const excludeSongs = previousSongs.filter(Boolean);
+        
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -120,17 +120,16 @@ export const usePromptStore = defineStore('prompt', {
             influence: song.influence
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
-          excludeSongs: excludeSongs
+          excludeSongs: excludeSongs,
+          dislikedArtists: authStore.user.disliked_artists || []  
         };
 
     
         try {
-
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-    
+        
           const formattedPlaylist = this.formatPlaylist(response.data);
-
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
@@ -140,7 +139,7 @@ export const usePromptStore = defineStore('prompt', {
       } else {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
-    },    
+    },     
     async regeneratePlaylist() {
 
       if (this.regenerateAttempts >= 2) {
