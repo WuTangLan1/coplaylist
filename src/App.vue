@@ -121,7 +121,6 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 98vh;
 }
 
 .router-view-container {
@@ -129,7 +128,6 @@ export default {
   align-items: center; 
   justify-content: center; 
   width: 100%;
-  height: calc(90vh - 60px); 
   padding: 0.5rem;
 }
 

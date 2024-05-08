@@ -42,7 +42,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  max-height: 80vh;
   margin: 0; 
   background: #F4F4F4; 
   border-radius: 8px;

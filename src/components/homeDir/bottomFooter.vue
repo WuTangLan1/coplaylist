@@ -31,67 +31,73 @@ export default {
       </div>
     </footer>
   </template>
-  
   <style scoped>
-@import '@/assets/css/styles.css';
-
-.bottom-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background-color: #C3D7F8;
-  color: black;
-  text-align: center;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.footer-links {
-  display: flex;
-  gap: 20px;
-  font-size: 0.9rem;
-}
-
-.social-media-icons {
-  display: flex;
-  gap: 20px;
-}
-
-.footer-links a,
-.social-media-icons a {
-  color: black;
-  text-decoration: none;
-}
-
-.footer-links a:hover,
-.social-media-icons a:hover {
-  text-decoration: underline;
-}
-
-.copy-right {
-  margin-top: 10px;
-  font-size: 0.8rem;
-}
-
-@media (min-width: 768px) {
+  @import '@/assets/css/styles.css';
+  
   .bottom-footer {
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 20px 50px;
+    display: flex;
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #C3D7F8;
+    color: black;
+    text-align: center;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   }
+  
   .footer-content {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
   }
-}
-</style>
+  
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .social-media-icons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .footer-links a,
+  .social-media-icons a {
+    color: black;
+    text-decoration: none;
+  }
+  
+  .social-media-icons img {
+    width: 24px; /* Smaller size for icons */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .footer-links a:hover,
+  .social-media-icons a:hover {
+    text-decoration: underline;
+  }
+  
+  .copy-right {
+    margin-top: 10px;
+    font-size: 0.8rem;
+  }
+  
+  @media (min-width: 768px) {
+    .bottom-footer {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 20px 50px;
+    }
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1200px;
+    }
+  }
+  </style>
+  
