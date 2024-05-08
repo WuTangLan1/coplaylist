@@ -19,10 +19,10 @@ export default {
             <img src="@/assets/images/footer/x_icon.png" alt="Twitter">
           </a>
           <a href="https://facebook.com/CoPlaylist" target="_blank">
-            <img src="@/assets/images/footer/instagram_icon.png" alt="Facebook">
+            <img src="@/assets/images/footer/facebook_icon.png" alt="Facebook">
           </a>
           <a href="https://instagram.com/CoPlaylist" target="_blank">
-            <img src="@/assets/images/footer/facebook_icon.png" alt="Instagram">
+            <img src="@/assets/images/footer/instagram_icon.png" alt="Instagram">
           </a>
         </div>
       </div>
@@ -32,60 +32,66 @@ export default {
     </footer>
   </template>
   
-
   <style scoped>
-  @import '@/assets/css/styles.css';
-  
+@import '@/assets/css/styles.css';
+
+.bottom-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #C3D7F8;
+  color: black;
+  text-align: center;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  font-size: 0.9rem;
+}
+
+.social-media-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a,
+.social-media-icons a {
+  color: black;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.social-media-icons a:hover {
+  text-decoration: underline;
+}
+
+.copy-right {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 768px) {
   .bottom-footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 20px;
-    background-color: #C3D7F8;
-    color: black;
-    text-align: center;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
   }
-  
   .footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
   }
-  
-  .footer-links {
-    display: flex;
-    gap: 15px;
-  }
-  
-  .social-media-icons {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .footer-links a,
-  .social-media-icons a {
-    color: black;
-    text-decoration: none;
-  }
-  
-  .copy-right {
-    margin-top: 10px;
-    font-size: 0.8rem;
-  }
-  
-  @media (min-width: 768px) {
-    .bottom-footer {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    .footer-content {
-      flex-direction: row;
-      justify-content: space-between;
-      width: 100%;
-      max-width: 960px;
-    }
-  }
-  </style>
-  
+}
+</style>
