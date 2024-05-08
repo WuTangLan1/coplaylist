@@ -48,19 +48,19 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   overflow-y: auto;
-  animation: dropAnimation 1.5s ease-in-out forwards;
+  opacity: 0;  
+  animation: fadeInAnimation 1.5s ease forwards;
 }
 
-@keyframes dropAnimation {
+@keyframes fadeInAnimation {
     0% {
-      transform: translateY(-100%);
       opacity: 0;
     }
     100% {
-      transform: translateY(0);
       opacity: 1;
     }
   }
+
 
   .explanation-content h1 {
   text-align: center; 
