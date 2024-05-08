@@ -1,34 +1,39 @@
 <!-- src\components\outputsDir\playlist\outputSection.vue -->
 
 <script>
-// Importing necessary components and stores
 import PlaylistSection from '@/components/outputsDir/playlist/playlistSection.vue';
 import ControlSection from '@/components/outputsDir/playlist/controlSection.vue';
 import SaveplaylistModal from '@/components/outputsDir/playlist/saveplaylistModal.vue';
+import loadingModal from '@/components/outputsDir/loadingModal.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../fbDir/fbInit';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 export default {
   components: {
     PlaylistSection,
     ControlSection,
-    SaveplaylistModal
+    SaveplaylistModal,
+    loadingModal
   },
   setup() {
     const playlistStore = usePlaylistStore();
     const promptStore = usePromptStore();
     const playlist = computed(() => playlistStore.playlistDetails);
-
+    const showLoadingModal = ref(false);
 
     const regeneratePlaylist = () => {
+      showLoadingModal.value = true;
       promptStore.regeneratePlaylist();
+      showLoadingModal.value = false;
     };
 
-    return { playlist, regeneratePlaylist};
+    return { playlist, regeneratePlaylist, showLoadingModal,  handleLoading: () => { showLoadingModal.value = true; },
+      handleLoadingComplete: () => { showLoadingModal.value = false; }
+    };
   },
   data() {
     return {
@@ -69,7 +74,7 @@ export default {
 <template>
   <div class="output-container">
     <div class="step-heading">
-      <h2>Add Songs</h2>
+      <h2>We have generated the following </h2>
       <div class="step-number">
         <img src="@/assets/images/output/output.png" alt="Output Image" class="heading-image">
       </div>
@@ -80,8 +85,9 @@ export default {
       or click <strong>Regenerate</strong> to create a new playlist based on the same prompt.
     </p>
     <PlaylistSection :playlist="playlist" />
-    <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" />
+    <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" @loading="handleLoading" @loading-complete="handleLoadingComplete" />
     <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
+    <loadingModal :show="showLoadingModal" />
   </div>
 </template>
 
@@ -97,32 +103,33 @@ export default {
   margin: 0 auto;
   overflow-y: auto; 
 }
+
 .step-heading {
   display: flex;
   align-items: center;
+  justify-content: center; 
   width: 100%;
-  justify-content: center;
+  margin-bottom: 10px; 
 }
 
-.step-number {
-  color: #507cac;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background: #e5e1f2;
-  border-radius: 10%;  
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  border: 2px solid #ccc;
+.heading-image {
+  width: 40px; 
+  height: 40px; 
+  margin-left: 20px; 
+}
+
+h2 {
+  flex-grow: 1; 
+  text-align: left; 
+  margin: 0; 
+  font-size: 1.4rem; 
 }
 
 .instructions {
   font-size: 0.9rem;
   color: #333;
-  margin-bottom: 1rem;
+  margin-top: 0; 
+  margin-bottom: 1rem; 
   text-align: center;
 }
 </style>

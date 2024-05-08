@@ -154,7 +154,6 @@ export const usePromptStore = defineStore('prompt', {
       }
     
       if (authStore.user && authStore.user.tokens >= 2) {
-        this.modal.show = true;  
         await authStore.fetchUserProfile();  
         const userTaste = authStore.user.taste || "General";
         if (!Array.isArray(playlistStore.playlistDetails)) {
@@ -189,8 +188,6 @@ export const usePromptStore = defineStore('prompt', {
         } catch (error) {
           console.error('Error regenerating playlist:', error);
           this.showModal("Failed to regenerate playlist.");
-        } finally {
-          this.modal.show = false;  // Hide loading modal
         }
       } else {
         this.showModal("Insufficient tokens to regenerate a playlist.");

@@ -1,25 +1,25 @@
 <!-- src\components\outputsDir\playlist\controlSection.vue -->
 
 <script>
-import { computed } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
+import { computed } from 'vue';
 
 export default {
-  setup(_, { emit }) {
+  emits: ['loading', 'loading-complete'],
+  setup(props, { emit }) {
     const promptStore = usePromptStore();
+    const regenerateDisabled = computed(() => promptStore.regenerateAttempts >= 2);
 
-    const regenerateDisabled = computed(() => {
-      return promptStore.regenerateAttempts >= 2;
-    });
+    const regenerate = async () => {
+      emit('loading'); 
+      await promptStore.regeneratePlaylist();
+      emit('loading-complete'); 
+    };
 
     return {
-      regenerate() {
-        promptStore.regeneratePlaylist();
-      },
+      regenerate,
       regenerateDisabled,
-      save() {
-        emit('save');
-      }
+      save: () => emit('save'),
     };
   }
 };
@@ -27,14 +27,13 @@ export default {
 
 <template>
   <div class="control-section">
-    <button class="regen-btn" 
-            @click="regenerate" 
-            :disabled="regenerateDisabled">
-      <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Regenerate
+    <button class="regen-btn" @click="regenerate" :disabled="regenerateDisabled">
+      <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> Regenerate
     </button>
-    <button class="save-btn" @click="save">💾 Save</button>
+    <button class="save-btn" @click="save">Save</button>
   </div>
 </template>
+
 
   <style scoped>
   .control-section {
