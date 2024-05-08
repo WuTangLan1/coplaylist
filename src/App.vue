@@ -63,6 +63,10 @@ export default {
       showinfoModal.value = true;
     }
 
+    function handleComponentChange(newComponent) {
+    currentInfoComponent.value = newComponent;  // Update the reactive reference correctly
+    }
+
     return {
       showAuthModal,
       showinfoModal,
@@ -77,7 +81,9 @@ export default {
       openAccountModal,
       closeAccountModal,
       currentInfoComponent,
-     handleModalOpen}
+      handleModalOpen,
+      handleComponentChange
+      }
   }
 }
 </script>
@@ -99,10 +105,9 @@ export default {
     <infoModal 
       v-if="showinfoModal"
       :current-component="currentInfoComponent"
-      @update:currentComponent="component => currentInfoComponent.value = component"
+      @update:currentComponent="handleComponentChange"
       @closeModal="closeinfoModal"
     />
-
 
     <PlaylistContainer
      v-if="showPlaylists" 

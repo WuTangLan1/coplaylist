@@ -84,7 +84,7 @@ export default {
   
   .social-media-icons {
     display: flex;
-    gap: 20px;
+    gap: 3rem;
   }
   
   .footer-links a,

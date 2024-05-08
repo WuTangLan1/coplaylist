@@ -9,7 +9,7 @@ export default {
 <template>
   <div class="privacy-section">
     <h1>Privacy Policy</h1>
-    <p>Last updated: [Date]</p>
+    <p>10th of May, 2024</p>
     <h2>1. Information We Collect</h2>
     <p>
       We collect information that you provide when creating an account, such as your name, email address, and your musical preferences. We also collect data about your interactions with our service, including song choices, playlists, and usage patterns.

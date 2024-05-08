@@ -16,7 +16,6 @@ export default {
   },
   data() {
     return {
-      // Remove 'currentComponent' from here if it's passed as a prop
       components: [
         { name: 'About', component: 'AboutSection' },
         { name: 'ToS', component: 'TosSection' },
@@ -30,8 +29,7 @@ export default {
       this.$emit('closeModal');
     },
     changeComponent(componentName) {
-      // Correctly update prop without local state interference
-      this.$emit('update:currentComponent', componentName);
+        this.$emit('update:currentComponent', componentName);  
     }
   }
 };
@@ -46,9 +44,10 @@ export default {
         <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
       </div>
       <div class="navigation">
-        <button v-for="item in components" :key="item.component" @click="changeComponent(item.component)">
+        <button v-for="item in components" :key="item.name" @click="changeComponent(item.component)">
           {{ item.name }}
         </button>
+
       </div>
       <div class="modal-body">
         <component :is="currentComponent"></component>

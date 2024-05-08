@@ -42,7 +42,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  max-height: 100%;
+  max-width: 800px;
   margin: 0; 
   background: #F4F4F4; 
   border-radius: 8px;
@@ -61,8 +61,14 @@ export default {
     }
   }
 
+@media (min-width: 600px)
+{
+  .explanation-container {
+    padding: 1rem;
+  }
+}
 
-  .explanation-content h1 {
+.explanation-content h1 {
   text-align: center; 
   color: #2D3047; 
   margin-bottom: 1rem;
@@ -79,7 +85,7 @@ export default {
 
 .logo {
   height: auto;
-  max-height: 1.5em; 
+  max-height: 1.58em; 
   margin-left: 0.5em;
   border-radius: 0.5rem;
 }
@@ -88,7 +94,9 @@ export default {
   text-align: left;
   line-height: 1.6; 
   color: #333; 
+  font-size: clamp(0.9rem, 2vw, 1.1rem); 
 }
+
 .features-container {
   display: flex;
   flex-wrap: wrap;  
@@ -104,7 +112,8 @@ export default {
  }
 
 .feature-image {
- max-width: 100%; 
+width: 4rem; 
+ max-width: 170px;
  height: auto; 
 }
   
