@@ -89,7 +89,10 @@ export default {
 
 <template>
   <div class="tone-container">
-    <h2>Define Your Tone</h2>
+    <div class="step-heading">
+      <div class="step-number">1</div>
+      <h2>Define Your Tone</h2>
+    </div>
     <h3 class="description">
       Select at least one genre and one era to create a base for your generated playlist
     </h3>
@@ -170,8 +173,36 @@ export default {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 700px; 
-  margin: 0;
+  margin: 0 auto;
   overflow-y: auto; 
+}
+
+.step-heading {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.step-number {
+  color: #507cac;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: #e5e1f2;
+  border-radius: 10%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: clamp(22px, 5vw, 28px);
 }
 
 @media (min-width: 500px) {
@@ -180,11 +211,6 @@ export default {
   }
 }
 
-h2 {
-  color: #333;
-  margin-bottom: 1rem;
-  font-size: clamp(22px, 5vw, 28px);
-}
 
 h3.description {
   color: #666666; 
