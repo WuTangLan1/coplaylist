@@ -41,14 +41,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 800px; 
-  max-height: 55vh;
+  width: 100%;
+  max-height: 80vh;
   margin: 0; 
-  padding: 20px;
   background: #F4F4F4; 
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  border: 1px solid blue;
   overflow-y: auto;
   animation: dropAnimation 1.5s ease-in-out forwards;
 }
