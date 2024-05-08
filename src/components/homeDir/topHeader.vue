@@ -92,6 +92,7 @@ export default {
 }
 
 
+
 .navigation {
   display: flex;
   gap: 0.4rem; 
@@ -107,14 +108,14 @@ export default {
 }
 
 .nav-icon {
-  height: clamp(30px, 6vw, 45px);
+  height: clamp(20px, 6vw, 35px);
   width: auto;
   transition: transform 0.3s ease;
 }
 
 @media (max-width: 400px) {
   .nav-icon {
-      height: clamp(25px, 5vw, 45px);
+      height: clamp(20px, 3vw, 30px);
     }
 }
 
