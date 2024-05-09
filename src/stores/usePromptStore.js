@@ -185,7 +185,7 @@ export const usePromptStore = defineStore('prompt', {
           await authStore.deductTokens(2);
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-          // Set both main and alternative songs
+          console.log('response for regen :', response.data)
           playlistStore.setPlaylistDetails(this.formatPlaylist(response.data.songs));
           playlistStore.setAlternativeSongs(this.formatAlternativePlaylist(response.data.alternativeSongs)); // Ensure alternative songs are also set here
           this.regenerateAttempts++;
@@ -204,7 +204,6 @@ export const usePromptStore = defineStore('prompt', {
       }
 
       return playlistArray.map(line => {
-          // Check if line is properly formatted
           if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
           try {
               const [titleArtist, releaseYear] = line.trim().split(':');
