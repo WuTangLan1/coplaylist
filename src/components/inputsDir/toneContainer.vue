@@ -237,7 +237,7 @@ h3.description {
 .selected-eras-container {
   border: solid 1px #ccc; 
   border-radius: 10px;
-  height: 150px;
+  height: 100px;
   width: 90%; 
   margin-bottom: 1rem;
   display: flex;

@@ -198,42 +198,45 @@ export const usePromptStore = defineStore('prompt', {
       }
     },    
     formatPlaylist(playlistArray) {
-      if (!Array.isArray(playlistArray)) {
-          console.error("Expected an array but received:", typeof playlistArray);
-          return [];
-      }
-
-      return playlistArray.map(line => {
-          if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
-          try {
-              const [titleArtist, releaseYear] = line.trim().split(':');
-              const [title, artist] = titleArtist.split(' - ');
-              return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
-          } catch (error) {
-              console.error("Error parsing playlist line:", line, error);
-              return null;
-          }
-      }).filter(song => song !== null);
+        if (!Array.isArray(playlistArray)) {
+            console.error("Expected an array but received:", typeof playlistArray);
+            return [];
+        }
+    
+        return playlistArray.map(line => {
+            if (!line.trim() || !line.includes('-') || !line.includes(':')) return null; // Enhanced validation
+            try {
+                const [titleArtist, releaseYear] = line.trim().split(':');
+                if (!titleArtist || !releaseYear) throw new Error("Malformed line, missing components");
+                const [title, artist] = titleArtist.split(' - ');
+                if (!title || !artist) throw new Error("Malformed line, missing title or artist");
+                return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+            } catch (error) {
+                console.error("Error parsing playlist line:", line, error);
+                return null;
+            }
+        }).filter(song => song !== null);
     },
-
+    
     formatAlternativePlaylist(alternativeSongsArray) {
-      if (!Array.isArray(alternativeSongsArray)) {
-          console.error("Expected an array but received:", typeof alternativeSongsArray);
-          return [];
-      }
-
-      return alternativeSongsArray.map(line => {
-          // Check if line is properly formatted
-          if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
-          try {
-              const [titleArtist, releaseYear] = line.trim().split(':');
-              const [title, artist] = titleArtist.split(' - ');
-              return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
-          } catch (error) {
-              console.error("Error parsing alternative song line:", line, error);
-              return null;
-          }
-      }).filter(song => song !== null);
-    }
+        if (!Array.isArray(alternativeSongsArray)) {
+            console.error("Expected an array but received:", typeof alternativeSongsArray);
+            return [];
+        }
+    
+        return alternativeSongsArray.map(line => {
+            if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
+            try {
+                const [titleArtist, releaseYear] = line.trim().split(':');
+                if (!titleArtist || !releaseYear) throw new Error("Malformed line, missing components");
+                const [title, artist] = titleArtist.split(' - ');
+                if (!title || !artist) throw new Error("Malformed line, missing title or artist");
+                return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+            } catch (error) {
+                console.error("Error parsing alternative song line:", line, error);
+                return null;
+            }
+        }).filter(song => song !== null);
+    }  
   }  
 });
