@@ -53,7 +53,6 @@ export default {
     }
 
     const swapSong = (index) => {
-        console.log('can swap : ', canSwap.value);
         if (canSwap.value) {
           const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
           const newSong = alternativeSongs.value[randomIndex];
@@ -155,7 +154,6 @@ ol {
   color: #ccc; 
   cursor: not-allowed;
 }
-
 
 .song-name {
   font-size: 1.3rem;

@@ -82,8 +82,19 @@ export default {
     <p class="instructions">
       Use the controls below to personalize your playlist experience. 
       Click <strong>Save</strong> to give your playlist a name and add it to your library, 
-      or click <strong>Regenerate</strong> to create a new playlist based on the same prompt.
+      or click <strong>Regenerate</strong> to create a new playlist based on the same prompt. 
+      You can use the <strong>Swap Icon</strong> up to 5 times to swap songs.
     </p>
+    <div class="icon-keys">
+      <div class="icon-key">
+        <font-awesome-icon icon="redo" class="icon-example" />
+        <span> - Swap Song</span>
+      </div>
+      <div class="icon-key">
+        <img src="@/assets/images/music_icons/spotify.png" class="icon-example" alt="Spotify Icon" />
+        <span> - Play Preview</span>
+      </div>
+    </div>
     <PlaylistSection :playlist="playlist" />
     <ControlSection @regenerate="regeneratePlaylist" @save="savePlaylist" @loading="handleLoading" @loading-complete="handleLoadingComplete" />
     <SaveplaylistModal v-if="showSaveModal" @close="closeSaveModal" @confirm="confirmSavePlaylist" />
@@ -131,6 +142,24 @@ h2 {
   margin-top: 0; 
   margin-bottom: 1rem; 
   text-align: center;
+}
+
+.icon-keys {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.icon-key {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.icon-example {
+  margin-right: 5px;
+  width: 24px;
+  height: 24px;
 }
 </style>
 

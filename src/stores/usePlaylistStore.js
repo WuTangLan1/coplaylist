@@ -11,7 +11,6 @@ export const usePlaylistStore = defineStore('playlist', {
   }),
   actions: {
     setAlternativeSongs(alternativeSongs) {
-      console.log("useplstore  : ", alternativeSongs )
       this.alternativeSongs = alternativeSongs;  
   },
   getAlternativeSongs() {
