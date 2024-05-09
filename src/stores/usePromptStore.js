@@ -201,9 +201,10 @@ export const usePromptStore = defineStore('prompt', {
           console.error("Expected an array but received:", typeof playlistArray);
           return [];
       }
-  
+
       return playlistArray.map(line => {
-          if (!line.trim() || line.startsWith('**') || line.includes('Extra Songs')) return null; // Skip empty lines, headings, and extra song headers
+          // Check if line is properly formatted
+          if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
           try {
               const [titleArtist, releaseYear] = line.trim().split(':');
               const [title, artist] = titleArtist.split(' - ');
@@ -213,16 +214,17 @@ export const usePromptStore = defineStore('prompt', {
               return null;
           }
       }).filter(song => song !== null);
-  },  
+    },
+
     formatAlternativePlaylist(alternativeSongsArray) {
-      console.log("alternative songs array : ", alternativeSongsArray )
       if (!Array.isArray(alternativeSongsArray)) {
           console.error("Expected an array but received:", typeof alternativeSongsArray);
           return [];
       }
-  
+
       return alternativeSongsArray.map(line => {
-          if (!line.trim()) return null; // Skip empty lines
+          // Check if line is properly formatted
+          if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
           try {
               const [titleArtist, releaseYear] = line.trim().split(':');
               const [title, artist] = titleArtist.split(' - ');
@@ -232,7 +234,8 @@ export const usePromptStore = defineStore('prompt', {
               return null;
           }
       }).filter(song => song !== null);
-  }
+    }
+
   
   }  
 });

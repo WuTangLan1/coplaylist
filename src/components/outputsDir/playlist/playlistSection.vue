@@ -84,13 +84,10 @@ export default {
           <div class="song-artist">{{ song.artist }}</div>
         </div>
         <div class="song-year">{{ song.releaseYear }}</div>
-        <font-awesome-icon icon="redo" class="redo-icon" :class="{ 'disabled': !canSwap }" @click="canSwap && swapSong(index)" />
-        <img
-          class="spotify-icon"
-          src="@/assets/images/music_icons/spotify.png"
-          @click="playSongPreview(song)"
-          alt="Play preview"
-        />
+        <div class="icon-container">
+          <font-awesome-icon icon="redo" class="redo-icon" :class="{ 'disabled': !canSwap }" @click="canSwap && swapSong(index)" />
+          <img class="spotify-icon" src="@/assets/images/music_icons/spotify.png" @click="playSongPreview(song)" alt="Play preview" />
+        </div>
       </li>
     </ol>
   </div>
@@ -107,7 +104,7 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 800px;
-  margin: 1rem;
+  margin: 1rem auto;
   overflow-y: auto;
 }
 
@@ -174,11 +171,23 @@ ol {
   color: #777;
 }
 
-.spotify-icon {
+.icon-container {
+  display: flex;
+  align-items: center;
+}
+
+.spotify-icon, .redo-icon {
   width: 24px;
   height: 24px;
   cursor: pointer;
-  margin-left: 1rem;
+}
+
+.spotify-icon {
+  margin-right: 5px; 
+}
+
+.redo-icon {
+  color: #4a76a8; 
 }
 
 .empty-playlist {
