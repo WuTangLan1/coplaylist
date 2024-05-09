@@ -52,14 +52,16 @@ export default {
       }
     }
 
-  const swapSong = (index) => {
+    const swapSong = (index) => {
+        console.log('can swap : ', canSwap.value);
         if (canSwap.value) {
           const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
           const newSong = alternativeSongs.value[randomIndex];
           playlistStore.playlistDetails[index] = newSong;
-          playlistStore.alternativeSongs.splice(randomIndex, 1);
+          playlistStore.alternativeSongs.splice(randomIndex, 1); 
         }
       };
+
 
 
     return {
@@ -149,21 +151,41 @@ ol {
   height: 24px;
 }
 
-.disabled {
+.redo-icon.disabled {
   color: #ccc; 
   cursor: not-allowed;
 }
+
 
 .song-name {
   font-size: 1.3rem;
   font-weight: 600;
   color: #333;
   margin-bottom: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; 
+}
+
+@media (max-width: 390px)
+{
+  .song-name {
+    max-width: 150px; 
+  }
+
+  .song-artist {
+    max-width: 150px; 
+  }
 }
 
 .song-artist {
   font-size: 1.1rem;
   color: #607D8B;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px; 
 }
 
 .song-year {

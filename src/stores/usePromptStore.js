@@ -235,7 +235,5 @@ export const usePromptStore = defineStore('prompt', {
           }
       }).filter(song => song !== null);
     }
-
-  
   }  
 });
