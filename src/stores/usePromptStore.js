@@ -162,7 +162,7 @@ export const usePromptStore = defineStore('prompt', {
           console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
           this.showModal("Error: No existing playlist details found.");
           return;
-      }
+        }
         const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
         const excludeSongs = previousSongs.filter(Boolean);
         const playlistDetails = {
@@ -185,7 +185,9 @@ export const usePromptStore = defineStore('prompt', {
           await authStore.deductTokens(2);
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-          playlistStore.setPlaylistDetails(this.formatPlaylist(response.data)); 
+          // Set both main and alternative songs
+          playlistStore.setPlaylistDetails(this.formatPlaylist(response.data.songs));
+          playlistStore.setAlternativeSongs(this.formatAlternativePlaylist(response.data.alternativeSongs)); // Ensure alternative songs are also set here
           this.regenerateAttempts++;
         } catch (error) {
           console.error('Error regenerating playlist:', error);
