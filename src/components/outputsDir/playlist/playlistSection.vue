@@ -2,7 +2,7 @@
 
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 

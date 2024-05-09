@@ -9,6 +9,9 @@ export const usePlaylistStore = defineStore('playlist', {
     playlistName: '',
   }),
   actions: {
+    setAlternativeSongs(alternativeSongs) {
+      this.alternativeSongs = alternativeSongs;  // Ensure you have alternativeSongs defined in your state
+  },
     setPlaylistDetails(responseData) {
       if (typeof responseData === 'string') {
         const nameMatch = responseData.match(/^Playlist Name: (.+)$/m); // Use regex to find the name

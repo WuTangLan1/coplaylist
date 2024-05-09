@@ -128,10 +128,13 @@ export const usePromptStore = defineStore('prompt', {
         try {
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
+          console.log('response in promptstore : ', response)
         
-          const formattedPlaylist = this.formatPlaylist(response.data);
+          const formattedPlaylist = this.formatPlaylist(response.data.songs);
+          const formattedAlternativeSongs = this.formatAlternativePlaylist(response.data.alternativeSongs);
           const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
+          playlistStore.setAlternativeSongs(formattedAlternativeSongs)
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
         } catch (error) {
           console.error('Error fetching playlist:', error);
@@ -194,23 +197,42 @@ export const usePromptStore = defineStore('prompt', {
       }
     },    
   
-    formatPlaylist(playlistString) {
-        if (!playlistString) {
-            console.error("Received empty playlist string");
+    formatPlaylist(playlistArray) {
+        if (!Array.isArray(playlistArray)) {
+            console.error("Expected an array but received:", typeof playlistArray);
             return [];
         }
     
-        const songLines = playlistString.split('\n').filter(line => line.includes('-') && line.includes(':'));
-        return songLines.map(line => {
+        return playlistArray.map(line => {
+            if (!line.trim() || line.startsWith('**')) return null; // Skip empty lines and headings
             try {
-                const [titleArtist, releaseYear] = line.split(':');
+                const [titleArtist, releaseYear] = line.trim().split(':');
                 const [title, artist] = titleArtist.split(' - ');
                 return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
             } catch (error) {
-                console.error("Error parsing line: ", line, error);
+                console.error("Error parsing playlist line:", line, error);
                 return null;
             }
         }).filter(song => song !== null);
-    }  
+    },
+    formatAlternativePlaylist(alternativeSongsArray) {
+      if (!Array.isArray(alternativeSongsArray)) {
+          console.error("Expected an array but received:", typeof alternativeSongsArray);
+          return [];
+      }
+  
+      return alternativeSongsArray.map(line => {
+          if (!line.trim()) return null; // Skip empty lines
+          try {
+              const [titleArtist, releaseYear] = line.trim().split(':');
+              const [title, artist] = titleArtist.split(' - ');
+              return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+          } catch (error) {
+              console.error("Error parsing alternative song line:", line, error);
+              return null;
+          }
+      }).filter(song => song !== null);
   }
+  
+  }  
 });
