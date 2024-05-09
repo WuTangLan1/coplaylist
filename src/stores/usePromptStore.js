@@ -196,26 +196,26 @@ export const usePromptStore = defineStore('prompt', {
         this.showModal("Insufficient tokens to regenerate a playlist.");
       }
     },    
-  
     formatPlaylist(playlistArray) {
-        if (!Array.isArray(playlistArray)) {
-            console.error("Expected an array but received:", typeof playlistArray);
-            return [];
-        }
-    
-        return playlistArray.map(line => {
-            if (!line.trim() || line.startsWith('**')) return null; // Skip empty lines and headings
-            try {
-                const [titleArtist, releaseYear] = line.trim().split(':');
-                const [title, artist] = titleArtist.split(' - ');
-                return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
-            } catch (error) {
-                console.error("Error parsing playlist line:", line, error);
-                return null;
-            }
-        }).filter(song => song !== null);
-    },
+      if (!Array.isArray(playlistArray)) {
+          console.error("Expected an array but received:", typeof playlistArray);
+          return [];
+      }
+  
+      return playlistArray.map(line => {
+          if (!line.trim() || line.startsWith('**') || line.includes('Extra Songs')) return null; // Skip empty lines, headings, and extra song headers
+          try {
+              const [titleArtist, releaseYear] = line.trim().split(':');
+              const [title, artist] = titleArtist.split(' - ');
+              return { title: title.trim(), artist: artist.trim(), releaseYear: releaseYear.trim() };
+          } catch (error) {
+              console.error("Error parsing playlist line:", line, error);
+              return null;
+          }
+      }).filter(song => song !== null);
+  },  
     formatAlternativePlaylist(alternativeSongsArray) {
+      console.log("alternative songs array : ", alternativeSongsArray )
       if (!Array.isArray(alternativeSongsArray)) {
           console.error("Expected an array but received:", typeof alternativeSongsArray);
           return [];

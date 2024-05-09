@@ -15,6 +15,8 @@ export default {
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
 
+    const alternativeSongs = computed(() => playlistStore.getAlternativeSongs());
+
     const baseUrl = process.env.VUE_APP_API_BASE_URL;
 
     let currentAudio = null;
@@ -49,17 +51,17 @@ export default {
       }
     }
 
-    const alternativeSongs = ref([]);
-
     const swapSong = (index) => {
-      if (alternativeSongs.value.length > 0) {
-        const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
-        playlist.value[index] = alternativeSongs.value[randomIndex]; 
-        alternativeSongs.value.splice(randomIndex, 1); 
-      } else {
-        console.error("No alternative songs available for swapping.");
-      }
+        if (alternativeSongs.value.length > 0) {
+            const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
+            const newSong = alternativeSongs.value[randomIndex];
+            playlistStore.playlistDetails[index] = newSong; // Update the playlist directly in the store
+            playlistStore.alternativeSongs.splice(randomIndex, 1); // Remove used song from alternatives
+        } else {
+            console.error("No alternative songs available for swapping.");
+        }
     };
+
 
 
     return {

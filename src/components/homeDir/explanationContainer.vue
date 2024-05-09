@@ -135,10 +135,11 @@ ul {
     color: #4c65af; 
   }
   
-  .next-button {
+.next-button {
   align-self: flex-end;
   padding: 10px 20px;
   color: white;
+  border-radius: 0.2rem;
   border: none;
   cursor: pointer;
   font-size: 16px;
