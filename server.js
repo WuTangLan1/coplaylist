@@ -82,6 +82,8 @@ app.post('/generate-playlist', async (req, res) => {
         Setting (please ensure the songs you submit all achieve the following settign): ${vibes.selectedSetting || 'any'},
         Songs (please ensure the songs are influenced by these songs BUT ARE NOT THESE SONGS): ${songs.map(song => song.name && song.artist ? `${song.name} by ${song.artist} with a influence weighting of ${song.influence}` : 'Not specified').join(', ')},
         ${exclusionString},
+        Please generate 5 additional alternative songs using the same criteria.
+        
         Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
         a playlist :
         A Team - Ed Sheeran: 2011
@@ -94,8 +96,17 @@ app.post('/generate-playlist', async (req, res) => {
         Titanium - David Guetta ft. Sia: 2011
         Eye of the Tiger - Survivor: 1982
         Don't Stop Me Now - Queen: 1978
+
+        Extra Songs:
+        Rolling in the Deep - Adele: 2010
+        Get Lucky - Daft Punk ft. Pharrell Williams: 2013
+        Firework - Katy Perry: 2010
+        Locked Out of Heaven - Bruno Mars: 2012
+        Livin' on a Prayer - Bon Jovi: 1986
+
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
+
 
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
@@ -112,7 +123,11 @@ app.post('/generate-playlist', async (req, res) => {
         });
 
         const data = response.data;
-        res.json(data.choices[0].message.content);
+        const songs = data.choices[0].message.content.split('\n').slice(0, -5); 
+        console.log('main playlist : ', songs)
+        const alternativeSongs = data.choices[0].message.content.split('\n').slice(-5); 
+        console.log('alt playlist : ', alternativeSongs)
+        res.json({songs, alternativeSongs});
     } catch (error) {
         console.error('Error generating playlist:', error);
         res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');

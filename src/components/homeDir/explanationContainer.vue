@@ -32,7 +32,11 @@ export default {
           </div>
         </div>
       </div>
-      <button class="next-button" @click="getStarted">Lets get started</button>
+      <div class="button-group">
+        <button class="next-button quick-gen" @click="quickGen">Quick Gen</button>
+        <button class="next-button long-gen" @click="getStarted">Long Gen</button>
+        <button class="next-button improve-playlist" @click="improvePlaylist">Improve</button>
+      </div>
     </div>
   </template>
   
@@ -131,22 +135,45 @@ ul {
     color: #4c65af; 
   }
   
-  .next-button {
-    align-self: flex-end;
-    padding: 10px 20px;
-    background-color: #4c56af; 
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease; 
-  }
-  
-  .next-button:hover {
-    background-color: #46367c; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+.next-button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; 
+}
+
+.long-gen {
+  background-color: #4c56af;
+}
+
+.long-gen:hover {
+  background-color: #46367c;
+}
+
+.quick-gen {
+  background-color: #78A355; 
+}
+
+.quick-gen:hover {
+  background-color: #5C7A40;
+}
+
+.improve-playlist {
+  background-color: #DAA520;
+}
+
+.improve-playlist:hover {
+  background-color: #B8860B;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
   
   @media (max-width: 768px) {
 

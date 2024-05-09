@@ -3,20 +3,22 @@
 <script>
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { computed } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 
 export default {
+  components : {
+    FontAwesomeIcon
+  },
   setup() {
     const playlistStore = usePlaylistStore();
     const playlistName = computed(() => playlistStore.playlistName);
     const playlist = computed(() => playlistStore.playlistDetails);
 
-    // Base URL from environment variables
     const baseUrl = process.env.VUE_APP_API_BASE_URL;
 
-    // Global audio object to ensure only one audio is playing at a time
     let currentAudio = null;
 
-    // Method to handle playing a preview
     async function playSongPreview(song) {
       try {
 
@@ -65,6 +67,7 @@ export default {
           <div class="song-name">{{ song.title }}</div>
           <div class="song-artist">{{ song.artist }}</div>
         </div>
+        <font-awesome-icon icon="redo" class="redo-icon" @click="swapSong(index)" />
         <div class="song-year">{{ song.releaseYear }}</div>
         <img
           class="spotify-icon"
@@ -124,6 +127,15 @@ ol {
   display: flex;
   flex-direction: column;
 }
+
+.redo-icon {
+  margin-right: 10px;
+  cursor: pointer;
+  color: #4a76a8; /* Example color, change as needed */
+  width: 24px;
+  height: 24px;
+}
+
 
 .song-name {
   font-size: 1.3rem;
