@@ -16,6 +16,7 @@ export default {
     const playlist = computed(() => playlistStore.playlistDetails);
 
     const alternativeSongs = computed(() => playlistStore.getAlternativeSongs());
+    const canSwap = computed(() => alternativeSongs.value.length > 0);
 
     const baseUrl = process.env.VUE_APP_API_BASE_URL;
 
@@ -51,17 +52,14 @@ export default {
       }
     }
 
-    const swapSong = (index) => {
-        if (alternativeSongs.value.length > 0) {
-            const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
-            const newSong = alternativeSongs.value[randomIndex];
-            playlistStore.playlistDetails[index] = newSong; // Update the playlist directly in the store
-            playlistStore.alternativeSongs.splice(randomIndex, 1); // Remove used song from alternatives
-        } else {
-            console.error("No alternative songs available for swapping.");
+  const swapSong = (index) => {
+        if (canSwap.value) {
+          const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
+          const newSong = alternativeSongs.value[randomIndex];
+          playlistStore.playlistDetails[index] = newSong;
+          playlistStore.alternativeSongs.splice(randomIndex, 1);
         }
-    };
-
+      };
 
 
     return {
@@ -69,7 +67,8 @@ export default {
       playlistName,
       playSongPreview,
       alternativeSongs,
-      swapSong
+      swapSong,
+      canSwap
     };
   },
 };
@@ -84,8 +83,8 @@ export default {
           <div class="song-name">{{ song.title }}</div>
           <div class="song-artist">{{ song.artist }}</div>
         </div>
-        <font-awesome-icon icon="redo" class="redo-icon" @click="swapSong(index)" />
         <div class="song-year">{{ song.releaseYear }}</div>
+        <font-awesome-icon icon="redo" class="redo-icon" :class="{ 'disabled': !canSwap }" @click="canSwap && swapSong(index)" />
         <img
           class="spotify-icon"
           src="@/assets/images/music_icons/spotify.png"
@@ -129,7 +128,7 @@ ol {
 
 .song-item {
   display: flex;
-  justify-content: space-between; /* This line ensures that items are spaced across the main axis */
+  justify-content: space-between; 
   align-items: center;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #e6e6e6;
@@ -148,11 +147,15 @@ ol {
 .redo-icon {
   margin-right: 10px;
   cursor: pointer;
-  color: #4a76a8; /* Example color, change as needed */
+  color: #4a76a8; 
   width: 24px;
   height: 24px;
 }
 
+.disabled {
+  color: #ccc; 
+  cursor: not-allowed;
+}
 
 .song-name {
   font-size: 1.3rem;
@@ -209,7 +212,7 @@ ol {
   }
 
   .song-artist {
-    color: #607D8B; /* slightly different color for mobile for fun */
+    color: #607D8B; 
   }
 }
 </style>
