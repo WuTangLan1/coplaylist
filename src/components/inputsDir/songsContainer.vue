@@ -19,7 +19,6 @@ export default {
 
     const selectedSongs = ref([
       { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 },
       { name: '', artist: '', influence: 50 }
     ]);
 
@@ -97,17 +96,12 @@ export default {
           placeholder="Enter Artist Name"
         />
       </div>
-      <div class="input-column">
-          <label :for="`influence-${index}`">Influence Weight</label>
-          <div class="slider-container">
-            <input type="range" :id="`influence-${index}`" v-model="song.influence" min="0" max="100" />
-            <span class="influence-label">{{ song.influence }}%</span>
-          </div>
-        </div>
-      </div>
-      <div class="checkbox-group">
+    </div>
+    <div class="checkbox-group">
+      <label class="checkbox-label">
         <input type="checkbox" id="newMusic" v-model="newMusic" />
-<label for="newMusic">New Music Only</label>
+        <span class="checkbox-description">Ensures no previously generated songs are included</span>
+      </label>
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
@@ -196,15 +190,15 @@ h3.description {
 }
 
 .input-column input[type="range"] {
-  flex-grow: 1; /* Allows the slider to fill available space */
-  margin-right: 10px; /* Adds spacing between the slider and the label */
+  flex-grow: 1; 
+  margin-right: 10px; 
 }
 
 .influence-label {
-  width: 50px; /* Fixed width for the label */
-  text-align: right; /* Right-aligns the text */
-  font-size: 0.9rem; /* Ensures the font size matches other inputs */
-  color: #333; /* Color for the percentage text */
+  width: 50px; 
+  text-align: right;
+  font-size: 0.9rem; 
+  color: #333; 
 }
 
 
@@ -230,10 +224,40 @@ h3.description {
 
 .checkbox-group {
   display: flex;
-  align-items: center;
+  justify-content: center; /* Center the checkbox group horizontally */
+  align-items: center; /* Align vertically */
   margin-top: 1rem;
   margin-bottom: 1rem;
-  position: relative;
+  width: 100%;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+
+.checkbox-description {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.input-column input:focus, input[type="checkbox"]:focus + .checkbox-description {
+  outline: 2px solid #507cac; 
+}
+
+@media (min-width: 550px) {
+  .checkbox-group {
+    justify-content: start; 
+  }
 }
 
 .help-icon {
@@ -250,19 +274,18 @@ h3.description {
   justify-content: space-between; 
   width: 95%; 
   margin-top: 1rem; 
-
   margin: auto;
 }
 
 button:disabled {
-  background-color: #ccc; /* Light gray background */
-  color: #666; /* Darker text color for contrast */
-  cursor: not-allowed; /* Shows a 'not allowed' cursor on hover */
+  background-color: #ccc; 
+  color: #666; 
+  cursor: not-allowed; 
 }
 .token-icon {
-  width: 20px;  /* Adjust size as necessary */
+  width: 20px; 
   height: auto;
-  margin-right: 5px; /* Space between the icon and the text */
+  margin-right: 5px; 
   vertical-align: middle;
 }
 

@@ -115,7 +115,7 @@ export default {
 
 @media (max-width: 400px) {
   .nav-icon {
-      height: clamp(20px, 3vw, 30px);
+      height: clamp(25px, 3vw, 30px);
     }
 }
 
