@@ -33,9 +33,9 @@ export default {
         </div>
       </div>
       <div class="button-group">
-        <button class="next-button quick-gen" @click="quickGen">Quick Gen</button>
+        <button class="next-button improve-playlist" @click="improvePlaylist" disabled>Improve</button>
+        <button class="next-button quick-gen" @click="quickGen" disabled>Quick Gen</button>
         <button class="next-button long-gen" @click="getStarted">Long Gen</button>
-        <button class="next-button improve-playlist" @click="improvePlaylist">Improve</button>
       </div>
     </div>
   </template>
@@ -135,7 +135,7 @@ ul {
     color: #4c65af; 
   }
   
-.next-button {
+  .next-button {
   align-self: flex-end;
   padding: 10px 20px;
   color: white;
@@ -146,29 +146,35 @@ ul {
 }
 
 .long-gen {
-  background-color: #4c56af;
+  background-color: #4c56af; /* Original color for Long Gen */
 }
 
 .long-gen:hover {
-  background-color: #46367c;
+  background-color: #46367c; /* Darker shade on hover */
 }
 
 .quick-gen {
-  background-color: #78A355; 
-}
-
-.quick-gen:hover {
-  background-color: #5C7A40;
+  background-color: #A0A0A0; /* Grey color for disabled */
+  cursor: not-allowed; /* Cursor indicates disabled state */
 }
 
 .improve-playlist {
-  background-color: #DAA520;
+  background-color: #A0A0A0; /* Grey color for disabled */
+  cursor: not-allowed; /* Cursor indicates disabled state */
 }
 
-.improve-playlist:hover {
-  background-color: #B8860B;
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
+@media (max-width: 420px) {
+  .next-button {
+    width: 100%;
+    padding: 12px 0;
+  }
+}
 .button-group {
   display: flex;
   gap: 10px;

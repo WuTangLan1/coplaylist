@@ -49,10 +49,25 @@ export default {
       }
     }
 
+    const alternativeSongs = ref([]);
+
+    const swapSong = (index) => {
+      if (alternativeSongs.value.length > 0) {
+        const randomIndex = Math.floor(Math.random() * alternativeSongs.value.length);
+        playlist.value[index] = alternativeSongs.value[randomIndex]; 
+        alternativeSongs.value.splice(randomIndex, 1); 
+      } else {
+        console.error("No alternative songs available for swapping.");
+      }
+    };
+
+
     return {
       playlist,
       playlistName,
       playSongPreview,
+      alternativeSongs,
+      swapSong
     };
   },
 };
