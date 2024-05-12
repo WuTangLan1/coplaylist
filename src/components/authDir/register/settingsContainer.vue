@@ -28,7 +28,6 @@ export default {
       <input v-model="password" type="password" placeholder="Password" required>
       <input v-model="confirmPassword" type="password" placeholder="Confirm Password" required>
       <input v-model="country" placeholder="Country of Origin">
-      <button type="submit">Next</button>
     </form>
   </div>
 </template>
