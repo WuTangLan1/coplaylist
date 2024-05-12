@@ -37,6 +37,6 @@ input, button {
     display: block;
     margin-top: 10px;
     padding: 8px;
-    width: 100%;
+    width: 90%;
 }
 </style>
