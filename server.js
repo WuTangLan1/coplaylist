@@ -124,9 +124,7 @@ app.post('/generate-playlist', async (req, res) => {
 
         const data = response.data;
         const songs = data.choices[0].message.content.split('\n').slice(0, -5); 
-        console.log('main playlist : ', songs)
         const alternativeSongs = data.choices[0].message.content.split('\n').slice(-5); 
-        console.log('alt playlist : ', alternativeSongs)
         res.json({songs, alternativeSongs});
     } catch (error) {
         console.error('Error generating playlist:', error);

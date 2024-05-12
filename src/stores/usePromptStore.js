@@ -185,7 +185,6 @@ export const usePromptStore = defineStore('prompt', {
           await authStore.deductTokens(2);
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-          console.log('response for regen :', response.data)
           playlistStore.setPlaylistDetails(this.formatPlaylist(response.data.songs));
           playlistStore.setAlternativeSongs(this.formatAlternativePlaylist(response.data.alternativeSongs)); // Ensure alternative songs are also set here
           this.regenerateAttempts++;
