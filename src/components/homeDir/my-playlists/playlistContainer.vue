@@ -80,17 +80,19 @@ export default {
         </select>
       </div>
       <div class="playlist-container">
-        <div v-if="loading">Loading playlists...</div>
+        <div v-if="loading" class="loading-container">
+          <img src="@/assets/images/loading/playlist_loading.gif" alt="Loading playlists" class="loading-gif" />
+          <img src="@/assets/images/loading/playlist_loading.gif" alt="Loading playlists" class="loading-gif" />
+        </div>
         <div v-else-if="error">Error: {{ error }}</div>
         <div v-else-if="filteredPlaylists.length === 0">No playlists found.</div>
         <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist"/>
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
         </div>
       </div>
     </div>
   </div>
 </template>
-
 
   
   <style scoped>
@@ -132,6 +134,19 @@ export default {
       opacity: 1;
     }
   }
+
+  .loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;  
+  width: 100%;
+}
+
+.loading-gif {
+  width: 40% ;
+  max-width:100px;
+}
 
 .modal-header {
   display: flex;
