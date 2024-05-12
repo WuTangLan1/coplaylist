@@ -63,12 +63,17 @@ export default {
 }
 .form-group {
   margin-bottom: 20px;
+  width: 80%;
+  padding:1rem;
 }
 input {
-  width: 90%;
+  width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  align-items: center;
+  align-self: center;
+  align-content: center;
 }
 input:focus {
   border-color: #6658d3;

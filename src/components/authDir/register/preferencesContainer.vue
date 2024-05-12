@@ -1,30 +1,31 @@
 <!-- src\components\authDir\register\preferencesContainer.vue -->
 
-  
-  <script>
-  export default {
-    name: 'PreferencesContainer',
-    data() {
-      return {
-        favouriteArtists: [''],
-        dislikedArtists: ['']
-      };
-    },
-    methods: {
-      addArtist(list) {
+<script>
+export default {
+  name: 'PreferencesContainer',
+  data() {
+    return {
+      favouriteArtists: [''],
+      dislikedArtists: ['']
+    };
+  },
+  methods: {
+    addArtist(list) {
+      if (list.length < 5) {
         list.push('');
-      },
-      removeArtist(list, index) {
-        list.splice(index, 1);
-      },
-      submitPreferences() {
-        console.log("Favourite Artists:", this.favouriteArtists);
-        console.log("Disliked Artists:", this.dislikedArtists);
       }
+    },
+    removeArtist(list, index) {
+      list.splice(index, 1);
+    },
+    submitPreferences() {
+      console.log("Favourite Artists:", this.favouriteArtists);
+      console.log("Disliked Artists:", this.dislikedArtists);
     }
-  };
-  </script>
-
+  }
+};
+</script>
+  
 <template>
     <div class="preferences-container">
       <h2>Preferences</h2>
@@ -33,18 +34,18 @@
           <legend>Favourite Artists</legend>
           <div v-for="(artist, index) in favouriteArtists" :key="'fav-' + index" class="input-group">
             <input type="text" v-model="favouriteArtists[index]" placeholder="Enter artist" aria-label="Favourite Artist">
-            <button type="button" @click="removeArtist(favouriteArtists, index)">Remove</button>
+            <button type="button" @click="removeArtist(favouriteArtists, index)" class="remove-btn">Remove</button>
           </div>
-          <button type="button" @click="addArtist(favouriteArtists)">Add Artist</button>
+          <button type="button" @click="addArtist(favouriteArtists)" :disabled="favouriteArtists.length >= 5" class="add-btn">Add Artist</button>
         </fieldset>
         
         <fieldset>
           <legend>Disliked Artists</legend>
           <div v-for="(artist, index) in dislikedArtists" :key="'dis-' + index" class="input-group">
             <input type="text" v-model="dislikedArtists[index]" placeholder="Enter artist" aria-label="Disliked Artist">
-            <button type="button" @click="removeArtist(dislikedArtists, index)">Remove</button>
+            <button type="button" @click="removeArtist(dislikedArtists, index)" class="remove-btn">Remove</button>
           </div>
-          <button type="button" @click="addArtist(dislikedArtists)">Add Artist</button>
+          <button type="button" @click="addArtist(dislikedArtists)" :disabled="dislikedArtists.length >= 5" class="add-btn">Add Artist</button>
         </fieldset>
         
         <button type="submit" class="submit-btn">Finish</button>
@@ -74,8 +75,13 @@
     flex-grow: 1;
   }
   
-  button[type="button"] {
+  .remove-btn, .add-btn {
     margin-left: 10px;
+  }
+  
+  .add-btn:disabled {
+    background-color: #ccc;
+    color: #666;
   }
   
   .submit-btn {
@@ -84,6 +90,7 @@
     background-color: #4CAF50;
     color: white;
     border: none;
+    cursor: pointer;
   }
   
   fieldset {
