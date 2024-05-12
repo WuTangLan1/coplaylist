@@ -77,6 +77,17 @@ export default {
   
   .remove-btn, .add-btn {
     margin-left: 10px;
+    border-radius: 0.2rem;
+  }
+
+  .remove-btn {
+    background-color: rgb(190, 50, 50);
+    color: white;
+  }
+
+  .add-btn {
+    background-color: rgb(26, 113, 40);
+    color: white;
   }
   
   .add-btn:disabled {
