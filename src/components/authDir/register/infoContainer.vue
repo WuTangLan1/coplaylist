@@ -1,12 +1,8 @@
 <!-- src\components\authDir\register\infoContainer.vue -->
 
 <script>
-import VueTelInput from 'vue-tel-input';
 export default {
   name: 'InfoContainer',
-  components: {
-    VueTelInput
-  },
   data() {
     return {
       firstName: '',
@@ -17,39 +13,46 @@ export default {
   },
   methods: {
     validateInput() {
-      // Implement validation logic here
-      // You can also access phone number details via this.phone
+      // Here, you could add more advanced validation if necessary
+      if (!this.email.includes('@')) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+      if (this.phone.length < 10) {
+        alert('Please enter a valid phone number.');
+        return false;
+      }
+      alert('Form is valid!');
     }
   }
 };
 </script>
 
 <template>
-    <div class="form-container">
-      <h2>Personal Information</h2>
-      <form @submit.prevent="validateInput">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input id="firstName" v-model="firstName" placeholder="Enter your first name" autofocus>
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last/Middle Name</label>
-          <input id="lastName" v-model="lastName" placeholder="Enter your last/middle name">
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input id="email" v-model="email" type="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
+  <div class="form-container">
+    <h2>Personal Information</h2>
+    <form @submit.prevent="validateInput">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input id="firstName" v-model="firstName" type="text" placeholder="Enter your first name" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last/Middle Name</label>
+        <input id="lastName" v-model="lastName" type="text" placeholder="Enter your last/middle name">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" v-model="email" type="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
         <label for="phone">Phone Number</label>
-        <vue-tel-input v-model="phone" :required="true"></vue-tel-input>
+        <input id="phone" v-model="phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
       </div>
     </form>
   </div>
 </template>
 
-  
-  <style scoped>
+<style scoped>
 .form-container {
   max-width: 500px;
   margin: auto;
@@ -61,13 +64,13 @@ export default {
 .form-group {
   margin-bottom: 20px;
 }
-input, .vue-tel-input {
+input {
   width: 90%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-input:focus, .vue-tel-input input:focus {
+input:focus {
   border-color: #6658d3;
   box-shadow: 0 0 8px rgba(102, 88, 211, 0.2);
 }
