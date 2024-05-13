@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       currentStep: 1,
+      previousStep: 1,
       formData: {
         firstName: '',
         lastName: '',
@@ -45,10 +46,14 @@ export default {
     },
     isFormValid() {
       return this.isInfoValid && this.isSettingsValid && this.isPreferencesValid;
+    },
+    transitionName() {
+      return this.currentStep > this.previousStep ? 'wipe-left' : 'wipe-right';
     }
   },
   methods: {
     navigate(step) {
+      this.previousStep = this.currentStep;
       this.currentStep = step;
       nextTick(() => {
         this.validateCurrentComponent();
@@ -101,7 +106,7 @@ export default {
 
 <template>
   <div class="registration-container">
-    <transition name="fade-slide">
+    <transition :name="transitionName">
       <component :is="componentMap[currentStep]"
                  :ref="currentStep === 1 ? 'infoContainer' : currentStep === 2 ? 'settingsContainer' : 'preferencesContainer'"
                  :form-data="formData"
@@ -177,12 +182,24 @@ export default {
   border-radius: 5px; 
 }
 
-.fade-slide-enter-active, .fade-slide-leave-active {
+.wipe-left-enter-active, .wipe-left-leave-active,
+.wipe-right-enter-active, .wipe-right-leave-active {
   transition: all 0.5s ease;
 }
 
-.fade-slide-enter-from, .fade-slide-leave-to {
-  opacity: 0;
-  transform: translateX(20px);
+.wipe-left-enter-from, .wipe-left-leave-to {
+  clip-path: inset(0 0 0 100%);
+}
+
+.wipe-left-leave-from, .wipe-left-enter-to {
+  clip-path: inset(0 0 0 0);
+}
+
+.wipe-right-enter-from, .wipe-right-leave-to {
+  clip-path: inset(0 100% 0 0);
+}
+
+.wipe-right-leave-from, .wipe-right-enter-to {
+  clip-path: inset(0 0 0 0);
 }
 </style>
