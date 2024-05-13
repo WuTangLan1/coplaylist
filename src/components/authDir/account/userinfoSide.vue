@@ -23,7 +23,7 @@ export default {
 
     const isUpdatedSuccessfully = ref(false);
 
-    async function updateUserProfile() {
+    const updateUserProfile = async () => {
       if (isFormValid.value) {
         try {
           await authStore.updateUserProfile({ 
@@ -42,7 +42,23 @@ export default {
       } else {
         alert('Please fill in all fields.');
       }
-    }
+    };
+
+    const addFavouriteArtist = () => {
+      favouriteArtists.value.push('');
+    };
+
+    const removeFavouriteArtist = (index) => {
+      favouriteArtists.value.splice(index, 1);
+    };
+
+    const addDislikedArtist = () => {
+      dislikedArtists.value.push('');
+    };
+
+    const removeDislikedArtist = (index) => {
+      dislikedArtists.value.splice(index, 1);
+    };
 
     return {
       firstName,
@@ -59,21 +75,6 @@ export default {
       addDislikedArtist,
       removeDislikedArtist
     };
-  },
-
-  methods: {
-    addFavouriteArtist() {
-      this.favouriteArtists.push('');
-    },
-    removeFavouriteArtist(index) {
-      this.favouriteArtists.splice(index, 1);
-    },
-    addDislikedArtist() {
-      this.dislikedArtists.push('');
-    },
-    removeDislikedArtist(index) {
-      this.dislikedArtists.splice(index, 1);
-    }
   }
 };
 </script>
@@ -118,41 +119,41 @@ export default {
 </template>
 
 <style scoped>
-  .userinfo {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  input, textarea {
-    width: 95%;
-    padding: 8px;
-    margin-top: 4px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+input, textarea {
+  width: 95%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
-  button {
-    padding: 10px 20px;
-    background-color: #507cac;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 5px;
-  }
+button {
+  padding: 10px 20px;
+  background-color: #507cac;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
 
-  button:hover {
-    background-color: #406fa1;
-  }
+button:hover {
+  background-color: #406fa1;
+}
 
-  .update-successful {
-    animation: glow 1s ease-in-out 3;
-  }
+.update-successful {
+  animation: glow 1s ease-in-out 3;
+}
 
-  @keyframes glow {
-    0%, 100% { box-shadow: none; }
-    50% { box-shadow: 0 0 8px 2px #28a745; }
-  }
+@keyframes glow {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 8px 2px #28a745; }
+}
 </style>
