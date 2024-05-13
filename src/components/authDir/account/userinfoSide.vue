@@ -82,39 +82,39 @@ export default {
 <template>
   <div class="userinfo">
     <h2>User Profile</h2>
-    <div>
+    <div class="form-group">
       <label for="first-name">First Name:</label>
       <input id="first-name" v-model="firstName" placeholder="Enter your first name" />
     </div>
-    <div>
+    <div class="form-group">
       <label for="last-name">Last Name:</label>
       <input id="last-name" v-model="lastName" placeholder="Enter your last name" />
     </div>
-    <div>
+    <div class="form-group">
       <label for="phone">Phone:</label>
       <input id="phone" v-model="phone" placeholder="Enter your phone number" />
     </div>
-    <div>
+    <div class="form-group">
       <label for="country">Country:</label>
       <input id="country" v-model="country" placeholder="Enter your country" />
     </div>
-    <div>
+    <div class="form-group">
       <label>Favourite Artists:</label>
-      <div v-for="(artist, index) in favouriteArtists" :key="index">
+      <div v-for="(artist, index) in favouriteArtists" :key="index" class="artist-group">
         <input v-model="favouriteArtists[index]" placeholder="Enter an artist" />
-        <button @click="removeFavouriteArtist(index)">Remove</button>
+        <button @click="removeFavouriteArtist(index)" class="remove-button">Remove</button>
       </div>
-      <button @click="addFavouriteArtist">Add Favourite Artist</button>
+      <button @click="addFavouriteArtist" class="add-button">Add Favourite Artist</button>
     </div>
-    <div>
+    <div class="form-group">
       <label>Disliked Artists:</label>
-      <div v-for="(artist, index) in dislikedArtists" :key="index">
+      <div v-for="(artist, index) in dislikedArtists" :key="index" class="artist-group">
         <input v-model="dislikedArtists[index]" placeholder="Enter an artist" />
-        <button @click="removeDislikedArtist(index)">Remove</button>
+        <button @click="removeDislikedArtist(index)" class="remove-button">Remove</button>
       </div>
-      <button @click="addDislikedArtist">Add Disliked Artist</button>
+      <button @click="addDislikedArtist" class="add-button">Add Disliked Artist</button>
     </div>
-    <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
+    <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid" @click="updateUserProfile" class="update-button">Update Profile</button>
   </div>
 </template>
 
@@ -122,15 +122,45 @@ export default {
 .userinfo {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 0.3rem;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+  align-items: center;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
 }
 
 input, textarea {
-  width: 95%;
-  padding: 8px;
-  margin-top: 4px;
+  width: 90%;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 16px;
+}
+
+.artist-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -141,11 +171,36 @@ button {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 5px;
 }
 
 button:hover {
   background-color: #406fa1;
+}
+
+.remove-button {
+  background-color: #d9534f;
+}
+
+.remove-button:hover {
+  background-color: #c9302c;
+}
+
+.add-button {
+  margin-top: 10px;
+  background-color: #5cb85c;
+}
+
+.add-button:hover {
+  background-color: #4cae4c;
+}
+
+.update-button {
+  align-self: center;
+  background-color: #5bc0de;
+}
+
+.update-button:hover {
+  background-color: #46b8da;
 }
 
 .update-successful {
@@ -157,3 +212,4 @@ button:hover {
   50% { box-shadow: 0 0 8px 2px #28a745; }
 }
 </style>
+
