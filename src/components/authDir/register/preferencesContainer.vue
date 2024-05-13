@@ -9,8 +9,17 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      inputStates: {
+        favouriteArtists: this.formData.favouriteArtists.map(() => false),
+        dislikedArtists: this.formData.dislikedArtists.map(() => false)
+      }
+    };
+  },
   computed: {
     isArtistsValid() {
+      // Check for at least one valid entry in each list
       const validFavouriteArtists = this.formData.favouriteArtists.filter(artist => artist.trim() !== '').length > 0;
       const validDislikedArtists = this.formData.dislikedArtists.filter(artist => artist.trim() !== '').length > 0;
       const isValid = validFavouriteArtists && validDislikedArtists;
@@ -18,24 +27,20 @@ export default {
       return isValid;
     }
   },
-  watch: {
-    'formData.favouriteArtists': {
-      handler() { this.$emit('validation', this.isArtistsValid); },
-      deep: true
-    },
-    'formData.dislikedArtists': {
-      handler() { this.$emit('validation', this.isArtistsValid); },
-      deep: true
-    }
-  },
   methods: {
-    addArtist(listName) {
-      if (this.formData[listName].length < 5) {
-        this.formData[listName].push('');
+    validateArtist(index, type) {
+      // Set the validation state based on whether the input is non-empty
+      this.inputStates[type][index] = this.formData[type][index].trim() !== '';
+    },
+    addArtist(type) {
+      if (this.formData[type].length < 5) {
+        this.formData[type].push('');
+        this.inputStates[type].push(false);  // Initialize state as false for new entry
       }
     },
-    removeArtist(listName, index) {
-      this.formData[listName].splice(index, 1);
+    removeArtist(type, index) {
+      this.formData[type].splice(index, 1);
+      this.inputStates[type].splice(index, 1);
       this.$emit('validation', this.isArtistsValid);
     }
   },
@@ -45,8 +50,6 @@ export default {
 };
 </script>
 
-
-
 <template>
   <div class="preferences-container">
     <h2>Preferences</h2>
@@ -54,9 +57,14 @@ export default {
       <fieldset>
         <legend>Favourite Artists</legend>
         <div v-for="(artist, index) in formData.favouriteArtists" :key="'fav-' + index" class="input-group">
-          <input type="text" v-model="formData.favouriteArtists[index]" placeholder="Enter artist" aria-label="Favourite Artist">
+          <input type="text"
+                 v-model="formData.favouriteArtists[index]"
+                 :class="{'input-valid': inputStates.favouriteArtists[index], 'input-invalid': !inputStates.favouriteArtists[index]}"
+                 @blur="validateArtist(index, 'favouriteArtists')"
+                 placeholder="Enter artist"
+                 aria-label="Favourite Artist">
           <div class="button-row">
-            <button type="button" @click="addArtist('favouriteArtists')" :disabled="formData.favouriteArtists.length >= 5" class="add-btn">Add Artist</button>
+            <button type="button" @click="addArtist('favouriteArtists')" :disabled="formData.favouriteArtists.length >= 5" class="add-btn">Add</button>
             <button type="button" @click="removeArtist('favouriteArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
           </div>
         </div>
@@ -64,9 +72,14 @@ export default {
       <fieldset>
         <legend>Disliked Artists</legend>
         <div v-for="(artist, index) in formData.dislikedArtists" :key="'dis-' + index" class="input-group">
-          <input type="text" v-model="formData.dislikedArtists[index]" placeholder="Enter artist" aria-label="Disliked Artist">
+          <input type="text"
+                 v-model="formData.dislikedArtists[index]"
+                 :class="{'input-valid': inputStates.dislikedArtists[index], 'input-invalid': !inputStates.dislikedArtists[index]}"
+                 @blur="validateArtist(index, 'dislikedArtists')"
+                 placeholder="Enter artist"
+                 aria-label="Disliked Artist">
           <div class="button-row">
-            <button type="button" @click="addArtist('dislikedArtists')" :disabled="formData.dislikedArtists.length >= 5" class="add-btn">Add Artist</button>
+            <button type="button" @click="addArtist('dislikedArtists')" :disabled="formData.dislikedArtists.length >= 5" class="add-btn">Add</button>
             <button type="button" @click="removeArtist('dislikedArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
           </div>
         </div>
@@ -89,6 +102,16 @@ export default {
 input, button {
   padding: 8px; 
   margin-top: 10px;
+}
+
+.input-valid {
+  border-color: lightblue;
+  box-shadow: 0 0 2px lightblue;
+}
+
+.input-invalid {
+  border-color: lightcoral;
+  box-shadow: 0 0 2px lightcoral;
 }
 
 .description {

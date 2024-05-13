@@ -8,12 +8,28 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      validationState: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        phone: false
+      }
+    };
+  },
   methods: {
     validateInput() {
       const validEmail = this.formData.email.includes('@') && this.formData.email.includes('.');
       const validPhone = this.formData.phone.length >= 10; // Assuming a minimum length for phone numbers
-      const fieldsFilled = this.formData.firstName && this.formData.lastName && this.formData.email && this.formData.phone;
-      this.$emit('validation', validEmail && validPhone && fieldsFilled);
+      const validFirstName = this.formData.firstName.trim() !== '';
+      const validLastName = this.formData.lastName.trim() !== '';
+      this.validationState.email = validEmail;
+      this.validationState.phone = validPhone;
+      this.validationState.firstName = validFirstName;
+      this.validationState.lastName = validLastName;
+      const fieldsFilled = validFirstName && validLastName && validEmail && validPhone;
+      this.$emit('validation', fieldsFilled);
     }
   },
   watch: {
@@ -28,29 +44,40 @@ export default {
 };
 </script>
 
-
 <template>
   <div class="form-container">
     <h2>Personal Information</h2>
     <p class="description">
-      Please fill out the form below with your personal details to create your account. 
+      Please fill out the form below with your personal details to create your account.
     </p>
     <form @submit.prevent="validateInput">
       <div class="form-group">
         <label for="firstName">First Name</label>
-        <input id="firstName" v-model="formData.firstName" type="text" placeholder="Enter your first name" autofocus>
+        <input id="firstName"
+               v-model="formData.firstName"
+               :class="{'input-valid': validationState.firstName, 'input-invalid': !validationState.firstName}"
+               type="text" placeholder="Enter your first name" autofocus>
       </div>
       <div class="form-group">
         <label for="lastName">Last/Middle Name</label>
-        <input id="lastName" v-model="formData.lastName" type="text" placeholder="Enter your last/middle name">
+        <input id="lastName"
+               v-model="formData.lastName"
+               :class="{'input-valid': validationState.lastName, 'input-invalid': !validationState.lastName}"
+               type="text" placeholder="Enter your last/middle name">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" v-model="formData.email" type="email" placeholder="Enter your email">
+        <input id="email"
+               v-model="formData.email"
+               :class="{'input-valid': validationState.email, 'input-invalid': !validationState.email}"
+               type="email" placeholder="Enter your email">
       </div>
       <div class="form-group">
         <label for="phone">Phone Number</label>
-        <input id="phone" v-model="formData.phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
+        <input id="phone"
+               v-model="formData.phone"
+               :class="{'input-valid': validationState.phone, 'input-invalid': !validationState.phone}"
+               type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
       </div>
     </form>
     <p class="description">
@@ -58,6 +85,7 @@ export default {
     </p>
   </div>
 </template>
+
 
 <style scoped>
 .form-container {
@@ -80,6 +108,17 @@ export default {
   flex-direction: column; 
   align-items: center; 
 }
+
+.input-valid {
+  border-color: lightblue;
+  box-shadow: 0 0 8px lightblue;
+}
+
+.input-invalid {
+  border-color: lightcoral;
+  box-shadow: 0 0 8px lightcoral;
+}
+
 
 .description {
   margin-bottom: 10px;
