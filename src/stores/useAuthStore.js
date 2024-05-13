@@ -12,23 +12,27 @@ export const useAuthStore = defineStore('auth', {
   
   actions: {
     async registerUser(details) {
-      const { email, fullName, username, password, musicTaste } = details;
+      const {
+        email, firstName, lastName, phone, password,
+        country, favouriteArtists, dislikedArtists
+      } = details;
+
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
         await updateProfile(user, {
-          displayName: fullName
+          displayName: `${firstName} ${lastName}`
         });
 
         const userProfile = {
-          full_name: fullName,
-          username: username,
-          playlists: [], 
-          taste: musicTaste,
-          disliked_artists: details.dislikedArtists.filter(Boolean),
+          first_name: firstName,
+          last_name: lastName,
+          phone: phone,
+          country: country,
+          favourite_artists: favouriteArtists.filter(Boolean), 
+          disliked_artists: dislikedArtists.filter(Boolean),
         };
-        
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);
         return user;
