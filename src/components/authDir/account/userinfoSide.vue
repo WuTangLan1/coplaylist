@@ -6,17 +6,36 @@ import { useAuthStore } from '@/stores/useAuthStore';
 export default {
   setup() {
     const authStore = useAuthStore();
-    const fullName = ref(authStore.user.full_name || '');
-    const musicTaste = ref(authStore.user.taste || '');
-    const isFormValid = computed(() => fullName.value.trim() !== '' && musicTaste.value.trim() !== '');
-    const isUpdatedSuccessfully = ref(false); 
+
+    const firstName = ref(authStore.user.first_name || '');
+    const lastName = ref(authStore.user.last_name || '');
+    const phone = ref(authStore.user.phone || '');
+    const country = ref(authStore.user.country || '');
+    const favouriteArtists = ref(authStore.user.favourite_artists || []);
+    const dislikedArtists = ref(authStore.user.disliked_artists || []);
+
+    const isFormValid = computed(() => 
+      firstName.value.trim() !== '' && 
+      lastName.value.trim() !== '' && 
+      phone.value.trim() !== '' &&
+      country.value.trim() !== ''
+    );
+
+    const isUpdatedSuccessfully = ref(false);
 
     async function updateUserProfile() {
       if (isFormValid.value) {
         try {
-          await authStore.updateUserProfile({ full_name: fullName.value, taste: musicTaste.value });
-          isUpdatedSuccessfully.value = true; 
-          setTimeout(() => isUpdatedSuccessfully.value = false, 3000); 
+          await authStore.updateUserProfile({ 
+            first_name: firstName.value,
+            last_name: lastName.value,
+            phone: phone.value,
+            country: country.value,
+            favourite_artists: favouriteArtists.value,
+            disliked_artists: dislikedArtists.value
+          });
+          isUpdatedSuccessfully.value = true;
+          setTimeout(() => isUpdatedSuccessfully.value = false, 3000);
         } catch (error) {
           alert('Failed to update profile: ' + error.message);
         }
@@ -26,12 +45,35 @@ export default {
     }
 
     return {
-      fullName,
-      musicTaste,
+      firstName,
+      lastName,
+      phone,
+      country,
+      favouriteArtists,
+      dislikedArtists,
       updateUserProfile,
       isFormValid,
-      isUpdatedSuccessfully 
+      isUpdatedSuccessfully,
+      addFavouriteArtist,
+      removeFavouriteArtist,
+      addDislikedArtist,
+      removeDislikedArtist
     };
+  },
+
+  methods: {
+    addFavouriteArtist() {
+      this.favouriteArtists.push('');
+    },
+    removeFavouriteArtist(index) {
+      this.favouriteArtists.splice(index, 1);
+    },
+    addDislikedArtist() {
+      this.dislikedArtists.push('');
+    },
+    removeDislikedArtist(index) {
+      this.dislikedArtists.splice(index, 1);
+    }
   }
 };
 </script>
@@ -40,12 +82,36 @@ export default {
   <div class="userinfo">
     <h2>User Profile</h2>
     <div>
-      <label for="full-name">Full Name:</label>
-      <input id="full-name" v-model="fullName" placeholder="Enter your full name" />
+      <label for="first-name">First Name:</label>
+      <input id="first-name" v-model="firstName" placeholder="Enter your first name" />
     </div>
     <div>
-      <label for="music-taste">Music Taste:</label>
-      <textarea id="music-taste" v-model="musicTaste" placeholder="Describe your music taste"></textarea>
+      <label for="last-name">Last Name:</label>
+      <input id="last-name" v-model="lastName" placeholder="Enter your last name" />
+    </div>
+    <div>
+      <label for="phone">Phone:</label>
+      <input id="phone" v-model="phone" placeholder="Enter your phone number" />
+    </div>
+    <div>
+      <label for="country">Country:</label>
+      <input id="country" v-model="country" placeholder="Enter your country" />
+    </div>
+    <div>
+      <label>Favourite Artists:</label>
+      <div v-for="(artist, index) in favouriteArtists" :key="index">
+        <input v-model="favouriteArtists[index]" placeholder="Enter an artist" />
+        <button @click="removeFavouriteArtist(index)">Remove</button>
+      </div>
+      <button @click="addFavouriteArtist">Add Favourite Artist</button>
+    </div>
+    <div>
+      <label>Disliked Artists:</label>
+      <div v-for="(artist, index) in dislikedArtists" :key="index">
+        <input v-model="dislikedArtists[index]" placeholder="Enter an artist" />
+        <button @click="removeDislikedArtist(index)">Remove</button>
+      </div>
+      <button @click="addDislikedArtist">Add Disliked Artist</button>
     </div>
     <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid" @click="updateUserProfile">Update Profile</button>
   </div>
@@ -59,27 +125,11 @@ export default {
   }
 
   input, textarea {
-    width: 95%; 
+    width: 95%;
     padding: 8px;
     margin-top: 4px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    align-items: center;
-    align-self: center;
-    align-content: center;
-  }
-
-  textarea {
-  height: 120px; 
-  }
-
-  .update-successful {
-    animation: glow 1s ease-in-out 3; 
-  }
-
-  @keyframes glow {
-    0%, 100% { box-shadow: none; }
-    50% { box-shadow: 0 0 8px 2px #28a745; } 
   }
 
   button {
@@ -90,10 +140,19 @@ export default {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-top: 5px;
   }
 
   button:hover {
     background-color: #406fa1;
   }
 
-  </style>
+  .update-successful {
+    animation: glow 1s ease-in-out 3;
+  }
+
+  @keyframes glow {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 8px 2px #28a745; }
+  }
+</style>
