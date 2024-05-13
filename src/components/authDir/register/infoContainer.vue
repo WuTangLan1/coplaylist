@@ -64,7 +64,7 @@ export default {
 .form-group {
   margin-bottom: 20px;
   width: 80%;
-  padding:1rem;
+  padding:0.5rem;
 }
 input {
   width: 100%;

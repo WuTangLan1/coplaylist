@@ -56,9 +56,7 @@ export default {
 .settings-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-self: center;
-  align-content: center;
+  text-align: left;
 }
 
 label {
@@ -66,21 +64,22 @@ label {
   margin-bottom: 5px;
   font-weight: bold;
   color: #333;
+  text-align: left;
 }
 
 .input-group {
-  width: 100%;
   margin-bottom: 20px;
+  width: 80%;
+  padding:0.5rem;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   align-items: center;
   align-self: center;
   align-content: center;
-}
-
-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 input:focus {
