@@ -1,5 +1,6 @@
 <!-- src\components\auth\regSide.vue -->
 <script>
+import { nextTick } from 'vue';
 import InfoContainer from './register/infoContainer.vue';
 import SettingsContainer from './register/settingsContainer.vue';
 import PreferencesContainer from './register/preferencesContainer.vue';
@@ -33,37 +34,40 @@ export default {
   computed: {
     componentMap() {
       return {
-        1: 'InfoContainer',
-        2: 'SettingsContainer',
-        3: 'PreferencesContainer'
+        1: InfoContainer,
+        2: SettingsContainer,
+        3: PreferencesContainer
       };
     },
     isFormValid() {
       return this.isInfoValid && this.isSettingsValid && this.isPreferencesValid;
     }
   },
-  watch: {
-    currentStep(newValue, oldValue) {
-      if (newValue === 1) {
-        this.$refs.infoContainer.validateInput();
-      } else if (newValue === 2) {
-        this.$refs.settingsContainer.validatePassword();
-      } else if (newValue === 3) {
-        this.$refs.preferencesContainer.isArtistsValid;
-      }
-    }
-  },
   methods: {
     navigate(step) {
       this.currentStep = step;
+      // Ensure the DOM is updated before validating the current component
+      nextTick(() => {
+        this.validateCurrentComponent();
+      });
     },
-    updateValidity(status, step) { 
+    updateValidity(status, step) {
       if (step === 1) {
         this.isInfoValid = status;
       } else if (step === 2) {
         this.isSettingsValid = status;
       } else if (step === 3) {
         this.isPreferencesValid = status;
+      }
+    },
+    validateCurrentComponent() {
+      if (this.currentStep === 1 && this.$refs.infoContainer) {
+        this.$refs.infoContainer.validateInput();
+      } else if (this.currentStep === 2 && this.$refs.settingsContainer) {
+        this.$refs.settingsContainer.validatePassword();
+      } else if (this.currentStep === 3 && this.$refs.preferencesContainer) {
+        // Directly use the computed property here
+        this.updateValidity(this.$refs.preferencesContainer.isArtistsValid, 3);
       }
     },
     register() {
@@ -73,14 +77,18 @@ export default {
         alert('Please complete the form correctly.');
       }
     }
+  },
+  mounted() {
+    this.validateCurrentComponent();
   }
 };
 </script>
 
+
 <template>
   <div class="registration-container">
     <component :is="componentMap[currentStep]"
-               ref="infoContainer" 
+               :ref="currentStep === 1 ? 'infoContainer' : currentStep === 2 ? 'settingsContainer' : 'preferencesContainer'"
                :form-data="formData"
                @validation="updateValidity($event, currentStep)">
     </component>
@@ -92,6 +100,7 @@ export default {
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
 </template>
+
 
 
 <style scoped>

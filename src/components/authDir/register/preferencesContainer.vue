@@ -13,7 +13,9 @@ export default {
     isArtistsValid() {
       const validFavouriteArtists = this.formData.favouriteArtists.some(artist => artist.trim() !== '');
       const validDislikedArtists = this.formData.dislikedArtists.some(artist => artist.trim() !== '');
-      return validFavouriteArtists && validDislikedArtists;
+      const isValid = validFavouriteArtists && validDislikedArtists;
+      this.$emit('validation', isValid);
+      return isValid;
     }
   },
   watch: {
