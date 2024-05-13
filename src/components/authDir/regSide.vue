@@ -99,14 +99,16 @@ export default {
 };
 </script>
 
-
 <template>
   <div class="registration-container">
-    <component :is="componentMap[currentStep]"
-               :ref="currentStep === 1 ? 'infoContainer' : currentStep === 2 ? 'settingsContainer' : 'preferencesContainer'"
-               :form-data="formData"
-               @validation="updateValidity($event, currentStep)">
-    </component>
+    <transition name="fade-slide">
+      <component :is="componentMap[currentStep]"
+                 :ref="currentStep === 1 ? 'infoContainer' : currentStep === 2 ? 'settingsContainer' : 'preferencesContainer'"
+                 :form-data="formData"
+                 @validation="updateValidity($event, currentStep)"
+                 key="currentStep">
+      </component>
+    </transition>
     <div class="navigation-dots">
       <span v-for="dot in [1, 2, 3]" :key="dot"
             :class="{ active: currentStep === dot }"
@@ -116,7 +118,6 @@ export default {
   </div>
   <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
 </template>
-
 
 <style scoped>
 .registration-container {
@@ -133,7 +134,6 @@ export default {
   transition: background-color 0.3s;
   align-items: center;
   align-content: center;
-
 }
 
 .navigation-dots {
@@ -175,5 +175,14 @@ export default {
   width: 90%;
   height: 40px;
   border-radius: 5px; 
+}
+
+.fade-slide-enter-active, .fade-slide-leave-active {
+  transition: all 0.5s ease;
+}
+
+.fade-slide-enter-from, .fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
 }
 </style>
