@@ -6,21 +6,18 @@ export default {
   data() {
     return {
       favouriteArtists: [''],
-      dislikedArtists: [''],
-      isFormValid: false,
+      dislikedArtists: ['']
     };
   },
   computed: {
-    // Check if the artists lists are valid
     isArtistsValid() {
       return this.favouriteArtists.every(artist => artist.trim() !== '') &&
              this.dislikedArtists.every(artist => artist.trim() !== '');
-    },
+    }
   },
   watch: {
-    // Watch the validity of artists and update form validity
     isArtistsValid(newVal) {
-      this.isFormValid = newVal;
+      this.$emit('validation', newVal);
     }
   },
   methods: {
@@ -34,14 +31,12 @@ export default {
         list.splice(index, 1);
       }
     },
-    submitPreferences() {
-      if (this.isFormValid) {
-        console.log("Favourite Artists:", this.favouriteArtists);
-        console.log("Disliked Artists:", this.dislikedArtists);
-      } else {
-        console.error('Form is invalid');
-      }
+    registerUser() {
+      // I want to ensure all validation is passed and register the user here
     }
+  },
+  created() {
+    this.$emit('validation', this.isArtistsValid); 
   }
 };
 </script>
@@ -78,7 +73,7 @@ export default {
         </div>
       </fieldset>
 
-      <button type="submit" class="submit-btn" :disabled="!isFormValid">Register</button>
+      <button type="submit" class="submit-btn" @click="" :disabled="!isFormValid">Register</button>
     </form>
   </div>
 </template>

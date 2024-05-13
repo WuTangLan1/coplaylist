@@ -58,7 +58,6 @@ export default {
             :class="{ active: currentStep === dot }"
             @click="navigate(dot)"></span>
     </div>
-    <button :disabled="!isFormValid">Register</button>
   </div>
 </template>
 
