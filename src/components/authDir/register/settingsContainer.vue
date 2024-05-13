@@ -6,10 +6,18 @@ export default {
     return {
       password: '',
       confirmPassword: '',
-      country: ''
+      country: '',
+      showPassword: false,
+      showConfirmPassword: false
     };
   },
   methods: {
+    togglePasswordVisibility() {
+      this.showPassword = !this.showPassword;
+    },
+    toggleConfirmPasswordVisibility() {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    },
     validatePassword() {
       if (this.password !== this.confirmPassword) {
         alert("Passwords do not match!");
@@ -31,11 +39,17 @@ export default {
     <form @submit.prevent="validatePassword" class="settings-form">
       <div class="input-group">
         <label for="password">Password</label>
-        <input v-model="password" type="password" placeholder="Password" required>
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" placeholder="Password" required>
+        <span @click="togglePasswordVisibility" class="visibility-toggle">
+          <font-awesome-icon :icon="showPassword ? 'far fa-eye-slash' : 'far fa-eye'" />
+        </span>
       </div>
       <div class="input-group">
         <label for="passwordConfirm">Confirm password</label>
-        <input v-model="confirmPassword" type="password" placeholder="Confirm Password" required>
+        <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" placeholder="Confirm Password" required>
+        <span @click="toggleConfirmPasswordVisibility" class="visibility-toggle">
+          <font-awesome-icon :icon="showConfirmPassword ? 'far fa-eye-slash' : 'far fa-eye'" />
+        </span>
       </div>
       <div class="input-group">
         <label for="countryofOrigin">Country of origin</label>
@@ -58,6 +72,7 @@ export default {
   max-width: 500px;
   margin: auto;
   text-align: center;
+  position: relative;
 }
 
 .settings-form {
@@ -65,6 +80,12 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center; 
+}
+
+.visibility-toggle {
+  position: absolute;
+  right: 12%;
+  cursor: pointer;
 }
 
 .description {
