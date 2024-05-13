@@ -35,7 +35,7 @@ export default {
     navigate(step) {
       this.currentStep = step;
     },
-    updateValidity(status, step) {
+    updateValidity(status, step) { 
       if (step === 1) {
         this.isInfoValid = status;
       } else if (step === 2) {
@@ -44,6 +44,7 @@ export default {
         this.isPreferencesValid = status;
       }
     }
+
   }
 };
 </script>
@@ -58,9 +59,9 @@ export default {
             :class="{ active: currentStep === dot }"
             @click="navigate(dot)"></span>
     </div>
+    <button :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
 </template>
-
 
 <style scoped>
 .registration-container {
@@ -101,5 +102,23 @@ export default {
 .navigation-dots .active {
   background-color: #7e1b76;
   transform: scale(1.5);
+}
+
+.reg-btn:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed; 
+}
+
+.reg-btn {
+  display: block;
+  margin: 20px auto;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 90%;
+  height: 40px;
+  border-radius: 5px; 
 }
 </style>

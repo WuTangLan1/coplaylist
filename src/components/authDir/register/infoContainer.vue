@@ -26,6 +26,9 @@ export default {
     lastName() { this.validateInput(); },
     email() { this.validateInput(); },
     phone() { this.validateInput(); }
+  },
+  created() {
+    this.validateInput();
   }
 };
 </script>

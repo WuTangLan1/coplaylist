@@ -3,6 +3,12 @@
 <script>
 export default {
   name: 'PreferencesContainer',
+  props: {
+    isFormValid: {
+      type: Boolean,
+      required: true
+    }
+  },
   data() {
     return {
       favouriteArtists: [''],
@@ -11,13 +17,10 @@ export default {
   },
   computed: {
     isArtistsValid() {
-      return this.favouriteArtists.every(artist => artist.trim() !== '') &&
-             this.dislikedArtists.every(artist => artist.trim() !== '');
-    }
-  },
-  watch: {
-    isArtistsValid(newVal) {
-      this.$emit('validation', newVal);
+      const isValid = this.favouriteArtists.every(artist => artist.trim() !== '') &&
+                      this.dislikedArtists.every(artist => artist.trim() !== '');
+      this.$emit('validation', isValid);
+      return isValid;
     }
   },
   methods: {
@@ -30,13 +33,10 @@ export default {
       if (list.length > 1) {
         list.splice(index, 1);
       }
-    },
-    registerUser() {
-      // I want to ensure all validation is passed and register the user here
     }
   },
   created() {
-    this.$emit('validation', this.isArtistsValid); 
+    this.$emit('validation', this.isArtistsValid);
   }
 };
 </script>
@@ -72,8 +72,6 @@ export default {
           </div>
         </div>
       </fieldset>
-
-      <button type="submit" class="submit-btn" @click="" :disabled="!isFormValid">Register</button>
     </form>
   </div>
 </template>
@@ -140,18 +138,6 @@ input[type="text"] {
   background-color: #ccc;
   color: #666;
   cursor: not-allowed; 
-}
-
-.submit-btn {
-  display: block;
-  margin: 20px auto;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  width: 90%;
-  height: 40px;
-  border-radius: 5px; 
 }
 
 fieldset {
