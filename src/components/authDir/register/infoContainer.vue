@@ -111,14 +111,13 @@ export default {
 
 .input-valid {
   border-color: lightblue;
-  box-shadow: 0 0 8px lightblue;
+  box-shadow: 0 0 2px lightblue;
 }
 
 .input-invalid {
   border-color: lightcoral;
-  box-shadow: 0 0 8px lightcoral;
+  box-shadow: 0 0 2px lightcoral;
 }
-
 
 .description {
   margin-bottom: 10px;
