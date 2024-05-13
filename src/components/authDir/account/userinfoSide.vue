@@ -1,6 +1,6 @@
 <!-- src\components\authDir\account\userinfoSide.vue -->
 <script>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
@@ -173,6 +173,7 @@ label {
   font-weight: bold;
   color: #333;
   text-align: left;
+  width: 100%; /* Added to make sure the label aligns properly */
 }
 
 input, textarea {
@@ -222,7 +223,7 @@ button:hover {
 }
 
 .update-button {
-  align-self: center;
+  align-self: flex-end; /* Changed to align button to the right */
   background-color: #5bc0de;
 }
 

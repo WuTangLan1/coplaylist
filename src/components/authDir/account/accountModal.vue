@@ -14,7 +14,7 @@ export default {
     const authStore = useAuthStore();
     return {
       activeTab: 'userinfo', 
-      username: authStore.user ? authStore.user.full_name : 'User' 
+      username: authStore.user.first_name ? authStore.user.first_name : 'User'
     };
   },
   methods: {
