@@ -69,48 +69,69 @@ export default {
 
 <style scoped>
 .login-container {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 0.3rem;
+  max-width: 550px;
+  max-height: 75vh;
+  overflow-y: auto;
   background: #e1e8eb;
-  padding: 0.3rem;
-  border-radius: 15px; 
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15); 
-  width: 90%;
-  max-width: 500px; 
-  margin: 20px auto;
-  border: 1px solid #e1e8eb;
+  margin: auto;
+  transition: background-color 0.3s;
+  align-items: center;
+  align-content: center;
 }
 
-.login-form h2 {
-  font-size: 28px;
+.login-form {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
   color: #333;
-  margin-bottom: 20px;
   text-align: center;
   font-weight: bold;
 }
 
-.form-group {
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+input {
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f7f9fc; 
 }
 
-.form-group label {
-  font-weight: bold;
+input:focus {
+  border-color: #6658d3;
+  box-shadow: 0 0 8px rgba(102, 88, 211, 0.2);
+}
+
+label {
+  width: 100%;
   margin-bottom: 5px;
-  color: #666;
+  font-weight: bold;
+  color: #333;
 }
 
 .input-group {
   position: relative;
-  display: flex;
-}
-
-.form-group input {
-  padding: 10px;
-  border-radius: 8px; 
-  max-width: 93%;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  background-color: #f7f9fc; /* Lighter background for inputs */
   width: 100%;
 }
 
@@ -129,23 +150,24 @@ export default {
 }
 
 .submit-button {
-  padding: 0.7rem 2rem;
-  background-color: #5c90b8;
+  padding: 10px 20px;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 8px;
   cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s ease;
+  width: 90%;
+  border-radius: 5px; 
+  transition: background-color 0.3s;
 }
 
 .submit-button:hover, .submit-button:focus {
   background-color: #311e86;
 }
 
-h2 {
+.description {
+  margin-bottom: 10px;
+  color: #666;
   text-align: center;
-  margin-bottom: 20px;
+  max-width: 100%;
 }
 </style>
-

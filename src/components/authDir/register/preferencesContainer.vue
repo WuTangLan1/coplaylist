@@ -11,20 +11,22 @@ export default {
   },
   computed: {
     isArtistsValid() {
-      const validFavouriteArtists = this.formData.favouriteArtists.some(artist => artist.trim() !== '');
-      const validDislikedArtists = this.formData.dislikedArtists.some(artist => artist.trim() !== '');
+      const validFavouriteArtists = this.formData.favouriteArtists.filter(artist => artist.trim() !== '').length > 0;
+      const validDislikedArtists = this.formData.dislikedArtists.filter(artist => artist.trim() !== '').length > 0;
       const isValid = validFavouriteArtists && validDislikedArtists;
       this.$emit('validation', isValid);
       return isValid;
     }
   },
   watch: {
-    isArtistsValid(newValue) {
-      this.$emit('validation', newValue);
+    'formData.favouriteArtists': {
+      handler() { this.$emit('validation', this.isArtistsValid); },
+      deep: true
+    },
+    'formData.dislikedArtists': {
+      handler() { this.$emit('validation', this.isArtistsValid); },
+      deep: true
     }
-  },
-  mounted() {
-    this.$emit('validation', this.isArtistsValid); 
   },
   methods: {
     addArtist(listName) {
@@ -33,9 +35,8 @@ export default {
       }
     },
     removeArtist(listName, index) {
-      if (this.formData[listName].length > 1) {
-        this.formData[listName].splice(index, 1);
-      }
+      this.formData[listName].splice(index, 1);
+      this.$emit('validation', this.isArtistsValid);
     }
   },
   created() {
@@ -43,6 +44,7 @@ export default {
   }
 };
 </script>
+
 
 
 <template>
@@ -123,13 +125,13 @@ input[type="text"] {
 }
 
 .remove-btn {
-  background-color: rgb(190, 50, 50);
-  color: white;
+  background-color: rgb(245, 207, 184);
+  color: black;
 }
 
 .add-btn {
-  background-color: rgb(26, 113, 40);
-  color: white;
+  background-color: rgb(174, 255, 205);
+  color: black;
 }
 
 .add-btn:disabled, .remove-btn:disabled {

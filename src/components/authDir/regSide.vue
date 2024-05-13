@@ -4,6 +4,7 @@ import { nextTick } from 'vue';
 import InfoContainer from './register/infoContainer.vue';
 import SettingsContainer from './register/settingsContainer.vue';
 import PreferencesContainer from './register/preferencesContainer.vue';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default {
   name: 'RegSide',
@@ -46,7 +47,6 @@ export default {
   methods: {
     navigate(step) {
       this.currentStep = step;
-      // Ensure the DOM is updated before validating the current component
       nextTick(() => {
         this.validateCurrentComponent();
       });
@@ -66,13 +66,13 @@ export default {
       } else if (this.currentStep === 2 && this.$refs.settingsContainer) {
         this.$refs.settingsContainer.validatePassword();
       } else if (this.currentStep === 3 && this.$refs.preferencesContainer) {
-        // Directly use the computed property here
         this.updateValidity(this.$refs.preferencesContainer.isArtistsValid, 3);
       }
     },
     register() {
       if (this.isFormValid) {
-        this.$store.useAuthStore().registerUser(this.formData);
+        const authStore = useAuthStore();
+        authStore.registerUser(this.formData);
       } else {
         alert('Please complete the form correctly.');
       }
