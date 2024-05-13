@@ -5,13 +5,15 @@ import InfoContainer from './register/infoContainer.vue';
 import SettingsContainer from './register/settingsContainer.vue';
 import PreferencesContainer from './register/preferencesContainer.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
+import RegsuccessModal from './authModals/regsuccessModal.vue';
 
 export default {
   name: 'RegSide',
   components: {
     InfoContainer,
     SettingsContainer,
-    PreferencesContainer
+    PreferencesContainer,
+    RegsuccessModal
   },
   data() {
     return {
@@ -25,11 +27,12 @@ export default {
         confirmPassword: '',
         country: '',
         favouriteArtists: [''],
-        dislikedArtists: ['']
+        dislikedArtists: [''],
       },
       isInfoValid: false,
       isSettingsValid: false,
-      isPreferencesValid: false
+      isPreferencesValid: false,
+      showSuccessModal: false 
     };
   },
   computed: {
@@ -69,13 +72,22 @@ export default {
         this.updateValidity(this.$refs.preferencesContainer.isArtistsValid, 3);
       }
     },
-    register() {
+    async register() {
       if (this.isFormValid) {
         const authStore = useAuthStore();
-        authStore.registerUser(this.formData);
+        try {
+          await authStore.registerUser(this.formData);
+          this.showSuccessModal = true;
+        } catch (error) {
+          alert('Registration failed. Please try again.');
+        }
       } else {
         alert('Please complete the form correctly.');
       }
+    },
+    closeSuccessModal() {
+      this.showSuccessModal = false;
+      this.$router.push('/'); 
     }
   },
   mounted() {
@@ -98,9 +110,9 @@ export default {
             @click="navigate(dot)"></span>
     </div>
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
+    <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
   </div>
 </template>
-
 
 
 <style scoped>
