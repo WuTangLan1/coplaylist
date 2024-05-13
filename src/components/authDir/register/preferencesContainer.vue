@@ -71,7 +71,7 @@ export default {
 }
 
 input, button {
-  padding: 10px;
+  padding: 8px; 
   margin-top: 10px;
 }
 
@@ -81,16 +81,24 @@ input, button {
   align-items: center;
 }
 
+input[type="text"] {
+  border-radius: 0.2rem;
+  border: 1px solid #ccc; 
+  width: 90%; 
+}
+
 .button-row {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; 
+  width: 90%; 
   margin-top: 10px;
 }
 
 .remove-btn, .add-btn {
-  margin-left: 10px;
-  border-radius: 0.2rem;
-  width: 90%;
+  margin-left: 5px;
+  border-radius: 5px; 
+  width: 48%; 
+  height: 2rem; 
 }
 
 .remove-btn {
@@ -106,7 +114,7 @@ input, button {
 .add-btn:disabled, .remove-btn:disabled {
   background-color: #ccc;
   color: #666;
-  cursor: not-allowed; /* Additional visual cue */
+  cursor: not-allowed; 
 }
 
 .submit-btn {
@@ -116,6 +124,9 @@ input, button {
   color: white;
   border: none;
   cursor: pointer;
+  width: 90%;
+  height: 40px;
+  border-radius: 5px; 
 }
 
 fieldset {
@@ -124,3 +135,4 @@ fieldset {
   margin-top: 20px;
 }
 </style>
+
