@@ -13,10 +13,16 @@ export default {
     isArtistsValid() {
       const validFavouriteArtists = this.formData.favouriteArtists.some(artist => artist.trim() !== '');
       const validDislikedArtists = this.formData.dislikedArtists.some(artist => artist.trim() !== '');
-      const isValid = validFavouriteArtists && validDislikedArtists;
-      this.$emit('validation', isValid);
-      return isValid;
+      return validFavouriteArtists && validDislikedArtists;
     }
+  },
+  watch: {
+    isArtistsValid(newValue) {
+      this.$emit('validation', newValue);
+    }
+  },
+  mounted() {
+    this.$emit('validation', this.isArtistsValid); 
   },
   methods: {
     addArtist(listName) {

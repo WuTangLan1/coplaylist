@@ -42,8 +42,16 @@ export default {
       return this.isInfoValid && this.isSettingsValid && this.isPreferencesValid;
     }
   },
-  created() {
-    this.validateAll();
+  watch: {
+    currentStep(newValue, oldValue) {
+      if (newValue === 1) {
+        this.$refs.infoContainer.validateInput();
+      } else if (newValue === 2) {
+        this.$refs.settingsContainer.validatePassword();
+      } else if (newValue === 3) {
+        this.$refs.preferencesContainer.isArtistsValid;
+      }
+    }
   },
   methods: {
     navigate(step) {
@@ -57,11 +65,6 @@ export default {
       } else if (step === 3) {
         this.isPreferencesValid = status;
       }
-    },
-    validateAll() {
-      this.updateValidity(true, 1);
-      this.updateValidity(true, 2);
-      this.updateValidity(true, 3);
     },
     register() {
       if (this.isFormValid) {
@@ -77,6 +80,7 @@ export default {
 <template>
   <div class="registration-container">
     <component :is="componentMap[currentStep]"
+               ref="infoContainer" 
                :form-data="formData"
                @validation="updateValidity($event, currentStep)">
     </component>
