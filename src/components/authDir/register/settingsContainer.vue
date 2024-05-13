@@ -39,28 +39,23 @@ export default {
 };
 </script>
 
-
-
 <template>
   <div class="settings-container">
     <h2>Account Settings</h2>
-    <p class="description">
-      Be sure to set a strong and secure password for your account
-    </p>
     <form @submit.prevent="validatePassword" class="settings-form">
       <div class="input-group">
         <label for="password">Password</label>
         <div class="input-with-icon">
-          <input :type="showPassword ? 'text' : 'password'" v-model="password" placeholder="Password" required>
+          <input :type="showPassword ? 'text' : 'password'" v-model="formData.password" placeholder="Password" required>
           <span @click="togglePasswordVisibility" class="visibility-toggle">
             <font-awesome-icon :icon="showPassword ? 'far fa-eye-slash' : 'far fa-eye'" />
           </span>
         </div>
       </div>
       <div class="input-group">
-        <label for="passwordConfirm">Confirm password</label>
+        <label for="passwordConfirm">Confirm Password</label>
         <div class="input-with-icon">
-          <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" placeholder="Confirm Password" required>
+          <input :type="showConfirmPassword ? 'text' : 'password'" v-model="formData.confirmPassword" placeholder="Confirm Password" required>
           <span @click="toggleConfirmPasswordVisibility" class="visibility-toggle">
             <font-awesome-icon :icon="showConfirmPassword ? 'far fa-eye-slash' : 'far fa-eye'" />
           </span>
@@ -68,7 +63,7 @@ export default {
       </div>
       <div class="input-group">
         <label for="countryOfOrigin">Country of Origin</label>
-        <input id="countryOfOrigin" v-model="formData.country" placeholder="Enter Country of Origin">
+        <input v-model="formData.country" placeholder="Enter Country of Origin">
       </div>
       <p class="description">
         Your selected country of origin will influence your song suggestions and currency format.
@@ -76,6 +71,7 @@ export default {
     </form>
   </div>
 </template>
+
 <style scoped>
 .settings-container {
   display: flex; 

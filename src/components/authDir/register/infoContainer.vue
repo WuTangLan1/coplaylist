@@ -38,8 +38,6 @@ export default {
 };
 </script>
 
-
-
 <template>
   <div class="form-container">
     <h2>Personal Information</h2>
@@ -49,19 +47,19 @@ export default {
     <form @submit.prevent="validateInput">
       <div class="form-group">
         <label for="firstName">First Name</label>
-        <input id="firstName" v-model="firstName" type="text" placeholder="Enter your first name" autofocus>
+        <input id="firstName" v-model="formData.firstName" type="text" placeholder="Enter your first name" autofocus>
       </div>
       <div class="form-group">
         <label for="lastName">Last/Middle Name</label>
-        <input id="lastName" v-model="lastName" type="text" placeholder="Enter your last/middle name">
+        <input id="lastName" v-model="formData.lastName" type="text" placeholder="Enter your last/middle name">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input id="email" v-model="email" type="email" placeholder="Enter your email">
+        <input id="email" v-model="formData.email" type="email" placeholder="Enter your email">
       </div>
       <div class="form-group">
         <label for="phone">Phone Number</label>
-        <input id="phone" v-model="phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
+        <input id="phone" v-model="formData.phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
       </div>
     </form>
     <p class="description">
@@ -69,7 +67,6 @@ export default {
     </p>
   </div>
 </template>
-
 
 <style scoped>
 .form-container {

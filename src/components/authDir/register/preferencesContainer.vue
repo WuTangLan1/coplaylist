@@ -35,41 +35,34 @@ export default {
 };
 </script>
 
-
-
 <template>
   <div class="preferences-container">
     <h2>Preferences</h2>
-    <p class="description">
-      Tell us about your favourite artists to help influence your outputted playlists.
-    </p>
     <form @submit.prevent="submitPreferences">
       <fieldset>
         <legend>Favourite Artists</legend>
-        <div v-for="(artist, index) in favouriteArtists" :key="'fav-' + index" class="input-group">
-          <input type="text" v-model="favouriteArtists[index]" placeholder="Enter artist" aria-label="Favourite Artist">
+        <div v-for="(artist, index) in formData.favouriteArtists" :key="'fav-' + index" class="input-group">
+          <input type="text" v-model="formData.favouriteArtists[index]" placeholder="Enter artist" aria-label="Favourite Artist">
           <div class="button-row">
-            <button type="button" @click="addArtist(favouriteArtists)" :disabled="favouriteArtists.length >= 5" class="add-btn">Add Artist</button>
-            <button type="button" @click="removeArtist(favouriteArtists, index)" :disabled="favouriteArtists[index] === ''" class="remove-btn">Remove</button>
+            <button type="button" @click="addArtist('favouriteArtists')" :disabled="formData.favouriteArtists.length >= 5" class="add-btn">Add Artist</button>
+            <button type="button" @click="removeArtist('favouriteArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
           </div>
         </div>
       </fieldset>
-      <p class="description">
-        Below you can enter up to 5 artists whose music you do not enjoy
-      </p>
       <fieldset>
         <legend>Disliked Artists</legend>
-        <div v-for="(artist, index) in dislikedArtists" :key="'dis-' + index" class="input-group">
-          <input type="text" v-model="dislikedArtists[index]" placeholder="Enter artist" aria-label="Disliked Artist">
+        <div v-for="(artist, index) in formData.dislikedArtists" :key="'dis-' + index" class="input-group">
+          <input type="text" v-model="formData.dislikedArtists[index]" placeholder="Enter artist" aria-label="Disliked Artist">
           <div class="button-row">
-            <button type="button" @click="addArtist(dislikedArtists)" :disabled="dislikedArtists.length >= 5" class="add-btn">Add Artist</button>
-            <button type="button" @click="removeArtist(dislikedArtists, index)" :disabled="dislikedArtists[index] === ''" class="remove-btn">Remove</button>
+            <button type="button" @click="addArtist('dislikedArtists')" :disabled="formData.dislikedArtists.length >= 5" class="add-btn">Add Artist</button>
+            <button type="button" @click="removeArtist('dislikedArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
           </div>
         </div>
       </fieldset>
     </form>
   </div>
 </template>
+
 
 <style scoped>
 .preferences-container {
