@@ -93,6 +93,7 @@ export const usePromptStore = defineStore('prompt', {
       const isAllValid =  isTonesValid && isSongsValid && isVibeValid;
       return isAllValid;
     },
+
     async generatePlaylist(newMusic) {
       const authStore = useAuthStore(); 
       const playlistStore = usePlaylistStore();
@@ -103,11 +104,14 @@ export const usePromptStore = defineStore('prompt', {
     
       if (authStore.user && authStore.user.tokens >= 2) {
         await authStore.fetchUserProfile();  
-        const userTaste = authStore.user.taste || "General"; 
+        const userTaste = {
+          favouriteArtists: authStore.user.favourite_artists.join(', '),
+          dislikedArtists: authStore.user.disliked_artists.join(', ')
+        }; // Modified to include both favourite and disliked artists
     
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
-        
+    
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -123,15 +127,12 @@ export const usePromptStore = defineStore('prompt', {
           excludeSongs: excludeSongs,
           dislikedArtists: authStore.user.disliked_artists || []  
         };
-
     
         try {
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
-        
           const formattedPlaylist = this.formatPlaylist(response.data.songs);
           const formattedAlternativeSongs = this.formatAlternativePlaylist(response.data.alternativeSongs);
-          const playlistStore = usePlaylistStore();
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           playlistStore.setAlternativeSongs(formattedAlternativeSongs)
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
@@ -141,7 +142,8 @@ export const usePromptStore = defineStore('prompt', {
       } else {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
-    },     
+    },   
+    
     async regeneratePlaylist() {
       const authStore = useAuthStore();
       const playlistStore = usePlaylistStore(); 
@@ -157,7 +159,11 @@ export const usePromptStore = defineStore('prompt', {
     
       if (authStore.user && authStore.user.tokens >= 2) {
         await authStore.fetchUserProfile();  
-        const userTaste = authStore.user.taste || "General";
+        const userTaste = {
+          favouriteArtists: authStore.user.favourite_artists.join(', '),
+          dislikedArtists: authStore.user.disliked_artists.join(', ')
+        }; // Modified to include both favourite and disliked artists
+    
         if (!Array.isArray(playlistStore.playlistDetails)) {
           console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);
           this.showModal("Error: No existing playlist details found.");
@@ -186,7 +192,7 @@ export const usePromptStore = defineStore('prompt', {
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
           playlistStore.setPlaylistDetails(this.formatPlaylist(response.data.songs));
-          playlistStore.setAlternativeSongs(this.formatAlternativePlaylist(response.data.alternativeSongs)); // Ensure alternative songs are also set here
+          playlistStore.setAlternativeSongs(this.formatAlternativePlaylist(response.data.alternativeSongs)); 
           this.regenerateAttempts++;
         } catch (error) {
           console.error('Error regenerating playlist:', error);
@@ -196,6 +202,7 @@ export const usePromptStore = defineStore('prompt', {
         this.showModal("Insufficient tokens to regenerate a playlist.");
       }
     },    
+
     formatPlaylist(playlistArray) {
         if (!Array.isArray(playlistArray)) {
             console.error("Expected an array but received:", typeof playlistArray);

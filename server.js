@@ -64,6 +64,8 @@ app.post('/generate-playlist', async (req, res) => {
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
+    const favouriteStyles = userTaste.favourite_artists.join(', ');
+    const dislikedArtists = userTaste.disliked_artists.join(', ');
 
     if (!vibes || !songs) {
         return res.status(400).send("Vibes or songs data are missing in the request");
