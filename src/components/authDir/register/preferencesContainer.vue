@@ -32,6 +32,9 @@ export default {
 <template>
   <div class="preferences-container">
     <h2>Preferences</h2>
+    <p class="description">
+      Tell us about your favourite artists to help influence your outputted playlists.
+    </p>
     <form @submit.prevent="submitPreferences">
       <fieldset>
         <legend>Favourite Artists</legend>
@@ -43,7 +46,9 @@ export default {
           </div>
         </div>
       </fieldset>
-
+      <p class="description">
+        Below you can enter up to 5 artists whose music you do not enjoy
+      </p>
       <fieldset>
         <legend>Disliked Artists</legend>
         <div v-for="(artist, index) in dislikedArtists" :key="'dis-' + index" class="input-group">
@@ -73,6 +78,13 @@ export default {
 input, button {
   padding: 8px; 
   margin-top: 10px;
+}
+
+.description {
+  margin-bottom: 10px;
+  color: #666;
+  text-align: center;
+  max-width: 100%;
 }
 
 .input-group {

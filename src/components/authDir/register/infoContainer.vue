@@ -31,6 +31,9 @@ export default {
 <template>
   <div class="form-container">
     <h2>Personal Information</h2>
+    <p class="description">
+      Please fill out the form below with your personal details to create your account. 
+    </p>
     <form @submit.prevent="validateInput">
       <div class="form-group">
         <label for="firstName">First Name</label>
@@ -49,15 +52,19 @@ export default {
         <input id="phone" v-model="phone" type="tel" placeholder="Enter your phone number" pattern="[0-9]{10}">
       </div>
     </form>
+    <p class="description">
+      Navigate through the pages below to complete your registration.
+    </p>
   </div>
 </template>
 
+
 <style scoped>
 .form-container {
-  display: flex; /* Use flexbox to align children */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: center; /* Center children vertically */
-  align-items: center; /* Center children horizontally */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
   max-width: 500px;
   margin: auto;
   padding: 20px;
@@ -68,10 +75,17 @@ export default {
 
 .form-group {
   width: 100%; 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   display: flex; 
   flex-direction: column; 
   align-items: center; 
+}
+
+.description {
+  margin-bottom: 10px;
+  color: #666;
+  text-align: center;
+  max-width: 100%;
 }
 
 input {

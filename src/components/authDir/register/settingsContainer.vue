@@ -25,6 +25,9 @@ export default {
 <template>
   <div class="settings-container">
     <h2>Account Settings</h2>
+    <p class="description">
+      Be sure to set a strong and secure password for your account
+    </p>
     <form @submit.prevent="validatePassword" class="settings-form">
       <div class="input-group">
         <label for="password">Password</label>
@@ -44,10 +47,10 @@ export default {
 
 <style scoped>
 .settings-container {
-  display: flex; /* Use flexbox to align children */
-  flex-direction: column; /* Stack children vertically */
-  justify-content: center; /* Center children vertically */
-  align-items: center; /* Center children horizontally */
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
   background-color: #f4f4f9;
   padding: 20px;
   border-radius: 8px;
@@ -58,22 +61,29 @@ export default {
 }
 
 .settings-form {
-  width: 100%; /* Take full width of the settings-container */
+  width: 100%; 
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center-align items */
+  align-items: center; 
+}
+
+.description {
+  margin-bottom: 10px;
+  color: #666;
+  text-align: center;
+  max-width: 100%;
 }
 
 .input-group {
-  width: 100%; /* Adjust width to full to align label and input */
+  width: 100%; 
   margin-bottom: 20px;
-  display: flex; /* Use flex to arrange label and input */
-  flex-direction: column; /* Stack input below the label */
-  align-items: center; /* Center-align items */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
 input {
-  width: 80%; /* Adjust input width to match design */
+  width: 80%; 
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -85,7 +95,7 @@ input:focus {
 }
 
 label {
-  width: 80%; /* Full width to maintain consistency */
+  width: 80%; 
   margin-bottom: 5px;
   font-weight: bold;
   color: #333;
