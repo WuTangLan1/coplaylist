@@ -54,6 +54,10 @@ export default {
 
 <style scoped>
 .form-container {
+  display: flex; /* Use flexbox to align children */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center children vertically */
+  align-items: center; /* Center children horizontally */
   max-width: 500px;
   margin: auto;
   padding: 20px;
@@ -61,26 +65,30 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .form-group {
+  width: 100%; /* Take full width to align children inside */
   margin-bottom: 20px;
-  width: 80%;
-  padding:0.5rem;
+  display: flex; /* Use flex to arrange label and input */
+  flex-direction: column; /* Stack input below the label */
+  align-items: center; /* Center-align items */
 }
+
 input {
-  width: 100%;
   padding: 8px;
+  width: 100%; /* Full width of the form-group */
   border: 1px solid #ccc;
   border-radius: 4px;
-  align-items: center;
-  align-self: center;
-  align-content: center;
 }
+
 input:focus {
   border-color: #6658d3;
   box-shadow: 0 0 8px rgba(102, 88, 211, 0.2);
 }
+
 label {
-  display: block;
+  self-align: start; /* Align label at the start of form-group */
+  width: 100%; /* Full width to maintain consistency */
   margin-bottom: 5px;
   font-weight: bold;
   color: #333;
