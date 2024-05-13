@@ -6,8 +6,22 @@ export default {
   data() {
     return {
       favouriteArtists: [''],
-      dislikedArtists: ['']
+      dislikedArtists: [''],
+      isFormValid: false,
     };
+  },
+  computed: {
+    // Check if the artists lists are valid
+    isArtistsValid() {
+      return this.favouriteArtists.every(artist => artist.trim() !== '') &&
+             this.dislikedArtists.every(artist => artist.trim() !== '');
+    },
+  },
+  watch: {
+    // Watch the validity of artists and update form validity
+    isArtistsValid(newVal) {
+      this.isFormValid = newVal;
+    }
   },
   methods: {
     addArtist(list) {
@@ -16,13 +30,17 @@ export default {
       }
     },
     removeArtist(list, index) {
-      if (list.length > 1 && list[index] !== '') { 
+      if (list.length > 1) {
         list.splice(index, 1);
       }
     },
     submitPreferences() {
-      console.log("Favourite Artists:", this.favouriteArtists);
-      console.log("Disliked Artists:", this.dislikedArtists);
+      if (this.isFormValid) {
+        console.log("Favourite Artists:", this.favouriteArtists);
+        console.log("Disliked Artists:", this.dislikedArtists);
+      } else {
+        console.error('Form is invalid');
+      }
     }
   }
 };
@@ -60,7 +78,7 @@ export default {
         </div>
       </fieldset>
 
-      <button type="submit" class="submit-btn">Finish</button>
+      <button type="submit" class="submit-btn" :disabled="!isFormValid">Register</button>
     </form>
   </div>
 </template>

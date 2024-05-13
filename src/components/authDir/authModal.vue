@@ -71,7 +71,8 @@ export default {
 
   .modal {
     background: white;
-    padding: 1.3rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
     border-radius: 5px;
     width: auto;
     max-width: 90vw;

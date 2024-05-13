@@ -51,11 +51,14 @@ export default {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   margin-top: 0.3rem;
   max-width: 550px;
+  min-height: 550px;
   max-height: 75vh;
   background: #e1e8eb;
   overflow-y: auto;
   margin: auto;
   transition: background-color 0.3s;
+  align-items: center;
+  align-content: center;
 }
 
 .navigation-dots {
