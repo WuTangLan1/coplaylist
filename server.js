@@ -59,11 +59,17 @@ app.use((req, res, next) => {
 });
 
 app.post('/generate-playlist', async (req, res) => {
-    const { vibes, tones, songs, userTaste ={}, excludeSongs= [] } = req.body;
+    const { vibes, tones = {}, songs, userTaste ={}, excludeSongs= [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Please ensure that none of the following songs are used in the result these songs: ${excludeSongs.join(', ')}` : '';
 
-    const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
-    const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
+    console.log('tones : ', tones)
+
+    const genres = Array.isArray(tones.genres) ? tones.genres.join(', ') : 'Not specified';
+    const eras = Array.isArray(tones.eras) ? tones.eras.join(', ') : 'Not specified';
+
+    console.log('Genres:', genres);  // Ensure this logs correctly
+    console.log('Eras:', eras); 
+
     console.log("User Taste", userTaste);
     console.log("Type of favouriteArtists", typeof userTaste.favouriteArtists); 
     console.log("Is Array?", Array.isArray(userTaste.favouriteArtists));
