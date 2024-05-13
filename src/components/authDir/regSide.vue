@@ -73,11 +73,13 @@ export default {
       }
     },
     async register() {
+      console.log('register invoked')
       if (this.isFormValid) {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
-          this.showSuccessModal = true;  
+          this.showSuccessModal = true;
+          console.log('should be showing modal from regSide')  
         } catch (error) {
           console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
@@ -87,6 +89,7 @@ export default {
       }
     },
     closeSuccessModal() {
+      console.log('close modal')
       this.showSuccessModal = false;
       this.$router.push('/');  
     }
@@ -112,8 +115,8 @@ export default {
             @click="navigate(dot)"></span>
     </div>
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
-    <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
   </div>
+  <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
 </template>
 
 
