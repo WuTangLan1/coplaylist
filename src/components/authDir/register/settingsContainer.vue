@@ -44,6 +44,10 @@ export default {
 
 <style scoped>
 .settings-container {
+  display: flex; /* Use flexbox to align children */
+  flex-direction: column; /* Stack children vertically */
+  justify-content: center; /* Center children vertically */
+  align-items: center; /* Center children horizontally */
   background-color: #f4f4f9;
   padding: 20px;
   border-radius: 8px;
@@ -54,37 +58,38 @@ export default {
 }
 
 .settings-form {
+  width: 100%; /* Take full width of the settings-container */
   display: flex;
   flex-direction: column;
-  text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-  text-align: left;
+  align-items: center; /* Center-align items */
 }
 
 .input-group {
+  width: 100%; /* Adjust width to full to align label and input */
   margin-bottom: 20px;
-  width: 80%;
-  padding:0.5rem;
+  display: flex; /* Use flex to arrange label and input */
+  flex-direction: column; /* Stack input below the label */
+  align-items: center; /* Center-align items */
 }
+
 input {
-  width: 100%;
+  width: 80%; /* Adjust input width to match design */
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  align-items: center;
-  align-self: center;
-  align-content: center;
 }
 
 input:focus {
   border-color: #6658d3;
   box-shadow: 0 0 8px rgba(102, 88, 211, 0.3);
+}
+
+label {
+  width: 80%; /* Full width to maintain consistency */
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
 }
 
 h2 {
