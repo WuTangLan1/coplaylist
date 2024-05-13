@@ -42,6 +42,9 @@ export default {
       return this.isInfoValid && this.isSettingsValid && this.isPreferencesValid;
     }
   },
+  created() {
+    this.validateAll();
+  },
   methods: {
     navigate(step) {
       this.currentStep = step;
@@ -54,6 +57,11 @@ export default {
       } else if (step === 3) {
         this.isPreferencesValid = status;
       }
+    },
+    validateAll() {
+      this.updateValidity(true, 1);
+      this.updateValidity(true, 2);
+      this.updateValidity(true, 3);
     },
     register() {
       if (this.isFormValid) {

@@ -22,10 +22,10 @@ export default {
       this.showConfirmPassword = !this.showConfirmPassword;
     },
     validatePassword() {
-      const isValid = this.formData.password === this.formData.confirmPassword &&
-                      this.formData.password.length > 0 &&
-                      this.formData.country.length > 0;
-      this.$emit('validation', isValid);
+      const passwordsMatch = this.formData.password === this.formData.confirmPassword;
+      const passwordLength = this.formData.password.length >= 8; // Example criterion
+      const countryFilled = this.formData.country.length > 0;
+      this.$emit('validation', passwordsMatch && passwordLength && countryFilled);
     }
   },
   watch: {
@@ -38,6 +38,7 @@ export default {
   }
 };
 </script>
+
 
 <template>
   <div class="settings-container">

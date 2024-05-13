@@ -11,8 +11,9 @@ export default {
   },
   computed: {
     isArtistsValid() {
-      const isValid = this.formData.favouriteArtists.every(artist => artist.trim() !== '') &&
-                      this.formData.dislikedArtists.every(artist => artist.trim() !== '');
+      const validFavouriteArtists = this.formData.favouriteArtists.some(artist => artist.trim() !== '');
+      const validDislikedArtists = this.formData.dislikedArtists.some(artist => artist.trim() !== '');
+      const isValid = validFavouriteArtists && validDislikedArtists;
       this.$emit('validation', isValid);
       return isValid;
     }
@@ -34,6 +35,7 @@ export default {
   }
 };
 </script>
+
 
 <template>
   <div class="preferences-container">

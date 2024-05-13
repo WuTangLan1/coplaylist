@@ -1,5 +1,4 @@
 <!-- src\components\authDir\register\infoContainer.vue -->
-
 <script>
 export default {
   name: 'InfoContainer',
@@ -9,21 +8,12 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: ''
-    };
-  },
   methods: {
     validateInput() {
-      if (!this.formData.email.includes('@') || this.formData.phone.length < 10) {
-        this.$emit('validation', false);
-      } else {
-        this.$emit('validation', true);
-      }
+      const validEmail = this.formData.email.includes('@') && this.formData.email.includes('.');
+      const validPhone = this.formData.phone.length >= 10; // Assuming a minimum length for phone numbers
+      const fieldsFilled = this.formData.firstName && this.formData.lastName && this.formData.email && this.formData.phone;
+      this.$emit('validation', validEmail && validPhone && fieldsFilled);
     }
   },
   watch: {
@@ -37,6 +27,7 @@ export default {
   }
 };
 </script>
+
 
 <template>
   <div class="form-container">
