@@ -60,7 +60,6 @@ export default {
   </div>
 </template>
 
-
 <style scoped>
 .preferences-container {
   background-color: #f4f4f9;
@@ -91,23 +90,23 @@ input, button {
 .remove-btn, .add-btn {
   margin-left: 10px;
   border-radius: 0.2rem;
+  width: 90%;
 }
 
 .remove-btn {
   background-color: rgb(190, 50, 50);
   color: white;
-  width: 90%;
 }
 
 .add-btn {
   background-color: rgb(26, 113, 40);
   color: white;
-  width: 90%;
 }
 
-.add-btn:disabled {
+.add-btn:disabled, .remove-btn:disabled {
   background-color: #ccc;
   color: #666;
+  cursor: not-allowed; /* Additional visual cue */
 }
 
 .submit-btn {

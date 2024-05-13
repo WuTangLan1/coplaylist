@@ -67,16 +67,16 @@ export default {
 }
 
 .form-group {
-  width: 100%; /* Take full width to align children inside */
+  width: 100%; 
   margin-bottom: 20px;
-  display: flex; /* Use flex to arrange label and input */
-  flex-direction: column; /* Stack input below the label */
-  align-items: center; /* Center-align items */
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
 }
 
 input {
   padding: 8px;
-  width: 100%; /* Full width of the form-group */
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -87,8 +87,7 @@ input:focus {
 }
 
 label {
-  self-align: start; /* Align label at the start of form-group */
-  width: 100%; /* Full width to maintain consistency */
+  width: 100%; 
   margin-bottom: 5px;
   font-weight: bold;
   color: #333;
