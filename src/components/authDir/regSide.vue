@@ -13,7 +13,10 @@ export default {
   },
   data() {
     return {
-      currentStep: 1
+      currentStep: 1,
+      isInfoValid: false,
+      isSettingsValid: false,
+      isPreferencesValid: false
     };
   },
   computed: {
@@ -23,11 +26,23 @@ export default {
         2: 'SettingsContainer',
         3: 'PreferencesContainer'
       };
+    },
+    isFormValid() {
+      return this.isInfoValid && this.isSettingsValid && this.isPreferencesValid;
     }
   },
   methods: {
     navigate(step) {
       this.currentStep = step;
+    },
+    updateValidity(status, step) {
+      if (step === 1) {
+        this.isInfoValid = status;
+      } else if (step === 2) {
+        this.isSettingsValid = status;
+      } else if (step === 3) {
+        this.isPreferencesValid = status;
+      }
     }
   }
 };
@@ -35,14 +50,18 @@ export default {
 
 <template>
   <div class="registration-container">
-    <component :is="componentMap[currentStep]"></component>
+    <component :is="componentMap[currentStep]"
+               @validation="updateValidity($event, currentStep)">
+    </component>
     <div class="navigation-dots">
       <span v-for="dot in [1, 2, 3]" :key="dot"
             :class="{ active: currentStep === dot }"
             @click="navigate(dot)"></span>
     </div>
+    <button :disabled="!isFormValid">Register</button>
   </div>
 </template>
+
 
 <style scoped>
 .registration-container {

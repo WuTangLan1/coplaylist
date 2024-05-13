@@ -82,11 +82,18 @@ export default {
   align-items: center; 
 }
 
+.input-with-icon {
+  position: relative;
+  width: 80%;
+}
+
 .visibility-toggle {
   position: absolute;
-  right: 12%;
+  right: 5px;
+  top: 8px;
   cursor: pointer;
 }
+
 
 .description {
   margin-bottom: 10px;

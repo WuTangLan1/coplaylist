@@ -13,20 +13,23 @@ export default {
   },
   methods: {
     validateInput() {
-      // Here, you could add more advanced validation if necessary
-      if (!this.email.includes('@')) {
-        alert('Please enter a valid email address.');
+      if (!this.email.includes('@') || this.phone.length < 10) {
+        this.$emit('validation', false);
         return false;
       }
-      if (this.phone.length < 10) {
-        alert('Please enter a valid phone number.');
-        return false;
-      }
-      alert('Form is valid!');
+      this.$emit('validation', true);
+      return true;
     }
+  },
+  watch: {
+    firstName() { this.validateInput(); },
+    lastName() { this.validateInput(); },
+    email() { this.validateInput(); },
+    phone() { this.validateInput(); }
   }
 };
 </script>
+
 
 <template>
   <div class="form-container">
