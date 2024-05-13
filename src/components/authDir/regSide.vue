@@ -77,8 +77,9 @@ export default {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
-          this.showSuccessModal = true;
+          this.showSuccessModal = true;  
         } catch (error) {
+          console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
         }
       } else {
@@ -87,8 +88,9 @@ export default {
     },
     closeSuccessModal() {
       this.showSuccessModal = false;
-      this.$router.push('/'); 
+      this.$router.push('/');  
     }
+
   },
   mounted() {
     this.validateCurrentComponent();

@@ -23,6 +23,7 @@ function handleClose() {
   </div>
 </template>
 
+
 <style scoped>
 .modal-backdrop {
   position: fixed;
