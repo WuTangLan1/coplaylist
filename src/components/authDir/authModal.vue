@@ -78,11 +78,11 @@ export default {
     max-width: 90vw;
     max-height: 90vh;
     width: 80%;
-    overflow-y: auto;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
   }
+
 
   @keyframes dropAnimation {
     0% {
@@ -100,12 +100,12 @@ export default {
       color: #ffffff;
       padding: 0.3rem 0.5rem;
       border-radius: 5px;
-      border: 1px solid #ccc; /* Light border */
-      font-weight: bold; /* Make text bold */
+      border: 1px solid #ccc; 
+      font-weight: bold; 
       position: absolute;
-      top: 20px; /* Distance from the top */
-      left: 50%; /* Center horizontally */
-      transform: translateX(-50%); /* Adjust for exact centering */
+      top: 20px; 
+      left: 50%; 
+      transform: translateX(-50%); 
       cursor: pointer;
       transition: background-color 0.3s ease;
     }

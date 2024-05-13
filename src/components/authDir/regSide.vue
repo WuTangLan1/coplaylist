@@ -71,12 +71,13 @@ export default {
   max-width: 550px;
   min-height: 550px;
   max-height: 75vh;
-  background: #e1e8eb;
   overflow-y: auto;
+  background: #e1e8eb;
   margin: auto;
   transition: background-color 0.3s;
   align-items: center;
   align-content: center;
+
 }
 
 .navigation-dots {

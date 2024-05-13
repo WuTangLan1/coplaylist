@@ -71,6 +71,9 @@ export default {
         <label for="countryofOrigin">Country of origin</label>
         <input v-model="country" placeholder="Country of Origin">
       </div>
+      <p class="description">
+        Your selected country of origin will influence your song suggestions and currency format.
+      </p>
     </form>
   </div>
 </template>
