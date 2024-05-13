@@ -59,13 +59,21 @@ app.use((req, res, next) => {
 });
 
 app.post('/generate-playlist', async (req, res) => {
-    const { vibes, tones, songs, userTaste, excludeSongs= [] } = req.body;
+    const { vibes, tones, songs, userTaste ={}, excludeSongs= [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Please ensure that none of the following songs are used in the result these songs: ${excludeSongs.join(', ')}` : '';
 
     const genres = tones && tones.selectedGenres ? tones.selectedGenres.join(', ') : 'Not specified';
     const eras = tones && tones.selectedEra ? tones.selectedEra.join(', ') : 'Not specified';
-    const favouriteStyles = userTaste.favourite_artists.join(', ');
-    const dislikedArtists = userTaste.disliked_artists.join(', ');
+    console.log("User Taste", userTaste);
+    console.log("Type of favouriteArtists", typeof userTaste.favouriteArtists); 
+    console.log("Is Array?", Array.isArray(userTaste.favouriteArtists));
+    const favouriteStyles = typeof userTaste.favouriteArtists === 'string'
+        ? userTaste.favouriteArtists.split(', ').filter(Boolean)
+        : userTaste.favouriteArtists;
+
+    const dislikedArtists = typeof userTaste.dislikedArtists === 'string'
+        ? userTaste.dislikedArtists.split(', ').filter(Boolean)
+        : userTaste.dislikedArtists;
 
     if (!vibes || !songs) {
         return res.status(400).send("Vibes or songs data are missing in the request");
@@ -111,6 +119,8 @@ app.post('/generate-playlist', async (req, res) => {
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
+
+        console.log('prompt : ', prompt)
 
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {
