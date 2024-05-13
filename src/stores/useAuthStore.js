@@ -32,6 +32,8 @@ export const useAuthStore = defineStore('auth', {
           country: country,
           favourite_artists: favouriteArtists.filter(Boolean), 
           disliked_artists: dislikedArtists.filter(Boolean),
+          tokens: 4,
+          refresh_token:""
         };
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);

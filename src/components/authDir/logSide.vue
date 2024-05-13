@@ -95,27 +95,25 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 .form-group {
   width: 100%;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin-bottom: 20px;
 }
 
 h2 {
   color: #333;
   text-align: center;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 input {
-  padding: 8px;
-  width: 100%;
+  padding: 12px;
+  width: 90%;
+  font-size: 0.9rem; 
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #f7f9fc; 
+  background-color: #fff; 
 }
 
 input:focus {
@@ -124,10 +122,9 @@ input:focus {
 }
 
 label {
-  width: 100%;
-  margin-bottom: 5px;
   font-weight: bold;
   color: #333;
+  margin-bottom: 5px;
 }
 
 .input-group {
@@ -146,7 +143,6 @@ label {
 .btn-grp {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .submit-button {
@@ -162,12 +158,5 @@ label {
 
 .submit-button:hover, .submit-button:focus {
   background-color: #311e86;
-}
-
-.description {
-  margin-bottom: 10px;
-  color: #666;
-  text-align: center;
-  max-width: 100%;
 }
 </style>
