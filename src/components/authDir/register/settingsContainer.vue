@@ -2,11 +2,14 @@
 <script>
 export default {
   name: 'SettingsContainer',
+  props: {
+    formData: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      password: '',
-      confirmPassword: '',
-      country: '',
       showPassword: false,
       showConfirmPassword: false
     };
@@ -19,27 +22,23 @@ export default {
       this.showConfirmPassword = !this.showConfirmPassword;
     },
     validatePassword() {
-      const isValid = this.password === this.confirmPassword && this.password.length > 0 && this.country.length > 0;
+      const isValid = this.formData.password === this.formData.confirmPassword &&
+                      this.formData.password.length > 0 &&
+                      this.formData.country.length > 0;
       this.$emit('validation', isValid);
-      return isValid;
     }
   },
   watch: {
-    password() {
-      this.validatePassword();
-    },
-    confirmPassword() {
-      this.validatePassword();
-    },
-    country() {
-      this.validatePassword();
-    }
+    'formData.password': 'validatePassword',
+    'formData.confirmPassword': 'validatePassword',
+    'formData.country': 'validatePassword'
   },
   created() {
-    this.validatePassword(); 
+    this.validatePassword();
   }
 };
 </script>
+
 
 
 <template>
@@ -68,8 +67,8 @@ export default {
         </div>
       </div>
       <div class="input-group">
-        <label for="countryofOrigin">Country of origin</label>
-        <input v-model="country" placeholder="Country of Origin">
+        <label for="countryOfOrigin">Country of Origin</label>
+        <input id="countryOfOrigin" v-model="formData.country" placeholder="Enter Country of Origin">
       </div>
       <p class="description">
         Your selected country of origin will influence your song suggestions and currency format.

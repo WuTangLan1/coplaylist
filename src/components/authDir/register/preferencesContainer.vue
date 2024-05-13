@@ -4,34 +4,28 @@
 export default {
   name: 'PreferencesContainer',
   props: {
-    isFormValid: {
-      type: Boolean,
+    formData: {
+      type: Object,
       required: true
     }
   },
-  data() {
-    return {
-      favouriteArtists: [''],
-      dislikedArtists: ['']
-    };
-  },
   computed: {
     isArtistsValid() {
-      const isValid = this.favouriteArtists.every(artist => artist.trim() !== '') &&
-                      this.dislikedArtists.every(artist => artist.trim() !== '');
+      const isValid = this.formData.favouriteArtists.every(artist => artist.trim() !== '') &&
+                      this.formData.dislikedArtists.every(artist => artist.trim() !== '');
       this.$emit('validation', isValid);
       return isValid;
     }
   },
   methods: {
-    addArtist(list) {
-      if (list.length < 5) {
-        list.push('');
+    addArtist(listName) {
+      if (this.formData[listName].length < 5) {
+        this.formData[listName].push('');
       }
     },
-    removeArtist(list, index) {
-      if (list.length > 1) {
-        list.splice(index, 1);
+    removeArtist(listName, index) {
+      if (this.formData[listName].length > 1) {
+        this.formData[listName].splice(index, 1);
       }
     }
   },
@@ -40,6 +34,7 @@ export default {
   }
 };
 </script>
+
 
 
 <template>

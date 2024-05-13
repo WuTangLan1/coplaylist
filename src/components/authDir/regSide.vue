@@ -14,6 +14,17 @@ export default {
   data() {
     return {
       currentStep: 1,
+      formData: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+        country: '',
+        favouriteArtists: [''],
+        dislikedArtists: ['']
+      },
       isInfoValid: false,
       isSettingsValid: false,
       isPreferencesValid: false
@@ -43,8 +54,14 @@ export default {
       } else if (step === 3) {
         this.isPreferencesValid = status;
       }
+    },
+    register() {
+      if (this.isFormValid) {
+        this.$store.useAuthStore().registerUser(this.formData);
+      } else {
+        alert('Please complete the form correctly.');
+      }
     }
-
   }
 };
 </script>
@@ -52,6 +69,7 @@ export default {
 <template>
   <div class="registration-container">
     <component :is="componentMap[currentStep]"
+               :form-data="formData"
                @validation="updateValidity($event, currentStep)">
     </component>
     <div class="navigation-dots">
@@ -59,9 +77,10 @@ export default {
             :class="{ active: currentStep === dot }"
             @click="navigate(dot)"></span>
     </div>
-    <button :disabled="!isFormValid" class="reg-btn">Register</button>
+    <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
 </template>
+
 
 <style scoped>
 .registration-container {

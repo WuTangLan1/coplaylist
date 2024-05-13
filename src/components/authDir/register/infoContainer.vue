@@ -3,6 +3,12 @@
 <script>
 export default {
   name: 'InfoContainer',
+  props: {
+    formData: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       firstName: '',
@@ -13,25 +19,25 @@ export default {
   },
   methods: {
     validateInput() {
-      if (!this.email.includes('@') || this.phone.length < 10) {
+      if (!this.formData.email.includes('@') || this.formData.phone.length < 10) {
         this.$emit('validation', false);
-        return false;
+      } else {
+        this.$emit('validation', true);
       }
-      this.$emit('validation', true);
-      return true;
     }
   },
   watch: {
-    firstName() { this.validateInput(); },
-    lastName() { this.validateInput(); },
-    email() { this.validateInput(); },
-    phone() { this.validateInput(); }
+    'formData.firstName': 'validateInput',
+    'formData.lastName': 'validateInput',
+    'formData.email': 'validateInput',
+    'formData.phone': 'validateInput'
   },
   created() {
     this.validateInput();
   }
 };
 </script>
+
 
 
 <template>
