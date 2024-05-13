@@ -108,15 +108,9 @@ export const usePromptStore = defineStore('prompt', {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
           dislikedArtists: authStore.user.disliked_artists.join(', ')
         }; 
-
-        console.log('User Taste ', userTaste)
     
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
-
-        console.log(' genres :',this.tones.selectedGenres  )
-        console.log('eras :', this.tones.selectedEra)
-    
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -168,8 +162,6 @@ export const usePromptStore = defineStore('prompt', {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
           dislikedArtists: authStore.user.disliked_artists.join(', ')
         }; 
-
-        console.log('User Taste ', userTaste)
     
         if (!Array.isArray(playlistStore.playlistDetails)) {
           console.error("Expected playlistDetails to be an array, got:", typeof playlistStore.playlistDetails);

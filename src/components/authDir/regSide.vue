@@ -73,13 +73,11 @@ export default {
       }
     },
     async register() {
-      console.log('register invoked')
       if (this.isFormValid) {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
           this.showSuccessModal = true;
-          console.log('should be showing modal from regSide')  
         } catch (error) {
           console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
