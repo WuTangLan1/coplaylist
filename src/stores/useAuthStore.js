@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', {
           country: country,
           favourite_artists: favouriteArtists.filter(Boolean), 
           disliked_artists: dislikedArtists.filter(Boolean),
-          tokens: 4,
+          tokens: 3,
           refresh_token:""
         };
 

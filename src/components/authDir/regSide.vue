@@ -81,7 +81,9 @@ export default {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
+          console.log('Registration successful, updating showSuccessModal.'); // Before updating
           this.showSuccessModal = true;
+          console.log('showSuccessModal status:', this.showSuccessModal); // After updating
         } catch (error) {
           console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
@@ -119,7 +121,6 @@ export default {
     </div>
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
-  <button @click="showSuccessModal = !showSuccessModal">Toggle Modal</button>
   <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
 </template>
 

@@ -10,10 +10,11 @@ const emits = defineEmits(['show','close']);
 watch(() => props.show, (newVal) => {
   console.log("Modal show state changed to:", newVal);
 });
-
 function handleClose() {
+  console.log('Emitting close event'); // Debug
   emits('close');
 }
+
 </script>
 
 <template>

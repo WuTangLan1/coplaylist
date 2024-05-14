@@ -18,12 +18,6 @@ export default {
       return currentComponent.value === 'RegSide' ? 'Log In' : 'Register';
     });
 
-    watch(() => authStore.user, (newUser) => {
-      if (newUser) {
-        closeModal(); 
-      }
-    });
-
     function toggleComponent() {
       currentComponent.value = currentComponent.value === 'RegSide' ? 'LogSide' : 'RegSide';
     }
