@@ -26,7 +26,8 @@ export const usePromptStore = defineStore('prompt', {
       show: false,
       message: ''
     },
-    previouslyGeneratedSongs: [] 
+    previouslyGeneratedSongs: [],
+    newMusic : false
   }),
   actions: {
     resetStore() {
@@ -35,6 +36,7 @@ export const usePromptStore = defineStore('prompt', {
       this.songs = [{ name: '', artist: '' }, { name: '', artist: '' }, { name: '', artist: '' }];
       this.modal = { show: false, message: '' };
       this.previouslyGeneratedSongs = [];
+      this.newMusic = false;
     },
     showModal(message) {
       this.modal.show = true;
@@ -95,7 +97,9 @@ export const usePromptStore = defineStore('prompt', {
       const isAllValid =  isTonesValid && isSongsValid && isVibeValid;
       return isAllValid;
     },
-
+    updateNewMusic(value) {
+      this.newMusic = value;
+    },
     async generatePlaylist(newMusic) {
       const authStore = useAuthStore(); 
       const playlistStore = usePlaylistStore();
@@ -137,7 +141,7 @@ export const usePromptStore = defineStore('prompt', {
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           playlistStore.setAlternativeSongs(formattedAlternativeSongs)
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
-          this.previouslyGeneratedSongs = formattedPlaylist.map(song => `${song.title} - ${song.artist}`);
+          this.previouslyGeneratedSongs.push(...formattedPlaylist.map(song => `${song.title} - ${song.artist}`));
         } catch (error) {
           console.error('Error fetching playlist:', error);
         }
@@ -145,7 +149,7 @@ export const usePromptStore = defineStore('prompt', {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
     },   
-    async regeneratePlaylist() {
+    async regeneratePlaylist(newMusic) {
       const authStore = useAuthStore();
       const playlistStore = usePlaylistStore(); 
       if (this.regenerateAttempts >= 2) {
@@ -170,7 +174,7 @@ export const usePromptStore = defineStore('prompt', {
           this.showModal("Error: No existing playlist details found.");
           return;
         }
-        const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
+        const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = [...previousSongs.filter(Boolean), ...this.previouslyGeneratedSongs];
         console.log('prev excluded : ', this.previouslyGeneratedSongs)
         console.log('exclude songs : ', excludeSongs)

@@ -27,7 +27,7 @@ export default {
 
     const regeneratePlaylist = () => {
       showLoadingModal.value = true;
-      promptStore.regeneratePlaylist();
+      promptStore.regeneratePlaylist(promptStore.newMusic);
       showLoadingModal.value = false;
     };
 
