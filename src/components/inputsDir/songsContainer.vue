@@ -82,7 +82,6 @@ export default {
 };
 </script>
 
-
 <template>
   <div class="songs-container">
     <div class="step-heading">
@@ -124,6 +123,7 @@ export default {
       </label>
     </div>
     <div class="button-group">
+      <button class="prev-btn" @click="goBack">Previous</button>
       <div v-if="authStore.user" class="token-display">
         <img
           :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
@@ -131,19 +131,13 @@ export default {
         />
         <span>{{ authStore.user.tokens }}</span>
       </div>
-      <button class="prev-btn" @click="goBack">Previous</button>
-      <button
-        class="gen-btn"
-        :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1)"
-        @click="generatePlaylist"
-      >
-        Generate
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) " @click="generatePlaylist">
+        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
       </button>
     </div>
     <loadingModal :show="showLoadingModal" />
   </div>
 </template>
-
 
 
 <style scoped>
@@ -233,7 +227,27 @@ h3.description {
   color: #333; 
 }
 
+.token-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px; /* Adjust spacing to your liking */
+  border: 1px solid #ccc; /* Optional border */
+  padding: 5px 10px; /* Padding around the content */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #fff; /* Background color */
+}
 
+.token-display img {
+  width: 20px; /* Adjust size as needed */
+  margin-right: 5px; /* Space between the image and the text */
+}
+
+.token-display span {
+  font-size: 1rem; /* Adjust font size as needed */
+  color: #333;
+  font-weight: bold;
+}
 
 .input-column label {
   font-size: 0.9rem; 
@@ -270,7 +284,6 @@ h3.description {
   cursor: pointer;
   font-size: 0.9rem;
 }
-
 
 .checkbox-description {
   margin-left: 10px;
@@ -358,4 +371,5 @@ button:disabled {
     margin-bottom: 0;
   }
 }
+
 </style>
