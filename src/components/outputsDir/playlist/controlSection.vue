@@ -8,7 +8,7 @@ export default {
   emits: ['loading', 'loading-complete'],
   setup(props, { emit }) {
     const promptStore = usePromptStore();
-    const regenerateDisabled = computed(() => promptStore.regenerateAttempts >= 2);
+    const regenerateDisabled = computed(() => promptStore.regenerateAttempts >= 1);
 
     const regenerate = async () => {
       emit('loading'); 
@@ -28,7 +28,7 @@ export default {
 <template>
   <div class="control-section">
     <button class="regen-btn" @click="regenerate" :disabled="regenerateDisabled">
-      <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> Regenerate
+      <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon">1 Regenerate
     </button>
     <button class="save-btn" @click="save">Save</button>
   </div>

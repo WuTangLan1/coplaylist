@@ -108,7 +108,7 @@ export const usePromptStore = defineStore('prompt', {
         return;
       }
     
-      if (authStore.user && authStore.user.tokens >= 2) {
+      if (authStore.user && authStore.user.tokens >= 1) {
         await authStore.fetchUserProfile();  
         const userTaste = {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
@@ -140,7 +140,7 @@ export const usePromptStore = defineStore('prompt', {
           const formattedAlternativeSongs = this.formatAlternativePlaylist(response.data.alternativeSongs);
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           playlistStore.setAlternativeSongs(formattedAlternativeSongs)
-          await authStore.updateUserTokens(authStore.user.tokens - 2); 
+          await authStore.updateUserTokens(authStore.user.tokens - 1); 
           this.previouslyGeneratedSongs.push(...formattedPlaylist.map(song => `${song.title} - ${song.artist}`));
         } catch (error) {
           console.error('Error fetching playlist:', error);
@@ -162,7 +162,7 @@ export const usePromptStore = defineStore('prompt', {
         return;
       }
     
-      if (authStore.user && authStore.user.tokens >= 2) {
+      if (authStore.user && authStore.user.tokens >= 1) {
         await authStore.fetchUserProfile();  
         const userTaste = {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
@@ -197,7 +197,7 @@ export const usePromptStore = defineStore('prompt', {
         console.log('playlist details : ', playlistDetails)
     
         try {
-          await authStore.deductTokens(2);
+          await authStore.deductTokens(1);
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
           const response = await axios.post(`${apiUrl}/generate-playlist`, playlistDetails);
           playlistStore.setPlaylistDetails(this.formatPlaylist(response.data.songs));

@@ -28,8 +28,6 @@ export default {
 
     function updateSong(index, field, value) {
         selectedSongs.value[index][field] = value;
-
-        // Check if both fields are non-empty before updating
         if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
           promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
           promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
@@ -109,8 +107,8 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 2)" @click="generatePlaylist">
-        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 2 Generate
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1)" @click="generatePlaylist">
+        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
       </button>
     </div>
     <loadingModal :show="showLoadingModal" />
