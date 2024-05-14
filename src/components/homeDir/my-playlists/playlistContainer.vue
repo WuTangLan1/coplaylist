@@ -6,6 +6,7 @@ import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/fire
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
 import { useRouter } from 'vue-router';
+
 export default {
   components: {
     PlaylistItem
@@ -26,6 +27,8 @@ export default {
         return this.playlists.filter(playlist => playlist.favourited);
       } else if (this.filterBy === 'date') {
         return this.playlists.slice().sort((a, b) => b.createdAt.seconds - a.createdAt.seconds);
+      } else if (this.filterBy === 'alphabetical') {
+        return this.playlists.slice().sort((a, b) => a.name.localeCompare(b.name));
       }
       return this.playlists;
     }
@@ -50,14 +53,14 @@ export default {
       }
     },
     async deletePlaylist(playlistId) {
-        try {
-          const playlistRef = doc(db, 'playlists', playlistId);
-          await deleteDoc(playlistRef);
-          this.fetchPlaylists();
-        } catch (error) {
-          console.error('Error deleting playlist:', error);
-        }
-      },
+      try {
+        const playlistRef = doc(db, 'playlists', playlistId);
+        await deleteDoc(playlistRef);
+        this.fetchPlaylists();
+      } catch (error) {
+        console.error('Error deleting playlist:', error);
+      }
+    },
   },
   created() {
     this.fetchPlaylists();
@@ -78,6 +81,7 @@ export default {
           <option value="all">All</option>
           <option value="favourited">Favourited</option>
           <option value="date">Date</option>
+          <option value="alphabetical">Alphabetical</option>
         </select>
       </div>
       <div class="playlist-container">
@@ -180,7 +184,6 @@ export default {
 .filter-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Center horizontally */
     margin-bottom: 0.3rem;
     margin-top: 0.3rem;
     padding: 0.5rem;
