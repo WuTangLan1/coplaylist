@@ -263,7 +263,7 @@ button:hover {
 }
 
 .update-button {
-  align-self: flex-end; /* Changed to align button to the right */
+  align-self: flex-end; 
   background-color: #5bc0de;
 }
 
