@@ -26,7 +26,9 @@ function handleClose() {
         <img src="@/assets/images/header/moretokens.png" alt="More Tokens" class="token-image" />
         <span class="token-text">3 Tokens</span>
       </div>
-      <button @click="handleClose" class="close-button">Close</button>
+      <div class="button-container">
+        <button @click="handleClose" class="close-button">Close</button>
+      </div>
     </div>
   </div>
 </template>
@@ -52,7 +54,12 @@ function handleClose() {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   text-align: center;
   max-width: 400px;
-  width: 100%;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 h2 {
@@ -76,6 +83,12 @@ h2 {
 .token-text {
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .close-button {
