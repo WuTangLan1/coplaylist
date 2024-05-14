@@ -19,7 +19,6 @@ export default {
   },
   computed: {
     isArtistsValid() {
-      // Check for at least one valid entry in each list
       const validFavouriteArtists = this.formData.favouriteArtists.filter(artist => artist.trim() !== '').length > 0;
       const validDislikedArtists = this.formData.dislikedArtists.filter(artist => artist.trim() !== '').length > 0;
       const isValid = validFavouriteArtists && validDislikedArtists;
@@ -29,19 +28,20 @@ export default {
   },
   methods: {
     validateArtist(index, type) {
-      // Set the validation state based on whether the input is non-empty
       this.inputStates[type][index] = this.formData[type][index].trim() !== '';
+      this.$emit('validation', this.isArtistsValid); // Emit validation status immediately
     },
     addArtist(type) {
       if (this.formData[type].length < 5) {
         this.formData[type].push('');
-        this.inputStates[type].push(false);  // Initialize state as false for new entry
+        this.inputStates[type].push(false);
+        this.$emit('validation', this.isArtistsValid); // Re-validate when adding an artist
       }
     },
     removeArtist(type, index) {
       this.formData[type].splice(index, 1);
       this.inputStates[type].splice(index, 1);
-      this.$emit('validation', this.isArtistsValid);
+      this.$emit('validation', this.isArtistsValid); // Re-validate when removing an artist
     }
   },
   created() {

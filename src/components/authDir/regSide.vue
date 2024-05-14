@@ -96,7 +96,6 @@ export default {
       this.showSuccessModal = false;
       this.$router.push('/');  
     }
-
   },
   mounted() {
     this.validateCurrentComponent();

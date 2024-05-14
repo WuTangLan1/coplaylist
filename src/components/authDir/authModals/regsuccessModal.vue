@@ -5,16 +5,16 @@ const props = defineProps({
   show: Boolean
 });
 
-const emits = defineEmits(['show','close']);
+const emits = defineEmits(['close']);
 
 watch(() => props.show, (newVal) => {
   console.log("Modal show state changed to:", newVal);
 });
+
 function handleClose() {
-  console.log('Emitting close event'); // Debug
+  console.log('Emitting close event');
   emits('close');
 }
-
 </script>
 
 <template>
@@ -22,7 +22,11 @@ function handleClose() {
     <div class="modal-content">
       <h2>Registration Successful!</h2>
       <p>You have successfully registered and been awarded 3 free tokens.</p>
-      <button @click="handleClose">Close</button>
+      <div class="token-info">
+        <img src="@/assets/images/header/moretokens.png" alt="More Tokens" class="token-image" />
+        <span class="token-text">3 Tokens</span>
+      </div>
+      <button @click="handleClose" class="close-button">Close</button>
     </div>
   </div>
 </template>
@@ -47,5 +51,44 @@ function handleClose() {
   background-color: #fff;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   text-align: center;
+  max-width: 400px;
+  width: 100%;
+}
+
+h2 {
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+.token-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.token-image {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.token-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.close-button {
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: #45a049;
 }
 </style>

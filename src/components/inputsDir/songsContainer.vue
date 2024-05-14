@@ -1,14 +1,16 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
 <script>
-import { ref, watch} from 'vue';
+import { ref, watch } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore';
 import loadingModal from '@/components/outputsDir/loadingModal.vue';
+import tokenImg from '@/assets/images/header/tokens.png'; 
+import tokensImg from '@/assets/images/header/moretokens.png'; 
 
 export default {
-  components : {
-    loadingModal
+  components: {
+    loadingModal,
   },
   setup() {
     const promptStore = usePromptStore();
@@ -23,36 +25,42 @@ export default {
 
     const selectedSongs = ref([
       { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 }
+      { name: '', artist: '', influence: 50 },
     ]);
 
     function updateSong(index, field, value) {
-        selectedSongs.value[index][field] = value;
-        if (selectedSongs.value[index].name.trim() && selectedSongs.value[index].artist.trim()) {
-          promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
-          promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
-          promptStore.updateSong(index, 'influence', selectedSongs.value[index].influence);
-        }
+      selectedSongs.value[index][field] = value;
+      if (
+        selectedSongs.value[index].name.trim() &&
+        selectedSongs.value[index].artist.trim()
+      ) {
+        promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
+        promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
+        promptStore.updateSong(
+          index,
+          'influence',
+          selectedSongs.value[index].influence
+        );
+      }
     }
 
     async function generatePlaylist() {
       if (!authStore.isAuthenticated) {
-        console.error("User is not logged in. Cannot generate playlist.");
+        console.error('User is not logged in. Cannot generate playlist.');
         return;
-      }        
+      }
       if (!promptStore.validateSongs()) {
-          promptStore.validateSongs()
-            return;
-        }
-        else {
-          showLoadingModal.value = true;
+        promptStore.validateSongs();
+        return;
+      } else {
+        showLoadingModal.value = true;
         try {
           await promptStore.generatePlaylist(newMusic.value);
           router.push({ name: 'Output' });
-        } finally {showLoadingModal.value=false}
-
+        } finally {
+          showLoadingModal.value = false;
         }
-       
+      }
     }
 
     function goBack() {
@@ -66,24 +74,30 @@ export default {
       goBack,
       authStore,
       newMusic,
-      showLoadingModal
+      showLoadingModal,
+      tokenImg,
+      tokensImg,
     };
-  }
+  },
 };
 </script>
-
 
 
 <template>
   <div class="songs-container">
     <div class="step-heading">
-      <div class="step-number">3</div> 
+      <div class="step-number">3</div>
       <h2>Add Songs</h2>
     </div>
     <h3 class="description">
-      Add up to three songs you like to guide the playlist generation (these will not be included in the generated playlist)
+      Add up to three songs you like to guide the playlist generation (these will
+      not be included in the generated playlist)
     </h3>
-    <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
+    <div
+      v-for="(song, index) in selectedSongs"
+      :key="`song-${index}`"
+      class="input-group"
+    >
       <div class="input-column">
         <label :for="`song-name-${index}`">Song Name</label>
         <input
@@ -110,14 +124,26 @@ export default {
       </label>
     </div>
     <div class="button-group">
+      <div v-if="authStore.user" class="token-display">
+        <img
+          :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
+          alt="Tokens"
+        />
+        <span>{{ authStore.user.tokens }}</span>
+      </div>
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) " @click="generatePlaylist">
-        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
+      <button
+        class="gen-btn"
+        :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1)"
+        @click="generatePlaylist"
+      >
+        Generate
       </button>
     </div>
     <loadingModal :show="showLoadingModal" />
   </div>
 </template>
+
 
 
 <style scoped>
@@ -206,6 +232,7 @@ h3.description {
   font-size: 0.9rem; 
   color: #333; 
 }
+
 
 
 .input-column label {

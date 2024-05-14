@@ -47,6 +47,7 @@ export default {
   }
 };
 </script>
+
 <template>
   <div class="settings-container">
     <h2>Account Settings</h2>
