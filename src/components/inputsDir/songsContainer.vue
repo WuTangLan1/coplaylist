@@ -40,15 +40,19 @@ export default {
         console.error("User is not logged in. Cannot generate playlist.");
         return;
       }        
-      if (!promptStore.validateTones()) {
+      if (!promptStore.validateSongs()) {
+        promptStore.validateSongs()
             return;
         }
-        showLoadingModal.value = true;
+        else {
+          showLoadingModal.value = true;
         try {
           await promptStore.generatePlaylist(newMusic.value);
           router.push({ name: 'Output' });
         } finally {showLoadingModal.value=false}
 
+        }
+       
     }
 
     function goBack() {
@@ -107,7 +111,7 @@ export default {
     </div>
     <div class="button-group">
       <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1)" @click="generatePlaylist">
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) " @click="generatePlaylist">
         <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
       </button>
     </div>
