@@ -91,7 +91,7 @@ export const useAuthStore = defineStore('auth', {
     },     
     async verifyEmailStatus() {
       if (!this.user) return;
-      await this.user.reload(); // Reload user to get updated info
+      await this.user.reload(); 
       if (this.user.emailVerified) {
         const userDocRef = doc(db, 'profiles', this.user.uid);
         await updateDoc(userDocRef, {

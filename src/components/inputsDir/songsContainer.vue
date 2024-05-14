@@ -45,6 +45,7 @@ export default {
     }
 
     async function generatePlaylist() {
+      authStore.verifyEmailStatus();
       if (!authStore.isAuthenticated) {
         console.error('User is not logged in. Cannot generate playlist.');
         return;
