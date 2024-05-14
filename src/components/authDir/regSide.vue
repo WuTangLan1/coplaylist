@@ -1,4 +1,3 @@
-<!-- src\components\auth\regSide.vue -->
 <script>
 import { nextTick } from 'vue';
 import InfoContainer from './register/infoContainer.vue';
@@ -92,7 +91,6 @@ export default {
       }
     },
     closeSuccessModal() {
-      console.log('close modal')
       this.showSuccessModal = false;
       this.$router.push('/');  
     }
@@ -121,6 +119,7 @@ export default {
     </div>
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
+  <button @click="showSuccessModal = !showSuccessModal">Toggle Modal</button>
   <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
 </template>
 

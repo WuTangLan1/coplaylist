@@ -41,7 +41,7 @@ export default {
         return;
       }        
       if (!promptStore.validateSongs()) {
-        promptStore.validateSongs()
+          promptStore.validateSongs()
             return;
         }
         else {
