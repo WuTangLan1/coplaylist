@@ -25,7 +25,8 @@ export const usePromptStore = defineStore('prompt', {
     modal: {
       show: false,
       message: ''
-    }
+    },
+    previouslyGeneratedSongs: [] 
   }),
   actions: {
     resetStore() {
@@ -33,6 +34,7 @@ export const usePromptStore = defineStore('prompt', {
       this.tones = { selectedGenres: [], selectedEra: [] };
       this.songs = [{ name: '', artist: '' }, { name: '', artist: '' }, { name: '', artist: '' }];
       this.modal = { show: false, message: '' };
+      this.previouslyGeneratedSongs = [];
     },
     showModal(message) {
       this.modal.show = true;
@@ -135,6 +137,7 @@ export const usePromptStore = defineStore('prompt', {
           playlistStore.setPlaylistDetails(formattedPlaylist);  
           playlistStore.setAlternativeSongs(formattedAlternativeSongs)
           await authStore.updateUserTokens(authStore.user.tokens - 2); 
+          this.previouslyGeneratedSongs = formattedPlaylist.map(song => `${song.title} - ${song.artist}`);
         } catch (error) {
           console.error('Error fetching playlist:', error);
         }
@@ -142,7 +145,6 @@ export const usePromptStore = defineStore('prompt', {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
     },   
-    
     async regeneratePlaylist() {
       const authStore = useAuthStore();
       const playlistStore = usePlaylistStore(); 
@@ -169,7 +171,9 @@ export const usePromptStore = defineStore('prompt', {
           return;
         }
         const previousSongs = await playlistStore.fetchUserPlaylists(authStore.user.uid);
-        const excludeSongs = previousSongs.filter(Boolean);
+        const excludeSongs = [...previousSongs.filter(Boolean), ...this.previouslyGeneratedSongs];
+        console.log('prev excluded : ', this.previouslyGeneratedSongs)
+        console.log('exclude songs : ', excludeSongs)
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -186,6 +190,8 @@ export const usePromptStore = defineStore('prompt', {
           dislikedArtists: authStore.user.disliked_artists || []
         };
     
+        console.log('playlist details : ', playlistDetails)
+    
         try {
           await authStore.deductTokens(2);
           const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
@@ -200,8 +206,7 @@ export const usePromptStore = defineStore('prompt', {
       } else {
         this.showModal("Insufficient tokens to regenerate a playlist.");
       }
-    },    
-
+    },
     formatPlaylist(playlistArray) {
         if (!Array.isArray(playlistArray)) {
             console.error("Expected an array but received:", typeof playlistArray);

@@ -62,17 +62,8 @@ app.post('/generate-playlist', async (req, res) => {
     const { vibes, tones = {}, songs, userTaste ={}, excludeSongs= [] } = req.body;
     const exclusionString = excludeSongs.length > 0 ? `Please ensure that none of the following songs are used in the result these songs: ${excludeSongs.join(', ')}` : '';
 
-    console.log('tones : ', tones)
-
     const genres = Array.isArray(tones.genres) ? tones.genres.join(', ') : 'Not specified';
     const eras = Array.isArray(tones.eras) ? tones.eras.join(', ') : 'Not specified';
-
-    console.log('Genres:', genres);  // Ensure this logs correctly
-    console.log('Eras:', eras); 
-
-    console.log("User Taste", userTaste);
-    console.log("Type of favouriteArtists", typeof userTaste.favouriteArtists); 
-    console.log("Is Array?", Array.isArray(userTaste.favouriteArtists));
     const favouriteStyles = typeof userTaste.favouriteArtists === 'string'
         ? userTaste.favouriteArtists.split(', ').filter(Boolean)
         : userTaste.favouriteArtists;
@@ -99,7 +90,7 @@ app.post('/generate-playlist', async (req, res) => {
         Setting: ${vibes.selectedSetting || 'any'},
         Songs: Influenced by these but not included: ${songs.map(song => `${song.name} by ${song.artist} (${song.influence}% influence)`).join(', ')},
         Exclude these artists under any circumstances: ${dislikedArtists},
-        ${exclusionString},
+        And please exclude the following songs under all circumstances and these represent songs the user does not want generated again ${exclusionString},
         Generate 5 additional alternative songs using the same criteria.
         
         Here is an example of a playlist that would be generated, please can you ensure that you strictly adhere to this format when generating
@@ -125,8 +116,7 @@ app.post('/generate-playlist', async (req, res) => {
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
         PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
 
-
-        console.log('prompt : ', prompt)
+        console.log('prompt in server :   ', prompt)
 
     try {
         const response = await axios.post("https://api.openai.com/v1/chat/completions", {

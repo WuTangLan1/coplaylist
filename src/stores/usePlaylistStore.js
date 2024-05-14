@@ -16,31 +16,33 @@ export const usePlaylistStore = defineStore('playlist', {
   getAlternativeSongs() {
       return this.alternativeSongs;
   },
-    setPlaylistDetails(responseData) {
-      if (typeof responseData === 'string') {
-        const nameMatch = responseData.match(/^Playlist Name: (.+)$/m); 
-        if (nameMatch && nameMatch[1]) {
-          this.playlistName = nameMatch[1].trim();
-        }
+  setPlaylistDetails(responseData) {
+    if (typeof responseData === 'string') {
+      const nameMatch = responseData.match(/^Playlist Name: (.+)$/m); 
+      if (nameMatch && nameMatch[1]) {
+        this.playlistName = nameMatch[1].trim();
       }
+    }
+  
+    if (typeof responseData === 'string' && responseData.includes('\n')) {
+      const sections = responseData.split('\n\n');  
+      sections.shift(); 
+      const details = sections.join('\n'); 
+      this.playlistDetails = this.parsePlaylistDetails(details);
+    } else if (Array.isArray(responseData)) {
+      this.playlistDetails = responseData.map(song => ({
+        title: song.title,
+        artist: song.artist,
+        releaseYear: song.releaseYear,
+        previewUrl: song.previewUrl || null 
+      }));
 
-      if (typeof responseData === 'string' && responseData.includes('\n')) {
-        const sections = responseData.split('\n\n');  
-        sections.shift(); 
-        const details = sections.join('\n'); 
-        this.playlistDetails = this.parsePlaylistDetails(details);
-      } else if (Array.isArray(responseData)) {
-        this.playlistDetails = responseData.map(song => ({
-          title: song.title,
-          artist: song.artist,
-          releaseYear: song.releaseYear,
-          previewUrl: song.previewUrl || null 
-        }));
-      } else {
-        console.error("Invalid details format:", responseData);
-        this.playlistDetails = [];
-      }
-    },
+      this.previouslyGeneratedSongs = responseData.map(song => `${song.title} - ${song.artist}`);
+    } else {
+      console.error("Invalid details format:", responseData);
+      this.playlistDetails = [];
+    }
+  },  
     parsePlaylistDetails(detailsString) {
       const songLines = detailsString.split('\n').filter(line => line.includes('-') && line.includes(':'));
       return songLines.map(line => {
