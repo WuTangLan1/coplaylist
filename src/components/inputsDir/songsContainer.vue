@@ -231,20 +231,20 @@ h3.description {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px; /* Adjust spacing to your liking */
-  border: 1px solid #ccc; /* Optional border */
-  padding: 5px 10px; /* Padding around the content */
-  border-radius: 5px; /* Rounded corners */
-  background-color: #fff; /* Background color */
+  margin-right: 20px; 
+  border: 1px solid #ccc; 
+  padding: 5px 10px; 
+  border-radius: 5px;
+  background-color: #fff;
 }
 
 .token-display img {
-  width: 20px; /* Adjust size as needed */
-  margin-right: 5px; /* Space between the image and the text */
+  width: 20px;
+  margin-right: 5px; 
 }
 
 .token-display span {
-  font-size: 1rem; /* Adjust font size as needed */
+  font-size: 1rem; 
   color: #333;
   font-weight: bold;
 }
@@ -271,8 +271,8 @@ h3.description {
 
 .checkbox-group {
   display: flex;
-  justify-content: center; /* Center the checkbox group horizontally */
-  align-items: center; /* Align vertically */
+  justify-content: center; 
+  align-items: center; 
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100%;
@@ -331,7 +331,6 @@ button:disabled {
 .token-icon {
   width: 20px; 
   height: auto;
-  margin-right: 5px; 
   vertical-align: middle;
 }
 
