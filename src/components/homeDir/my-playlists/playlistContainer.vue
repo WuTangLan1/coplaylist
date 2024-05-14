@@ -1,10 +1,11 @@
 <!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
+
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
-import {collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
-
+import { useRouter } from 'vue-router';
 export default {
   components: {
     PlaylistItem
@@ -56,7 +57,7 @@ export default {
         } catch (error) {
           console.error('Error deleting playlist:', error);
         }
-      }
+      },
   },
   created() {
     this.fetchPlaylists();
@@ -85,7 +86,9 @@ export default {
           <img src="@/assets/images/loading/playlist_loading.gif" alt="Loading playlists" class="loading-gif" />
         </div>
         <div v-else-if="error">Error: {{ error }}</div>
-        <div v-else-if="filteredPlaylists.length === 0">No playlists found.</div>
+        <div v-else-if="filteredPlaylists.length === 0" class="no-playlists-container">
+          <p class="no-playlists-message">You don't have any playlists yet.</p>
+        </div>
         <div v-else>
           <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
         </div>
@@ -94,9 +97,7 @@ export default {
   </div>
 </template>
 
-  
-  <style scoped>
-
+<style scoped>
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -109,9 +110,9 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
+}
 
-  .modal {
+.modal {
     background: white;
     border-radius: 10px;
     width: auto;
@@ -122,81 +123,116 @@ export default {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
-  }
+}
 
-  @keyframes dropAnimation {
+@keyframes dropAnimation {
     0% {
-      transform: translateY(-100%);
-      opacity: 0;
+        transform: translateY(-100%);
+        opacity: 0;
     }
     100% {
-      transform: translateY(0);
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-  }
+}
 
-  .loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;  
-  width: 100%;
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;  
+    width: 100%;
 }
 
 .loading-gif {
-  width: 40% ;
-  max-width:100px;
+    width: 40%;
+    max-width: 100px;
 }
 
 .modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #f3f3f4;
-  border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f3f3f4;
+    border-radius: 0.5rem;
 }
 
 .modal-title {
-  font-size: 32px;
-  font-weight: bold;
-  color: #000000;
-  margin: 0;
+    font-size: 32px;
+    font-weight: bold;
+    color: #000000;
+    margin: 0;
 }
 
-  .close-icon {
-  font-size: 24px;
-  cursor: pointer;
+.close-icon {
+    font-size: 24px;
+    cursor: pointer;
 }
 
-  .playlist-container {
+.playlist-container {
     max-width: 800px;
     margin: 0 auto;
     max-height: 60vh;
     overflow-y: auto;
-  }
-
-  .filter-container {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center horizontally */
-  margin-bottom: 0.3rem;
-  margin-top: 0.3rem;
-  padding: 0.5rem;
-  width: 100%;
 }
 
+.filter-container {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center horizontally */
+    margin-bottom: 0.3rem;
+    margin-top: 0.3rem;
+    padding: 0.5rem;
+    width: 100%;
+}
 
 label {
-  margin-right: 10px;
-  font-size: 16px;
-  font-weight: bold;
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 select {
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
 }
-  </style>
+
+.no-playlists-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    padding: 20px;
+}
+
+.no-playlists-icon {
+    width: 50%;
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+.no-playlists-message {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.create-playlist-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1db954;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.create-playlist-button:hover {
+    background-color: #1ed760;
+}
+</style>
