@@ -1,6 +1,6 @@
 // src/stores/useAuthStore.js
 import { defineStore } from 'pinia';
-import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '@/components/fbDir/fbInit';
 import router from '@/router';
@@ -26,6 +26,8 @@ export const useAuthStore = defineStore('auth', {
           displayName: `${firstName} ${lastName}`
         });
 
+        await sendEmailVerification(user); 
+
         const userProfile = {
           first_name: firstName,
           last_name: lastName,
@@ -34,23 +36,14 @@ export const useAuthStore = defineStore('auth', {
           favourite_artists: favouriteArtists.filter(Boolean), 
           disliked_artists: dislikedArtists.filter(Boolean),
           tokens: 3,
-          refresh_token:""
+          refresh_token: "",
+          email_verified: false 
         };
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);
         return user;
       } catch (error) {
         console.error('Error registering user', error);
-        throw error;
-      }
-    },
-    async loginUser(details) {
-      const { username, password } = details;
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth,username, password);
-        return userCredential.user;
-      } catch (error) {
-        console.error('Error logging in', error);
         throw error;
       }
     },
@@ -85,11 +78,28 @@ export const useAuthStore = defineStore('auth', {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         const data = docSnap.data();
-        this.user = { ...this.user, ...data, disliked_artists: data.disliked_artists || [], favourite_artists: data.favourite_artists || [] };
+        this.user = {
+          ...this.user,
+          ...data,
+          disliked_artists: data.disliked_artists || [],
+          favourite_artists: data.favourite_artists || [],
+          emailVerified: auth.currentUser.emailVerified // Check email verification status
+        };
       } else {
         console.error("No such profile!");
       }
-    },       
+    },     
+    async verifyEmailStatus() {
+      if (!this.user) return;
+      await this.user.reload(); // Reload user to get updated info
+      if (this.user.emailVerified) {
+        const userDocRef = doc(db, 'profiles', this.user.uid);
+        await updateDoc(userDocRef, {
+          email_verified: true
+        });
+        this.user.email_verified = true;
+      }
+    },        
     async updateUserTokens(newTokenCount) {
       if (!this.user) return;
       const userDocRef = doc(db, 'profiles', this.user.uid);

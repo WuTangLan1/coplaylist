@@ -27,6 +27,7 @@ function handleClose() {
         <img src="@/assets/images/header/moretokens.png" alt="More Tokens" class="token-image" />
         <span class="token-text">3 Tokens</span>
       </div>
+      <p>Please verify your email address to start generating music.</p> <!-- Added message -->
       <div class="button-container">
         <button @click="handleClose" class="close-button">Close</button>
       </div>
