@@ -1,3 +1,4 @@
+<!-- src\components\authDir\regSide.vue -->
 <script>
 import { nextTick } from 'vue';
 import InfoContainer from './register/infoContainer.vue';
@@ -14,6 +15,7 @@ export default {
     PreferencesContainer,
     RegsuccessModal
   },
+  emits: ['closeModal'], // Add this line to declare the closeModal event
   data() {
     return {
       currentStep: 1,
@@ -81,9 +83,9 @@ export default {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
-          console.log('Registration successful, updating showSuccessModal.'); // Before updating
+          console.log('Registration successful, updating showSuccessModal.');
           this.showSuccessModal = true;
-          console.log('showSuccessModal status:', this.showSuccessModal); // After updating
+          console.log('showSuccessModal status:', this.showSuccessModal);
         } catch (error) {
           console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');
@@ -94,7 +96,8 @@ export default {
     },
     closeSuccessModal() {
       this.showSuccessModal = false;
-      this.$router.push('/');  
+      this.$router.push('/');
+      this.$emit('closeModal'); // Emit closeModal event to close the parent modal
     }
   },
   mounted() {
@@ -122,6 +125,8 @@ export default {
   </div>
   <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
 </template>
+
+
 
 <style scoped>
 .registration-container {

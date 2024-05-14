@@ -1,3 +1,4 @@
+<!-- src/components/authDir/authModals/regsuccessModal.vue -->
 <script setup>
 import { defineProps, defineEmits, watch } from 'vue';
 

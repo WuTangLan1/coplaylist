@@ -1,4 +1,4 @@
-<!-- src/components/authDir/logSide.vue -->
+<!-- src\components\authDir\logSide.vue -->
 <script>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -10,6 +10,7 @@ export default {
   components: {
     FontAwesomeIcon
   },
+  emits: ['closeModal'], // Add this line to declare the closeModal event
   setup(_, { emit }) {
     const loginForm = ref({
       email: '',
@@ -31,7 +32,7 @@ export default {
           password: loginForm.value.password,
         });
         loginForm.value = { email: '', password: '' };
-        emit('closeModal');
+        emit('closeModal'); // Emit closeModal event after successful login
       } catch (error) {
         console.error(error);
       }
