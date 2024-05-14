@@ -71,7 +71,9 @@ export default {
     };
 
     const addFavouriteArtist = () => {
-      favouriteArtists.value.push('');
+      if (favouriteArtists.value.length < 5) {
+        favouriteArtists.value.push('');
+      }
     };
 
     const removeFavouriteArtist = (index) => {
@@ -79,12 +81,23 @@ export default {
     };
 
     const addDislikedArtist = () => {
-      dislikedArtists.value.push('');
+      if (dislikedArtists.value.length < 5) {
+        dislikedArtists.value.push('');
+      }
     };
 
     const removeDislikedArtist = (index) => {
       dislikedArtists.value.splice(index, 1);
     };
+
+    const tokenCount = computed(() => authStore.user.tokens);
+
+    const tokenImage = computed(() => {
+      if (tokenCount.value > 1) {
+        return require('@/assets/images/header/moretokens.png');
+      }
+      return require('@/assets/images/header/tokens.png');
+    });
 
     return {
       firstName,
@@ -100,7 +113,9 @@ export default {
       addFavouriteArtist,
       removeFavouriteArtist,
       addDislikedArtist,
-      removeDislikedArtist
+      removeDislikedArtist,
+      tokenCount,
+      tokenImage
     };
   }
 };
@@ -108,7 +123,10 @@ export default {
 
 <template>
   <div class="userinfo">
-    <h2>User Profile</h2>
+    <div class="token-display">
+      <img :src="tokenImage" alt="Tokens" class="token-icon" />
+      <span>{{ tokenCount }}</span>
+    </div>
     <div class="form-group">
       <label for="first-name">First Name:</label>
       <input id="first-name" v-model="firstName" placeholder="Enter your first name" />
@@ -131,7 +149,7 @@ export default {
         <input v-model="favouriteArtists[index]" placeholder="Enter an artist" />
         <button @click="removeFavouriteArtist(index)" class="remove-button">Remove</button>
       </div>
-      <button @click="addFavouriteArtist" class="add-button">Add Favourite Artist</button>
+      <button @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5" class="add-button">Add Favourite Artist</button>
     </div>
     <div class="form-group">
       <label>Disliked Artists:</label>
@@ -139,7 +157,7 @@ export default {
         <input v-model="dislikedArtists[index]" placeholder="Enter an artist" />
         <button @click="removeDislikedArtist(index)" class="remove-button">Remove</button>
       </div>
-      <button @click="addDislikedArtist" class="add-button">Add Disliked Artist</button>
+      <button @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5" class="add-button">Add Disliked Artist</button>
     </div>
     <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid || !isFormChanged" @click="updateUserProfile" class="update-button">Update Profile</button>
   </div>
@@ -153,6 +171,18 @@ export default {
   padding: 20px;
   background-color: #f4f4f9;
   border-radius: 0.3rem;
+}
+
+.token-display {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.token-icon {
+  width: 24px;
+  height: 24px;
 }
 
 h2 {
@@ -182,6 +212,11 @@ input, textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+}
+
+input:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
 }
 
 .artist-group {
@@ -218,7 +253,12 @@ button:hover {
   background-color: #5cb85c;
 }
 
-.add-button:hover {
+.add-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.add-button:hover:enabled {
   background-color: #4cae4c;
 }
 
