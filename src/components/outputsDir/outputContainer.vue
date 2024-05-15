@@ -47,7 +47,7 @@ export default {
     closeSaveModal() {
       this.showSaveModal = false;
     },
-    async confirmSavePlaylist(playlistName) {
+    async confirmSavePlaylist(playlistData) {
       try {
         const authStore = useAuthStore();
         const playlistStore = usePlaylistStore();
@@ -55,11 +55,13 @@ export default {
         const playlistsCollection = collection(db, 'playlists');
         await addDoc(playlistsCollection, {
           creatorId: authStore.user.uid,
-          creator_name : authStore.user.first_name,
-          name: playlistName,
+          creator_name: authStore.user.first_name,
+          name: playlistData.name,
           likes: 0,
           favourited: false,
           details: playlistStore.playlistDetails,
+          isPublic: playlistData.isPublic,
+          public_genre: playlistData.genre,
           createdAt: new Date()
         });
 
