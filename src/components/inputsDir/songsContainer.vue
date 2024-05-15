@@ -1,6 +1,6 @@
 <!-- src\components\inputsDir\songsContainer.vue -->
 <script>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -45,7 +45,6 @@ export default {
     }
 
     async function generatePlaylist() {
-      authStore.verifyEmailStatus();
       if (!authStore.isAuthenticated) {
         console.error('User is not logged in. Cannot generate playlist.');
         return;
@@ -80,6 +79,10 @@ export default {
       tokensImg,
     };
   },
+  onMounted() {
+    const authStore = useAuthStore();
+    authStore.verifyEmailStatus();
+  }
 };
 </script>
 

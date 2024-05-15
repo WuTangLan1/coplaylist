@@ -83,10 +83,10 @@ export const useAuthStore = defineStore('auth', {
           ...data,
           disliked_artists: data.disliked_artists || [],
           favourite_artists: data.favourite_artists || [],
-          emailVerified: auth.currentUser.emailVerified // Check email verification status
+          emailVerified: auth.currentUser.emailVerified 
         };
       } else {
-        console.error("No such profile!");
+        console.error("");
       }
     },     
     async verifyEmailStatus() {
