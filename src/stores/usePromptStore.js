@@ -176,8 +176,6 @@ export const usePromptStore = defineStore('prompt', {
         }
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = [...previousSongs.filter(Boolean), ...this.previouslyGeneratedSongs];
-        console.log('prev excluded : ', this.previouslyGeneratedSongs)
-        console.log('exclude songs : ', excludeSongs)
         const playlistDetails = {
           vibes: this.vibes,
           tones: {
@@ -194,7 +192,6 @@ export const usePromptStore = defineStore('prompt', {
           dislikedArtists: authStore.user.disliked_artists || []
         };
     
-        console.log('playlist details : ', playlistDetails)
     
         try {
           await authStore.deductTokens(1);

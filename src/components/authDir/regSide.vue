@@ -83,9 +83,7 @@ export default {
         const authStore = useAuthStore();
         try {
           await authStore.registerUser(this.formData);
-          console.log('Registration successful, updating showSuccessModal.');
           this.showSuccessModal = true;
-          console.log('showSuccessModal status:', this.showSuccessModal);
         } catch (error) {
           console.error('Registration failed:', error);
           alert('Registration failed. Please try again.');

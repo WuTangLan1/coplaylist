@@ -100,7 +100,6 @@ export const useAuthStore = defineStore('auth', {
       }
     },     
     async verifyEmailStatus() {
-      console.log('verify email triggered');
       if (!auth.currentUser) return;
       await auth.currentUser.reload(); 
       if (auth.currentUser.emailVerified) {

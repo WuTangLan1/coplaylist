@@ -1,6 +1,6 @@
 <!-- src/components/authDir/authModals/regsuccessModal.vue -->
 <script setup>
-import { defineProps, defineEmits, watch } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
   show: Boolean
@@ -8,12 +8,7 @@ const props = defineProps({
 
 const emits = defineEmits(['close']);
 
-watch(() => props.show, (newVal) => {
-  console.log("Modal show state changed to:", newVal);
-});
-
 function handleClose() {
-  console.log('Emitting close event');
   emits('close');
 }
 </script>
