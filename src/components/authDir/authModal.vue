@@ -71,6 +71,7 @@ export default {
   border-radius: 5px;
   width: auto;
   max-width: 90vw;
+  max-width: 560px;
   max-height: 90vh;
   width: 80%;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);

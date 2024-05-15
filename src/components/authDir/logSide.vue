@@ -38,6 +38,7 @@ export default {
         loginForm.value = { email: '', password: '' };
         emit('closeModal');
       } catch (error) {
+        // Ensure the error is not logged to the console
         errorMessage.value = error.message;
         showErrorModal.value = true;
       }
