@@ -1,4 +1,4 @@
-<!-- src\components\authDir\regSide.vue -->
+<!-- src/components/authDir/regSide.vue -->
 <script>
 import { nextTick } from 'vue';
 import InfoContainer from './register/infoContainer.vue';
@@ -6,6 +6,7 @@ import SettingsContainer from './register/settingsContainer.vue';
 import PreferencesContainer from './register/preferencesContainer.vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import RegsuccessModal from './authModals/regsuccessModal.vue';
+import AuthErrorModal from './authModals/autherrorModal.vue';
 
 export default {
   name: 'RegSide',
@@ -13,9 +14,10 @@ export default {
     InfoContainer,
     SettingsContainer,
     PreferencesContainer,
-    RegsuccessModal
+    RegsuccessModal,
+    AuthErrorModal
   },
-  emits: ['closeModal'], // Add this line to declare the closeModal event
+  emits: ['closeModal'],
   data() {
     return {
       currentStep: 1,
@@ -34,7 +36,9 @@ export default {
       isInfoValid: false,
       isSettingsValid: false,
       isPreferencesValid: false,
-      showSuccessModal: false 
+      showSuccessModal: false,
+      showErrorModal: false,
+      errorMessage: ''
     };
   },
   computed: {
@@ -86,16 +90,21 @@ export default {
           this.showSuccessModal = true;
         } catch (error) {
           console.error('Registration failed:', error);
-          alert('Registration failed. Please try again.');
+          this.errorMessage = 'Registration failed. Please try again.';
+          this.showErrorModal = true;
         }
       } else {
-        alert('Please complete the form correctly.');
+        this.errorMessage = 'Please complete the form correctly.';
+        this.showErrorModal = true;
       }
     },
     closeSuccessModal() {
       this.showSuccessModal = false;
       this.$router.push('/');
-      this.$emit('closeModal'); // Emit closeModal event to close the parent modal
+      this.$emit('closeModal');
+    },
+    closeErrorModal() {
+      this.showErrorModal = false;
     }
   },
   mounted() {
@@ -122,9 +131,8 @@ export default {
     <button @click="register" :disabled="!isFormValid" class="reg-btn">Register</button>
   </div>
   <RegsuccessModal :show="showSuccessModal" @close="closeSuccessModal" />
+  <AuthErrorModal :show="showErrorModal" :errorMessage="errorMessage" @close="closeErrorModal" />
 </template>
-
-
 
 <style scoped>
 .registration-container {

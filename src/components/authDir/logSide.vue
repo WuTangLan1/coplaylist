@@ -1,16 +1,18 @@
-<!-- src\components\authDir\logSide.vue -->
+<!-- src/components/authDir/logSide.vue -->
 <script>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import AuthErrorModal from './authModals/autherrorModal.vue';
 
 export default {
   name: 'LogSide',
   components: {
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    AuthErrorModal
   },
-  emits: ['closeModal'], // Add this line to declare the closeModal event
+  emits: ['closeModal'],
   setup(_, { emit }) {
     const loginForm = ref({
       email: '',
@@ -18,6 +20,8 @@ export default {
     });
 
     const showPassword = ref(false);
+    const showErrorModal = ref(false);
+    const errorMessage = ref('');
 
     const toggleShowPassword = () => {
       showPassword.value = !showPassword.value;
@@ -32,10 +36,16 @@ export default {
           password: loginForm.value.password,
         });
         loginForm.value = { email: '', password: '' };
-        emit('closeModal'); // Emit closeModal event after successful login
+        emit('closeModal');
       } catch (error) {
-        console.error(error);
+        console.error('Login failed:', error);
+        errorMessage.value = 'Login failed. Please check your credentials and try again.';
+        showErrorModal.value = true;
       }
+    };
+
+    const closeErrorModal = () => {
+      showErrorModal.value = false;
     };
 
     return {
@@ -44,7 +54,10 @@ export default {
       showPassword,
       toggleShowPassword,
       faEye,
-      faEyeSlash
+      faEyeSlash,
+      showErrorModal,
+      errorMessage,
+      closeErrorModal
     };
   },
 };
@@ -72,6 +85,7 @@ export default {
         <button type="submit" class="submit-button">Login</button>
       </div>
     </form>
+    <AuthErrorModal :show="showErrorModal" :errorMessage="errorMessage" @close="closeErrorModal" />
   </div>
 </template>
 
