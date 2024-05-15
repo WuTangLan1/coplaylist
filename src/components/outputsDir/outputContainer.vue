@@ -1,5 +1,4 @@
 <!-- src\components\outputsDir\playlist\outputSection.vue -->
-
 <script>
 import PlaylistSection from '@/components/outputsDir/playlist/playlistSection.vue';
 import ControlSection from '@/components/outputsDir/playlist/controlSection.vue';
@@ -31,7 +30,7 @@ export default {
       showLoadingModal.value = false;
     };
 
-    return { playlist, regeneratePlaylist, showLoadingModal,  handleLoading: () => { showLoadingModal.value = true; },
+    return { playlist, regeneratePlaylist, showLoadingModal, handleLoading: () => { showLoadingModal.value = true; },
       handleLoadingComplete: () => { showLoadingModal.value = false; }
     };
   },
@@ -73,7 +72,6 @@ export default {
   }
 };
 </script>
-
 
 <template>
   <div class="output-container">

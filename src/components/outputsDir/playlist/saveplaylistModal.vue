@@ -26,7 +26,7 @@ export default {
         const playlistData = {
           name: this.playlistName.trim(),
           isPublic: this.makePublic,
-          genre: this.makePublic ? (this.selectedGenre === 'Custom' ? this.customGenre.trim() : this.selectedGenre) : ''
+          genre: this.makePublic ? (this.selectedGenre === 'Custom' ? this.customGenre.trim() : this.selectedGenre) : null
         };
         this.$emit('confirm', playlistData);
       }
