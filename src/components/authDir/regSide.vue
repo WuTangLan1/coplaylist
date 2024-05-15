@@ -89,8 +89,7 @@ export default {
           await authStore.registerUser(this.formData);
           this.showSuccessModal = true;
         } catch (error) {
-          console.error('Registration failed:', error);
-          this.errorMessage = 'Registration failed. Please try again.';
+          this.errorMessage = error.message;
           this.showErrorModal = true;
         }
       } else {

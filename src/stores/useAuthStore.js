@@ -7,7 +7,7 @@ import router from '@/router';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null, 
+    user: null,
     isAuthenticated: false,
   }),
   
@@ -26,25 +26,32 @@ export const useAuthStore = defineStore('auth', {
           displayName: `${firstName} ${lastName}`
         });
 
-        await sendEmailVerification(user); 
+        await sendEmailVerification(user);
 
         const userProfile = {
           first_name: firstName,
           last_name: lastName,
           phone: phone,
           country: country,
-          favourite_artists: favouriteArtists.filter(Boolean), 
+          favourite_artists: favouriteArtists.filter(Boolean),
           disliked_artists: dislikedArtists.filter(Boolean),
           tokens: 3,
           refresh_token: "",
-          email_verified: false 
+          email_verified: false
         };
 
         await setDoc(doc(db, 'profiles', user.uid), userProfile);
         return user;
       } catch (error) {
-        console.error('Error registering user', error);
-        throw error;
+        let errorMessage = 'Error registering user';
+        if (error.code === 'auth/email-already-in-use') {
+          errorMessage = 'This email is already in use.';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email address.';
+        } else if (error.code === 'auth/weak-password') {
+          errorMessage = 'Password is too weak.';
+        }
+        throw new Error(errorMessage);
       }
     },
     async loginUser(details) {
@@ -53,8 +60,13 @@ export const useAuthStore = defineStore('auth', {
         const userCredential = await signInWithEmailAndPassword(auth, username, password);
         return userCredential.user;
       } catch (error) {
-        console.error('Error logging in', error);
-        throw error;
+        let errorMessage = 'Error logging in';
+        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+          errorMessage = 'Invalid credentials. Please check your email and password.';
+        } else if (error.code === 'auth/invalid-email') {
+          errorMessage = 'Invalid email address.';
+        }
+        throw new Error(errorMessage);
       }
     },
     deductTokens(amount) {

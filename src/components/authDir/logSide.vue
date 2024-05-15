@@ -38,8 +38,7 @@ export default {
         loginForm.value = { email: '', password: '' };
         emit('closeModal');
       } catch (error) {
-        console.error('Login failed:', error);
-        errorMessage.value = 'Login failed. Please check your credentials and try again.';
+        errorMessage.value = error.message;
         showErrorModal.value = true;
       }
     };
@@ -88,6 +87,7 @@ export default {
     <AuthErrorModal :show="showErrorModal" :errorMessage="errorMessage" @close="closeErrorModal" />
   </div>
 </template>
+
 
 <style scoped>
 .login-container {
