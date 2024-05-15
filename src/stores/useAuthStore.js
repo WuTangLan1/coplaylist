@@ -47,6 +47,16 @@ export const useAuthStore = defineStore('auth', {
         throw error;
       }
     },
+    async loginUser(details) {
+      const { username, password } = details;
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, username, password);
+        return userCredential.user;
+      } catch (error) {
+        console.error('Error logging in', error);
+        throw error;
+      }
+    },
     deductTokens(amount) {
       if (!this.user || this.user.tokens < amount) {
         throw new Error("Insufficient tokens");
@@ -83,17 +93,18 @@ export const useAuthStore = defineStore('auth', {
           ...data,
           disliked_artists: data.disliked_artists || [],
           favourite_artists: data.favourite_artists || [],
-          emailVerified: auth.currentUser.emailVerified 
+          email_verified: data.email_verified || false 
         };
       } else {
-        console.error("");
+        console.error("No such profile!");
       }
     },     
     async verifyEmailStatus() {
-      if (!this.user) return;
-      await this.user.reload(); 
-      if (this.user.emailVerified) {
-        const userDocRef = doc(db, 'profiles', this.user.uid);
+      console.log('verify email triggered');
+      if (!auth.currentUser) return;
+      await auth.currentUser.reload(); 
+      if (auth.currentUser.emailVerified) {
+        const userDocRef = doc(db, 'profiles', auth.currentUser.uid);
         await updateDoc(userDocRef, {
           email_verified: true
         });

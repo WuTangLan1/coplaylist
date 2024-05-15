@@ -1,4 +1,3 @@
-<!-- src\components\inputsDir\songsContainer.vue -->
 <script>
 import { ref, watch, onMounted } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
@@ -67,6 +66,10 @@ export default {
       router.push({ name: 'Vibe' });
     }
 
+    onMounted(() => {
+      authStore.verifyEmailStatus();
+    })
+
     return {
       selectedSongs,
       updateSong,
@@ -79,13 +82,8 @@ export default {
       tokensImg,
     };
   },
-  onMounted() {
-    const authStore = useAuthStore();
-    authStore.verifyEmailStatus();
-  }
 };
 </script>
-
 <template>
   <div class="songs-container">
     <div class="step-heading">
@@ -127,22 +125,26 @@ export default {
       </label>
     </div>
     <div class="button-group">
-      <button class="prev-btn" @click="goBack">Previous</button>
-      <div v-if="authStore.user" class="token-display">
-        <img
-          :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
-          alt="Tokens"
-        />
-        <span>{{ authStore.user.tokens }}</span>
+      <div v-if="authStore.user && !authStore.user.email_verified==true" class="email-verification-warning">
+        <p>Please verify your email address before generating a playlist.</p>
       </div>
-      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) " @click="generatePlaylist">
-        <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
-      </button>
+      <div class="button-row">
+        <button class="prev-btn" @click="goBack">Previous</button>
+        <div v-if="authStore.user" class="token-display">
+          <img
+            :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
+            alt="Tokens"
+          />
+          <span>{{ authStore.user.tokens }}</span>
+        </div>
+        <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || (authStore.user && !authStore.user.emailVerified)" @click="generatePlaylist">
+          <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
+        </button>
+      </div>
     </div>
     <loadingModal :show="showLoadingModal" />
   </div>
 </template>
-
 
 <style scoped>
 .songs-container {
@@ -320,11 +322,18 @@ input[type="checkbox"] {
 }
 
 .button-group {
+  width: 100%;
   display: flex;
-  justify-content: space-between; 
-  width: 95%; 
+  flex-direction: column;
+  align-items: center;
   margin-top: 1rem; 
-  margin: auto;
+}
+
+.button-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 button:disabled {
@@ -332,6 +341,7 @@ button:disabled {
   color: #666; 
   cursor: not-allowed; 
 }
+
 .token-icon {
   width: 20px; 
   height: auto;
@@ -348,7 +358,8 @@ button:disabled {
   font-size: 0.9rem; 
   transition: background-color 0.3s ease;
   flex-grow: 0;
-  margin: 0; 
+  margin: 0.5rem; /* Added margin for better spacing */
+  width: auto; /* Ensure consistent button width */
 }
 
 .gen-btn {
@@ -375,4 +386,12 @@ button:disabled {
   }
 }
 
+.email-verification-warning p {
+  color: #d9534f;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  width: 100%;
+}
 </style>
