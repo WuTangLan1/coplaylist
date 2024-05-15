@@ -5,12 +5,14 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import AuthErrorModal from './authModals/autherrorModal.vue';
+import ForgotPasswordModal from './authModals/forgotpasswordModal.vue';
 
 export default {
   name: 'LogSide',
   components: {
     FontAwesomeIcon,
-    AuthErrorModal
+    AuthErrorModal,
+    ForgotPasswordModal
   },
   emits: ['closeModal'],
   setup(_, { emit }) {
@@ -21,6 +23,7 @@ export default {
 
     const showPassword = ref(false);
     const showErrorModal = ref(false);
+    const showForgotPasswordModal = ref(false);
     const errorMessage = ref('');
 
     const toggleShowPassword = () => {
@@ -38,7 +41,6 @@ export default {
         loginForm.value = { email: '', password: '' };
         emit('closeModal');
       } catch (error) {
-        // Ensure the error is not logged to the console
         errorMessage.value = error.message;
         showErrorModal.value = true;
       }
@@ -46,6 +48,14 @@ export default {
 
     const closeErrorModal = () => {
       showErrorModal.value = false;
+    };
+
+    const openForgotPasswordModal = () => {
+      showForgotPasswordModal.value = true;
+    };
+
+    const closeForgotPasswordModal = () => {
+      showForgotPasswordModal.value = false;
     };
 
     return {
@@ -56,8 +66,11 @@ export default {
       faEye,
       faEyeSlash,
       showErrorModal,
+      showForgotPasswordModal,
       errorMessage,
-      closeErrorModal
+      closeErrorModal,
+      openForgotPasswordModal,
+      closeForgotPasswordModal
     };
   },
 };
@@ -82,13 +95,14 @@ export default {
         </div>
       </div>
       <div class="btn-grp">
+        <div class="forgot-password" @click="openForgotPasswordModal">Forgot Password?</div>
         <button type="submit" class="submit-button">Login</button>
       </div>
     </form>
     <AuthErrorModal :show="showErrorModal" :errorMessage="errorMessage" @close="closeErrorModal" />
+    <ForgotPasswordModal :show="showForgotPasswordModal" @close="closeForgotPasswordModal" />
   </div>
 </template>
-
 
 <style scoped>
 .login-container {
@@ -158,10 +172,21 @@ label {
   cursor: pointer;
 }
 
+.forgot-password {
+  cursor: pointer;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
 .btn-grp {
   display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
+  justify-content: space-between; /* Space between the forgot password and login button */
   width: 100%;
+  align-items: center;
 }
 
 .submit-button {
