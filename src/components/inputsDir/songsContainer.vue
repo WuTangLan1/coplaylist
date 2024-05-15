@@ -137,7 +137,7 @@ export default {
           />
           <span>{{ authStore.user.tokens }}</span>
         </div>
-        <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || (authStore.user && !authStore.user.emailVerified)" @click="generatePlaylist">
+        <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || (authStore.user && authStore.user.emailVerified)" @click="generatePlaylist">
           <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
         </button>
       </div>

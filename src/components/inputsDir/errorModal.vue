@@ -18,6 +18,7 @@ export default {
 <template>
   <div v-if="modal.show" class="modal-overlay">
     <div class="modal">
+      <h2>Error</h2>
       <div class="modal-content">
         <p>{{ modal.message }}</p>
       </div>
@@ -47,7 +48,8 @@ export default {
   background: white;
   padding: 1rem;
   border-radius: 10px;
-  width: auto;
+  width: 80%;
+  max-width: 80vw;
   max-width: 500px;
   max-height: 80vh;
   display: flex;

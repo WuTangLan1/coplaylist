@@ -9,7 +9,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../fbDir/fbInit';
+import { auth, db } from '../fbDir/fbInit';
 import { computed, ref } from 'vue';
 
 export default {
@@ -55,7 +55,9 @@ export default {
         const playlistsCollection = collection(db, 'playlists');
         await addDoc(playlistsCollection, {
           creatorId: authStore.user.uid,
+          creator_name : authStore.user.first_name,
           name: playlistName,
+          likes: 0,
           favourited: false,
           details: playlistStore.playlistDetails,
           createdAt: new Date()
