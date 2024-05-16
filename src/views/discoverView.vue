@@ -27,9 +27,11 @@ export default {
 
 <style scoped>
 .discover-view {
-  padding: 20px;
   padding: 1rem;
   max-width: 89vw;
+  background: linear-gradient(to bottom, #d0e8ff, #f0f8ff); /* Light blue gradient background */
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .section {
   margin-bottom: 40px;

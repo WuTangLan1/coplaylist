@@ -53,16 +53,18 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 98vw;
   overflow: hidden;
   position: relative;
-  height: 500px; /* Adjust the height as needed */
+  height: 500px; 
+  background-color: #f0f0f0; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .scrolling-playlists {
   display: flex;
   flex-direction: column;
-  animation: scrollPlaylists 60s linear infinite; /* Adjust the duration as needed */
+  animation: scrollPlaylists 60s linear infinite; 
 }
 
 @keyframes scrollPlaylists {
@@ -81,25 +83,25 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 10px; 
   color: #333;
   font-size: 1rem;
 }
 
 .playlist-name {
-  color: #1a73e8; /* Blue color */
+  color: #4b8df8; 
 }
 
 .creator-name {
-  color: #34a853; /* Green color */
+  color: #4caf50; 
 }
 
 .display-genre {
-  color: #fbbc05; /* Yellow color */
+  color: #6a3191; 
 }
 
 .songs {
-  color: #ea4335; /* Red color */
+  color: #f44336;
 }
 
 .playlist-name, .creator-name, .display-genre, .songs {
