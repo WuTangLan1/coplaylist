@@ -28,6 +28,7 @@ export default {
 <style scoped>
 .discover-view {
   padding: 20px;
+  padding: 1rem;
 }
 .section {
   margin-bottom: 40px;
