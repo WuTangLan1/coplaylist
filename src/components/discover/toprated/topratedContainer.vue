@@ -41,6 +41,7 @@ export default {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 98vw;
 }
 
 .playlist-line {
@@ -49,11 +50,17 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 100%;
-  max-width: 100%;
+  width: 100%;
 }
 
 .playlist-name, .creator-name, .display-genre, .songs {
   margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.playlist-line span {
+  flex-shrink: 0;
 }
 </style>

@@ -1,5 +1,4 @@
 <!-- src\views\discoverView.vue -->
-  <!-- src\views\discoverView.vue -->
 <script>
 import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
 import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
