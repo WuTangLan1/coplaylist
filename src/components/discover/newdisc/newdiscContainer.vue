@@ -30,8 +30,8 @@ export default {
   <div class="newdisc-container">
     <div class="scrolling-playlists">
       <div v-for="(playlist, index) in newDiscoveries" :key="index" class="playlist-line">
-        <span class="playlist-name">{{ playlist.name }}</span> by 
-        <span class="creator-name">{{ playlist.creatorName }}</span> in 
+        <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
+        <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
         <span class="display-genre">{{ playlist.displayGenre }}</span>:
         <span class="songs">
           <template v-for="(song, idx) in playlist.songs" :key="idx">
@@ -42,6 +42,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .newdisc-container {
