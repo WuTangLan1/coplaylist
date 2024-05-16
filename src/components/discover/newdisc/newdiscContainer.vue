@@ -5,7 +5,7 @@ import { onMounted, computed, ref } from 'vue';
 
 export default {
   name: 'newdisc-Container',
-  setup() {
+  setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
     const newDiscoveries = computed(() => {
       const playlists = discoverStore.newDiscoveries;
@@ -32,11 +32,16 @@ export default {
       await discoverStore.fetchNewDiscoveries();
     });
 
+    const showModal = (playlist) => {
+      emit('show-modal', playlist);
+    };
+
     return {
       newDiscoveries,
       scrollingPlaylistsRef,
       pauseScrolling,
-      resumeScrolling
+      resumeScrolling,
+      showModal,
     };
   },
 };
@@ -45,7 +50,7 @@ export default {
 <template>
   <div class="newdisc-container" @mouseover="pauseScrolling" @mouseleave="resumeScrolling">
     <div class="scrolling-playlists" ref="scrollingPlaylistsRef">
-      <div v-for="(playlist, index) in newDiscoveries" :key="index" class="playlist-line">
+      <div v-for="(playlist, index) in newDiscoveries" :key="index" class="playlist-line" @click="showModal(playlist)">
         <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
         <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
         <span class="display-genre">{{ playlist.displayGenre }}</span>:
@@ -98,6 +103,7 @@ export default {
   color: #333;
   font-size: 1rem;
   transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  cursor: pointer;
 }
 
 .playlist-line:hover {
