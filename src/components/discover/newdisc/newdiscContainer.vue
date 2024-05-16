@@ -2,17 +2,14 @@
 
 <template>
     <div class="newdisc-container">
-      <newdisc-playlist v-for="n in 3" :key="n" />
+      <!-- content will go here -->
     </div>
   </template>
   
   <script>
-  import newdiscPlaylist from "@/components/discover/newdisc/newdiscPlaylist.vue";
   
   export default {
-    components: {
-      newdiscPlaylist,
-    },
+    name: "newdisc-Container"
   };
   </script>
   

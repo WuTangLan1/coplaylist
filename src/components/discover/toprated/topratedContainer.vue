@@ -2,17 +2,14 @@
 
 <template>
     <div class="toprated-container">
-      <toprated-playlist v-for="n in 3" :key="n" />
+      <!-- content will go here -->
     </div>
   </template>
   
   <script>
-  import topratedPlaylist from "@/components/discover/toprated/topratedPlaylist.vue";
   
   export default {
-    components: {
-      topratedPlaylist,
-    },
+    name: "toprated-Container"
   };
   </script>
   

@@ -1,5 +1,4 @@
 <!-- src\components\homeDir\bottomFooter.vue -->
-
 <script>
 import { ref } from 'vue';
 
