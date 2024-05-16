@@ -1,17 +1,12 @@
 <!-- src\components\discover\newdisc\newdiscContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 
 export default {
   name: 'newdisc-Container',
   setup() {
     const discoverStore = useDiscoverStore();
-
-    onMounted(async () => {
-      await discoverStore.fetchNewDiscoveries();
-    });
-
     const newDiscoveries = computed(() => {
       const playlists = discoverStore.newDiscoveries;
       // Clone playlists to ensure there is no empty space during the scroll
@@ -19,16 +14,37 @@ export default {
       return clonedPlaylists;
     });
 
+    const scrollingPlaylistsRef = ref(null);
+
+    const pauseScrolling = () => {
+      if (scrollingPlaylistsRef.value) {
+        scrollingPlaylistsRef.value.style.animationPlayState = 'paused';
+      }
+    };
+
+    const resumeScrolling = () => {
+      if (scrollingPlaylistsRef.value) {
+        scrollingPlaylistsRef.value.style.animationPlayState = 'running';
+      }
+    };
+
+    onMounted(async () => {
+      await discoverStore.fetchNewDiscoveries();
+    });
+
     return {
       newDiscoveries,
+      scrollingPlaylistsRef,
+      pauseScrolling,
+      resumeScrolling
     };
   },
 };
 </script>
 
 <template>
-  <div class="newdisc-container">
-    <div class="scrolling-playlists">
+  <div class="newdisc-container" @mouseover="pauseScrolling" @mouseleave="resumeScrolling">
+    <div class="scrolling-playlists" ref="scrollingPlaylistsRef">
       <div v-for="(playlist, index) in newDiscoveries" :key="index" class="playlist-line">
         <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
         <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
@@ -42,7 +58,6 @@ export default {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .newdisc-container {
@@ -82,6 +97,12 @@ export default {
   margin-bottom: 10px;
   color: #333;
   font-size: 1rem;
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+.playlist-line:hover {
+  background-color: #e0e0e0; /* Change background color on hover */
+  transform: scale(1.02); /* Slightly enlarge on hover */
 }
 
 .playlist-name {
