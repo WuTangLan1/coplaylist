@@ -1,4 +1,5 @@
 <!-- src\views\discoverView.vue -->
+<!-- src\views\discoverView.vue -->
 <script>
 import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
 import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
@@ -18,8 +19,10 @@ export default {
   },
   methods: {
     showPlaylistModal(playlist) {
-      this.selectedPlaylist = playlist;
-      this.isModalVisible = true;
+      if (playlist) {
+        this.selectedPlaylist = playlist;
+        this.isModalVisible = true;
+      }
     },
   },
 };
@@ -36,7 +39,7 @@ export default {
       <h2>Newly Generated</h2>
       <newdisc-container @show-modal="showPlaylistModal" />
     </div>
-    <playlist-info-modal :playlist="selectedPlaylist" :visible.sync="isModalVisible" />
+    <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" :visible.sync="isModalVisible" />
   </div>
 </template>
 

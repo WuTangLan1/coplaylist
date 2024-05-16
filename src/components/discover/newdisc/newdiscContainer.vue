@@ -9,7 +9,6 @@ export default {
     const discoverStore = useDiscoverStore();
     const newDiscoveries = computed(() => {
       const playlists = discoverStore.newDiscoveries;
-      // Clone playlists to ensure there is no empty space during the scroll
       const clonedPlaylists = [...playlists, ...playlists, ...playlists];
       return clonedPlaylists;
     });
@@ -138,3 +137,4 @@ export default {
   flex-shrink: 0;
 }
 </style>
+

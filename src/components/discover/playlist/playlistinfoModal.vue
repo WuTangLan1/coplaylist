@@ -1,16 +1,15 @@
 <!-- src\components\discover\playlist\playlistinfoModal.vue -->
-
 <script>
 export default {
   name: "PlaylistInfoModal",
   props: {
     playlist: {
       type: Object,
-      required: true
+      default: () => ({}), // Provide a default empty object
     },
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     }
   },
   methods: {
@@ -23,10 +22,10 @@ export default {
 
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
-    <div class="modal">
+    <div class="modal" @click.stop>
       <h3>{{ playlist.name }}</h3>
       <ul>
-        <li v-for="(song, index) in playlist.details" :key="index">
+        <li v-for="(song, index) in playlist.details || []" :key="index">
           "{{ song.title }}" by {{ song.artist }} ({{ song.releaseYear }})
         </li>
       </ul>
@@ -53,7 +52,7 @@ export default {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 90%;
+  width: 80%;
   max-width: 500px;
 }
 
