@@ -49,7 +49,7 @@ export default {
         </div>
       </div>
       <div class="copy-right">
-        © 2024 CoPlaylist. All rights reserved.
+        © 2024 CoPlaylist, Inc
       </div>
     </footer>
   </template>
