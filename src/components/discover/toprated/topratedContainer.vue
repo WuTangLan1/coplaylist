@@ -1,25 +1,18 @@
 <!-- src\components\discover\toprated\topratedContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { onMounted, computed, ref } from 'vue';
+import { onMounted, computed } from 'vue';
 
 export default {
   name: 'toprated-Container',
   setup() {
     const discoverStore = useDiscoverStore();
-    const topRatedPlaylists = ref([]);
 
     onMounted(async () => {
       await discoverStore.fetchTopRatedPlaylists();
-      topRatedPlaylists.value = discoverStore.topRatedPlaylists;
-      startScrolling();
     });
 
-    const startScrolling = () => {
-      setInterval(() => {
-        topRatedPlaylists.value.push(topRatedPlaylists.value.shift());
-      }, 3000); // Adjust the speed of the scrolling here
-    };
+    const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists);
 
     return {
       topRatedPlaylists,
@@ -32,11 +25,21 @@ export default {
   <div class="toprated-container">
     <div class="scrolling-playlists">
       <div v-for="(playlist, index) in topRatedPlaylists" :key="index" class="playlist-line">
-        <span class="playlist-name">{{ playlist.name }}</span> - 
+        <span class="playlist-name">{{ playlist.name }}</span> by 
         <span class="creator-name">{{ playlist.creatorName }}</span> in 
         <span class="display-genre">{{ playlist.displayGenre }}</span>:
         <span class="songs">
           <template v-for="(song, idx) in playlist.songs" :key="idx">
+            {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
+          </template>
+        </span>
+      </div>
+      <div v-for="(playlist, index) in topRatedPlaylists" :key="index + '-clone'" class="playlist-line">
+        <span class="playlist-name">{{ playlist.name }}</span> by 
+        <span class="creator-name">{{ playlist.creatorName }}</span> in 
+        <span class="display-genre">{{ playlist.displayGenre }}</span>:
+        <span class="songs">
+          <template v-for="(song, idx) in playlist.songs" :key="idx + '-clone'">
             {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
           </template>
         </span>
@@ -59,7 +62,7 @@ export default {
 .scrolling-playlists {
   display: flex;
   flex-direction: column;
-  animation: scrollPlaylists 30s linear infinite; /* Adjust the duration as needed */
+  animation: scrollPlaylists 60s linear infinite; /* Adjust the duration as needed */
 }
 
 @keyframes scrollPlaylists {
@@ -67,7 +70,7 @@ export default {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-50%);
+    transform: translateY(-100%);
   }
 }
 
