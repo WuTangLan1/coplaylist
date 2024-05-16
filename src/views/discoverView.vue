@@ -1,11 +1,11 @@
-<!-- src\views\view-wrapper.vue -->
+<!-- src\views\discoverView.vue -->
 
 <script>
 
 </script>
 
 <template>
-
+    <h1> hello</h1>
 
 </template>
 

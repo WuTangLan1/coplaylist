@@ -1,6 +1,7 @@
 // src\router\index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import homeView from '../views/homeView.vue';
+import discoverView from '../views/discoverView.vue'
 import ToneContainer from '../components/inputsDir/toneContainer.vue';
 import VibeContainer from '../components/inputsDir/vibeContainer.vue';
 import SongsContainer from '../components/inputsDir/songsContainer.vue';
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'Home',
     component: homeView
+  },
+  {
+    path: '/discover',
+    name: 'Discover',
+    component: discoverView
   },
   {
     path: '/tone',

@@ -1,9 +1,13 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
 <script>
+
 export default {
   methods: {
     getStarted() {
       this.$emit('next');
+    },
+    discover() {
+      this.$router.push('/discover');
     }
   }
 };
@@ -34,7 +38,7 @@ export default {
       </div>
       <div class="button-group">
         <button class="next-button improve-playlist" @click="improvePlaylist" disabled>Improve</button>
-        <button class="next-button quick-gen" @click="quickGen" disabled>Quick Gen</button>
+        <button class="next-button discover" @click="discover">Discover</button>
         <button class="next-button long-gen" @click="getStarted">Long Gen</button>
       </div>
     </div>
@@ -147,21 +151,20 @@ ul {
 }
 
 .long-gen {
-  background-color: #4c56af; /* Original color for Long Gen */
+  background-color: #4c56af;
 }
 
 .long-gen:hover {
-  background-color: #46367c; /* Darker shade on hover */
+  background-color: #46367c;
 }
 
-.quick-gen {
-  background-color: #A0A0A0; /* Grey color for disabled */
-  cursor: not-allowed; /* Cursor indicates disabled state */
+.discover {
+  background-color: #36aa4f;
 }
 
 .improve-playlist {
-  background-color: #A0A0A0; /* Grey color for disabled */
-  cursor: not-allowed; /* Cursor indicates disabled state */
+  background-color: #A0A0A0;
+  cursor: not-allowed; 
 }
 
 .button-group {
