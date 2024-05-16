@@ -1,18 +1,17 @@
 <!-- src\components\discover\newdisc\newdiscContainer.vue -->
 
-<template>
-    <div class="newdisc-container">
-      <!-- content will go here -->
-    </div>
-  </template>
-  
-  <script>
-  
+<script>
   export default {
     name: "newdisc-Container"
   };
-  </script>
-  
+</script>
+
+<template>
+  <div class="newdisc-container">
+    <!-- content will go here -->
+  </div>
+</template>
+ 
   <style scoped>
   .newdisc-container {
     display: flex;

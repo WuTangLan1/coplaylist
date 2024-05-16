@@ -1,17 +1,16 @@
 <!-- src\components\discover\toprated\topratedContainer.vue -->
+<script>
+  
+export default {
+  name: "toprated-Container"
+};
+</script>
 
 <template>
     <div class="toprated-container">
       <!-- content will go here -->
     </div>
   </template>
-  
-  <script>
-  
-  export default {
-    name: "toprated-Container"
-  };
-  </script>
   
   <style scoped>
   .toprated-container {

@@ -1,18 +1,4 @@
 <!-- src\views\discoverView.vue -->
-<template>
-    <div class="discover-view">
-      <h1>Discover</h1>
-      <div class="section">
-        <h2>Top Rated</h2>
-        <toprated-container />
-      </div>
-      <div class="section">
-        <h2>Newly Generated</h2>
-        <newdisc-container />
-      </div>
-    </div>
-  </template>
-  
   <script>
   import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
   import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
@@ -24,6 +10,20 @@
     },
   };
   </script>
+
+<template>
+  <div class="discover-view">
+    <h1>Discover</h1>
+    <div class="section">
+      <h2>Top Rated</h2>
+      <toprated-container />
+    </div>
+    <div class="section">
+      <h2>Newly Generated</h2>
+      <newdisc-container />
+    </div>
+  </div>
+</template>
   
   <style scoped>
   .discover-view {
