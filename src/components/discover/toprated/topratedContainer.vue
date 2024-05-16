@@ -32,7 +32,7 @@ export default {
   <div class="toprated-container">
     <div class="scrolling-playlists">
       <div v-for="(playlist, index) in topRatedPlaylists" :key="index" class="playlist-line">
-        <span class="playlist-name">{{ playlist.name }}</span> by 
+        <span class="playlist-name">{{ playlist.name }}</span> - 
         <span class="creator-name">{{ playlist.creatorName }}</span> in 
         <span class="display-genre">{{ playlist.displayGenre }}</span>:
         <span class="songs">
@@ -79,6 +79,24 @@ export default {
   text-overflow: ellipsis;
   width: 100%;
   margin-bottom: 20px;
+  color: #333;
+  font-size: 1rem;
+}
+
+.playlist-name {
+  color: #1a73e8; /* Blue color */
+}
+
+.creator-name {
+  color: #34a853; /* Green color */
+}
+
+.display-genre {
+  color: #fbbc05; /* Yellow color */
+}
+
+.songs {
+  color: #ea4335; /* Red color */
 }
 
 .playlist-name, .creator-name, .display-genre, .songs {

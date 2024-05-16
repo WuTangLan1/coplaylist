@@ -29,6 +29,7 @@ export default {
 .discover-view {
   padding: 20px;
   padding: 1rem;
+  max-width: 89vw;
 }
 .section {
   margin-bottom: 40px;

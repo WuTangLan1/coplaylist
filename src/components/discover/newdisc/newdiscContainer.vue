@@ -79,6 +79,24 @@ export default {
   text-overflow: ellipsis;
   width: 100%;
   margin-bottom: 20px;
+  color: #333;
+  font-size: 1rem;
+}
+
+.playlist-name {
+  color: #1a73e8; /* Blue color */
+}
+
+.creator-name {
+  color: #34a853; /* Green color */
+}
+
+.display-genre {
+  color: #fbbc05; /* Yellow color */
+}
+
+.songs {
+  color: #ea4335; /* Red color */
 }
 
 .playlist-name, .creator-name, .display-genre, .songs {
