@@ -1,15 +1,16 @@
 <!-- src\views\discoverView.vue -->
-  <script>
-  import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
-  import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
-  
-  export default {
-    components: {
-      topratedContainer,
-      newdiscContainer,
-    },
-  };
-  </script>
+  <!-- src\views\discoverView.vue -->
+<script>
+import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
+import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
+
+export default {
+  components: {
+    topratedContainer,
+    newdiscContainer,
+  },
+};
+</script>
 
 <template>
   <div class="discover-view">
@@ -24,19 +25,18 @@
     </div>
   </div>
 </template>
-  
-  <style scoped>
-  .discover-view {
-    padding: 20px;
-  }
-  .section {
-    margin-bottom: 40px;
-  }
-  h1 {
-    text-align: center;
-  }
-  h2 {
-    margin-bottom: 20px;
-  }
-  </style>
-  
+
+<style scoped>
+.discover-view {
+  padding: 20px;
+}
+.section {
+  margin-bottom: 40px;
+}
+h1 {
+  text-align: center;
+}
+h2 {
+  margin-bottom: 20px;
+}
+</style>
