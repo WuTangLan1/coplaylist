@@ -12,7 +12,12 @@ export default {
       await discoverStore.fetchNewDiscoveries();
     });
 
-    const newDiscoveries = computed(() => discoverStore.newDiscoveries);
+    const newDiscoveries = computed(() => {
+      const playlists = discoverStore.newDiscoveries;
+      // Clone playlists to ensure there is no empty space during the scroll
+      const clonedPlaylists = [...playlists, ...playlists, ...playlists];
+      return clonedPlaylists;
+    });
 
     return {
       newDiscoveries,
@@ -34,16 +39,6 @@ export default {
           </template>
         </span>
       </div>
-      <div v-for="(playlist, index) in newDiscoveries" :key="index + '-clone'" class="playlist-line">
-        <span class="playlist-name">{{ playlist.name }}</span> by 
-        <span class="creator-name">{{ playlist.creatorName }}</span> in 
-        <span class="display-genre">{{ playlist.displayGenre }}</span>:
-        <span class="songs">
-          <template v-for="(song, idx) in playlist.songs" :key="idx + '-clone'">
-            {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
-          </template>
-        </span>
-      </div>
     </div>
   </div>
 </template>
@@ -55,16 +50,16 @@ export default {
   width: 100%;
   overflow: hidden;
   position: relative;
-  height: 500px; 
-  background-color: #f0f0f0; 
-  border-radius: 10px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  height: 500px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .scrolling-playlists {
   display: flex;
   flex-direction: column;
-  animation: scrollPlaylists 60s linear infinite; 
+  animation: scrollPlaylists 60s linear infinite;
 }
 
 @keyframes scrollPlaylists {
@@ -72,7 +67,7 @@ export default {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-100%);
+    transform: translateY(-33.33%); /* Adjust to match the number of cloned playlists */
   }
 }
 
@@ -83,21 +78,21 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   color: #333;
   font-size: 1rem;
 }
 
 .playlist-name {
-  color: #4b8df8; 
+  color: #4b8df8;
 }
 
 .creator-name {
-  color: #4caf50; 
+  color: #4caf50;
 }
 
 .display-genre {
-  color: #6a3191; 
+  color: #6a3191;
 }
 
 .songs {
