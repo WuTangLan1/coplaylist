@@ -105,11 +105,6 @@ export default {
   cursor: pointer;
 }
 
-.playlist-line:hover {
-  background-color: #e0e0e0; /* Change background color on hover */
-  transform: scale(1.02); /* Slightly enlarge on hover */
-}
-
 .playlist-name {
   color: #4b8df8;
 }

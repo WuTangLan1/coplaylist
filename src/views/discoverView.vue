@@ -59,7 +59,7 @@ export default {
 .discover-view {
   padding: 1rem;
   max-width: 89vw;
-  background: linear-gradient(to bottom, #b3b4ee, #abc7df); 
+  background: linear-gradient(to bottom, #e5e5ff, #ddedfc); 
   border-radius: 10px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

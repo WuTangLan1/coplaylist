@@ -63,16 +63,21 @@ export default {
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal" @click.stop>
       <div class="modal-header">
-        <h3>{{ playlist.name }} - {{ playlist.creatorName }}</h3>
-        <div class="modal-genre">
+        <div class="modal-info">
+          <!-- Left aligned elements -->
+          <img src="@/assets/images/discover/song.png" alt="Song Icon" class="info-icon">
+          <h3>{{ playlist.name }}</h3>
+          <!-- Spacer to push genre to the right -->
+          <div class="flex-grow"></div>
+          <!-- Right aligned elements -->
           <img src="@/assets/images/discover/genre.png" alt="Genre Icon" class="genre-icon">
-          {{ playlist.displayGenre }}
+          <span>{{ playlist.displayGenre }}</span>
         </div>
       </div>
       <ul class="modal-content">
         <li v-for="(song, index) in playlist.songs || []" :key="index" class="song-item">
           <div class="song-details">
-              {{ song}}
+              {{ song }}
           </div>
           <div class="song-actions">
             <img class="spotify-icon" src="@/assets/images/music_icons/spotify.png" @click="playSong(song)"></img>
@@ -85,6 +90,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .modal-overlay {
@@ -120,23 +126,23 @@ export default {
   align-items: center;
 }
 
-.modal-genre {
+.modal-info {
   display: flex;
   align-items: center;
-  font-size: 1rem;
-  color: #000000;
-  opacity: 0.9;
-  border-radius: 0.2rem;
-  background-color: white;
-  padding: 10px 10px;
+  width: 100%;
+  justify-content: space-between;
 }
 
-.genre-icon {
+.flex-grow {
+  flex-grow: 1;
+}
+
+.genre-icon, .info-icon {
   margin-right: 0.5rem;
   width: 24px;
   height: 24px;
-  
 }
+
 
 .modal-footer {
   justify-content: flex-end; 
@@ -156,6 +162,7 @@ export default {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid #ccc;
   transition: background-color 0.3s;
+  text-overflow: ellipsis;
 }
 
 .song-item:hover {
