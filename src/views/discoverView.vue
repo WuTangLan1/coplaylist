@@ -34,6 +34,9 @@ export default {
 <template>
   <div class="discover-view">
     <h1>Discover</h1>
+    <p class="instructions">
+        Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information. 
+    </p>
     <div class="section">
       <h2>Top Rated</h2>
       <toprated-container @show-modal="showPlaylistModal" />
@@ -62,5 +65,13 @@ h1 {
 }
 h2 {
   margin-bottom: 20px;
+}
+
+.instructions {
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 0; 
+  margin-bottom: 1rem; 
+  text-align: center;
 }
 </style>
