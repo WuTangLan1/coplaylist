@@ -118,7 +118,7 @@ export default {
 }
 
 .songs {
-  color: #f44336;
+  color: #000000;
 }
 
 .playlist-name, .creator-name, .display-genre, .songs {
