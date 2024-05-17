@@ -23,12 +23,12 @@ export default {
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal" @click.stop>
-      <h3>{{ playlist.name }}</h3>
+      <h3>{{ playlist.name }} -- {{   playlist.creatorName }} -- {{ playlist.displayGenre }}</h3>
       <ul>
-        <li v-for="(song, index) in playlist.details || []" :key="index">
-          "{{ song.title }}" by {{ song.artist }} ({{ song.releaseYear }})
-        </li>
-      </ul>
+          <li v-for="(song, index) in playlist.songs || []" :key="index">
+            "{{ song.title }}" by {{ song.artist }} ({{ song.releaseYear }})
+          </li>
+        </ul>
       <button @click="close">Close</button>
     </div>
   </div>
