@@ -23,10 +23,8 @@ export default {
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal" @click.stop>
-      <div class="modal-header">
-        <h3>{{ playlist.name }} - {{ playlist.creatorName }} - {{ playlist.displayGenre }}</h3>
-      </div>
-      <div class="modal-body">
+      <div class="modal-content">
+        <h3>{{ playlist.name }} -- {{ playlist.creatorName }} -- {{ playlist.displayGenre }}</h3>
         <ul>
           <li v-for="(song, index) in playlist.songs || []" :key="index">
             {{ song }}
@@ -40,6 +38,7 @@ export default {
   </div>
 </template>
 
+
 <style scoped>
 .modal-overlay {
   position: fixed;
@@ -50,64 +49,51 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.75); /* Darker background */
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal {
   background: white;
   padding: 1rem;
-  border-radius: 10px;
+  border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: auto;
-  max-width: 90%;
-  max-height: 80vh;
-  overflow-y: auto; /* Scrollable content */
+  width: 80%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Aligns children (content and footer) on the main axis */
 }
 
-.modal-header, .modal-footer {
-  padding: 0.5rem;
-  text-align: center;
+.modal-content {
+  overflow-y: auto; /* Ensures content is scrollable if it overflows */
 }
 
-.modal-body {
-  margin: 1rem 0;
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Aligns the close button to the right */
+  padding-top: 1rem; /* Adds space between content and the button */
 }
 
-h3 {
-  font-size: 1.2rem;
-  color: #333;
-  margin: 0;
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 li {
   margin-bottom: 10px;
-  padding: 0.5rem;
-  transition: background-color 0.3s;
-}
-
-li:hover {
-  background-color: #f0f0f0; /* Hover effect for list items */
-}
-
-button {
-  padding: 0.8rem 1.6rem;
-  margin-top: 20px;
-  cursor: pointer;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
 }
 </style>

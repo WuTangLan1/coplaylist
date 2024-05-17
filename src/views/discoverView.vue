@@ -22,7 +22,6 @@ export default {
       this.isModalVisible=false;
     },
     showPlaylistModal(playlist) {
-      console.log('playlist passing : ', playlist); // Make sure this logs the expected structure
       if (playlist && playlist.songs) {
         this.selectedPlaylist = playlist;
         this.isModalVisible = true;

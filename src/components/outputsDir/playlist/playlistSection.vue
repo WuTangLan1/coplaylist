@@ -35,7 +35,6 @@ export default {
         if (response.ok) {
           const data = await response.json();
           
-          // Create new Audio object and play it
           currentAudio = new Audio(data.previewUrl);
           currentAudio.play();
         } else {
