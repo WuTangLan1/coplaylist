@@ -1,5 +1,4 @@
 <!-- src\views\discoverView.vue -->
-<!-- src\views\discoverView.vue -->
 <script>
 import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
 import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
@@ -18,8 +17,13 @@ export default {
     };
   },
   methods: {
+    hidePlaylistModal() {
+      this.selectedPlaylist= null;
+      this.isModalVisible=false;
+    },
     showPlaylistModal(playlist) {
       if (playlist) {
+        console.log('playlist passing : ', playlist)
         this.selectedPlaylist = playlist;
         this.isModalVisible = true;
       }
@@ -39,7 +43,7 @@ export default {
       <h2>Newly Generated</h2>
       <newdisc-container @show-modal="showPlaylistModal" />
     </div>
-    <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" :visible.sync="isModalVisible" />
+    <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" @update:visible="isModalVisible = $event" :visible="isModalVisible" />
   </div>
 </template>
 
@@ -47,7 +51,7 @@ export default {
 .discover-view {
   padding: 1rem;
   max-width: 89vw;
-  background: linear-gradient(to bottom, #b3b4ee, #abc7df); /* Light blue gradient background */
+  background: linear-gradient(to bottom, #b3b4ee, #abc7df); 
   border-radius: 10px; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
