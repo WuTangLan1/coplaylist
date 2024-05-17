@@ -1,6 +1,5 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
 <script>
-
 export default {
   methods: {
     getStarted() {
@@ -14,37 +13,46 @@ export default {
 </script>
 
 <template>
-    <div class="explanation-container">
-      <div class="explanation-content">
-        <h1><span>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></span></h1>
-        <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
-        <div class="features-container">
-          <div class="feature-item">
-            <h3>Generate Playlist</h3>
-            <img src="@/assets/images/explanation/playlist.png" alt="Artificial Intelligence" class="feature-image">
-            <p>Use the latest Artificial Intelligence to curate and personalize your playlists.</p>
-          </div>
-          <div class="feature-item">
-            <h3>Expand Your Music Knowledge</h3>
-            <img src="@/assets/images/explanation/library.png" alt="Music Knowledge" class="feature-image">
-            <p>Discover new genres and artists, expanding your musical horizons.</p>
-          </div>
-          <div class="feature-item">
-            <h3>Store and Share</h3>
-            <img src="@/assets/images/explanation/share.png" alt="Share Playlists" class="feature-image">
-            <p>Keep your favorite tunes saved and share them with friends and family.</p>
-          </div>
+  <div class="explanation-container">
+    <div class="explanation-content">
+      <h1><span>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></span></h1>
+      <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
+      <div class="features-container">
+        <div class="feature-item">
+          <h3>Generate Playlist</h3>
+          <img src="@/assets/images/explanation/playlist.png" alt="Artificial Intelligence" class="feature-image">
+          <p>Use the latest Artificial Intelligence to curate and personalize your playlists.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Expand Your Music Knowledge</h3>
+          <img src="@/assets/images/explanation/library.png" alt="Music Knowledge" class="feature-image">
+          <p>Discover new genres and artists, expanding your musical horizons.</p>
+        </div>
+        <div class="feature-item">
+          <h3>Store and Share</h3>
+          <img src="@/assets/images/explanation/share.png" alt="Share Playlists" class="feature-image">
+          <p>Keep your favorite tunes saved and share them with friends and family.</p>
         </div>
       </div>
-      <div class="button-group">
-        <button class="next-button improve-playlist" @click="improvePlaylist" disabled>Improve</button>
-        <button class="next-button discover" @click="discover">Discover</button>
-        <button class="next-button long-gen" @click="getStarted">Long Gen</button>
-      </div>
     </div>
-  </template>
-  
-  <style scoped>
+    <div class="button-group">
+      <button class="next-button improve-playlist" @click="improvePlaylist" disabled>
+        <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
+        Improve
+      </button>
+      <button class="next-button discover" @click="discover">
+        <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
+        Discover
+      </button>
+      <button class="next-button long-gen" @click="getStarted">
+        <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
+        Generate
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
 .explanation-container {
   display: flex;
   flex-direction: column;
@@ -61,16 +69,15 @@ export default {
 }
 
 @keyframes fadeInAnimation {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  0% {
+    opacity: 0;
   }
+  100% {
+    opacity: 1;
+  }
+}
 
-@media (min-width: 600px)
-{
+@media (min-width: 600px) {
   .explanation-container {
     padding: 1rem;
   }
@@ -117,12 +124,12 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center; 
- }
+}
 
 .feature-image {
-width: 4rem; 
- max-width: 170px;
- height: auto; 
+  width: 4rem; 
+  max-width: 170px;
+  height: auto; 
 }
   
 h1 {
@@ -135,19 +142,27 @@ ul {
   text-align: left;
 }
   
-  li strong {
-    color: #4c65af; 
-  }
-  
+li strong {
+  color: #4c65af; 
+}
+
 .next-button {
   align-self: flex-end;
-  padding: 10px 20px;
+  padding: 10px 10px;
   color: white;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   transition: background-color 0.3s ease; 
+  display: flex;
+  align-items: center; 
+}
+
+.next-button img {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
 }
 
 .long-gen {
@@ -179,14 +194,8 @@ ul {
     padding: 12px 0;
   }
 }
-.button-group {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-  
-  @media (max-width: 768px) {
 
+@media (max-width: 768px) {
   .explanation-content {
     text-align: center;
   }
@@ -197,13 +206,13 @@ ul {
     font-size: 16px; 
   }
   .explanation-container {
-      padding: 10px;
-    }
+    padding: 10px;
+  }
   
-    .next-button {
-      width: 100%; 
-      margin-top: 20px; 
-    }
+  .next-button {
+    width: 100%; 
+    margin-top: 20px; 
+  }
 }
 
 @media (max-width: 420px) {
@@ -226,5 +235,4 @@ ul {
     padding: 12px 0;
   }
 }
-  </style>
-  
+</style>
