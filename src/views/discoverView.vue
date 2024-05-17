@@ -33,7 +33,7 @@ export default {
 
 <template>
   <div class="discover-view">
-    <h1>Discover</h1>
+    <h1>Welcome to Discover</h1>
     <p class="instructions">
         Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information. 
     </p>
