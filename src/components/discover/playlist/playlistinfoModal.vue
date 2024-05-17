@@ -6,7 +6,7 @@ export default {
     return {
       spotifyToken: null, 
       currentAudio: null,  
-      baseUrl: 'http://localhost:3000' 
+      baseUrl: process.env.VUE_APP_API_BASE_URL
     };
   },
   props: {
