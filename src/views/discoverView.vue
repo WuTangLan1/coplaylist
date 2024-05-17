@@ -33,9 +33,13 @@ export default {
 
 <template>
   <div class="discover-view">
-    <h1>Welcome to Discover</h1>
+    <div class="header-container">
+      <img src="@/assets/images/discover/left.png" alt="Left Icon" class="header-icon">
+      <h1>Lets go Discover</h1>
+      <img src="@/assets/images/discover/right.png" alt="Right Icon" class="header-icon">
+    </div>
     <p class="instructions">
-        Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information. 
+      Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information.
     </p>
     <div class="section">
       <div class="title-bar">
@@ -59,35 +63,45 @@ export default {
 .discover-view {
   padding: 1rem;
   max-width: 89vw;
-  background: linear-gradient(to bottom, #e5e5ff, #ddedfc); 
-  border-radius: 10px; 
+  background: linear-gradient(to bottom, #e5e5ff, #ddedfc);
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.header-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+}
+h1 {
+  text-align: center;
+  flex-grow: 1;
+  margin: 0;
 }
 .section {
   margin-bottom: 40px;
 }
-h1 {
-  text-align: center;
-}
 h2 {
   margin-bottom: 20px;
 }
-
 .instructions {
   font-size: 0.9rem;
   color: #333;
-  margin-top: 0; 
-  margin-bottom: 1rem; 
+  margin-top: 0;
+  margin-bottom: 1rem;
   text-align: center;
 }
-
 .title-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
   margin-bottom: 10px;
 }
-
 .title-icon {
   width: 32px;
   height: 32px;
