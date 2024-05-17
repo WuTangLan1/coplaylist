@@ -38,11 +38,17 @@ export default {
         Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information. 
     </p>
     <div class="section">
-      <h2>Top Rated</h2>
+      <div class="title-bar">
+        <h2>Top Rated</h2>
+        <img src="@/assets/images/discover/toprated.png" alt="Top Rated" class="title-icon">
+      </div>
       <toprated-container @show-modal="showPlaylistModal" />
     </div>
     <div class="section">
-      <h2>Newly Generated</h2>
+      <div class="title-bar">
+        <h2>Newly Generated</h2>
+        <img src="@/assets/images/discover/newdiscoveries.png" alt="New Discoveries" class="title-icon">
+      </div>
       <newdisc-container @show-modal="showPlaylistModal" />
     </div>
     <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" @update:visible="isModalVisible = $event" :visible="isModalVisible" />
@@ -73,5 +79,17 @@ h2 {
   margin-top: 0; 
   margin-bottom: 1rem; 
   text-align: center;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  margin-bottom: 10px;
+}
+
+.title-icon {
+  width: 32px;
+  height: 32px;
 }
 </style>
