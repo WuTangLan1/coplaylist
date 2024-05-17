@@ -26,7 +26,7 @@ export default {
       <h3>{{ playlist.name }} -- {{   playlist.creatorName }} -- {{ playlist.displayGenre }}</h3>
       <ul>
           <li v-for="(song, index) in playlist.songs || []" :key="index">
-            "{{ song.title }}" by {{ song.artist }} ({{ song.releaseYear }})
+            {{ song }}
           </li>
         </ul>
       <button @click="close">Close</button>
