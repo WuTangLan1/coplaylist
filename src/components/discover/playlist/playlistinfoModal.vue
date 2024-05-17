@@ -4,8 +4,8 @@ export default {
   name: "PlaylistInfoModal",
   data() {
     return {
-      spotifyToken: null, 
-      currentAudio: null,  
+      spotifyToken: null,
+      currentAudio: null,
       baseUrl: process.env.VUE_APP_API_BASE_URL
     };
   },
@@ -27,7 +27,7 @@ export default {
       const parts = songDetail.split(' - ');
       const song = {
         title: parts[0],
-        artist: parts.slice(1).join(' - ')  
+        artist: parts.slice(1).join(' - ')
       };
       console.log('song : ', song)
       if (!song.title || !song.artist) {
@@ -64,7 +64,10 @@ export default {
     <div class="modal" @click.stop>
       <div class="modal-header">
         <h3>{{ playlist.name }} - {{ playlist.creatorName }}</h3>
-        <span class="modal-genre">{{ playlist.displayGenre }}</span>
+        <div class="modal-genre">
+          <img src="@/assets/images/discover/genre.png" alt="Genre Icon" class="genre-icon">
+          {{ playlist.displayGenre }}
+        </div>
       </div>
       <ul class="modal-content">
         <li v-for="(song, index) in playlist.songs || []" :key="index" class="song-item">
@@ -117,14 +120,26 @@ export default {
   align-items: center;
 }
 
-.modal-footer {
-  justify-content: flex-end; /* Aligns the content to the right */
-}
-
 .modal-genre {
+  display: flex;
+  align-items: center;
   font-size: 1rem;
   color: #000000;
   opacity: 0.9;
+  border-radius: 0.2rem;
+  background-color: white;
+  padding: 10px 10px;
+}
+
+.genre-icon {
+  margin-right: 0.5rem;
+  width: 24px;
+  height: 24px;
+  
+}
+
+.modal-footer {
+  justify-content: flex-end; 
 }
 
 .modal-content {

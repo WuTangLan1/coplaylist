@@ -101,13 +101,8 @@ export default {
   margin-bottom: 10px;
   color: #333;
   font-size: 1rem;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+  transition: background-color 0.3s, transform 0.3s;
   cursor: pointer;
-}
-
-.playlist-line:hover {
-  background-color: #e0e0e0; /* Change background color on hover */
-  transform: scale(1.02); /* Slightly enlarge on hover */
 }
 
 .playlist-name {
