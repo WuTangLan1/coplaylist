@@ -5,7 +5,7 @@ export default {
   props: {
     playlist: {
       type: Object,
-      default: () => ({}), // Provide a default empty object
+      default: () => ({}),
     },
     visible: {
       type: Boolean,
@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('update:visible', false); 
+      this.$emit('update:visible', false);
     }
   }
 };
@@ -23,14 +23,20 @@ export default {
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal" @click.stop>
-      <div class="modal-content">
-        <h3>{{ playlist.name }} -- {{ playlist.creatorName }} -- {{ playlist.displayGenre }}</h3>
-        <ul>
-          <li v-for="(song, index) in playlist.songs || []" :key="index">
-            {{ song }}
-          </li>
-        </ul>
+      <div class="modal-header">
+        <h3>{{ playlist.name }} - {{ playlist.creatorName }}</h3>
+        <span class="modal-genre">{{ playlist.displayGenre }}</span>
       </div>
+      <ul class="modal-content">
+        <li v-for="(song, index) in playlist.songs || []" :key="index" class="song-item">
+          <div class="song-details">
+              {{ song }}
+          </div>
+          <div class="song-actions">
+            <i class="fas fa-play-circle play-icon" @click="playSong(song)"></i>
+          </div>
+        </li>
+      </ul>
       <div class="modal-footer">
         <button @click="close">Close</button>
       </div>
@@ -49,51 +55,89 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 .modal {
-  background: white;
-  padding: 1rem;
+  background: #fff;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  width: 90%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Aligns children (content and footer) on the main axis */
+}
+
+.modal-header, .modal-footer {
+  background-color: #b3bad6;
+  color: rgb(0, 0, 0);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-genre {
+  font-size: 1rem;
+  color: #000000;
+  opacity: 0.9;
 }
 
 .modal-content {
-  overflow-y: auto; /* Ensures content is scrollable if it overflows */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
 }
 
-.modal-footer {
+.song-item {
   display: flex;
-  justify-content: flex-end; /* Aligns the close button to the right */
-  padding-top: 1rem; /* Adds space between content and the button */
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+.song-item:hover {
+  background-color: #f4f4f4;
+}
+
+.song-details {
+  flex-grow: 1;
+}
+
+.song-title, .song-artist {
+  display: block;
+}
+
+.song-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.play-icon {
+  color: #007bff;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 button {
-  padding: 10px 20px;
-  cursor: pointer;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
 button:hover {
   background-color: #0056b3;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
 }
 </style>
