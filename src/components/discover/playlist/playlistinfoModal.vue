@@ -4,7 +4,9 @@ export default {
   name: "PlaylistInfoModal",
   data() {
     return {
-      spotifyToken: null // Ensure you have a way to set this token correctly
+      spotifyToken: null, 
+      currentAudio: null,  
+      baseUrl: 'http://localhost:3000' 
     };
   },
   props: {
@@ -21,22 +23,42 @@ export default {
     close() {
       this.$emit('update:visible', false);
     },
-    async playSong(song) {
-      if (!song.previewUrl) {
-        alert("No preview available for this song.");
+    async playSong(songDetail) {
+      const parts = songDetail.split(' - ');
+      const song = {
+        title: parts[0],
+        artist: parts.slice(1).join(' - ')  
+      };
+      console.log('song : ', song)
+      if (!song.title || !song.artist) {
+        alert("Song details are missing.");
         return;
       }
+
+      if (this.currentAudio) {
+        this.currentAudio.pause();
+        this.currentAudio.currentTime = 0;
+      }
+
       try {
-        let audio = new Audio(song.previewUrl);
-        audio.play();
+        const response = await fetch(`${this.baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+        if (response.ok) {
+          const data = await response.json();
+          this.currentAudio = new Audio(data.previewUrl);
+          this.currentAudio.play();
+        } else {
+          console.error('Error fetching preview:', response.status, response.statusText);
+          alert('Preview not available for this song.');
+        }
       } catch (error) {
-        console.error('Error playing song:', error);
-        alert('Failed to play the song. Please try again.');
+        console.error('Error playing song preview:', error);
+        alert('An error occurred while trying to play the song preview. Please try again later.');
       }
     }
   }
 };
 </script>
+
 
 
 <template>
