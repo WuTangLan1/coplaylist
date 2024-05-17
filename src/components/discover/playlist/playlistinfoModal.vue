@@ -59,8 +59,6 @@ export default {
 };
 </script>
 
-
-
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
     <div class="modal" @click.stop>
@@ -119,6 +117,10 @@ export default {
   align-items: center;
 }
 
+.modal-footer {
+  justify-content: flex-end; /* Aligns the content to the right */
+}
+
 .modal-genre {
   font-size: 1rem;
   color: #000000;
@@ -145,14 +147,10 @@ export default {
   background-color: #f4f4f4;
 }
 
-.spotify-icon{
+.spotify-icon {
   width: 24px;
   height: 24px;
   cursor: pointer;
-}
-
-.spotify-icon {
-  margin-right: 5px; 
 }
 
 .song-details {

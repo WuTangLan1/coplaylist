@@ -9,7 +9,6 @@ export default {
     const discoverStore = useDiscoverStore();
     const topRatedPlaylists = computed(() => {
       const playlists = discoverStore.topRatedPlaylists;
-      // Clone playlists to ensure there is no empty space during the scroll
       const clonedPlaylists = [...playlists, ...playlists, ...playlists];
       return clonedPlaylists;
     });
