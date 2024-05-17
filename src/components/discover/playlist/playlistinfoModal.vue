@@ -2,6 +2,11 @@
 <script>
 export default {
   name: "PlaylistInfoModal",
+  data() {
+    return {
+      spotifyToken: null // Ensure you have a way to set this token correctly
+    };
+  },
   props: {
     playlist: {
       type: Object,
@@ -17,14 +22,13 @@ export default {
       this.$emit('update:visible', false);
     },
     async playSong(song) {
+      if (!song.previewUrl) {
+        alert("No preview available for this song.");
+        return;
+      }
       try {
-        const response = await fetch(`https://api.spotify.com/v1/tracks/${song.id}/play`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${this.spotifyToken}`
-          }
-        });
-        if (!response.ok) throw new Error('Failed to play song.');
+        let audio = new Audio(song.previewUrl);
+        audio.play();
       } catch (error) {
         console.error('Error playing song:', error);
         alert('Failed to play the song. Please try again.');
@@ -33,6 +37,7 @@ export default {
   }
 };
 </script>
+
 
 <template>
   <div v-if="visible" class="modal-overlay" @click.self="close">
