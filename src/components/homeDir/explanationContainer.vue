@@ -38,19 +38,20 @@ export default {
     <div class="button-group">
       <button class="next-button improve-playlist" @click="improvePlaylist" disabled>
         <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
-        Improve
+        <span>Improve</span>
       </button>
       <button class="next-button discover" @click="discover">
         <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
-        Discover
+        <span>Discover</span>
       </button>
       <button class="next-button long-gen" @click="getStarted">
         <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
-        Generate
+        <span>Generate</span>
       </button>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .explanation-container {
@@ -147,22 +148,36 @@ li strong {
 }
 
 .next-button {
-  align-self: flex-end;
-  padding: 10px 10px;
+  display: flex;
+  align-items: center;  
+  justify-content: center; 
+  padding: 10px 20px;
   color: white;
   border-radius: 0.2rem;
   border: none;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s ease; 
-  display: flex;
-  align-items: center; 
+  transition: background-color 0.3s ease;
+  width: 100%; 
 }
 
 .next-button img {
   margin-right: 8px;
   width: 24px;
   height: 24px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: space-around; 
+  width: 100%; 
+}
+
+@media (max-width: 450px) {
+  .next-button {
+    padding: 12px 0; 
+  }
 }
 
 .long-gen {
