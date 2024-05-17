@@ -15,6 +15,20 @@ export default {
   methods: {
     close() {
       this.$emit('update:visible', false);
+    },
+    async playSong(song) {
+      try {
+        const response = await fetch(`https://api.spotify.com/v1/tracks/${song.id}/play`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${this.spotifyToken}`
+          }
+        });
+        if (!response.ok) throw new Error('Failed to play song.');
+      } catch (error) {
+        console.error('Error playing song:', error);
+        alert('Failed to play the song. Please try again.');
+      }
     }
   }
 };
@@ -30,10 +44,10 @@ export default {
       <ul class="modal-content">
         <li v-for="(song, index) in playlist.songs || []" :key="index" class="song-item">
           <div class="song-details">
-              {{ song }}
+              {{ song}}
           </div>
           <div class="song-actions">
-            <i class="fas fa-play-circle play-icon" @click="playSong(song)"></i>
+            <img class="spotify-icon" src="@/assets/images/music_icons/spotify.png" @click="playSong(song)"></img>
           </div>
         </li>
       </ul>
@@ -43,7 +57,6 @@ export default {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .modal-overlay {
@@ -63,6 +76,8 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
   max-width: 600px;
   display: flex;
   flex-direction: column;
@@ -101,6 +116,16 @@ export default {
 
 .song-item:hover {
   background-color: #f4f4f4;
+}
+
+.spotify-icon{
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.spotify-icon {
+  margin-right: 5px; 
 }
 
 .song-details {
