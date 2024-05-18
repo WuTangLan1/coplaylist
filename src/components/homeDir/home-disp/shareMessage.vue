@@ -12,24 +12,25 @@
   <style scoped>
   .feature-item {
     display: flex;
-    background: #fff;
+    background: linear-gradient(to right, #f0f9ff, #cbebff);
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
     align-items: center;
+    margin-bottom: 1rem; 
   }
   
   .feature-image {
-    flex-basis: 50%; 
+    flex-basis: 50%;
     height: auto;
     max-width: 35%;
     border-radius: 8px;
-    margin-right: 1rem; 
+    margin-right: 1rem;
   }
   
   .text-container {
-    flex-basis: 50%; 
+    flex-basis: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -48,5 +49,6 @@
     font-size: 1rem;
   }
   </style>
+  
   
   

@@ -75,7 +75,7 @@ export default {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  background: #F4F4F4;
+  background: #fbeaff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
