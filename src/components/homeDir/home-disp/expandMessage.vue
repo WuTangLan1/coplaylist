@@ -12,6 +12,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: rgb(255, 255, 255);
+    border: 2px thick blue;
   }
   
   .feature-image {
