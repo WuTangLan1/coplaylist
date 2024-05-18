@@ -1,22 +1,22 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
 <script>
 import generateMessage from './generateMessage.vue';
-import expandMessage from './expandMessage.vue';
-import shareMessage from './shareMessage.vue';
+ import expandMessage from './expandMessage.vue';
+ import shareMessage from './shareMessage.vue';
 
 export default {
   components: {
     generateMessage,
-    expandMessage,
-    shareMessage
+     expandMessage,
+     shareMessage
   },
   data() {
     return {
       currentComponentIndex: 0,
       components: [
         'generateMessage',
-        'expandMessage',
-        'shareMessage'
+         'expandMessage',
+         'shareMessage'
       ]
     };
   },
@@ -33,7 +33,7 @@ export default {
     startRotation() {
       setInterval(() => {
         this.currentComponentIndex = (this.currentComponentIndex + 1) % this.components.length;
-      }, 5000); // Change component every 5 seconds
+      }, 5000);
     }
   }
 };
