@@ -3,8 +3,8 @@
     <div class="feature-item">
       <img src="@/assets/images/explanation/library.png" alt="Music Knowledge" class="feature-image">
       <div class="text-container">
-        <h3>Expand Your Music Knowledge</h3>
-        <p>Discover new genres and artists, expanding your musical horizons.</p>
+        <h3>Expand Your Music</h3>
+        <p>Discover new genres and artists, and community playlists.</p>
       </div>
     </div>
   </template>  
@@ -12,13 +12,13 @@
   <style scoped>
   .feature-item {
     display: flex;
-    background: linear-gradient(to right, #f0f9ff, #cbebff); /* Soft blue gradient */
+    background: linear-gradient(to right, #f0f9ff, #cbebff);
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
     align-items: center;
-    margin-bottom: 1rem; /* Adds space between items if listed in a column */
+    margin-bottom: 1rem; 
   }
   
   .feature-image {

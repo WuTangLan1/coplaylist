@@ -1,22 +1,22 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
 <script>
 import generateMessage from './generateMessage.vue';
- import expandMessage from './expandMessage.vue';
- import shareMessage from './shareMessage.vue';
+import expandMessage from './expandMessage.vue';
+import shareMessage from './shareMessage.vue';
 
 export default {
   components: {
     generateMessage,
-     expandMessage,
-     shareMessage
+    expandMessage,
+    shareMessage
   },
   data() {
     return {
       currentComponentIndex: 0,
       components: [
         'generateMessage',
-         'expandMessage',
-         'shareMessage'
+        'expandMessage',
+        'shareMessage'
       ]
     };
   },
@@ -47,7 +47,9 @@ export default {
       </h1>
       <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
       <div class="features-container">
-        <component :is="components[currentComponentIndex]"></component>
+        <transition name="fade" mode="out-in">
+          <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
+        </transition>
       </div>
       <div class="button-group">
         <button class="next-button improve-playlist" @click="improvePlaylist" disabled>
@@ -232,5 +234,13 @@ export default {
     width: 100%;
     padding: 12px 0;
   }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0;
 }
 </style>
