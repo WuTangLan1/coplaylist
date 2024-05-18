@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ExplanationContainer from '@/components/homeDir/explanationContainer.vue';
+import ExplanationContainer from '@/components/homeDir/home-disp/explanationContainer.vue';
 
 export default {
   name: 'HomeView',

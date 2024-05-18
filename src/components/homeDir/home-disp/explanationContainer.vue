@@ -1,5 +1,8 @@
 <!-- src\components\homeDir\explanationContainer.vue -->
 <script>
+import generateMessage from './generateMessage.vue'
+import expandMessage from '/expandMessage.vue'
+import shareMessage from '/shareMessage.vue'
 export default {
   methods: {
     getStarted() {
@@ -18,23 +21,8 @@ export default {
       <h1><span>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></span></h1>
       <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
       <div class="features-container">
-        <div class="feature-item">
-          <h3>Generate Playlist</h3>
-          <img src="@/assets/images/explanation/playlist.png" alt="Artificial Intelligence" class="feature-image">
-          <p>Use the latest Artificial Intelligence to curate and personalize your playlists.</p>
-        </div>
-        <div class="feature-item">
-          <h3>Expand Your Music Knowledge</h3>
-          <img src="@/assets/images/explanation/library.png" alt="Music Knowledge" class="feature-image">
-          <p>Discover new genres and artists, expanding your musical horizons.</p>
-        </div>
-        <div class="feature-item">
-          <h3>Store and Share</h3>
-          <img src="@/assets/images/explanation/share.png" alt="Share Playlists" class="feature-image">
-          <p>Keep your favorite tunes saved and share them with friends and family.</p>
-        </div>
+        <component :is="components[currentComponentIndex]"></component>
       </div>
-    </div>
     <div class="button-group">
       <button class="next-button improve-playlist" @click="improvePlaylist" disabled>
         <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
@@ -48,8 +36,9 @@ export default {
         <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
         <span>Generate</span>
       </button>
+       </div>
+     </div>
     </div>
-  </div>
 </template>
 
 
