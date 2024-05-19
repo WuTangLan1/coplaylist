@@ -1,54 +1,37 @@
 <!-- src\components\homeDir\home-disp\shareMessage.vue -->
 <template>
-    <div class="feature-item">
-      <img src="@/assets/images/explanation/share.png" alt="Share Playlists" class="feature-image">
-      <div class="text-container">
-        <h3>Store and Share</h3>
-        <p>Keep your favorite tunes saved and share them with friends and family.</p>
-      </div>
-    </div>
-  </template>
-  
-  <style scoped>
-  .feature-item {
-    display: flex;
-    background: linear-gradient(to right, #f0f9ff, #cbebff);
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    align-items: center;
-    margin-bottom: 1rem; 
-  }
-  
-  .feature-image {
-    flex-basis: 50%;
-    height: auto;
-    max-width: 35%;
-    border-radius: 8px;
-    margin-right: 1rem;
-  }
-  
-  .text-container {
-    flex-basis: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 20px;
-  }
-  
-  h3 {
-    color: #4c56af;
-    margin: 0;
-    margin-bottom: 0.5rem;
-  }
-  
-  p {
-    color: #333;
-    margin: 0;
-    font-size: 1rem;
-  }
-  </style>
-  
-  
-  
+  <v-container fluid>
+    <v-row class="d-flex justify-center">
+      <v-col cols="12" md="10" lg="8">
+        <v-card class="mx-auto" elevation="10" shaped>
+          <v-img
+            :src="require('@/assets/images/explanation/share.png')"
+            alt="Share Playlists"
+            class="white--text align-end"
+            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.7)"
+            height="300px"
+          >
+            <v-card-title class="fill-height align-end mb-0 px-3 py-2">Store and Share</v-card-title>
+          </v-img>
+          <v-card-text class="pt-4 pb-3 px-3">
+            Save your playlists and playlists created by others to your account, where you can store 
+            and share this music with your close friends and family! Don't hog the good music !
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<style scoped>
+.v-card-title {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #FFFFFF;
+  font-size: 1.75rem;
+}
+
+.v-card-text {
+  color: #333333;
+  font-size: 1.1rem;
+}
+</style>

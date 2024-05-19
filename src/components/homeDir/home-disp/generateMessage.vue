@@ -14,7 +14,8 @@
             <v-card-title class="fill-height align-end mb-0 px-3 py-2">Generate Playlists</v-card-title>
           </v-img>
           <v-card-text class="pt-4 pb-3 px-3">
-            Use the latest Artificial Intelligence to curate and personalize your playlists. This technology ensures a unique and satisfying musical experience tailored just for you.
+            Use AI to generate playlists tailored to your preferences ! Just detail the information about the playlist,
+            and we'll provide you with music we think you'll like. What are you waiting for, get generating !
           </v-card-text>
         </v-card>
       </v-col>

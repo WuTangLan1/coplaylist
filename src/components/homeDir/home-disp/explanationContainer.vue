@@ -38,7 +38,6 @@ export default {
   }
 };
 </script>
-
 <template>
   <v-container class="explanation-container" fluid>
     <v-row class="explanation-content" justify="center">
@@ -53,19 +52,19 @@ export default {
       </transition>
     </v-row>
     <v-row class="button-group" justify="center" align="center">
-      <v-col cols="12" sm="4" class="d-flex justify-center">
+      <v-col cols="4" class="d-flex justify-center">
         <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
           <v-icon left>mdi-pencil</v-icon>
           Improve
         </v-btn>
       </v-col>
-      <v-col cols="12" sm="4" class="d-flex justify-center">
+      <v-col cols="4" class="d-flex justify-center">
         <v-btn class="next-button discover" @click="discover">
           <v-icon left>mdi-magnify</v-icon>
           Discover
         </v-btn>
       </v-col>
-      <v-col cols="12" sm="4" class="d-flex justify-center">
+      <v-col cols="4" class="d-flex justify-center">
         <v-btn class="next-button long-gen" @click="getStarted">
           <v-icon left>mdi-play-circle</v-icon>
           Generate
@@ -86,13 +85,13 @@ export default {
   background: #fbeaff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .explanation-content h1 {
   text-align: center;
   color: #2D3047;
-  margin-bottom: 1rem;
+  margin-bottom: 0.2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,13 +108,13 @@ export default {
   line-height: 1.6;
   color: #333;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
-  margin-bottom: 2rem;
+  margin-bottom: 0.2rem;
 }
 
 .features-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.2rem;
 }
 
 .button-group {
@@ -129,7 +128,7 @@ export default {
 }
 
 .next-button {
-  width: 90%; 
+  width: 100%;
   color: white;
   border-radius: 0.2rem;
   cursor: pointer;
