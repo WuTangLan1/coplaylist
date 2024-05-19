@@ -65,7 +65,7 @@ export default {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 80%;
+  width: 90%;
   max-width: 600px;
   max-height: 80vh;
   overflow-y: auto;

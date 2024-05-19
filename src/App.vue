@@ -164,7 +164,7 @@ export default {
   width: 100%;
   min-height: 70vh;
   overflow-y: auto;
-  margin-top: 64px; /* Add margin-top to create space */
+  margin-top: 100px; 
 }
 
 @media (min-width: 500px) {

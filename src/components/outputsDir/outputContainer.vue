@@ -135,7 +135,7 @@ h2 {
   flex-grow: 1; 
   text-align: left; 
   margin: 0; 
-  font-size: 1.4rem; 
+  font-size: 1.2rem; 
 }
 
 .instructions {
