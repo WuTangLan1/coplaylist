@@ -80,8 +80,10 @@ export default {
   background-color: #f44336;
   color: #ffffff;
   border-radius: 50%;
-  min-width: 36px;
-  min-height: 36px;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 32px;
+  max-height: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
