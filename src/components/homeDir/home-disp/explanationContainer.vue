@@ -38,7 +38,6 @@ export default {
   }
 };
 </script>
-
 <template>
   <v-container class="explanation-container" fluid>
     <v-row class="explanation-content" justify="center">
@@ -55,19 +54,19 @@ export default {
     <v-row class="button-group" justify="center" align="center">
       <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
-          <v-icon left>mdi-pencil</v-icon>
+          <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
           Improve
         </v-btn>
       </v-col>
       <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button discover" @click="discover">
-          <v-icon left>mdi-magnify</v-icon>
+          <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
           Discover
         </v-btn>
       </v-col>
       <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button long-gen" @click="getStarted">
-          <v-icon left>mdi-play-circle</v-icon>
+          <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
           Generate
         </v-btn>
       </v-col>
@@ -129,13 +128,21 @@ export default {
 }
 
 .next-button {
-  width: 100%;
+  width: 90%;
   color: white;
   border-radius: 0.2rem;
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
-  text-transform: none; 
+  text-transform: none;
+  display: flex;
+  align-items: center;
+}
+
+.button-image {
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
 }
 
 .discover {
