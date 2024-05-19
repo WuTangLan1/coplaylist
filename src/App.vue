@@ -149,6 +149,7 @@ export default {
   align-self: center;
   width: 100%;
   min-height: 70vh;
+  padding-top: 64px; /* Adjust padding to ensure space below the header */
   overflow-y: auto;
 }
 
@@ -157,7 +158,7 @@ export default {
     display: flex;
     align-items: center; 
     justify-content: center; 
-    height: calc(100vh - 60px); 
+    height: calc(100vh - 64px); 
     padding: 0.5rem;
   }
 }
