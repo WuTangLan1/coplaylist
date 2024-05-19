@@ -28,7 +28,7 @@ export default {
       this.$emit('next');
     },
     improvePlaylist() {
-    // Placeholder function until the functionality is implemented
+    // Placeholder function
   },
     discover() {
       this.$router.push('/discover');
@@ -45,17 +45,17 @@ export default {
       enter(el, done) {
         el.offsetHeight; 
         this.$nextTick(() => {
-          el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+          el.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
           el.style.transform = 'scale(1)';
           el.style.opacity = '1';
           done();
         });
       },
       leave(el, done) {
-        el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        el.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
         el.style.transform = 'scale(0.95)';
         el.style.opacity = '0';
-        setTimeout(() => done(), 500); 
+        setTimeout(() => done(), 800); 
       }
   }
 };
@@ -124,7 +124,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
 }
 
 .explanation-content p {

@@ -3,6 +3,7 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { computed } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default {
   name: 'TopHeader',
@@ -10,6 +11,7 @@ export default {
   setup(props, { emit }) {
     const authStore = useAuthStore();
     const promptStore = usePromptStore();
+    const router = useRouter(); 
 
     const handleAuthAction = () => {
       if (authStore.isAuthenticated) {
@@ -25,6 +27,7 @@ export default {
 
     const homeClicked = () => {
       promptStore.resetStore(); 
+      router.push('/')
     }
 
     const emitPlaylistsClicked = () => {
