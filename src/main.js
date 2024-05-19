@@ -8,8 +8,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
 import { createVuetify } from 'vuetify';
 import 'vuetify/styles';
+import '@mdi/font/css/materialdesignicons.css'; // Import Material Design Icons CSS
 import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 

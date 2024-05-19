@@ -14,7 +14,7 @@ export default {
   setup(props, { emit }) {
     const currentComponent = ref('RegSide');
     const authStore = useAuthStore();
-    const dialogVisible = ref(true);  // Reactive variable to control dialog visibility
+    const dialogVisible = ref(true);
 
     const toggleButtonText = computed(() => {
       return currentComponent.value === 'RegSide' ? 'Log In' : 'Register';
@@ -25,7 +25,7 @@ export default {
     }
 
     function closeModal() {
-      dialogVisible.value = false;  // Close the dialog
+      dialogVisible.value = false;
       emit('closeModal');
     }
 
@@ -47,7 +47,7 @@ export default {
         <v-btn text color="primary" @click="toggleComponent">
           Switch to {{ toggleButtonText }}
         </v-btn>
-        <v-btn icon @click="closeModal">
+        <v-btn icon @click="closeModal" class="close-btn">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-card-title>
@@ -73,12 +73,27 @@ export default {
 }
 
 .v-btn.icon {
-  color: #ff0000;
   padding: 0;
+}
+
+.close-btn {
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn:hover {
+  background-color: #d32f2f;
 }
 
 .v-icon {
   font-size: 1.5rem;
+  color: #ffffff; 
 }
 
 .v-card-text {
