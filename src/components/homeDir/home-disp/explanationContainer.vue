@@ -44,6 +44,7 @@ export default {
     <v-row class="explanation-content" justify="center">
       <v-col cols="12" class="text-center">
         <h1>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></h1>
+        <p>Discover, Share, and Generate Personalized Music Playlists</p>
       </v-col>
     </v-row>
     <v-row class="features-container" justify="center">
@@ -95,20 +96,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5rem;
+}
+
+.explanation-content p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  color: #555;
 }
 
 .logo {
   height: auto;
   max-height: 1.58em;
   margin-left: 0.5em;
-}
-
-.explanation-content {
-  text-align: center;
-  line-height: 1.6;
-  color: #333;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
-  margin-bottom: 0.2rem;
 }
 
 .features-container {
@@ -136,6 +137,7 @@ export default {
 }
 
 .next-button {
+  width: 100%;
   color: white;
   border-radius: 0.2rem;
   cursor: pointer;
