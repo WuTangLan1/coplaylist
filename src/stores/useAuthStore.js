@@ -55,6 +55,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async loginUser(details) {
+      console.log('login triggered')
       const { username, password } = details;
       try {
         const userCredential = await signInWithEmailAndPassword(auth, username, password);

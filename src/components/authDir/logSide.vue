@@ -77,31 +77,44 @@ export default {
 </script>
 
 <template>
-  <div class="login-container">
-    <form @submit.prevent="login" class="login-form">
+  <v-container class="login-container">
+    <v-form @submit.prevent="login" class="login-form">
       <h2>Login</h2>
-      <div class="form-group">
-        <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" v-model.trim="loginForm.email" required placeholder="Enter your email">
-      </div>
-      <div class="form-group">
-        <label for="loginPassword">Password</label>
-        <div class="input-group">
-          <input :type="showPassword ? 'text' : 'password'" id="loginPassword" v-model="loginForm.password" required minlength="6"
-            placeholder="Enter your password">
-          <span class="toggle-visibility" @click="toggleShowPassword">
+      <v-text-field
+        v-model.trim="loginForm.email"
+        label="Email"
+        type="email"
+        required
+        placeholder="Enter your email"
+        outlined
+        dense
+        class="login-input"
+      ></v-text-field>
+      <v-text-field
+        v-model="loginForm.password"
+        :type="showPassword ? 'text' : 'password'"
+        label="Password"
+        required
+        minlength="6"
+        placeholder="Enter your password"
+        outlined
+        dense
+        class="login-input"
+        append-inner-icon
+        @click:append-inner="toggleShowPassword"
+      >
+        <template v-slot:append>
+          <v-icon @click="toggleShowPassword">
             <font-awesome-icon :icon="showPassword ? faEyeSlash : faEye" />
-          </span>
-        </div>
-      </div>
-      <div class="btn-grp">
-        <div class="forgot-password" @click="openForgotPasswordModal">Forgot Password?</div>
-        <button type="submit" class="submit-button">Login</button>
-      </div>
-    </form>
+          </v-icon>
+        </template>
+      </v-text-field>
+      <v-row class="forgot-password" @click="openForgotPasswordModal">Forgot Password?</v-row>
+      <v-btn type="submit" class="submit-button" color="primary">Login</v-btn>
+    </v-form>
     <AuthErrorModal :show="showErrorModal" :errorMessage="errorMessage" @close="closeErrorModal" />
     <ForgotPasswordModal :show="showForgotPasswordModal" @close="closeForgotPasswordModal" />
-  </div>
+  </v-container>
 </template>
 
 <style scoped>
@@ -118,18 +131,16 @@ export default {
 }
 
 .login-form {
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 
-.form-group {
+.login-input {
   width: 100%;
   margin-bottom: 20px;
-  display: flex;
-  flex-direction: column;
 }
 
 h2 {
@@ -139,68 +150,19 @@ h2 {
   margin-bottom: 20px;
 }
 
-input {
-  padding: 12px;
-  width: 92%;
-  font-size: 1rem; 
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #f9f9f9; 
-}
-
-input:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.2);
-}
-
-label {
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.input-group {
-  position: relative;
-  width: 100%;
-}
-
-.toggle-visibility {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-}
-
 .forgot-password {
   cursor: pointer;
   color: #4CAF50;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .forgot-password:hover {
   text-decoration: underline;
 }
 
-.btn-grp {
-  display: flex;
-  justify-content: space-between; /* Space between the forgot password and login button */
-  width: 100%;
-  align-items: center;
-}
-
 .submit-button {
-  padding: 12px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px; 
-  transition: background-color 0.3s;
-  font-size: 1rem;
-}
-
-.submit-button:hover, .submit-button:focus {
-  background-color: #45a049;
+  margin-top: 20px;
+  width: 100%;
 }
 </style>
