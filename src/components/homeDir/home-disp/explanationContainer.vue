@@ -38,12 +38,12 @@ export default {
   }
 };
 </script>
+
 <template>
   <v-container class="explanation-container" fluid>
     <v-row class="explanation-content" justify="center">
       <v-col cols="12" class="text-center">
         <h1>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></h1>
-        <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
       </v-col>
     </v-row>
     <v-row class="features-container" justify="center">
@@ -51,20 +51,20 @@ export default {
         <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
       </transition>
     </v-row>
-    <v-row class="button-group" justify="center" align="center">
-      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
+    <v-row class="button-group" justify="space-between">
+      <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
           <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
           Improve
         </v-btn>
       </v-col>
-      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
+      <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button discover" @click="discover">
           <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
           Discover
         </v-btn>
       </v-col>
-      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
+      <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button long-gen" @click="getStarted">
           <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
           Generate
@@ -120,15 +120,22 @@ export default {
 .button-group {
   display: flex;
   width: 100%;
+  margin: 0;
 }
 
 .button-col {
+  padding: 0 0px;
   display: flex;
   justify-content: center;
 }
 
+@media (min-width: 500px) {
+  .button-col {
+    padding: 0 8px;
+  }
+}
+
 .next-button {
-  width: 90%;
   color: white;
   border-radius: 0.2rem;
   cursor: pointer;

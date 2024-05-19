@@ -15,7 +15,7 @@
           </v-img>
           <v-card-text class="pt-4 pb-3 px-3">
             Save your playlists and playlists created by others to your account, where you can store 
-            and share this music with your close friends and family! Don't hog the good music !
+            and share this music with your close friends and family!
           </v-card-text>
         </v-card>
       </v-col>
