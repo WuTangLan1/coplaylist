@@ -46,7 +46,7 @@ export default {
 <template>
   <v-dialog v-model="dialog" persistent max-width="700px">
     <v-card>
-      <v-card-title>
+      <v-card-title class="d-flex align-center">
         <span class="headline">Information Center</span>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeModal">
