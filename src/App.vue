@@ -2,33 +2,33 @@
 <template>
   <v-app>
     <div id="app">
-      <top-Header
+      <top-header
         @auth-modal-open="openAuthModal"
         @info-clicked="openinfoModal"
         @playlists-clicked="openPlaylists"
         @account-modal-open="openAccountModal"
       />
       
-      <authmodal 
+      <auth-modal 
         v-if="showAuthModal" 
         @closeModal="closeAuthModal"
       />
       
-      <infoModal 
+      <info-modal 
         v-if="showinfoModal"
         :current-component="currentInfoComponent"
         @update:currentComponent="handleComponentChange"
         @closeModal="closeinfoModal"
       />
       
-      <PlaylistContainer
+      <playlist-container
         v-if="showPlaylists" 
         @closeModal="closePlaylists"
       />
       
-      <errorModal></errorModal>
+      <error-modal></error-modal>
       
-      <accountModal
+      <account-modal
         v-if="showAccountModal"
         @closeModal="closeAccountModal" 
       />
@@ -37,25 +37,25 @@
         <router-view/>
       </div>
       
-      <bottomFooter @openModal="handleModalOpen"/>
+      <bottom-footer @openModal="handleModalOpen"/>
     </div>
   </v-app>
 </template>
 
 <script>
 import { ref } from 'vue';
-import topHeader from '@/components/homeDir/topHeader.vue'
-import bottomFooter from '@/components/homeDir/bottomFooter.vue'
-import authmodal from '@/components/authDir/authModal.vue'
-import infoModal from '@/components/homeDir/info-section/infoModal.vue'
-import errorModal from '@/components/inputsDir/errorModal.vue'
+import topHeader from '@/components/homeDir/topHeader.vue';
+import bottomFooter from '@/components/homeDir/bottomFooter.vue';
+import authModal from '@/components/authDir/authModal.vue';
+import infoModal from '@/components/homeDir/info-section/infoModal.vue';
+import errorModal from '@/components/inputsDir/errorModal.vue';
 import PlaylistContainer from './components/homeDir/my-playlists/playlistContainer.vue';
-import accountModal from '@/components/authDir/account/accountModal.vue'
+import accountModal from '@/components/authDir/account/accountModal.vue';
 
 export default { 
-  components : {
+  components: {
     topHeader,
-    authmodal,
+    authModal,
     PlaylistContainer,
     infoModal,
     errorModal,
@@ -107,7 +107,7 @@ export default {
     }
 
     function handleComponentChange(newComponent) {
-    currentInfoComponent.value = newComponent;  // Update the reactive reference correctly
+      currentInfoComponent.value = newComponent;  // Update the reactive reference correctly
     }
 
     return {
@@ -126,7 +126,7 @@ export default {
       currentInfoComponent,
       handleModalOpen,
       handleComponentChange
-      }
+    };
   }
 }
 </script>
@@ -147,7 +147,7 @@ export default {
   justify-content: center; 
   align-content: center;
   align-self: center;
-  width:100%;
+  width: 100%;
   min-height: 70vh;
   overflow-y: auto;
 }
@@ -159,6 +159,6 @@ export default {
     justify-content: center; 
     height: calc(100vh - 60px); 
     padding: 0.5rem;
-}
+  }
 }
 </style>

@@ -1,4 +1,4 @@
-<!-- src\components\homeDir\explanationContainer.vue -->
+<!-- src/components/homeDir/explanationContainer.vue -->
 <script>
 import generateMessage from './generateMessage.vue';
 import expandMessage from './expandMessage.vue';
@@ -40,33 +40,39 @@ export default {
 </script>
 
 <template>
-  <div class="explanation-container">
-    <div class="explanation-content">
-      <h1>
-        <span>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></span>
-      </h1>
-      <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
-      <div class="features-container">
-        <transition name="fade" mode="out-in">
-          <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
-        </transition>
-      </div>
-      <div class="button-group">
-        <button class="next-button improve-playlist" @click="improvePlaylist" disabled>
-          <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
-          <span>Improve</span>
-        </button>
-        <button class="next-button discover" @click="discover">
-          <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
-          <span>Discover</span>
-        </button>
-        <button class="next-button long-gen" @click="getStarted">
-          <img src="@/assets/images/explanation-container/generate.png" alt="Generate Playlist" class="button-image">
-          <span>Generate</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <v-container class="explanation-container" fluid>
+    <v-row class="explanation-content" justify="center">
+      <v-col cols="12" class="text-center">
+        <h1>Welcome to <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo"/></h1>
+        <p>CoPlaylist is an innovative music streaming application designed to deliver personalized playlists to users, finely tuned to their unique tastes and situational preferences. By tapping into advanced algorithms, CoPlaylist offers a bespoke musical journey that deeply resonates on a personal level.</p>
+      </v-col>
+    </v-row>
+    <v-row class="features-container" justify="center">
+      <transition name="fade" mode="out-in">
+        <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
+      </transition>
+    </v-row>
+    <v-row class="button-group" justify="center" align="center">
+      <v-col cols="12" sm="4" class="d-flex justify-center">
+        <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
+          <v-icon left>mdi-pencil</v-icon>
+          Improve
+        </v-btn>
+      </v-col>
+      <v-col cols="12" sm="4" class="d-flex justify-center">
+        <v-btn class="next-button discover" @click="discover">
+          <v-icon left>mdi-magnify</v-icon>
+          Discover
+        </v-btn>
+      </v-col>
+      <v-col cols="12" sm="4" class="d-flex justify-center">
+        <v-btn class="next-button long-gen" @click="getStarted">
+          <v-icon left>mdi-play-circle</v-icon>
+          Generate
+        </v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <style scoped>
@@ -80,24 +86,7 @@ export default {
   background: #fbeaff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  opacity: 0;
-  animation: fadeInAnimation 1.5s ease forwards;
-}
-
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@media (min-width: 600px) {
-  .explanation-container {
-    padding: 1rem;
-  }
+  padding: 2rem;
 }
 
 .explanation-content h1 {
@@ -107,19 +96,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-}
-
-.explanation-content h1 span {
-  display: inline-flex;
-  align-items: center;
 }
 
 .logo {
   height: auto;
   max-height: 1.58em;
   margin-left: 0.5em;
-  border-radius: 0.5rem;
 }
 
 .explanation-content {
@@ -136,51 +118,31 @@ export default {
   margin-bottom: 2rem;
 }
 
-.next-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 20px;
-  color: white;
-  border-radius: 0.2rem;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-  width: 100%;
-  max-width: 150px;
-  margin: 0 5px;
-}
-
-.next-button img {
-  margin-right: 8px;
-  width: 24px;
-  height: 24px;
-}
-
 .button-group {
   display: flex;
-  justify-content: center;
-  gap: 10px;
   width: 100%;
 }
 
-@media (max-width: 450px) {
-  .next-button {
-    padding: 12px 0;
-  }
+.button-col {
+  display: flex;
+  justify-content: center;
 }
 
-.long-gen {
-  background-color: #4c56af;
-}
-
-.long-gen:hover {
-  background-color: #46367c;
+.next-button {
+  width: 90%; 
+  color: white;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
 }
 
 .discover {
   background-color: #36aa4f;
+}
+
+.long-gen {
+  background-color: #4c56af;
 }
 
 .improve-playlist {
@@ -188,59 +150,11 @@ export default {
   cursor: not-allowed;
 }
 
-@media (max-width: 420px) {
-  .next-button {
-    width: 100%;
-    padding: 12px 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .explanation-content {
-    text-align: center;
-  }
-
-  .explanation-content p,
-  .explanation-content ul,
-  .explanation-content li {
-    font-size: 16px;
-  }
-  .explanation-container {
-    padding: 10px;
-  }
-
-  .next-button {
-    width: 100%;
-    margin-top: 20px;
-  }
-}
-
-@media (max-width: 420px) {
-  .explanation-container {
-    padding: 10px;
-  }
-
-  .explanation-content h1 {
-    font-size: 26px;
-  }
-
-  .explanation-content p,
-  .explanation-content ul,
-  .explanation-content li {
-    font-size: 1rem;
-  }
-
-  .next-button {
-    width: 100%;
-    padding: 12px 0;
-  }
-}
-
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.5s;
 }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>
