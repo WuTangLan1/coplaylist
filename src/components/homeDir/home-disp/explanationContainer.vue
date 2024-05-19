@@ -27,6 +27,9 @@ export default {
     getStarted() {
       this.$emit('next');
     },
+    improvePlaylist() {
+    // Placeholder function until the functionality is implemented
+  },
     discover() {
       this.$router.push('/discover');
     },
@@ -34,7 +37,26 @@ export default {
       setInterval(() => {
         this.currentComponentIndex = (this.currentComponentIndex + 1) % this.components.length;
       }, 5000);
-    }
+    },
+    beforeEnter(el) {
+        el.style.transform = 'scale(0.95)';
+        el.style.opacity = '0';
+      },
+      enter(el, done) {
+        el.offsetHeight; 
+        this.$nextTick(() => {
+          el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+          el.style.transform = 'scale(1)';
+          el.style.opacity = '1';
+          done();
+        });
+      },
+      leave(el, done) {
+        el.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+        el.style.transform = 'scale(0.95)';
+        el.style.opacity = '0';
+        setTimeout(() => done(), 500); 
+      }
   }
 };
 </script>
@@ -48,7 +70,13 @@ export default {
       </v-col>
     </v-row>
     <v-row class="features-container" justify="center">
-      <transition name="fade" mode="out-in">
+      <transition
+        name="custom-scale"
+        mode="out-in"
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @leave="leave"
+      >
         <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
       </transition>
     </v-row>
@@ -83,7 +111,7 @@ export default {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  background: #fbeaff;
+  background: #ebeaff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1rem;
