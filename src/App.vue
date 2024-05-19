@@ -1,4 +1,47 @@
-<!-- src/App.vue-->
+<!-- App.vue -->
+<template>
+  <v-app>
+    <div id="app">
+      <top-Header
+        @auth-modal-open="openAuthModal"
+        @info-clicked="openinfoModal"
+        @playlists-clicked="openPlaylists"
+        @account-modal-open="openAccountModal"
+      />
+      
+      <authmodal 
+        v-if="showAuthModal" 
+        @closeModal="closeAuthModal"
+      />
+      
+      <infoModal 
+        v-if="showinfoModal"
+        :current-component="currentInfoComponent"
+        @update:currentComponent="handleComponentChange"
+        @closeModal="closeinfoModal"
+      />
+      
+      <PlaylistContainer
+        v-if="showPlaylists" 
+        @closeModal="closePlaylists"
+      />
+      
+      <errorModal></errorModal>
+      
+      <accountModal
+        v-if="showAccountModal"
+        @closeModal="closeAccountModal" 
+      />
+      
+      <div class="router-view-container">
+        <router-view/>
+      </div>
+      
+      <bottomFooter @openModal="handleModalOpen"/>
+    </div>
+  </v-app>
+</template>
+
 <script>
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue'
@@ -88,49 +131,10 @@ export default {
 }
 </script>
 
-<template>
-  <div id="app">
-    <top-Header
-      @auth-modal-open="openAuthModal"
-      @info-clicked="openinfoModal"
-      @playlists-clicked="openPlaylists"
-      @account-modal-open="openAccountModal"
-    />
-
-    <authmodal 
-    v-if="showAuthModal" 
-    @closeModal="closeAuthModal"
-    />
-
-    <infoModal 
-      v-if="showinfoModal"
-      :current-component="currentInfoComponent"
-      @update:currentComponent="handleComponentChange"
-      @closeModal="closeinfoModal"
-    />
-
-    <PlaylistContainer
-     v-if="showPlaylists" 
-     @closeModal="closePlaylists"
-     />
-
-     <errorModal></errorModal>
-
-     <accountModal
-      v-if="showAccountModal"
-      @closeModal="closeAccountModal" 
-    />
-
-    <div class="router-view-container">
-      <router-view/>
-    </div>
-
-    <bottomFooter @openModal="handleModalOpen"/>
-  </div>
-</template>
-
 <style>
- @import './assets/css/styles.css';
+@import 'vuetify/styles';
+@import './assets/css/styles.css';
+
 #app {
   display: flex;
   flex-direction: column;
@@ -157,5 +161,4 @@ export default {
     padding: 0.5rem;
 }
 }
-
 </style>
