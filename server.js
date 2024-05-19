@@ -114,7 +114,14 @@ app.post('/generate-playlist', async (req, res) => {
         Livin' on a Prayer - Bon Jovi: 1986
 
         please note the structure of the above to be achieved and ensure that no additional information is posted, and above all else, please ensure the user inputs are achieved.
-        PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE`;
+        PLEASE DO NOT ADD NUMBERING TO THE LIST OF SONGS YOU GENERATE
+        It of the utmost importantce the following two steps are adhered to so please check the outputted playlist to ensure this was achieved :
+
+        Exclude these artists under any circumstances: ${dislikedArtists},
+        And please exclude the following songs under all circumstances and these represent songs the user does not want generated again ${exclusionString},
+        `;
+
+        
 
         console.log('prompt in server :   ', prompt)
 
