@@ -15,7 +15,7 @@
           </v-img>
           <v-card-text class="pt-4 pb-3 px-3">
             Use AI to generate playlists tailored to your preferences ! Just detail the information about the playlist,
-            and we'll provide you with music we think you'll like. What are you waiting for, get generating !
+            and we'll provide you with music we think you'll like. 
           </v-card-text>
         </v-card>
       </v-col>

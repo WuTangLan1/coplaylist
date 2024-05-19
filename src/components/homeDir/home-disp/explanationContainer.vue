@@ -38,6 +38,7 @@ export default {
   }
 };
 </script>
+
 <template>
   <v-container class="explanation-container" fluid>
     <v-row class="explanation-content" justify="center">
@@ -52,19 +53,19 @@ export default {
       </transition>
     </v-row>
     <v-row class="button-group" justify="center" align="center">
-      <v-col cols="4" class="d-flex justify-center">
+      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
           <v-icon left>mdi-pencil</v-icon>
           Improve
         </v-btn>
       </v-col>
-      <v-col cols="4" class="d-flex justify-center">
+      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button discover" @click="discover">
           <v-icon left>mdi-magnify</v-icon>
           Discover
         </v-btn>
       </v-col>
-      <v-col cols="4" class="d-flex justify-center">
+      <v-col cols="4" xs="12" sm="4" md="4" class="d-flex justify-center">
         <v-btn class="next-button long-gen" @click="getStarted">
           <v-icon left>mdi-play-circle</v-icon>
           Generate
@@ -134,6 +135,7 @@ export default {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s;
+  text-transform: none; 
 }
 
 .discover {
