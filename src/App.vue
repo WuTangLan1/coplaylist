@@ -1,47 +1,4 @@
-<!-- App.vue -->
-<template>
-  <v-app>
-    <div id="app">
-      <top-header
-        @auth-modal-open="openAuthModal"
-        @info-clicked="openinfoModal"
-        @playlists-clicked="openPlaylists"
-        @account-modal-open="openAccountModal"
-      />
-      
-      <auth-modal 
-        v-if="showAuthModal" 
-        @closeModal="closeAuthModal"
-      />
-      
-      <info-modal 
-        v-if="showinfoModal"
-        :current-component="currentInfoComponent"
-        @update:currentComponent="handleComponentChange"
-        @closeModal="closeinfoModal"
-      />
-      
-      <playlist-container
-        v-if="showPlaylists" 
-        @closeModal="closePlaylists"
-      />
-      
-      <error-modal></error-modal>
-      
-      <account-modal
-        v-if="showAccountModal"
-        @closeModal="closeAccountModal" 
-      />
-      
-      <div class="router-view-container">
-        <router-view/>
-      </div>
-      
-      <bottom-footer @openModal="handleModalOpen"/>
-    </div>
-  </v-app>
-</template>
-
+<!-- C:\Users\finnm\OneDrive\Documents\GitHub\coplaylist\src\App.vue -->
 <script>
 import { ref } from 'vue';
 import topHeader from '@/components/homeDir/topHeader.vue';
@@ -71,6 +28,7 @@ export default {
 
     function openinfoModal() {
       showinfoModal.value = true;
+      showPlaylists.value = false; 
     }
 
     function closeinfoModal() {
@@ -79,6 +37,7 @@ export default {
 
     function openPlaylists() {
       showPlaylists.value = true;
+      showinfoModal.value = false; 
     }
 
     function closePlaylists() {
@@ -107,7 +66,17 @@ export default {
     }
 
     function handleComponentChange(newComponent) {
-      currentInfoComponent.value = newComponent;  // Update the reactive reference correctly
+      currentInfoComponent.value = newComponent;  
+    }
+
+    function handleInfoClicked() {
+      openinfoModal();
+      closePlaylists();
+    }
+
+    function handlePlaylistsClicked() {
+      openPlaylists();
+      closeinfoModal();
     }
 
     return {
@@ -125,11 +94,56 @@ export default {
       closeAccountModal,
       currentInfoComponent,
       handleModalOpen,
-      handleComponentChange
+      handleComponentChange,
+      handleInfoClicked,
+      handlePlaylistsClicked
     };
   }
 }
 </script>
+
+<template>
+  <v-app>
+    <div id="app">
+      <top-header
+        @auth-modal-open="openAuthModal"
+        @info-clicked="handleInfoClicked"
+        @playlists-clicked="handlePlaylistsClicked"
+        @account-modal-open="openAccountModal"
+      />
+
+      <auth-modal 
+        v-if="showAuthModal" 
+        @closeModal="closeAuthModal"
+      />
+
+      <info-modal 
+        v-if="showinfoModal"
+        :current-component="currentInfoComponent"
+        @update:currentComponent="handleComponentChange"
+        @closeModal="closeinfoModal"
+      />
+
+      <playlist-container
+        v-if="showPlaylists" 
+        @closeModal="closePlaylists"
+      />
+
+      <error-modal></error-modal>
+
+      <account-modal
+        v-if="showAccountModal"
+        @closeModal="closeAccountModal" 
+      />
+
+      <div class="router-view-container">
+        <router-view/>
+      </div>
+
+      <bottom-footer @openModal="handleModalOpen"/>
+    </div>
+  </v-app>
+</template>
 
 <style>
 @import 'vuetify/styles';
@@ -143,23 +157,24 @@ export default {
 
 .router-view-container {
   display: flex;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   align-content: center;
   align-self: center;
   width: 100%;
   min-height: 70vh;
-  padding-top: 64px; /* Adjust padding to ensure space below the header */
   overflow-y: auto;
+  margin-top: 64px; /* Add margin-top to create space */
 }
 
 @media (min-width: 500px) {
   .router-view-container {
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    height: calc(100vh - 64px); 
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
     padding: 0.5rem;
+    margin-top: 64px; /* Add margin-top to create space */
   }
 }
 </style>
