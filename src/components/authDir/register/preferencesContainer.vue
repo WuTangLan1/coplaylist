@@ -51,42 +51,67 @@ export default {
 </script>
 
 <template>
-  <div class="preferences-container">
-    <h2>Preferences</h2>
-    <form @submit.prevent="submitPreferences">
-      <fieldset>
-        <legend>Favourite Artists</legend>
-        <div v-for="(artist, index) in formData.favouriteArtists" :key="'fav-' + index" class="input-group">
-          <input type="text"
-                 v-model="formData.favouriteArtists[index]"
-                 :class="{'input-valid': inputStates.favouriteArtists[index], 'input-invalid': !inputStates.favouriteArtists[index]}"
-                 @blur="validateArtist(index, 'favouriteArtists')"
-                 placeholder="Enter artist"
-                 aria-label="Favourite Artist">
-          <div class="button-row">
-            <button type="button" @click="addArtist('favouriteArtists')" :disabled="formData.favouriteArtists.length >= 5" class="add-btn">Add</button>
-            <button type="button" @click="removeArtist('favouriteArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
-          </div>
-        </div>
-      </fieldset>
-      <fieldset>
-        <legend>Disliked Artists</legend>
-        <div v-for="(artist, index) in formData.dislikedArtists" :key="'dis-' + index" class="input-group">
-          <input type="text"
-                 v-model="formData.dislikedArtists[index]"
-                 :class="{'input-valid': inputStates.dislikedArtists[index], 'input-invalid': !inputStates.dislikedArtists[index]}"
-                 @blur="validateArtist(index, 'dislikedArtists')"
-                 placeholder="Enter artist"
-                 aria-label="Disliked Artist">
-          <div class="button-row">
-            <button type="button" @click="addArtist('dislikedArtists')" :disabled="formData.dislikedArtists.length >= 5" class="add-btn">Add</button>
-            <button type="button" @click="removeArtist('dislikedArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">Remove</button>
-          </div>
-        </div>
-      </fieldset>
-    </form>
-  </div>
+  <v-container class="preferences-container" max-width="500px">
+    <v-card>
+      <v-card-title>Preferences</v-card-title>
+      <v-card-text>
+        <v-form @submit.prevent="submitPreferences">
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header>Favourite Artists</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-row v-for="(artist, index) in formData.favouriteArtists" :key="'fav-' + index">
+                  <v-col>
+                    <v-text-field
+                      v-model="formData.favouriteArtists[index]"
+                      :rules="[v => !!v || 'Artist name is required']"
+                      @blur="validateArtist(index, 'favouriteArtists')"
+                      label="Favourite Artist"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-btn @click="addArtist('favouriteArtists')" :disabled="formData.favouriteArtists.length >= 5" class="add-btn">
+                      Add
+                    </v-btn>
+                    <v-btn @click="removeArtist('favouriteArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">
+                      Remove
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+            <v-expansion-panel>
+              <v-expansion-panel-header>Disliked Artists</v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-row v-for="(artist, index) in formData.dislikedArtists" :key="'dis-' + index">
+                  <v-col>
+                    <v-text-field
+                      v-model="formData.dislikedArtists[index]"
+                      :rules="[v => !!v || 'Artist name is required']"
+                      @blur="validateArtist(index, 'dislikedArtists')"
+                      label="Disliked Artist"
+                      outlined
+                    ></v-text-field>
+                  </v-col>
+                  <v-col>
+                    <v-btn @click="addArtist('dislikedArtists')" :disabled="formData.dislikedArtists.length >= 5" class="add-btn">
+                      Add
+                    </v-btn>
+                    <v-btn @click="removeArtist('dislikedArtists', index)" :disabled="artist.trim() === ''" class="remove-btn">
+                      Remove
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </v-form>
+      </v-card-text>
+    </v-card>
+  </v-container>
 </template>
+
 
 
 <style scoped>

@@ -58,7 +58,6 @@ export default {
     </v-card>
   </v-dialog>
 </template>
-
 <style scoped>
 .v-card-title {
   padding: 0.5rem 1rem;
@@ -80,8 +79,10 @@ export default {
   background-color: #f44336;
   color: #ffffff;
   border-radius: 50%;
-  min-width: 36px;
-  min-height: 36px;
+  min-width: 20px; 
+  min-height: 20px; 
+  max-height: 30px;
+  max-width: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,7 +93,7 @@ export default {
 }
 
 .v-icon {
-  font-size: 1.5rem;
+  font-size: 1rem; /* Reduced from 1.5rem to 1.2rem */
   color: #ffffff; 
 }
 
