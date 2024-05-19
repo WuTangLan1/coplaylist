@@ -50,35 +50,32 @@ export default {
 
 <template>
   <v-card class="playlist-section" elevation="2" shaped>
-    <v-list v-if="playlist && playlist.length" dense>
-      <v-list-item v-for="(song, index) in playlist" :key="index" class="song-item">
-        <div class="song-info">
-          <div class="song-details">
-            <v-list-item-title>{{ song.title }}</v-list-item-title>
-            <v-list-item-subtitle>{{ song.artist }}</v-list-item-subtitle>
-          </div>
+    <v-list dense v-if="playlist && playlist.length">
+      <v-list-item class="song-item" v-for="(song, index) in playlist" :key="index">
+        <!-- Song Details -->
+        <div class="details">
+          <v-list-item-title class="song-title">{{ song.title }}</v-list-item-title>
+          <v-list-item-subtitle class="song-artist">{{ song.artist }}</v-list-item-subtitle>
         </div>
-        <v-list-item-action class="actions">
+        <!-- Icons -->
+        <div class="icon-container">
           <v-btn icon @click="canSwap && swapSong(index)">
-            <v-icon>mdi-redo</v-icon>
+            <font-awesome-icon :icon="['fas', 'redo']" :class="{ 'disabled': !canSwap }" />
           </v-btn>
           <v-btn icon @click="playSongPreview(song)">
             <v-icon>mdi-play-circle-outline</v-icon>
           </v-btn>
-        </v-list-item-action>
+        </div>
       </v-list-item>
     </v-list>
-    <div v-else class="empty-playlist">
-      No songs available. Please generate a playlist.
-    </div>
+    <div v-else class="empty-playlist">No songs available. Please generate a playlist.</div>
   </v-card>
 </template>
-
 
 <style scoped>
 .playlist-section {
   max-width: 800px;
-  margin: 1rem auto;
+  margin: auto;
   width: 100%;
 }
 
@@ -86,34 +83,27 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  padding: 10px;
 }
 
-.song-info {
+.details {
   flex-grow: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.song-details {
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
+.song-title, .song-artist {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
-.release-year {
-  padding-left: 16px;
-  white-space: nowrap; 
-}
-
-.actions {
-  flex-shrink: 0; 
+.icon-container {
   display: flex;
   gap: 10px;
-  align-items: flex-end;
-  align-self: flex-end;
-  align-content: flex-end;
+}
+
+.redo-icon.disabled, .spotify-icon {
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 .empty-playlist {

@@ -124,7 +124,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
 }
 
 .explanation-content p {
@@ -136,7 +136,7 @@ export default {
 
 .logo {
   height: auto;
-  max-height: 1.9em;
+  max-height: 1.7em;
   margin-left: 0.5em;
 }
 
