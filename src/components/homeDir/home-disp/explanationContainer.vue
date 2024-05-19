@@ -130,13 +130,13 @@ export default {
 .explanation-content p {
   margin-top: 0.5rem;
   margin-bottom: 0.8rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #555;
 }
 
 .logo {
   height: auto;
-  max-height: 1.58em;
+  max-height: 1.8em;
   margin-left: 0.5em;
 }
 

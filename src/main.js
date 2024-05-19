@@ -2,6 +2,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import { useAuthStore } from './stores/useAuthStore';
 import { createPinia } from 'pinia';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -45,6 +46,8 @@ window.ResizeObserver = class extends OriginalResizeObserver {
 const app = createApp(App);
 app.component('font-awesome-icon', FontAwesomeIcon);
 app.use(createPinia());
+const authStore = useAuthStore();
+authStore.initializeAuthListener();
 app.use(router);
 app.use(vuetify);
 

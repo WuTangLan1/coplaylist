@@ -100,8 +100,6 @@ export default {
         outlined
         dense
         class="login-input"
-        append-inner-icon
-        @click:append-inner="toggleShowPassword"
       >
         <template v-slot:append>
           <v-icon @click="toggleShowPassword">

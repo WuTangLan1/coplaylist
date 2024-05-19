@@ -55,10 +55,12 @@ export const useAuthStore = defineStore('auth', {
       }
     },
     async loginUser(details) {
-      console.log('login triggered')
       const { username, password } = details;
       try {
         const userCredential = await signInWithEmailAndPassword(auth, username, password);
+        this.user = userCredential.user;
+        this.isAuthenticated = true;
+        await this.fetchUserProfile();
         return userCredential.user;
       } catch (error) {
         let errorMessage = 'Error logging in';
