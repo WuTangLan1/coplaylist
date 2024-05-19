@@ -1,6 +1,5 @@
-<!-- src/components/homeDir/infoModal.vue -->
+<!-- src\components\homeDir\infoModal.vue -->
 <script>
-import { ref } from 'vue';
 import AboutSection from './aboutSection.vue';
 import TosSection from './tosSection.vue';
 import PrivacySection from './privacySection.vue';
@@ -14,83 +13,140 @@ export default {
     PrivacySection,
     PromptGuideSection
   },
-  emits: ['closeModal', 'update:currentComponent'],
-  setup(props, { emit }) {
-    const dialog = ref(true);
-    const components = [
-      { name: 'About', component: 'AboutSection' },
-      { name: 'ToS', component: 'TosSection' },
-      { name: 'Privacy', component: 'PrivacySection' },
-      { name: 'Guide', component: 'PromptGuideSection' }
-    ];
-
-    function closeModal() {
-      dialog.value = false;
-      emit('closeModal');
-    }
-
-    function changeComponent(componentName) {
-      emit('update:currentComponent', componentName);
-    }
-
+  data() {
     return {
-      dialog,
-      components,
-      closeModal,
-      changeComponent
+      components: [
+        { name: 'About', component: 'AboutSection' },
+        { name: 'ToS', component: 'TosSection' },
+        { name: 'Privacy', component: 'PrivacySection' },
+        { name: 'Guide', component: 'PromptGuideSection' }
+      ]
     };
+  },
+  methods: {
+    closeModal() {
+      this.$emit('closeModal');
+    },
+    changeComponent(componentName) {
+      this.$emit('update:currentComponent', componentName);  
+    }
   }
 };
 </script>
 
 <template>
-  <v-dialog v-model="dialog" persistent max-width="700px">
-    <v-card>
-      <v-card-title class="d-flex align-center">
-        <span class="headline">Information Center</span>
-        <v-spacer></v-spacer>
-        <v-btn icon @click="closeModal" class="close-btn">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-card-title>
-
-      <v-tabs centered :model-value="currentComponent" @update:model-value="changeComponent">
-        <v-tab v-for="item in components" :key="item.name" @click="changeComponent(item.component)">
+  <div class="modal-backdrop" @click.self="closeModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Information Center</h2>
+        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
+      </div>
+      <div class="navigation">
+        <button v-for="item in components" :key="item.name" @click="changeComponent(item.component)" :class="{ active: currentComponent === item.component }">
           {{ item.name }}
-        </v-tab>
-      </v-tabs>
-
-      <v-card-text>
+        </button>
+      </div>
+      <div class="modal-body">
         <component :is="currentComponent"></component>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-.headline {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #333;
-}
-
-
-.v-btn.icon {
-  padding: 0;
-}
-
-.close-btn {
-  background-color: #f44336;
-  color: #ffffff;
-  border-radius: 50%;
-  min-width: 36px;
-  min-height: 36px;
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 500;
 }
 
-.close-btn:hover {
-  background-color: #d32f2f;
+.modal {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  animation: dropAnimation 0.5s ease-in-out forwards;
+  position: relative;
+}
+
+@keyframes dropAnimation {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f3f3f4;
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.close-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.navigation {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f7f7f8;
+  border-bottom: 1px solid #ddd;
+}
+
+.navigation button {
+  margin: 0 10px;
+  padding: 0.5rem 1rem;
+  background-color: #507cac;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.navigation button.active {
+  background-color: #345f8d;
+}
+
+.navigation button:hover {
+  background-color: #345f8d;
+}
+
+.modal-body {
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: calc(80vh - 150px);
+}
+
+.info-icon {
+  height: 60px; 
 }
 </style>
