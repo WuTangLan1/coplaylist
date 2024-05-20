@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-  <v-app-bar app color="primary" dark flat>
+<v-app-bar app dark flat :style="{ backgroundColor: '#220956' }">
     <v-toolbar-title class="logo-container">
       <div class="logo-wrapper">
         <img src="@/assets/images/header/cp_logo_dark.png" alt="CoPlaylist Logo" class="logo" />

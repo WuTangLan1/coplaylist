@@ -45,7 +45,7 @@ export default {
 
 <style scoped>
 .bottom-footer {
-  background-color: #1976D2;
+  background-color: #220956;
   color: black;
   text-align: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
