@@ -55,7 +55,6 @@ export default {
           isUpdatedSuccessfully.value = true;
           setTimeout(() => isUpdatedSuccessfully.value = false, 3000);
 
-          // Update initial values
           initialFirstName.value = firstName.value;
           initialLastName.value = lastName.value;
           initialPhone.value = phone.value;
@@ -121,7 +120,6 @@ export default {
   }
 };
 </script>
-
 <template>
   <v-container class="userinfo">
     <v-row class="token-display" justify="end">
@@ -180,13 +178,13 @@ export default {
       <v-row class="form-group">
         <v-col cols="12">
           <v-label>Favourite Artists:</v-label>
-          <v-row v-for="(artist, index) in favouriteArtists" :key="index" align="center">
+          <v-row v-for="(artist, index) in favouriteArtists" :key="index" align="center" class="artist-row">
             <v-col cols="10">
               <v-text-field v-model="favouriteArtists[index]" label="Artist" clearable />
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" class="d-flex justify-end align-center-col">
               <v-btn icon @click="removeFavouriteArtist(index)">
-                <v-icon>mdi-delete</v-icon>
+                <v-icon color="error">mdi-delete</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -199,13 +197,13 @@ export default {
       <v-row class="form-group">
         <v-col cols="12">
           <v-label>Disliked Artists:</v-label>
-          <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center">
+          <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center" class="artist-row">
             <v-col cols="10">
               <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
             </v-col>
-            <v-col cols="2">
+            <v-col cols="2" class="d-flex justify-end align-center-col">
               <v-btn icon @click="removeDislikedArtist(index)">
-                <v-icon>mdi-delete</v-icon>
+                <v-icon color="error">mdi-delete</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -257,6 +255,23 @@ export default {
 .form-group {
   margin-bottom: 20px;
 }
+
+  .align-center-col {
+    display: flex;
+    align-items: center; /* Ensures vertical centering within the column */
+  }
+
+  .artist-row {
+    display: flex;
+    align-items: center; 
+  }
+
+  .v-btn {
+    min-width: 0;
+    margin-top: 0;
+    height: 100%;
+    margin-bottom: 15px;
+  }
 
 .update-successful {
   animation: glow 1s ease-in-out 3;
