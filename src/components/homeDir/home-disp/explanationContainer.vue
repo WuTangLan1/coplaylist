@@ -28,8 +28,8 @@ export default {
       this.$emit('next');
     },
     improvePlaylist() {
-    // Placeholder function until the functionality is implemented
-  },
+      // Placeholder function until the functionality is implemented
+    },
     discover() {
       this.$router.push('/discover');
     },
@@ -39,27 +39,28 @@ export default {
       }, 5000);
     },
     beforeEnter(el) {
-        el.style.transform = 'scale(0.95)';
-        el.style.opacity = '0';
-      },
-      enter(el, done) {
-        el.offsetHeight; 
-        this.$nextTick(() => {
-          el.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
-          el.style.transform = 'scale(1)';
-          el.style.opacity = '1';
-          done();
-        });
-      },
-      leave(el, done) {
+      el.style.transform = 'translateX(-100%) scale(0.95)';
+      el.style.opacity = '0';
+    },
+    enter(el, done) {
+      el.offsetHeight; // trigger reflow
+      this.$nextTick(() => {
         el.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
-        el.style.transform = 'scale(0.95)';
-        el.style.opacity = '0';
-        setTimeout(() => done(), 900); 
-      }
+        el.style.transform = 'translateX(0) scale(1)';
+        el.style.opacity = '1';
+        done();
+      });
+    },
+    leave(el, done) {
+      el.style.transition = 'transform 0.8s ease, opacity 0.8s ease';
+      el.style.transform = 'translateX(100%) scale(0.95)';
+      el.style.opacity = '0';
+      setTimeout(() => done(), 800); // match transition duration
+    }
   }
 };
 </script>
+
 
 <template>
   <v-container class="explanation-container" fluid>
@@ -71,14 +72,16 @@ export default {
     </v-row>
     <v-row class="features-container" justify="center">
       <transition
-        name="custom-scale"
-        mode="out-in"
-        @before-enter="beforeEnter"
-        @enter="enter"
-        @leave="leave"
-      >
-        <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
-      </transition>
+          name="slide-fade-scale"
+          mode="out-in"
+          appear
+          @before-enter="beforeEnter"
+          @enter="enter"
+          @leave="leave"
+        >
+          <component :is="components[currentComponentIndex]" :key="currentComponentIndex"></component>
+        </transition>
+
     </v-row>
     <v-row class="button-group" justify="space-between">
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
@@ -202,5 +205,18 @@ export default {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.slide-fade-scale-enter-active, .slide-fade-scale-leave-active {
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
+.slide-fade-scale-enter, .slide-fade-scale-leave-to {
+  transform: translateX(-100%) scale(0.95);
+  opacity: 0;
+}
+
+.slide-fade-scale-leave-active {
+  position: absolute; 
 }
 </style>
