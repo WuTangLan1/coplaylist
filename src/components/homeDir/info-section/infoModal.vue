@@ -85,6 +85,7 @@ export default {
 {
   .modal {
     margin-top: 2.5rem;
+    max-height: 75vh;
   }
 }
 

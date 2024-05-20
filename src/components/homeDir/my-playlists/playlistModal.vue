@@ -130,6 +130,14 @@ export default {
     position: relative;
 }
 
+@media (max-width: 550px)
+{
+  .modal {
+    margin-top: 2.5rem;
+    max-height: 75vh;
+  }
+}
+
 @keyframes dropAnimation {
     0% {
         transform: translateY(-100%);
@@ -190,7 +198,7 @@ export default {
 .playlist-container {
     max-width: 800px;
     margin: 0 auto;
-    max-height: 60vh;
+    max-height: 56vh;
     overflow-y: auto;
 }
 
