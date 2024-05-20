@@ -45,7 +45,7 @@ export default {
   <v-app-bar app color="primary" dark flat>
     <v-toolbar-title class="logo-container">
       <div class="logo-wrapper">
-        <img src="@/assets/images/header/cp_logo_transparent.png" alt="CoPlaylist Logo" class="logo" />
+        <img src="@/assets/images/header/cp_logo_dark.png" alt="CoPlaylist Logo" class="logo" />
       </div>
     </v-toolbar-title>
     <v-btn icon @click="homeClicked" color="white">
@@ -76,7 +76,7 @@ export default {
 }
 
 .logo {
-  max-height: 40px;
+  max-height: 45px;
   width: auto;
 }
 

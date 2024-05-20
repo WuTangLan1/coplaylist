@@ -172,9 +172,9 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 200px);
     padding: 0.5rem;
-    margin-top: 64px; /* Add margin-top to create space */
+    margin-top: 64px; 
   }
 }
 </style>
