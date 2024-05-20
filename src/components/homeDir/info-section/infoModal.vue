@@ -84,7 +84,7 @@ export default {
 @media(max-width: 600px)
 {
   .modal {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
   }
 }
 

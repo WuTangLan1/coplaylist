@@ -73,6 +73,13 @@ export default {
   position: relative;
 }
 
+@media(max-width: 600px)
+{
+  .modal {
+    margin-top: 2.5rem;
+  }
+}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
