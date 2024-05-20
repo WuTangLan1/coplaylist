@@ -38,10 +38,15 @@ export default {
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
+  width: 100%;
 }
 
 .about-section h1, .about-section h2 {
   color: #507cac;
+}
+
+.about-section h1 {
+  font-size: 1.6rem;
 }
 
 .about-section ul {
