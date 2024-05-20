@@ -304,6 +304,7 @@ h3.description {
   justify-content: space-between;
   width: 100%; 
   margin-bottom: 1rem;
+  gap: 0.5rem; /* Added gap for spacing */
 }
 
 h2 {
