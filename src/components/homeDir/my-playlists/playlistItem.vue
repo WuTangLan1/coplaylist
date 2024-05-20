@@ -66,194 +66,40 @@ export default {
 </script>
 
 <template>
-  <div class="playlist-card" :class="{ 'open': isOpen }">
-    <div class="playlist-header">
-      <h3 class="playlist-name">{{ playlist.name }}</h3>
-      <font-awesome-icon 
-          :icon="[playlist.favourited ? 'fas' : 'far', 'heart']" 
-          class="heart-icon" 
-          @click="toggleFavourite"
-        />
-      <button class="toggle-button" @click="toggleOpen">{{ buttonText }}</button>
-    </div>
-    <div class="playlist-body">
-      <ul class="song-list">
-        <li v-for="(song, index) in visibleSongs" :key="index" class="song-item">
-          <div class="song-info">
-            <div class="song-details">
-              <div class="song-title">{{ song.title }}</div>
-              <div class="song-artist">{{ song.artist }}</div>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <div v-if="isOpen" class="playlist-actions">
-        <button class="action-button remove-button" @click="openConfirmModal">Remove</button>
-        <button class="action-button export-button" @click="exportToSpotify">Export to Spotify</button>
+  <v-card class="ma-5" :class="{ 'open': isOpen }">
+    <v-card-title class="d-flex justify-space-between align-center">
+      <div>{{ playlist.name }}</div>
+      <v-btn icon @click="toggleFavourite">
+        <v-icon color="red">{{ playlist.favourited ? 'mdi-heart' : 'mdi-heart-outline' }}</v-icon>
+      </v-btn>
+      <v-btn @click="toggleOpen">{{ buttonText }}</v-btn>
+    </v-card-title>
+
+    <v-card-text>
+      <v-list>
+        <v-list-item v-for="(song, index) in visibleSongs" :key="index">
+          <v-list-item-title>{{ song.title }}</v-list-item-title>
+          <v-list-item-subtitle>{{ song.artist }}</v-list-item-subtitle>
+        </v-list-item>
+      </v-list>
+      <div v-if="isOpen" class="text-right">
+        <v-btn color="red" @click="openConfirmModal">Remove</v-btn>
+        <v-btn color="green" @click="exportToSpotify">Export to Spotify</v-btn>
       </div>
-      <div v-if="hiddenSongs.length > 0 && !this.isOpen" class="blurred-songs">
-        <font-awesome-icon icon="ellipsis-h" /> {{ hiddenSongs.length }} more songs...
-      </div>
-    </div>
+      <v-fade-transition>
+        <div v-if="hiddenSongs.length > 0 && !isOpen" class="text-center">
+          <v-icon>mdi-dots-horizontal</v-icon>
+          {{ hiddenSongs.length }} more songs...
+        </div>
+      </v-fade-transition>
+    </v-card-text>
     <confirmdelModal v-if="showConfirmModal" @close="closeConfirmModal" @confirm="confirmDelete" />
-  </div>
+  </v-card>
 </template>
 
+
 <style scoped>
-.playlist-card {
-  background: linear-gradient(135deg, #f6f6fa, #f4f5f9);
-  color: rgb(0, 0, 0);
-  padding: 0.5rem;
-  margin: 0.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  transition: max-height 0.5s ease-in-out;
-  max-height: 400px;
+.open {
+  max-height: none !important;
 }
-
-.playlist-card.open {
-  max-height: 1200px;
-}
-
-.playlist-card:hover {
-  transform: translateY(-5px);
-}
-
-.playlist-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  margin-right: 0.3rem;
-}
-
-.playlist-header h3 {
-  margin: 0;
-  color: #333333;
-}
-
-.playlist-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.action-button {
-  padding: 8px 16px;
-  font-size: 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.remove-button {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  margin-right: 10px;
-}
-
-.remove-button:hover {
-  background-color: #e60000;
-}
-
-.export-button {
-  background-color: #1db954;
-  color: white;
-  border: none;
-}
-
-.export-button:hover {
-  background-color: #1ed760;
-}
-
-.song-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.song-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 4px;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: background-color 0.3s ease;
-  border-bottom: 1px solid #eee;
-}
-
-.song-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.song-info {
-  display: flex;
-  align-items: center;
-}
-
-.song-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.song-title {
-  font-size: 16px;
-  color: #000000;
-}
-
-.song-artist {
-  font-size: 14px;
-  color: #000000;
-}
-
-.song-duration {
-  font-size: 14px;
-  color: #000000;
-}
-
-.blurred-songs {
-  margin-top: 10px;
-  color: #000000;
-  font-style: italic;
-  position: relative;
-}
-
-.playlist-footer {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.toggle-button {
-  background-color: #6780b9;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  margin-top: 10px;
-  margin-bottom: 0.5rem;
-}
-
-.toggle-button:hover {
-  background-color: #2b1783;
-}
-
-.heart-icon {
-    cursor: pointer;
-    color: rgb(243, 0, 0);
-    height: 10%;
-    width: 10%;
-    font-size: 24px;
-  }
-
-  .fas.fa-heart { /* Filled heart when favourited */
-    color: red;
-  }
-
 </style>
