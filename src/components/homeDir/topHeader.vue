@@ -64,6 +64,7 @@ export default {
   </v-app-bar>
 </template>
 
+/* src/components/homeDir/topHeader.vue */
 <style scoped>
 .logo-container {
   display: flex;
@@ -90,5 +91,9 @@ export default {
 
 .v-icon {
   font-size: 24px;
+}
+
+.v-app-bar {
+  height: 64px; /* Set a consistent height for the topHeader */
 }
 </style>

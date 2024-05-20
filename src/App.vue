@@ -164,7 +164,7 @@ export default {
   width: 100%;
   min-height: 70vh;
   overflow-y: auto;
-  margin-top: 100px; 
+  padding-top: 64px; /* Adjust padding to match the height of the topHeader */
 }
 
 @media (min-width: 500px) {
@@ -174,7 +174,9 @@ export default {
     justify-content: center;
     height: calc(100vh - 200px);
     padding: 0.5rem;
-    margin-top: 64px; 
+    padding-top: 64px; /* Adjust padding to match the height of the topHeader */
   }
 }
+
+
 </style>
