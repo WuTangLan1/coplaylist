@@ -1,3 +1,4 @@
+<!-- src\components\inputsDir\songsContainer.vue -->
 <script>
 import { ref, watch, onMounted } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
@@ -23,44 +24,32 @@ export default {
     });
 
     const selectedSongs = ref([
-      { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 },
+      { fullSong: ''},
+      { fullSong: ''},
     ]);
 
-    function updateSong(index, field, value) {
-      selectedSongs.value[index][field] = value;
-      if (
-        selectedSongs.value[index].name.trim() &&
-        selectedSongs.value[index].artist.trim()
-      ) {
-        promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
-        promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
-        promptStore.updateSong(
-          index,
-          'influence',
-          selectedSongs.value[index].influence
-        );
-      }
+    function updateSong(index, value) {
+      selectedSongs.value[index].fullSong = value;
     }
 
     async function generatePlaylist() {
-      if (!authStore.isAuthenticated) {
-        console.error('User is not logged in. Cannot generate playlist.');
-        return;
-      }
-      if (!promptStore.validateSongs()) {
-        promptStore.validateSongs();
-        return;
-      } else {
-        showLoadingModal.value = true;
-        try {
-          await promptStore.generatePlaylist(newMusic.value);
-          router.push({ name: 'Output' });
-        } finally {
-          showLoadingModal.value = false;
+        console.log('gen button clicked')
+        if (!authStore.isAuthenticated) {
+          console.error('User is not logged in. Cannot generate playlist.');
+          return;
+        }
+        if (!promptStore.validateSongs(selectedSongs.value)) {
+          return;
+        } else {
+          showLoadingModal.value = true;
+          try {
+            await promptStore.generatePlaylist(newMusic.value, selectedSongs.value);
+            router.push({ name: 'Output' });
+          } finally {
+            showLoadingModal.value = false;
+          }
         }
       }
-    }
 
     function goBack() {
       router.push({ name: 'Vibe' });
@@ -84,6 +73,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div class="songs-container">
     <div class="step-heading">
@@ -91,7 +81,7 @@ export default {
       <h2>Add Songs</h2>
     </div>
     <h3 class="description">
-      Add up to three songs you like to guide the playlist generation (these will
+      Add up to two songs you like to guide the playlist generation (these will
       not be included in the generated playlist)
     </h3>
     <div
@@ -100,21 +90,12 @@ export default {
       class="input-group"
     >
       <div class="input-column">
-        <label :for="`song-name-${index}`">Song Name</label>
+        <label :for="`full-song-${index}`">Song - Artist</label>
         <input
-          :id="`song-name-${index}`"
-          v-model="song.name"
-          @input="updateSong(index, 'name', $event.target.value)"
-          placeholder="Enter Song Name"
-        />
-      </div>
-      <div class="input-column">
-        <label :for="`artist-name-${index}`">Artist Name</label>
-        <input
-          :id="`artist-name-${index}`"
-          v-model="song.artist"
-          @input="updateSong(index, 'artist', $event.target.value)"
-          placeholder="Enter Artist Name"
+          :id="`full-song-${index}`"
+          v-model="song.fullSong"
+          @input="updateSong(index, $event.target.value)"
+          placeholder="Enter Song - Artist"
         />
       </div>
     </div>
@@ -224,13 +205,6 @@ h3.description {
 .input-column input[type="range"] {
   flex-grow: 1; 
   margin-right: 10px; 
-}
-
-.influence-label {
-  width: 50px; 
-  text-align: right;
-  font-size: 0.9rem; 
-  color: #333; 
 }
 
 .token-display {

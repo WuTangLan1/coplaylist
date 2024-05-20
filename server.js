@@ -88,7 +88,7 @@ app.post('/generate-playlist', async (req, res) => {
         Activity: ${vibes.selectedActivity || 'any'},
         Familiarity: ${vibes.selectedFamiliarity || 'any'},
         Setting: ${vibes.selectedSetting || 'any'},
-        Songs: Influenced by these but not included: ${songs.map(song => `${song.name} by ${song.artist} (${song.influence}% influence)`).join(', ')},
+        Songs: Influenced by these but not included: ${songs.map(song => `${song.name} by ${song.artist} `).join(', ')},
         Exclude these artists under any circumstances: ${dislikedArtists},
         And please exclude the following songs under all circumstances and these represent songs the user does not want generated again ${exclusionString},
         Generate 5 additional alternative songs using the same criteria.

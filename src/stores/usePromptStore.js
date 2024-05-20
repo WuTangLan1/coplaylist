@@ -18,9 +18,9 @@ export const usePromptStore = defineStore('prompt', {
       selectedEra: [],
     },
     songs: [
-      { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 }
+      { name: '', artist: ''},
+      { name: '', artist: ''},
+      { name: '', artist: ''}
     ],
     modal: {
       show: false,
@@ -76,19 +76,20 @@ export const usePromptStore = defineStore('prompt', {
     },
     validateSongs() {
         const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length;
-        if (isSongsValid === 0 || isSongsValid > 3) {
-            this.showModal('Please enter between 1 and 3 songs, each with a name and an artist.');
+        if (isSongsValid === 0 || isSongsValid > 2) {
+            this.showModal('Please enter between 1 and 2 songs, each with a name and an artist.');
             return false;
         }
         return true;
     },
-    updateSong(index, field, value) {
-      if (index >= 0 && index < this.songs.length) {
-        this.songs[index][field] = value;
-      } else {
-        console.error('Invalid song index:', index);
+    validateSongs(selectedSongs) {
+      const isSongsValid = selectedSongs.some(song => song.fullSong.trim() !== '');
+      if (!isSongsValid) {
+        this.showModal('Please enter at least one song.');
+        return false;
       }
-    },
+      return true;
+    },    
     validateAll() {
       const isTonesValid = this.validateTones();
       const isSongsValid = this.validateSongs(); 
@@ -100,10 +101,10 @@ export const usePromptStore = defineStore('prompt', {
     updateNewMusic(value) {
       this.newMusic = value;
     },
-    async generatePlaylist(newMusic) {
+    async generatePlaylist(newMusic, selectedSongs) {
       const authStore = useAuthStore(); 
       const playlistStore = usePlaylistStore();
-      if (!this.validateAll()) {
+      if (!this.validateTones() || !this.validateVibes() || !this.validateSongs(selectedSongs)) {
         console.error("Validation failed. Make sure all required fields are filled correctly.");
         return;
       }
@@ -115,6 +116,11 @@ export const usePromptStore = defineStore('prompt', {
           dislikedArtists: authStore.user.disliked_artists.join(', ')
         }; 
     
+        const processedSongs = selectedSongs.map(song => {
+          const [name, artist] = song.fullSong.split('-').map(part => part.trim());
+          return { name, artist }; 
+        }).filter(song => song.name && song.artist); 
+    
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
         const playlistDetails = {
@@ -123,11 +129,7 @@ export const usePromptStore = defineStore('prompt', {
             genres: this.tones.selectedGenres || [],
             eras: this.tones.selectedEra || []
           },
-          songs: this.songs.map(song => ({
-            name: song.name.trim(),
-            artist: song.artist.trim(),
-            influence: song.influence
-          })).filter(song => song.name && song.artist),
+          songs: processedSongs,
           userTaste: userTaste,
           excludeSongs: excludeSongs,
           dislikedArtists: authStore.user.disliked_artists || []  
@@ -148,7 +150,7 @@ export const usePromptStore = defineStore('prompt', {
       } else {
         this.showModal("Insufficient tokens to generate a playlist.");
       }
-    },   
+    },         
     async regeneratePlaylist(newMusic) {
       const authStore = useAuthStore();
       const playlistStore = usePlaylistStore(); 
@@ -185,7 +187,6 @@ export const usePromptStore = defineStore('prompt', {
           songs: this.songs.map(song => ({
             name: song.name.trim(),
             artist: song.artist.trim(),
-            influence: song.influence
           })).filter(song => song.name && song.artist),
           userTaste: userTaste,
           excludeSongs: excludeSongs,
