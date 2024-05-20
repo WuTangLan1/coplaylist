@@ -62,7 +62,7 @@ export default {
 <style scoped>
 .discover-view {
   padding: 1rem;
-  max-width: 89vw;
+  max-width: 100%;
   background: linear-gradient(to bottom, #e5e5ff, #ddedfc);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -82,6 +82,7 @@ h1 {
   text-align: center;
   flex-grow: 1;
   margin: 0;
+  font-size: 1.7rem;
 }
 .section {
   margin-bottom: 40px;

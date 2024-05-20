@@ -81,6 +81,13 @@ export default {
   position: relative;
 }
 
+@media(max-width: 600px)
+{
+  .modal {
+    margin-top: 2rem;
+  }
+}
+
 @keyframes dropAnimation {
   0% {
     transform: translateY(-100%);
