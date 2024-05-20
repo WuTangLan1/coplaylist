@@ -139,7 +139,7 @@ export default {
         outlined
         dense
       />
-      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3" color="primary">
+      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3 || selectedGenres.length >= 3" color="primary">
         Submit
       </VBtn>
     </div>
