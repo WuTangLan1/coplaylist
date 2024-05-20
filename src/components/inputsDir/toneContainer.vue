@@ -3,8 +3,14 @@
 import { ref, computed } from 'vue';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
+import { VChip, VBtn, VTextField } from 'vuetify/components';
 
 export default {
+  components: {
+    VChip,
+    VBtn,
+    VTextField,
+  },
   setup() {
     const promptStore = usePromptStore();
     const newGenre = ref('');
@@ -97,15 +103,15 @@ export default {
       Select at least one genre and one era to create a base for your generated playlist
     </h3>
     <div class="genres-container">
-      <div
+      <VChip
         v-for="genre in commonGenres"
         :key="genre"
-        class="genre-chip"
-        :class="{ 'selected': selectedGenres.includes(genre) }"
+        :active="selectedGenres.includes(genre)"
         @click="toggleGenreSelection(genre)"
+        class="genre-chip"
       >
         {{ genre }}
-      </div>
+      </VChip>
     </div>
 
     <div v-if="selectedGenres.length === 0" class="placeholder">
@@ -113,60 +119,67 @@ export default {
     </div>
 
     <div class="selected-genres-container">
-      <div
+      <VChip
         v-for="genre in selectedGenres"
         :key="genre"
         class="selected-genre-chip"
+        closable
+        @click:close="removeGenre(genre)"
       >
         {{ genre }}
-      </div>
+      </VChip>
     </div>
 
     <div class="input-group">
-      <input type="text" placeholder="Add Genre" v-model="newGenre"
-             @keyup.enter="addNewItem('genre', newGenre)" maxlength="25">
-      <button @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3">
+      <VTextField
+        v-model="newGenre"
+        placeholder="Add Genre"
+        @keyup.enter="addNewItem('genre', newGenre)"
+        maxlength="25"
+        outlined
+      />
+      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3">
         Submit
-      </button>
+      </VBtn>
     </div>
 
     <div class="eras-container">
-      <div
+      <VChip
         v-for="era in commonEras"
         :key="era"
-        class="era-chip"
-        :class="{ 'selected': selectedEra.includes(era) }"
+        :active="selectedEra.includes(era)"
         @click="toggleEraSelection(era)"
+        class="era-chip"
       >
         {{ era }}
-      </div>
+      </VChip>
     </div>
 
     <div v-if="selectedEra.length === 0" class="placeholder">
       Select up to 3 eras
     </div>
     <div class="selected-eras-container">
-      <div
+      <VChip
         v-for="era in selectedEra"
         :key="era"
         class="selected-era-chip"
+        closable
+        @click:close="removeEra(era)"
       >
         {{ era }}
-      </div>
+      </VChip>
     </div>
 
-    <button class="next-btn" @click="handleNext">Next</button>
+    <VBtn class="next-btn" @click="handleNext">Next</VBtn>
   </div>
 </template>
 
-
-  
 <style scoped>
 .tone-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.3rem;
+  padding: 1rem;
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
