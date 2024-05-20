@@ -119,7 +119,6 @@ export default {
         class="selected-genre-chip"
       >
         {{ genre }}
-        <button class="remove-genre" @click="removeGenre(genre)">✕</button>
       </div>
     </div>
 
@@ -153,7 +152,6 @@ export default {
         class="selected-era-chip"
       >
         {{ era }}
-        <button class="remove-era" @click="removeEra(era)">✕</button>
       </div>
     </div>
 
@@ -236,16 +234,17 @@ h3.description {
 .selected-genres-container,
 .selected-eras-container {
   border: solid 1px #ccc; 
+  margin-top: 0.3rem;
   border-radius: 10px;
-  height: 100px;
-  width: 90%; 
+  min-height: 50px;
+  width: 100%; 
   margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: start; 
+  justify-content: center; 
   gap: 0.5rem; 
-  padding: 0.5rem;
-  align-content: flex-start; 
+  padding: 1rem;
+  align-content: center; 
   
 }
 
@@ -284,16 +283,7 @@ h3.description {
   border-color: #0b1d30;
   background-color: #d4cbef;
   position: relative; 
-  padding-right: 0.2rem; 
-
-}
-
-.remove-genre, .remove-era {
-  background: none;
-  border: none;
-  color: black;
-  cursor: pointer;
-  font-size: 0.8rem;
+  text-align: center;
 }
 
 .input-group {
@@ -322,9 +312,9 @@ h3.description {
 }
 
 .input-group button:disabled {
-  background-color: #ccc; /* Light gray background to indicate it's disabled */
-  color: #666; /* Darker text color for better contrast and readability */
-  cursor: not-allowed; /* Cursor to indicate that the button is not clickable */
+  background-color: #ccc; 
+  color: #666; 
+  cursor: not-allowed; 
 }
 
 .input-group button:hover {
