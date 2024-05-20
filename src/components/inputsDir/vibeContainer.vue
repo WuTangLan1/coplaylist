@@ -1,12 +1,18 @@
 <!-- src\components\inputsDir\vibeContainer.vue -->
+
 <script>
 import { usePromptStore } from '@/stores/usePromptStore';
 import { useRouter } from 'vue-router';
+import { VSelect, VBtn } from 'vuetify/components';
 
 export default {
+  components: {
+    VSelect,
+    VBtn,
+  },
   setup() {
     const promptStore = usePromptStore();
-    const router = useRouter(); 
+    const router = useRouter();
 
     const updateSelection = (type, value) => {
       promptStore.updateVibeSelection(type, value);
@@ -15,7 +21,7 @@ export default {
     const validateAndNext = () => {
       if (promptStore.validateVibes()) {
         router.push({ name: 'Songs' });
-      } 
+      }
     };
 
     function goBack() {
@@ -24,76 +30,107 @@ export default {
 
     return {
       vibes: promptStore.vibes,
-      moods : ['Soothing', 'Chill', 'Romantic', 'Reflective', 'Happy', 'Melancholic', 'Motivational', 'Energetic', 'Sad'],
-      activities : ['Sleeping', 'Meditating', 'Relaxing', 'Reading', 'Cooking', 'Commuting', 'Studying', 'Party', 'Working Out'],
-      familiarities : ['Famous', 'Classics', 'Old Favorites', 'Known', 'New Discoveries', 'Not Well Known', 'Emerging Artists'],
-      settings : ['By Yourself', 'Quiet Evening', 'Family Gathering', 'With Close Friends', 'Work Environment', 'Outdoor Activities', 'At the Party'],
+      moods: ['Soothing', 'Chill', 'Romantic', 'Reflective', 'Happy', 'Melancholic', 'Motivational', 'Energetic', 'Sad'],
+      activities: ['Sleeping', 'Meditating', 'Relaxing', 'Reading', 'Cooking', 'Commuting', 'Studying', 'Party', 'Working Out'],
+      familiarities: ['Famous', 'Classics', 'Old Favorites', 'Known', 'New Discoveries', 'Not Well Known', 'Emerging Artists'],
+      settings: ['By Yourself', 'Quiet Evening', 'Family Gathering', 'With Close Friends', 'Work Environment', 'Outdoor Activities', 'At the Party'],
       updateSelection,
       validateAndNext,
-      goBack
+      goBack,
     };
   },
 };
 </script>
 
-
 <template>
   <div class="vibe-container">
     <div class="step-heading">
-      <div class="step-number">2</div> 
+      <div class="step-number">2</div>
       <h2>Select Your Vibe</h2>
     </div>
     <h3 class="description">
-      Select at least two of the below setting to guide the direction of your generated playlist.
+      Select at least two of the below settings to guide the direction of your generated playlist.
     </h3>
     <div class="input-group">
       <label for="mood">Set a mood for the playlist:</label>
-      <select id="mood" v-model="vibes.selectedMood" @change="updateSelection('selectedMood', $event.target.value)">
-        <option disabled value="">Select Mood</option>
-        <option v-for="mood in moods" :key="mood" :value="mood">{{ mood }}</option>
-      </select>
+      <VSelect
+        id="mood"
+        v-model="vibes.selectedMood"
+        :items="moods"
+        label="Select Mood"
+        outlined
+        dense
+        hide-details
+        class="custom-select"
+        @change="updateSelection('selectedMood', $event)"
+      />
     </div>
     <div class="input-group">
-      <label for="activity">What activity is this music for :</label>
-      <select id="activity" v-model="vibes.selectedActivity" @change="updateSelection('selectedActivity', $event.target.value)">
-        <option disabled value="">Select Activity</option>
-        <option v-for="activity in activities" :key="activity" :value="activity">{{ activity }}</option>
-      </select>
+      <label for="activity">What activity is this music for:</label>
+      <VSelect
+        id="activity"
+        v-model="vibes.selectedActivity"
+        :items="activities"
+        label="Select Activity"
+        outlined
+        dense
+        hide-details
+        class="custom-select"
+        @change="updateSelection('selectedActivity', $event)"
+      />
     </div>
     <div class="input-group">
-      <label for="familiarity">Set your music familiarity :</label>
-      <select id="familiarity" v-model="vibes.selectedFamiliarity" @change="updateSelection('selectedFamiliarity', $event.target.value)">
-        <option disabled value="">Select Familiarity</option>
-        <option v-for="familiarity in familiarities" :key="familiarity" :value="familiarity">{{ familiarity }}</option>
-      </select>
+      <label for="familiarity">Set your music familiarity:</label>
+      <VSelect
+        id="familiarity"
+        v-model="vibes.selectedFamiliarity"
+        :items="familiarities"
+        label="Select Familiarity"
+        outlined
+        dense
+        hide-details
+        class="custom-select"
+        @change="updateSelection('selectedFamiliarity', $event)"
+      />
     </div>
     <div class="input-group">
       <label for="setting">Select your playlist setting:</label>
-      <select id="setting" v-model="vibes.selectedSetting" @change="updateSelection('selectedSetting', $event.target.value)">
-        <option disabled value="">Select Setting</option>
-        <option v-for="setting in settings" :key="setting" :value="setting">{{ setting }}</option>
-      </select>
+      <VSelect
+        id="setting"
+        v-model="vibes.selectedSetting"
+        :items="settings"
+        label="Select Setting"
+        outlined
+        dense
+        hide-details
+        class="custom-select"
+        @change="updateSelection('selectedSetting', $event)"
+      />
     </div>
     <div class="button-group">
-      <button class="prev-btn" @click="goBack">Previous</button>
-      <button class="next-btn" @click="validateAndNext">Next</button>
+      <VBtn class="prev-btn" @click="goBack" color="primary" outlined>
+        Prev
+      </VBtn>
+      <VBtn class="next-btn" @click="validateAndNext" color="primary">
+        Next
+      </VBtn>
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .vibe-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.3rem;
+  padding: 1rem;
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 700px;
   margin: auto;
   overflow-y: auto;
+  margin-bottom: 2rem;
 }
 
 .step-heading {
@@ -108,7 +145,7 @@ export default {
   font-size: 1.2rem;
   font-weight: bold;
   background: #e5e1f2;
-  border-radius: 10%;  /* Slight rounding, adjust as needed */
+  border-radius: 10%;
   width: 40px;
   height: 40px;
   display: flex;
@@ -132,44 +169,34 @@ h3.description {
 
 .input-group {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 95%;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
   margin-bottom: 1rem;
-  padding: 0.5rem;
+  padding: 0 1rem;
 }
 
 .input-group label {
-  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
   color: #333;
   font-size: clamp(14px, 3.2vw, 18px);
-  white-space: nowrap;
 }
 
-.input-group select {
-  padding: 0.3rem;
-  border: 2px solid #507cac;
+.custom-select {
+  width: 100%; 
+}
+
+.custom-select .v-input__control {
+  border-color: #507cac;
   border-radius: 4px;
-  background-color: white;
-  font-size: clamp(12px, 3vw, 16px);
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-  position: relative;
-  cursor: pointer;
 }
 
-/* Custom dropdown arrow */
-.input-group select {
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 1em;
-}
-
-.input-group select:focus, .input-group select:hover {
+.custom-select .v-input__control:hover {
   border-color: #345f8d;
-  outline: none;
+}
+
+.custom-select .v-select__selections {
+  color: #333;
 }
 
 
@@ -178,6 +205,7 @@ h3.description {
   justify-content: space-between;
   width: 100%;
   margin-bottom: 0.2rem;
+  padding: 0 1rem;
 }
 
 .next-btn, .prev-btn {
@@ -196,11 +224,7 @@ h3.description {
 
 .next-btn:hover, .prev-btn:hover {
   background-color: #345f8d;
-  transform: translateY(-2px); /* Adds a subtle lift effect on hover */
-}
-
-.prev-btn:hover {
-  background-color: #3b5998;
+  transform: translateY(-2px);
 }
 
 h2 {
@@ -221,5 +245,4 @@ h2 {
     min-width: 30%;
   }
 }
-
 </style>

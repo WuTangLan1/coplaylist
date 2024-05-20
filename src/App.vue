@@ -144,7 +144,6 @@ export default {
     </div>
   </v-app>
 </template>
-
 <style>
 @import 'vuetify/styles';
 @import './assets/css/styles.css';
@@ -152,17 +151,17 @@ export default {
 #app {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-height: 100vh;
 }
 
 .router-view-container {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   align-content: center;
   align-self: center;
   width: 100%;
-  min-height: 70vh;
   overflow-y: auto;
   padding-top: 64px; /* Adjust padding to match the height of the topHeader */
 }
@@ -172,11 +171,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 200px);
     padding: 0.5rem;
     padding-top: 64px; /* Adjust padding to match the height of the topHeader */
   }
 }
-
-
 </style>
