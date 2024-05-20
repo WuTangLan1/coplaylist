@@ -1,14 +1,13 @@
 <!-- src\views\discoverView.vue -->
 <script>
-import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
-import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
-import PlaylistInfoModal from "@/components/discover/playlist/playlistinfoModal.vue";
+import RotatingCircle from '@/components/discover/circle/discoverCircle.vue';
+import playlistinfoModal from '@/components/discover/playlist/playlistinfoModal.vue';
+import { useDiscoverStore } from '@/stores/useDiscoverStore';
 
 export default {
   components: {
-    topratedContainer,
-    newdiscContainer,
-    PlaylistInfoModal,
+    RotatingCircle,
+    playlistinfoModal
   },
   data() {
     return {
@@ -16,10 +15,20 @@ export default {
       isModalVisible: false,
     };
   },
+  computed: {
+    newDiscoveries() {
+      const discoverStore = useDiscoverStore();
+      return discoverStore.newDiscoveries;
+    },
+    topRatedPlaylists() {
+      const discoverStore = useDiscoverStore();
+      return discoverStore.topRatedPlaylists;
+    },
+  },
   methods: {
     hidePlaylistModal() {
-      this.selectedPlaylist= null;
-      this.isModalVisible=false;
+      this.selectedPlaylist = null;
+      this.isModalVisible = false;
     },
     showPlaylistModal(playlist) {
       if (playlist && playlist.songs) {
@@ -41,21 +50,8 @@ export default {
     <p class="instructions">
       Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information.
     </p>
-    <div class="section">
-      <div class="title-bar">
-        <h2>Top Rated</h2>
-        <img src="@/assets/images/discover/toprated.png" alt="Top Rated" class="title-icon">
-      </div>
-      <toprated-container @show-modal="showPlaylistModal" />
-    </div>
-    <div class="section">
-      <div class="title-bar">
-        <h2>Newly Generated</h2>
-        <img src="@/assets/images/discover/newdiscoveries.png" alt="New Discoveries" class="title-icon">
-      </div>
-      <newdisc-container @show-modal="showPlaylistModal" />
-    </div>
-    <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" @update:visible="isModalVisible = $event" :visible="isModalVisible" />
+    <RotatingCircle :newDiscoveries="newDiscoveries" :topRatedPlaylists="topRatedPlaylists" @show-modal="showPlaylistModal" />
+    <PlaylistInfoModal v-if="selectedPlaylist" :playlist="selectedPlaylist" @update:visible="isModalVisible = $event" :visible="isModalVisible" />
   </div>
 </template>
 
@@ -84,27 +80,11 @@ h1 {
   margin: 0;
   font-size: 1.7rem;
 }
-.section {
-  margin-bottom: 40px;
-}
-h2 {
-  margin-bottom: 20px;
-}
 .instructions {
   font-size: 0.9rem;
   color: #333;
   margin-top: 0;
   margin-bottom: 1rem;
   text-align: center;
-}
-.title-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.title-icon {
-  width: 32px;
-  height: 32px;
 }
 </style>
