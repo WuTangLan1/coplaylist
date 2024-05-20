@@ -137,8 +137,9 @@ export default {
         @keyup.enter="addNewItem('genre', newGenre)"
         maxlength="25"
         outlined
+        dense
       />
-      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3">
+      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3" color="primary">
         Submit
       </VBtn>
     </div>
@@ -170,7 +171,7 @@ export default {
       </VChip>
     </div>
 
-    <VBtn class="next-btn" @click="handleNext">Next</VBtn>
+    <VBtn class="next-btn" @click="handleNext" color="primary">Next</VBtn>
   </div>
 </template>
 
@@ -222,7 +223,6 @@ h2 {
   }
 }
 
-
 h3.description {
   color: #666666; 
   font-size: 0.9rem; 
@@ -236,13 +236,13 @@ h3.description {
 }
 
 .placeholder {
-    text-align: center;
-    color: #aaa; 
-    padding: 1rem;
-    margin:0;
-    align-items: center;
-    align-self: center;
-  }
+  text-align: center;
+  color: #aaa; 
+  padding: 1rem;
+  margin:0;
+  align-items: center;
+  align-self: center;
+}
   
 .selected-genres-container,
 .selected-eras-container {
@@ -302,36 +302,8 @@ h3.description {
 .input-group {
   display: flex;
   justify-content: space-between;
-  width: 95%; 
+  width: 100%; 
   margin-bottom: 1rem;
-}
-
-.input-group input {
-  flex-grow: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 0.5rem;
-}
-
-.input-group button {
-  padding: 0.5rem 0.8rem;
-  cursor: pointer;
-  background-color: #459537;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.input-group button:disabled {
-  background-color: #ccc; 
-  color: #666; 
-  cursor: not-allowed; 
-}
-
-.input-group button:hover {
-  background-color: #345f8d;
 }
 
 h2 {
@@ -352,8 +324,8 @@ h2 {
   transition: background-color 0.3s ease;
 }
   
-  .next-btn:hover {
-    background-color: #46367c; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
+.next-btn:hover {
+  background-color: #46367c; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 </style>
