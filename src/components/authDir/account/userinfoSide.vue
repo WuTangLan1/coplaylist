@@ -1,4 +1,5 @@
 <!-- src\components\authDir\account\userinfoSide.vue -->
+
 <script>
 import { ref, computed } from 'vue';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -21,18 +22,17 @@ export default {
     const favouriteArtists = ref([...initialFavouriteArtists.value]);
     const dislikedArtists = ref([...initialDislikedArtists.value]);
 
-    const isFormValid = computed(() => 
-      firstName.value.trim() !== '' && 
-      lastName.value.trim() !== '' && 
-      phone.value.trim() !== '' &&
-      country.value.trim() !== ''
-    );
+    const isFormValid = ref(false);
+
+    const rules = {
+      required: value => !!value || 'Required.',
+    };
 
     const isUpdatedSuccessfully = ref(false);
 
     const isFormChanged = computed(() => {
       return (
-        firstName.value !== initialFirstName.value ||
+        firstName.value !== initialFirstName.value  ||
         lastName.value !== initialLastName.value ||
         phone.value !== initialPhone.value ||
         country.value !== initialCountry.value ||
@@ -44,7 +44,7 @@ export default {
     const updateUserProfile = async () => {
       if (isFormValid.value && isFormChanged.value) {
         try {
-          await authStore.updateUserProfile({ 
+          await authStore.updateUserProfile({
             first_name: firstName.value,
             last_name: lastName.value,
             phone: phone.value,
@@ -115,165 +115,147 @@ export default {
       addDislikedArtist,
       removeDislikedArtist,
       tokenCount,
-      tokenImage
+      tokenImage,
+      rules
     };
   }
 };
 </script>
 
 <template>
-  <div class="userinfo">
-    <div class="token-display">
-      <img :src="tokenImage" alt="Tokens" class="token-icon" />
-      <span>{{ tokenCount }}</span>
-    </div>
-    <div class="form-group">
-      <label for="first-name">First Name:</label>
-      <input id="first-name" v-model="firstName" placeholder="Enter your first name" />
-    </div>
-    <div class="form-group">
-      <label for="last-name">Last Name:</label>
-      <input id="last-name" v-model="lastName" placeholder="Enter your last name" />
-    </div>
-    <div class="form-group">
-      <label for="phone">Phone:</label>
-      <input id="phone" v-model="phone" placeholder="Enter your phone number" />
-    </div>
-    <div class="form-group">
-      <label for="country">Country:</label>
-      <input id="country" v-model="country" placeholder="Enter your country" />
-    </div>
-    <div class="form-group">
-      <label>Favourite Artists:</label>
-      <div v-for="(artist, index) in favouriteArtists" :key="index" class="artist-group">
-        <input v-model="favouriteArtists[index]" placeholder="Enter an artist" />
-        <button @click="removeFavouriteArtist(index)" class="remove-button">Remove</button>
-      </div>
-      <button @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5" class="add-button">Add Favourite Artist</button>
-    </div>
-    <div class="form-group">
-      <label>Disliked Artists:</label>
-      <div v-for="(artist, index) in dislikedArtists" :key="index" class="artist-group">
-        <input v-model="dislikedArtists[index]" placeholder="Enter an artist" />
-        <button @click="removeDislikedArtist(index)" class="remove-button">Remove</button>
-      </div>
-      <button @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5" class="add-button">Add Disliked Artist</button>
-    </div>
-    <button :class="{ 'update-successful': isUpdatedSuccessfully }" :disabled="!isFormValid || !isFormChanged" @click="updateUserProfile" class="update-button">Update Profile</button>
-  </div>
+  <v-container class="userinfo">
+    <v-row class="token-display" justify="end">
+      <v-col cols="auto">
+        <v-card outlined class="token-card">
+          <v-row align="center">
+            <v-col cols="auto">
+              <v-avatar size="36">
+                <v-img :src="tokenImage" alt="Tokens" />
+              </v-avatar>
+            </v-col>
+            <v-col cols="auto">
+              <v-chip class="token-chip" color="amber" text-color="black" outlined>{{ tokenCount }}</v-chip>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <v-form v-model="isFormValid">
+      <v-row class="form-group">
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="firstName"
+            label="First Name"
+            :rules="[rules.required]"
+            clearable
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="lastName"
+            label="Last Name"
+            :rules="[rules.required]"
+            clearable
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="phone"
+            label="Phone"
+            :rules="[rules.required]"
+            clearable
+          />
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-text-field
+            v-model="country"
+            label="Country"
+            :rules="[rules.required]"
+            clearable
+          />
+        </v-col>
+      </v-row>
+
+      <v-row class="form-group">
+        <v-col cols="12">
+          <v-label>Favourite Artists:</v-label>
+          <v-row v-for="(artist, index) in favouriteArtists" :key="index" align="center">
+            <v-col cols="10">
+              <v-text-field v-model="favouriteArtists[index]" label="Artist" clearable />
+            </v-col>
+            <v-col cols="2">
+              <v-btn icon @click="removeFavouriteArtist(index)">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-btn @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5">
+            Add Favourite Artist
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row class="form-group">
+        <v-col cols="12">
+          <v-label>Disliked Artists:</v-label>
+          <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center">
+            <v-col cols="10">
+              <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
+            </v-col>
+            <v-col cols="2">
+              <v-btn icon @click="removeDislikedArtist(index)">
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-btn @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5">
+            Add Disliked Artist
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row justify="end">
+        <v-col cols="auto">
+          <v-btn
+            :disabled="!isFormValid || !isFormChanged"
+            @click="updateUserProfile"
+            :class="{ 'update-successful': isUpdatedSuccessfully }"
+            color="primary"
+          >
+            Update Profile
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+  </v-container>
 </template>
 
 <style scoped>
 .userinfo {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   padding: 20px;
   background-color: #f4f4f9;
   border-radius: 0.3rem;
 }
 
 .token-display {
+  margin-bottom: 20px;
+}
+
+.token-card {
+  padding: 8px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
+  border-radius: 8px;
 }
 
-.token-icon {
-  width: 24px;
-  height: 24px;
-}
-
-h2 {
-  font-size: 24px;
+.token-chip {
+  font-size: 1.25rem;
   font-weight: bold;
-  color: #333;
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: center;
-}
-
-label {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-  text-align: left;
-  width: 100%; /* Added to make sure the label aligns properly */
-}
-
-input, textarea {
-  width: 90%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-input:disabled {
-  background-color: #e9ecef;
-  cursor: not-allowed;
-}
-
-.artist-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #507cac;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #406fa1;
-}
-
-.remove-button {
-  background-color: #d9534f;
-}
-
-.remove-button:hover {
-  background-color: #c9302c;
-}
-
-.add-button {
-  margin-top: 10px;
-  background-color: #5cb85c;
-}
-
-.add-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.add-button:hover:enabled {
-  background-color: #4cae4c;
-}
-
-.update-button {
-  align-self: flex-end; 
-  background-color: #5bc0de;
-}
-
-.update-button:hover {
-  background-color: #46b8da;
-}
-
-.update-button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+  margin-bottom: 20px;
 }
 
 .update-successful {
