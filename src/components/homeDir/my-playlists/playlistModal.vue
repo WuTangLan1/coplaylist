@@ -5,7 +5,6 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
-import { useRouter } from 'vue-router';
 
 export default {
   components: {
@@ -73,7 +72,9 @@ export default {
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">My Playlists</h2>
-        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
+        <v-btn icon @click="closeModal" class="close-btn">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </div>
       <div class="filter-container">
         <label for="filter">Filter by:</label>
@@ -169,9 +170,21 @@ export default {
     margin: 0;
 }
 
-.close-icon {
-    font-size: 24px;
-    cursor: pointer;
+.close-btn {
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 32px;
+  max-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn:hover {
+  background-color: #d32f2f;
 }
 
 .playlist-container {

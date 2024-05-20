@@ -106,6 +106,7 @@ export default {
   max-width: 800px;
   margin: 1rem auto;
   overflow-y: auto;
+  box-shadow: 0 2px 12px rgb(48, 5, 57);
 }
 
 .playlist-title {
@@ -121,6 +122,7 @@ ol {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  box-shadow: 0 2px 12px rgb(48, 5, 57);
 }
 
 .song-item {
