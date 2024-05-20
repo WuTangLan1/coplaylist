@@ -6,14 +6,14 @@ import bottomFooter from '@/components/homeDir/bottomFooter.vue';
 import authModal from '@/components/authDir/authModal.vue';
 import infoModal from '@/components/homeDir/info-section/infoModal.vue';
 import errorModal from '@/components/inputsDir/errorModal.vue';
-import PlaylistContainer from './components/homeDir/my-playlists/playlistContainer.vue';
+import PlaylistModal from './components/homeDir/my-playlists/playlistModal.vue';
 import accountModal from '@/components/authDir/account/accountModal.vue';
 
 export default { 
   components: {
     topHeader,
     authModal,
-    PlaylistContainer,
+    PlaylistModal,
     infoModal,
     errorModal,
     accountModal,
@@ -124,7 +124,7 @@ export default {
         @closeModal="closeinfoModal"
       />
 
-      <playlist-container
+      <playlist-modal
         v-if="showPlaylists" 
         @closeModal="closePlaylists"
       />

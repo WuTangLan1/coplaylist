@@ -6,7 +6,7 @@ import ToneContainer from '../components/inputsDir/toneContainer.vue';
 import VibeContainer from '../components/inputsDir/vibeContainer.vue';
 import SongsContainer from '../components/inputsDir/songsContainer.vue';
 import OutputContainer from '../components/outputsDir/outputContainer.vue'
-import playlistContainer from '../components/homeDir/my-playlists/playlistContainer.vue'
+import playlistModal from '../components/homeDir/my-playlists/playlistModal.vue'
 
 const routes = [
   {
@@ -42,7 +42,7 @@ const routes = [
   {
     path: '/my-playlists',
     name: 'My-Playlists',
-    component: playlistContainer
+    component: playlistModal
   }
 ];
 
