@@ -174,6 +174,24 @@ export default {
           />
         </v-col>
       </v-row>
+      <v-row class="form-group">
+    <v-col cols="12">
+      <v-label>Disliked Artists:</v-label>
+      <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center" class="artist-row">
+        <v-col cols="10">
+          <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
+        </v-col>
+        <v-col cols="2" class="d-flex justify-end align-center-col">
+          <v-btn icon @click="removeDislikedArtist(index)">
+            <v-icon color="error">mdi-delete</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-btn color="green" @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5">
+        Add Disliked Artist
+      </v-btn>
+    </v-col>
+  </v-row>
 
       <v-row class="form-group">
         <v-col cols="12">
@@ -188,27 +206,8 @@ export default {
               </v-btn>
             </v-col>
           </v-row>
-          <v-btn @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5">
+          <v-btn color="green" @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5">
             Add Favourite Artist
-          </v-btn>
-        </v-col>
-      </v-row>
-
-      <v-row class="form-group">
-        <v-col cols="12">
-          <v-label>Disliked Artists:</v-label>
-          <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center" class="artist-row">
-            <v-col cols="10">
-              <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
-            </v-col>
-            <v-col cols="2" class="d-flex justify-end align-center-col">
-              <v-btn icon @click="removeDislikedArtist(index)">
-                <v-icon color="error">mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-btn @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5">
-            Add Disliked Artist
           </v-btn>
         </v-col>
       </v-row>
