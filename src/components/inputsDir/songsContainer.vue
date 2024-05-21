@@ -61,7 +61,6 @@ export default {
     function updateSong(index, value) {
       selectedSongs.value[index].songArtist = value;
       const parts = value.split(' - ');
-      console.log('updated song ', index, value)
       if (parts.length === 2) {
         promptStore.updateSong(index, 'name', parts[0].trim());
         promptStore.updateSong(index, 'artist', parts[1].trim());

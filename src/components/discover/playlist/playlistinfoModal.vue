@@ -29,7 +29,6 @@ export default {
         title: parts[0],
         artist: parts.slice(1).join(' - ')
       };
-      console.log('song : ', song)
       if (!song.title || !song.artist) {
         alert("Song details are missing.");
         return;

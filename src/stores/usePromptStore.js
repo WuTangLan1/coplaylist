@@ -74,19 +74,14 @@ export const usePromptStore = defineStore('prompt', {
         return true;
     },
     validateSongs() {
-      console.log("Current songs:", JSON.stringify(this.songs));
-  
-      // Validate that at least one song has both a non-empty name and artist
       const isSongsValid = this.songs.some(song => {
           return song.name.trim() !== '' && song.artist.trim() !== '';
       });
   
       if (!isSongsValid) {
           this.showModal('Please enter at least one song, formatted as "Song Name - Artist Name".');
-          console.log("Validation failed for all songs.");
           return false;
       }
-      console.log("Validation passed.");
       return true;
   },
   
@@ -123,14 +118,6 @@ export const usePromptStore = defineStore('prompt', {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
           dislikedArtists: authStore.user.disliked_artists.join(', ')
         }; 
-
-        const debugsongs = this.songs.map(song => ({
-          name: song.name.trim(),
-          artist: song.artist.trim(),
-          influence: song.influence
-        })).filter(song => song.name && song.artist)
-
-        console.log('debug songs ', debugsongs)
     
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
