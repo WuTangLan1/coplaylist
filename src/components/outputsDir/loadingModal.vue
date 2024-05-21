@@ -1,4 +1,17 @@
 <!-- src\components\outputsDir\loadingModal.vue -->
+<template>
+  <v-dialog v-model="localShow" persistent max-width="300">
+    <v-card class="text-center">
+      <v-card-text>
+        <img src="@/assets/images/loading/loading.gif" alt="Loading" />
+        <v-divider class="my-4"></v-divider>
+        <v-icon large color="primary">mdi-music-note</v-icon>
+        <v-card-title class="text-h6">Generating Playlist...</v-card-title>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+</template>
+
 <script>
 export default {
   props: {
@@ -6,50 +19,36 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  data() {
+    return {
+      localShow: this.show
+    };
+  },
+  watch: {
+    show(val) {
+      this.localShow = val;
+    },
+    localShow(val) {
+      this.$emit('update:show', val);
+    }
   }
 };
 </script>
 
-<template>
-  <div v-if="show" class="modal-overlay">
-    <div class="modal-content">
-      <img src="@/assets/images/loading/loading.gif" alt="Loading" />
-      <p>Generating Playlist...</p>
-    </div>
-  </div>
-</template>
-  
-  <style scoped>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-  }
-  
-  .modal-content {
-    background: #fff;
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .modal-content img {
+<style scoped>
+.v-dialog {
+  z-index: 9999;
+}
+
+.v-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+img {
     width: 80px;
     height: 80px;
     margin-bottom: 1rem;
-  }
-  
-  .modal-content p {
-    font-size: 1.2rem;
-    color: #333;
-  }
-  </style>
-  
+}
+</style>

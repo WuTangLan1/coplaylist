@@ -18,8 +18,8 @@ export const usePromptStore = defineStore('prompt', {
       selectedEra: [],
     },
     songs: [
-      { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 },
+      { name: '', artist: '', influence: 90 },
+      { name: '', artist: '', influence: 90 },
     ],
     modal: {
       show: false,

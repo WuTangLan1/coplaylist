@@ -87,7 +87,7 @@ app.post('/generate-playlist', async (req, res) => {
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
         Generate a playlist that must adhere to the following playlist guides:
-        Genres: (CRITICAL) Ensure the genre(s) heavily influence the playlist: ${genres},
+        Genres: (CRITICAL) Ensure the genre(s) are the genres that the songs generated are from: ${genres},
         Eras: Ensure the songs are from these eras: ${eras},
         User Taste: Influenced by the styles of ${favouriteStyles},
         Mood: ${vibes.selectedMood || 'any'},
@@ -124,7 +124,7 @@ app.post('/generate-playlist', async (req, res) => {
         It of the utmost importantce the following two steps are adhered to so please check the outputted playlist to ensure this was achieved :
 
         Exclude these artists under any circumstances: ${dislikedArtists},
-        And please exclude the following songs under all circumstances and these represent songs the user does not want generated again ${exclusionString},
+        ONCE AGAIN I WOULD LIKE TO REITERATE THAT I DO NOT WANT THE PLAYLIST TO HAVE SONGS FROM ANY OF THESE ARTISTS :  ${dislikedArtists}
         `;
 
         
