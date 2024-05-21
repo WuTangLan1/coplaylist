@@ -51,10 +51,11 @@ export default {
 
 <style scoped>
 .tos-section {
-  padding: 20px;
+  padding: 10px;
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
+  padding-bottom: 60px;
 }
 
 .tos-section h1, .tos-section h2 {

@@ -47,9 +47,10 @@ export default {
 
 <style scoped>
 .privacy-section {
-  padding: 20px;
+  padding: 10px;
   line-height: 1.6;
   font-size: 1rem;
+  padding-bottom: 40px;
   color: #333;
 }
 

@@ -34,11 +34,13 @@ export default {
 
 <style scoped>
 .about-section {
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 40px;
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
   width: 100%;
+  margin-bottom: 2rem;
 }
 
 .about-section h1, .about-section h2 {

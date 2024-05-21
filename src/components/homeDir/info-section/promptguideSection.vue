@@ -53,13 +53,14 @@ export default {
 
 <style scoped>
 .prompt-guide-section {
-  padding: 20px;
+  padding: 10px;
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
   background: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 50px;
 }
 
 .prompt-guide-section h1 {

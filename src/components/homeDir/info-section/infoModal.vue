@@ -74,7 +74,7 @@ export default {
   border-radius: 10px;
   width: 90%;
   max-width: 700px;
-  max-height: 80vh;
+  max-height: 75vh;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   animation: dropAnimation 0.5s ease-in-out forwards;
@@ -86,6 +86,7 @@ export default {
   .modal {
     margin-top: 2.5rem;
     max-height: 75vh;
+    margin-bottom: 1rem;
   }
 }
 
