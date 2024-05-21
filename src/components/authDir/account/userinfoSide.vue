@@ -174,43 +174,51 @@ export default {
           />
         </v-col>
       </v-row>
-      <v-row class="form-group">
-    <v-col cols="12">
-      <v-label>Disliked Artists:</v-label>
-      <v-row v-for="(artist, index) in dislikedArtists" :key="index" align="center" class="artist-row">
-        <v-col cols="10">
-          <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
-        </v-col>
-        <v-col cols="2" class="d-flex justify-end align-center-col">
-          <v-btn icon @click="removeDislikedArtist(index)">
-            <v-icon color="error">mdi-delete</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-btn color="green" @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5">
-        Add Disliked Artist
-      </v-btn>
-    </v-col>
-  </v-row>
 
       <v-row class="form-group">
+      <v-col cols="12">
+        <v-label>Disliked Artists:</v-label>
+        <!-- List entries -->
+        <v-row v-for="(artist, index) in dislikedArtists" :key="index" class="artist-row">
+          <v-col cols="10">
+            <v-text-field v-model="dislikedArtists[index]" label="Artist" clearable />
+          </v-col>
+          <v-col cols="1">
+            <v-btn icon @click="removeDislikedArtist(index)">
+              <v-icon color="error">mdi-delete</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
         <v-col cols="12">
-          <v-label>Favourite Artists:</v-label>
-          <v-row v-for="(artist, index) in favouriteArtists" :key="index" align="center" class="artist-row">
-            <v-col cols="10">
-              <v-text-field v-model="favouriteArtists[index]" label="Artist" clearable />
-            </v-col>
-            <v-col cols="2" class="d-flex justify-end align-center-col">
-              <v-btn icon @click="removeFavouriteArtist(index)">
-                <v-icon color="error">mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-          <v-btn color="green" @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5">
+          <v-btn class="add-artist-button" color="green" @click="addDislikedArtist" :disabled="dislikedArtists.length >= 5">
+            Add Disliked Artist
+          </v-btn>
+        </v-col>
+      </v-col>
+    </v-row>
+
+    <v-row class="form-group">
+      <v-col cols="12">
+        <v-label>Favourite Artists:</v-label>
+        <!-- List entries -->
+        <v-row v-for="(artist, index) in favouriteArtists" :key="index" class="artist-row">
+          <v-col cols="10">
+            <v-text-field v-model="favouriteArtists[index]" label="Artist" clearable />
+          </v-col>
+          <v-col cols="1">
+            <v-btn icon @click="removeFavouriteArtist(index)">
+              <v-icon color="error">mdi-delete</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-col cols="12">
+          <v-btn class="add-artist-button" color="green" @click="addFavouriteArtist" :disabled="favouriteArtists.length >= 5">
             Add Favourite Artist
           </v-btn>
         </v-col>
-      </v-row>
+      </v-col>
+    </v-row>
+
 
       <v-row justify="end">
         <v-col cols="auto">
@@ -257,7 +265,7 @@ export default {
 
   .align-center-col {
     display: flex;
-    align-items: center; /* Ensures vertical centering within the column */
+    align-items: center; 
   }
 
   .artist-row {
@@ -271,6 +279,13 @@ export default {
     height: 100%;
     margin-bottom: 15px;
   }
+
+  .add-artist-button {
+  width: 100%;  
+  margin-top: 8px;
+  padding: 0.5rem 0.7rem;
+}
+
 
 .update-successful {
   animation: glow 1s ease-in-out 3;
