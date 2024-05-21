@@ -8,6 +8,32 @@ const axios = require('axios');
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:8080',
+  'https://coplaylist-3481ef838394.herokuapp.com',
+  'https://coplaylist.com',
+  'https://www.coplaylist.com'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  optionsSuccessStatus: 200,
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ['GET', 'POST', 'OPTIONS']
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
+
+
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
       res.redirect(`https://${req.header('host')}${req.url}`);
@@ -15,6 +41,9 @@ app.use((req, res, next) => {
       next();
     }
   });
+
+  app.use('/', serveStatic(path.join(__dirname, '/dist')));
+
 
 const spotifyServer = require('./spotifyserver.js');
 app.use('/spotify', spotifyServer);
@@ -24,32 +53,7 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
-const allowedOrigins = [
-    'http://localhost:8080',
-    'https://coplaylist-3481ef838394.herokuapp.com',
-    'https://coplaylist.com',
-    'https://www.coplaylist.com'
-  ];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS'));
-        }
-      },
-    optionsSuccessStatus: 200,
-    credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    methods: ['GET', 'POST', 'OPTIONS']
-};
-
-app.use(cors(corsOptions));
-app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
 app.use('/spotify', spotifyServer); 
 app.get('/google123456789abcd.html', function(req, res) {
