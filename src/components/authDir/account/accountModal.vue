@@ -35,7 +35,9 @@ export default {
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Welcome, {{ username }}</h2>
-        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
+        <v-btn icon @click="closeModal" class="close-btn">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </div>
       <div class="tabs">
         <button :class="{active: activeTab === 'userinfo', enlarged: activeTab === 'userinfo'}" @click="activeTab = 'userinfo'">User Info</button>
@@ -96,9 +98,21 @@ export default {
   margin: 0;
 }
 
-  .close-icon {
-  font-size: 24px;
-  cursor: pointer;
+.close-btn {
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 32px;
+  max-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn:hover {
+  background-color: #d32f2f;
 }
 
 .tabs {
