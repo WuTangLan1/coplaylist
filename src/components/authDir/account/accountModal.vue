@@ -69,7 +69,7 @@ export default {
   border-radius: 10px;
   width: 90%;
   max-width: 600px;
-  max-height: 80vh;
+  max-height: 75vh;
   overflow-y: auto;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
   position: relative;
