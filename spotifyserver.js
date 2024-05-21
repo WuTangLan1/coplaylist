@@ -76,5 +76,19 @@ app.get('/preview', async (req, res) => {
     }
   });
 
+  app.get('/search', async (req, res) => {
+    const { query } = req.query;
+    if (!query) {
+        return res.status(400).send('Query parameter is required');
+    }
+    try {
+        const result = await spotifyApi.searchTracks(query);
+        res.json(result.body);
+    } catch (error) {
+        console.error('Spotify search error:', error);
+        res.status(500).send('Failed to fetch data from Spotify');
+    }
+});
+
 
 module.exports = app;

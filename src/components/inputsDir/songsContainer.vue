@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import loadingModal from '@/components/outputsDir/loadingModal.vue';
 import tokenImg from '@/assets/images/header/tokens.png'; 
 import tokensImg from '@/assets/images/header/moretokens.png'; 
+import axios from 'axios';
 
 export default {
   components: {
@@ -18,10 +19,39 @@ export default {
     const authStore = useAuthStore();
     const newMusic = ref(false);
     const showLoadingModal = ref(false);
+    const searchQuery = ref('');
+    const searchResults = ref([[], []]);
 
     watch(newMusic, (newValue) => {
       promptStore.updateNewMusic(newValue);
     });
+
+    const fetchSongSuggestions = async (query, index) => {
+      try {
+          console.log('Fetching song suggestions for:', query);
+          const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+          console.log('apiURL : ', apiUrl)
+          const response = await axios.get(`${apiUrl}/spotify/search`, { params: { query } });
+          console.log('Response:', response.data);
+          if (response.data && response.data.tracks && Array.isArray(response.data.tracks.items)) {
+              searchResults.value[index] = response.data.tracks.items;
+          } else {
+              throw new Error('Unexpected response structure: ' + JSON.stringify(response.data, null, 2));
+          }
+      } catch (error) {
+          console.error('Failed to fetch song suggestions:', error);
+          searchResults.value[index] = [];
+      }
+  };
+
+      function handleSongSelect(song, index) {
+        console.log('handle song select invoked')
+          if (song && song.artists && song.artists.length > 0) {
+            const songArtist = `${song.name} - ${song.artists[0].name}`;
+            selectedSongs.value[index].songArtist = songArtist;  // Update the song artist
+            searchResults.value[index] = [];  // Clear the suggestions
+          }
+        }
 
     const selectedSongs = ref([
       { songArtist: '', influence: 50 },
@@ -31,6 +61,7 @@ export default {
     function updateSong(index, value) {
       selectedSongs.value[index].songArtist = value;
       const parts = value.split(' - ');
+      console.log('updated song ', index, value)
       if (parts.length === 2) {
         promptStore.updateSong(index, 'name', parts[0].trim());
         promptStore.updateSong(index, 'artist', parts[1].trim());
@@ -74,10 +105,16 @@ export default {
       showLoadingModal,
       tokenImg,
       tokensImg,
+      searchQuery,
+      searchResults,
+      handleSongSelect,
+      fetchSongSuggestions
     };
   },
 };
 </script>
+
+
 <template>
   <div class="songs-container">
     <div class="step-heading">
@@ -85,18 +122,25 @@ export default {
       <h2>Add Songs</h2>
     </div>
     <h3 class="description">
-      Add up to three songs you like to guide the playlist generation (these will
-      not be included in the generated playlist)
+      Add up to two songs you like to guide the playlist generation (these will
+      not be included in the generated playlist).
     </h3>
+    <!-- Input field for each song -->
     <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
       <div class="input-column">
         <label :for="`song-artist-${index}`">Song - Artist</label>
         <input
-          :id="`song-artist-${index}`"
-          v-model="song.songArtist"
-          @input="updateSong(index, $event.target.value)"
-          placeholder="Type in your song name here"
-        />
+            :id="`song-artist-${index}`"
+            v-model="song.songArtist"
+            @input="event => fetchSongSuggestions(event.target.value, index)"
+            placeholder="Search for songs on Spotify..."
+            class="song-search-input"
+          />
+          <ul v-if="searchResults[index] && searchResults[index].length">
+              <li v-for="result in searchResults[index]" :key="result.id" @click="() => handleSongSelect(result, index)">
+                  {{ result.name }} - {{ result.artists[0].name }}
+              </li>
+          </ul>
       </div>
     </div>
     <div class="checkbox-group">
@@ -106,7 +150,7 @@ export default {
       </label>
     </div>
     <div class="button-group">
-      <div v-if="authStore.user && !authStore.user.email_verified==true" class="email-verification-warning">
+      <div v-if="authStore.user && !authStore.user.email_verified" class="email-verification-warning">
         <p>Please verify your email address before generating a playlist.</p>
       </div>
       <div class="button-row">
@@ -118,14 +162,15 @@ export default {
           />
           <span>{{ authStore.user.tokens }}</span>
         </div>
-        <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || (authStore.user && authStore.user.emailVerified)" @click="generatePlaylist">
-          <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> 1 Generate
+        <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified" @click="generatePlaylist">
+          <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> Generate
         </button>
       </div>
     </div>
     <loadingModal :show="showLoadingModal" />
   </div>
 </template>
+
 
 <style scoped>
 .songs-container {
@@ -374,5 +419,28 @@ button:disabled {
   margin-top: 10px;
   font-weight: bold;
   width: 100%;
+}
+
+.song-search-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+li {
+  padding: 8px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+}
+
+li:hover {
+  background-color: #e2e2e2;
 }
 </style>
