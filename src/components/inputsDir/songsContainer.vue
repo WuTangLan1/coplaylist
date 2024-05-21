@@ -28,21 +28,19 @@ export default {
 
     const fetchSongSuggestions = async (query, index) => {
       try {
-          console.log('Fetching song suggestions for:', query);
-          const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
-          console.log('apiURL : ', apiUrl)
-          const response = await axios.get(`${apiUrl}/spotify/search`, { params: { query } });
-          console.log('Response:', response.data);
-          if (response.data && response.data.tracks && Array.isArray(response.data.tracks.items)) {
-              searchResults.value[index] = response.data.tracks.items;
-          } else {
-              throw new Error('Unexpected response structure: ' + JSON.stringify(response.data, null, 2));
-          }
+        const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+        const response = await axios.get(`${apiUrl}/spotify/search`, { params: { query } });
+        if (response.data && response.data.tracks && Array.isArray(response.data.tracks.items)) {
+            searchResults.value[index] = response.data.tracks.items.slice(0, 5);
+        } else {
+            throw new Error('Unexpected response structure: ' + JSON.stringify(response.data, null, 2));
+        }
       } catch (error) {
-          console.error('Failed to fetch song suggestions:', error);
-          searchResults.value[index] = [];
+        console.error('Failed to fetch song suggestions:', error);
+        searchResults.value[index] = [];
       }
-  };
+    };
+
 
       function handleSongSelect(song, index) {
         console.log('handle song select invoked')
