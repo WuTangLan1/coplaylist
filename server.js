@@ -19,9 +19,12 @@ app.use((req, res, next) => {
 const spotifyServer = require('./spotifyserver.js');
 app.use('/spotify', spotifyServer);
 
+
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
+
+app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 const allowedOrigins = [
     'http://localhost:8080',
@@ -48,10 +51,7 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
-app.use('/spotify', spotifyServer); // Use the Spotify router
-
-app.use('/', serveStatic(path.join(__dirname, '/dist')));
-
+app.use('/spotify', spotifyServer); 
 app.get('/google123456789abcd.html', function(req, res) {
     res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });
