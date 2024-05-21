@@ -41,15 +41,17 @@ export default {
       }
     };
 
+    function handleSongSelect(song, index) {
+      if (song && song.artists && song.artists.length > 0) {
+        const songArtist = `${song.name} - ${song.artists[0].name}`;
+        selectedSongs.value[index].songArtist = songArtist;  
 
-      function handleSongSelect(song, index) {
-        console.log('handle song select invoked')
-          if (song && song.artists && song.artists.length > 0) {
-            const songArtist = `${song.name} - ${song.artists[0].name}`;
-            selectedSongs.value[index].songArtist = songArtist;  // Update the song artist
-            searchResults.value[index] = [];  // Clear the suggestions
-          }
-        }
+        promptStore.updateSong(index, 'name', song.name);
+        promptStore.updateSong(index, 'artist', song.artists[0].name);
+
+        searchResults.value[index] = [];  
+      }
+    }
 
     const selectedSongs = ref([
       { songArtist: '', influence: 50 },

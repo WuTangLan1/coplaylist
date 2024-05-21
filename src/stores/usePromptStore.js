@@ -74,16 +74,23 @@ export const usePromptStore = defineStore('prompt', {
         return true;
     },
     validateSongs() {
-      const isSongsValid = this.songs.filter(song => {
-          const parts = song.songArtist.split(' - ');
-          return parts.length === 2 && parts[0].trim() !== '' && parts[1].trim() !== '';
-      }).length;
-      if (isSongsValid === 0 || isSongsValid > 2) {
-          this.showModal('Please enter alreadt a single song, each formatted as "Song Name - Artist Name".');
+      console.log("Current songs:", JSON.stringify(this.songs));
+  
+      // Validate that at least one song has both a non-empty name and artist
+      const isSongsValid = this.songs.some(song => {
+          return song.name.trim() !== '' && song.artist.trim() !== '';
+      });
+  
+      if (!isSongsValid) {
+          this.showModal('Please enter at least one song, formatted as "Song Name - Artist Name".');
+          console.log("Validation failed for all songs.");
           return false;
       }
+      console.log("Validation passed.");
       return true;
   },
+  
+  
     updateSong(index, field, value) {
       if (index >= 0 && index < this.songs.length) {
         this.songs[index][field] = value;
@@ -116,6 +123,14 @@ export const usePromptStore = defineStore('prompt', {
           favouriteArtists: authStore.user.favourite_artists.join(', '),
           dislikedArtists: authStore.user.disliked_artists.join(', ')
         }; 
+
+        const debugsongs = this.songs.map(song => ({
+          name: song.name.trim(),
+          artist: song.artist.trim(),
+          influence: song.influence
+        })).filter(song => song.name && song.artist)
+
+        console.log('debug songs ', debugsongs)
     
         const previousSongs = newMusic ? await playlistStore.fetchUserPlaylists(authStore.user.uid) : [];
         const excludeSongs = previousSongs.filter(Boolean);
@@ -125,11 +140,11 @@ export const usePromptStore = defineStore('prompt', {
             genres: this.tones.selectedGenres || [],
             eras: this.tones.selectedEra || []
           },
-          songs: this.songs.map(song => ({
+          songs:this.songs.map(song => ({
             name: song.name.trim(),
             artist: song.artist.trim(),
             influence: song.influence
-          })).filter(song => song.name && song.artist),
+          })).filter(song => song.name && song.artist) ,
           userTaste: userTaste,
           excludeSongs: excludeSongs,
           dislikedArtists: authStore.user.disliked_artists || []  
