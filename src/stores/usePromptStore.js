@@ -20,7 +20,6 @@ export const usePromptStore = defineStore('prompt', {
     songs: [
       { name: '', artist: '', influence: 50 },
       { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 }
     ],
     modal: {
       show: false,
@@ -75,13 +74,16 @@ export const usePromptStore = defineStore('prompt', {
         return true;
     },
     validateSongs() {
-        const isSongsValid = this.songs.filter(song => song.name.trim() !== '' && song.artist.trim() !== '').length;
-        if (isSongsValid === 0 || isSongsValid > 3) {
-            this.showModal('Please enter between 1 and 3 songs, each with a name and an artist.');
-            return false;
-        }
-        return true;
-    },
+      const isSongsValid = this.songs.filter(song => {
+          const parts = song.songArtist.split(' - ');
+          return parts.length === 2 && parts[0].trim() !== '' && parts[1].trim() !== '';
+      }).length;
+      if (isSongsValid === 0 || isSongsValid > 2) {
+          this.showModal('Please enter alreadt a single song, each formatted as "Song Name - Artist Name".');
+          return false;
+      }
+      return true;
+  },
     updateSong(index, field, value) {
       if (index >= 0 && index < this.songs.length) {
         this.songs[index][field] = value;

@@ -24,23 +24,16 @@ export default {
     });
 
     const selectedSongs = ref([
-      { name: '', artist: '', influence: 50 },
-      { name: '', artist: '', influence: 50 },
+      { songArtist: '', influence: 50 },
+      { songArtist: '', influence: 50 },
     ]);
 
-    function updateSong(index, field, value) {
-      selectedSongs.value[index][field] = value;
-      if (
-        selectedSongs.value[index].name.trim() &&
-        selectedSongs.value[index].artist.trim()
-      ) {
-        promptStore.updateSong(index, 'name', selectedSongs.value[index].name);
-        promptStore.updateSong(index, 'artist', selectedSongs.value[index].artist);
-        promptStore.updateSong(
-          index,
-          'influence',
-          selectedSongs.value[index].influence
-        );
+    function updateSong(index, value) {
+      selectedSongs.value[index].songArtist = value;
+      const parts = value.split(' - ');
+      if (parts.length === 2) {
+        promptStore.updateSong(index, 'name', parts[0].trim());
+        promptStore.updateSong(index, 'artist', parts[1].trim());
       }
     }
 
@@ -95,27 +88,14 @@ export default {
       Add up to three songs you like to guide the playlist generation (these will
       not be included in the generated playlist)
     </h3>
-    <div
-      v-for="(song, index) in selectedSongs"
-      :key="`song-${index}`"
-      class="input-group"
-    >
+    <div v-for="(song, index) in selectedSongs" :key="`song-${index}`" class="input-group">
       <div class="input-column">
-        <label :for="`song-name-${index}`">Song Name</label>
+        <label :for="`song-artist-${index}`">Song - Artist</label>
         <input
-          :id="`song-name-${index}`"
-          v-model="song.name"
-          @input="updateSong(index, 'name', $event.target.value)"
-          placeholder="Enter Song Name"
-        />
-      </div>
-      <div class="input-column">
-        <label :for="`artist-name-${index}`">Artist Name</label>
-        <input
-          :id="`artist-name-${index}`"
-          v-model="song.artist"
-          @input="updateSong(index, 'artist', $event.target.value)"
-          placeholder="Enter Artist Name"
+          :id="`song-artist-${index}`"
+          v-model="song.songArtist"
+          @input="updateSong(index, $event.target.value)"
+          placeholder="Type in your song name here"
         />
       </div>
     </div>
