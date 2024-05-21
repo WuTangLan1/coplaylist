@@ -198,7 +198,7 @@ export default {
 .playlist-container {
     max-width: 800px;
     margin: 0 auto;
-    max-height: 56vh;
+    max-height: 50vh;
     overflow-y: auto;
 }
 
