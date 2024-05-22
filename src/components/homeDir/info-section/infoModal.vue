@@ -39,7 +39,9 @@ export default {
     <div class="modal">
       <div class="modal-header">
         <h2 class="modal-title">Information Center</h2>
-        <font-awesome-icon icon="times" class="close-icon" @click="closeModal" />
+        <v-btn icon @click="closeModal" class="close-btn">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </div>
       <div class="navigation">
         <button v-for="item in components" :key="item.name" @click="changeComponent(item.component)" :class="{ active: currentComponent === item.component }">
@@ -117,9 +119,21 @@ export default {
   margin: 0;
 }
 
-.close-icon {
-  font-size: 1.5rem;
-  cursor: pointer;
+.close-btn {
+  background-color: #f44336;
+  color: #ffffff;
+  border-radius: 50%;
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 32px;
+  max-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-btn:hover {
+  background-color: #d32f2f;
 }
 
 .navigation {
