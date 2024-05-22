@@ -54,8 +54,6 @@ app.get('*', function (req, res) {
 });
 
 
-
-app.use('/spotify', spotifyServer); 
 app.get('/google123456789abcd.html', function(req, res) {
     res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });

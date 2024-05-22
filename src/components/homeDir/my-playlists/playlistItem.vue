@@ -59,7 +59,8 @@ export default {
       this.showConfirmModal = false;
     },
     exportToSpotify() {
-      // Add logic to export the playlist to Spotify
+      console.log('here', this.playlist.details)
+        this.$emit('exportToSpotify', this.playlist.details);
     }
   }
 }

@@ -1,4 +1,4 @@
-<!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
+<!-- src\components\homeDir\my-playlists\playlistModal.vue -->
 
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -35,6 +35,36 @@ export default {
   methods: {
     closeModal() {
       this.$emit('closeModal');
+    },
+    methods: {
+        async getSpotifyAccessToken() {
+            try {
+                const response = await axios.get('/api/get-token'); // Endpoint to retrieve the token
+                return response.data.token;
+            } catch (error) {
+                console.error('Error retrieving Spotify token:', error);
+                throw error;
+            }
+        },
+        async exportToSpotify(playlist) {
+            const token = await this.getSpotifyAccessToken();
+            // Call to export playlist with the token
+            this.handleExportToSpotify(playlist, token);
+        }
+    },
+    handleExportToSpotify(playlist) {
+
+        const token = this.$store.getters['auth/spotifyAccessToken'];
+        axios.post(`${this.VUE_APP_API_BASE_URL}/create-playlist`, { playlist, token })
+            .then(response => {
+                console.log('Playlist exported to Spotify successfully.');
+            })
+            .catch(error => {
+                console.error('Failed to export playlist:', error);
+                if (error.response && error.response.status === 401) {
+                    // Handle Spotify re-authentication if needed
+                }
+            });
     },
     async fetchPlaylists() {
       const authStore = useAuthStore();
@@ -95,7 +125,11 @@ export default {
           <p class="no-playlists-message">You don't have any playlists yet.</p>
         </div>
         <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index"
+               :playlist="playlist"
+               @delete="deletePlaylist"
+               @exportToSpotify="handleExportToSpotify" />
+
         </div>
       </div>
     </div>
