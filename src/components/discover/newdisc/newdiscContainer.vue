@@ -53,15 +53,16 @@ export default {
         <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
         <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
         <span class="display-genre">{{ playlist.displayGenre }}</span>:
-        <span class="songs">
-          <template v-for="(song, idx) in playlist.songs" :key="idx">
-            {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
+        <span class="artists">
+          <template v-for="(artist, idx) in playlist.uniqueArtists" :key="idx">
+            {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
           </template>
         </span>
       </div>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .newdisc-container {
