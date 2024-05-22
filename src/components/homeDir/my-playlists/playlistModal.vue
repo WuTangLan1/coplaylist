@@ -36,26 +36,18 @@ export default {
     closeModal() {
       this.$emit('closeModal');
     },
-    methods: {
-        async getSpotifyAccessToken() {
-            try {
-                const response = await axios.get('/api/get-token'); // Endpoint to retrieve the token
-                return response.data.token;
-            } catch (error) {
-                console.error('Error retrieving Spotify token:', error);
-                throw error;
-            }
-        },
-        async exportToSpotify(playlist) {
-            const token = await this.getSpotifyAccessToken();
-            // Call to export playlist with the token
-            this.handleExportToSpotify(playlist, token);
-        }
+    async getSpotifyAccessToken() {
+      try {
+        const response = await axios.get('/api/get-token'); // Endpoint to retrieve the token
+        return response.data.token;
+      } catch (error) {
+        console.error('Error retrieving Spotify token:', error);
+        throw error;
+      }
     },
-    handleExportToSpotify(playlist) {
-
-        const token = this.$store.getters['auth/spotifyAccessToken'];
-        axios.post(`${this.VUE_APP_API_BASE_URL}/create-playlist`, { playlist, token })
+    async handleExportToSpotify(playlist) {
+        const token = await this.getSpotifyAccessToken();
+        axios.post(`${process.env.VUE_APP_API_BASE_URL}/create-playlist`, { playlistDetails: playlist, token })
             .then(response => {
                 console.log('Playlist exported to Spotify successfully.');
             })
@@ -96,6 +88,7 @@ export default {
   }
 }
 </script>
+
 
 <template>
   <div class="modal-backdrop">
