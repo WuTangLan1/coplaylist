@@ -1,136 +1,69 @@
-<!-- src\components\discover\newdisc\newdiscContainer.vue -->
+<!-- src/components/discover/newdisc/newdiscContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { onMounted, computed, ref } from 'vue';
+import { computed, onMounted } from 'vue';
+import Masonry from 'vue-masonry-css';
 
 export default {
-  name: 'newdisc-Container',
+  name: 'newdiscContainer',
+  components: {
+    Masonry
+  },
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
     const newDiscoveries = computed(() => {
-      const playlists = discoverStore.newDiscoveries;
-      const clonedPlaylists = [...playlists, ...playlists, ...playlists];
-      return clonedPlaylists;
-    });
-
-    const scrollingPlaylistsRef = ref(null);
-
-    const pauseScrolling = () => {
-      if (scrollingPlaylistsRef.value) {
-        scrollingPlaylistsRef.value.style.animationPlayState = 'paused';
-      }
-    };
-
-    const resumeScrolling = () => {
-      if (scrollingPlaylistsRef.value) {
-        scrollingPlaylistsRef.value.style.animationPlayState = 'running';
-      }
-    };
-
-    onMounted(async () => {
-      await discoverStore.fetchNewDiscoveries();
+      const data = discoverStore.newDiscoveries;
+      console.log(data); 
+      return data;
     });
 
     const showModal = (playlist) => {
       emit('show-modal', playlist);
     };
 
+    onMounted(async () => {
+      await discoverStore.fetchNewDiscoveries();
+    });
+
     return {
       newDiscoveries,
-      scrollingPlaylistsRef,
-      pauseScrolling,
-      resumeScrolling,
       showModal,
     };
   },
 };
+
 </script>
 
+
 <template>
-  <div class="newdisc-container" @mouseover="pauseScrolling" @mouseleave="resumeScrolling">
-    <div class="scrolling-playlists" ref="scrollingPlaylistsRef">
-      <div v-for="(playlist, index) in newDiscoveries" :key="index" class="playlist-line" @click="showModal(playlist)">
-        <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
-        <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
-        <span class="display-genre">{{ playlist.displayGenre }}</span>:
-        <span class="artists">
-          <template v-for="(artist, idx) in playlist.uniqueArtists" :key="idx">
-            {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
-          </template>
-        </span>
-      </div>
+  <div class="newdisc-container" v-if="newDiscoveries && newDiscoveries.length">
+    <div class="grid-container">
+      <v-card
+        class="playlist-line"
+        v-for="(playlist, index) in newDiscoveries"
+        :key="index"
+        @click="showModal(playlist)"
+      >
+        <v-card-title>{{ playlist.name }}</v-card-title>
+        <v-card-subtitle>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</v-card-subtitle>
+        <v-card-text>
+          <span v-for="(song, idx) in playlist.songs" :key="idx">
+            {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
+          </span>
+        </v-card-text>
+      </v-card>
     </div>
   </div>
 </template>
 
-
 <style scoped>
 .newdisc-container {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  overflow: hidden;
-  position: relative;
-  height: 500px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
 }
-
-.scrolling-playlists {
-  display: flex;
-  flex-direction: column;
-  animation: scrollPlaylists 60s linear infinite;
-}
-
-@keyframes scrollPlaylists {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-33.33%); /* Adjust to match the number of cloned playlists */
-  }
-}
-
-.playlist-line {
-  display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.3s;
-  cursor: pointer;
-}
-
-.playlist-name {
-  color: #4b8df8;
-}
-
-.creator-name {
-  color: #4caf50;
-}
-
-.display-genre {
-  color: #6a3191;
-}
-
-.songs {
-  color: #000000;
-}
-
-.playlist-name, .creator-name, .display-genre, .songs {
-  margin-right: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.playlist-line span {
-  flex-shrink: 0;
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
 }
 </style>
-

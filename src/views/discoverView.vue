@@ -1,4 +1,4 @@
-<!-- src\views\discoverView.vue -->
+<!-- src/views/discoverView.vue -->
 <script>
 import topratedContainer from "@/components/discover/toprated/topratedContainer.vue";
 import newdiscContainer from "@/components/discover/newdisc/newdiscContainer.vue";
@@ -18,8 +18,8 @@ export default {
   },
   methods: {
     hidePlaylistModal() {
-      this.selectedPlaylist= null;
-      this.isModalVisible=false;
+      this.selectedPlaylist = null;
+      this.isModalVisible = false;
     },
     showPlaylistModal(playlist) {
       if (playlist && playlist.songs) {
@@ -35,11 +35,11 @@ export default {
   <div class="discover-view">
     <div class="header-container">
       <img src="@/assets/images/discover/left.png" alt="Left Icon" class="header-icon">
-      <h1>Lets go Discover</h1>
+      <h1>Let's go Discover</h1>
       <img src="@/assets/images/discover/right.png" alt="Right Icon" class="header-icon">
     </div>
     <p class="instructions">
-      Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlist to bring up more information.
+      Browse through our top rated generated playlists and some newly generated playlists from our users. <strong>Click</strong> on any of the playlists to bring up more information.
     </p>
     <div class="section">
       <div class="title-bar">
