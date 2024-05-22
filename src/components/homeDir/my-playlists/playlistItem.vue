@@ -2,7 +2,8 @@
 <script>
 import confirmdelModal from './confirmdelModal.vue'
 import { updateDoc, doc } from 'firebase/firestore';
-import { db } from '@/components/fbDir/fbInit';
+const { db } = require('@/components/fbDir/fbInit');
+
 
 export default {
   components : {

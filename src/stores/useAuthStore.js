@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia';
 import { createUserWithEmailAndPassword, updateProfile, sendEmailVerification, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '@/components/fbDir/fbInit';
+const { db , auth} = require('@/components/fbDir/fbInit');
 import router from '@/router';
 
 export const useAuthStore = defineStore('auth', {

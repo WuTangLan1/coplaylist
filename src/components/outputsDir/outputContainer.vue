@@ -8,7 +8,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { usePlaylistStore } from '@/stores/usePlaylistStore';
 import { usePromptStore } from '@/stores/usePromptStore';
 import { collection, addDoc } from 'firebase/firestore';
-import { auth, db } from '../fbDir/fbInit';
+const { db } = require('@/components/fbDir/fbInit');
 import { computed, ref } from 'vue';
 
 export default {

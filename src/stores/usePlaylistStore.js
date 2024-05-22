@@ -1,7 +1,7 @@
 // src/stores/usePlaylistStore.js
 import { defineStore } from 'pinia';
 import { collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '@/components/fbDir/fbInit';
+const { db } = require('@/components/fbDir/fbInit');
 
 export const usePlaylistStore = defineStore('playlist', {
   state: () => ({

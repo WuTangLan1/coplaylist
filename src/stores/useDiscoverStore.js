@@ -1,7 +1,7 @@
 // src/useDiscoverStore.js
 import { defineStore } from 'pinia';
 import { collection, query, orderBy, getDocs, limit } from 'firebase/firestore'; 
-import { db } from '@/components/fbDir/fbInit';
+const { db } = require('@/components/fbDir/fbInit');
 
 export const useDiscoverStore = defineStore('discover', {
   state: () => ({

@@ -1,20 +1,13 @@
-// src\components\fbDir\fbInit.js
-
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
-import fbConfig from './fbConfig';
+// src/components/fbDir/fbInit.js
+const { initializeApp } = require('firebase/app');
+const { getFirestore } = require('firebase/firestore');
+const { getAuth } = require('firebase/auth');
+const { getStorage } = require('firebase/storage');
+const fbConfig = require('./fbConfig');
 
 const firebaseApp = initializeApp(fbConfig);
 const db = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const storage = getStorage(firebaseApp);
 
-// Export section 
-//---------------------------------------------------------------------------------------------------------------------------
-
-export {db, auth, storage}
-
-
-//---------------------------------------------------------------------------------------------------------------------------
+module.exports = { db, auth, storage };
