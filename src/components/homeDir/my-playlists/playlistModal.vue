@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
+import axios from 'axios';
 
 export default {
   components: {
