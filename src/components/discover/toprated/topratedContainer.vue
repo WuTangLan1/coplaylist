@@ -25,9 +25,47 @@ export default {
 
     onMounted(async () => {
       await discoverStore.fetchTopRatedPlaylists(10);
-      console.log(discoverStore.topRatedPlaylists); // Check for IDs here
       intervalId = setInterval(rotatePages, 10000); 
     });
+
+    async function playpreview(playlist){
+        if (!playlist.songs.length) {
+          console.error('No songs in the playlist');
+          return;
+        }
+
+        const firstSongDetails = playlist.songs[0].split(' - ');
+        const song = {
+          title: firstSongDetails[0],
+          artist: firstSongDetails.slice(1).join(' - ')
+        };
+        const baseUrl = process.env.VUE_APP_API_BASE_URL
+
+        if (!song.title || !song.artist) {
+          console.error("Song details are missing.");
+          return;
+        }
+
+        try {
+          const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+          console.log(`Requesting:${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.previewUrl) {
+              const audio = new Audio(data.previewUrl);
+              audio.play();
+            } else {
+              console.error('Preview URL not available for this song.');
+            }
+          } else {
+            console.error('Error fetching preview:', response.status, response.statusText);
+          }
+        } catch (error) {
+          console.error('Error playing song preview:', error);
+        }
+      }
+
 
     onUnmounted(() => {
       clearInterval(intervalId); 
@@ -42,7 +80,8 @@ export default {
       currentPage,
       changePage: rotatePages,
       showModal,
-      updateCount
+      updateCount,
+      playpreview
     };
   },
 };
@@ -55,19 +94,18 @@ export default {
           class="playlist-line"
           v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 5, currentPage * 5)"
          :key="`toprated-${playlist.id}-${updateCount}`"
-          @click="showModal(playlist)"
         >
 
         <div class="card-header">
           <v-card-title>{{ playlist.name }}</v-card-title>
           <div class="spotify-icon">
-            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify">
+            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click="playpreview(playlist)">
             <span>Catch a Taste</span>
           </div>
         </div>
         <div class="card-subtitle">
           <span>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</span>
-          <v-btn small color="blue lighten-2" @click.stop="showMore(playlist)">See More</v-btn>
+          <v-btn small color="blue lighten-2"        @click="showModal(playlist)">See More</v-btn>
         </div>
         <v-card-text class="card-text">
           <div v-if="playlist.songs && playlist.songs.length" class="artist-container">
