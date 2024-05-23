@@ -1,4 +1,4 @@
-// src/components/discover/newdisc/newdiscContainer.vue
+<!-- // src/components/discover/newdisc/newdiscContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -7,14 +7,12 @@ export default {
   name: 'newdiscContainer',
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
-    const newDiscoveries = computed(() => discoverStore.newDiscoveries);
     const visiblePlaylists = ref([]);
     const currentPage = ref(1);
 
     const updateVisiblePlaylists = async () => {
       await discoverStore.fetchNewDiscoveries(24);
       visiblePlaylists.value = discoverStore.newDiscoveries;
-      console.log('Visible Playlists:', visiblePlaylists.value);  // Log to check data
     };
 
     const showModal = (playlist) => {
@@ -23,13 +21,11 @@ export default {
 
     const changePage = (page) => {
       currentPage.value = page;
-      console.log(`Page changed to: ${page}`);  // Log page changes
     };
 
     onMounted(updateVisiblePlaylists);
 
     watch(currentPage, () => {
-      console.log(`Current page updated to: ${currentPage.value}`); // Log page changes
       updateVisiblePlaylists();
     });
 
@@ -88,18 +84,18 @@ export default {
 <style scoped>
 .newdisc-container {
   width: 100%;
-  padding: 0 15px; /* Add padding for better spacing */
-  box-sizing: border-box; /* Ensures padding is included in width */
+  padding: 0 15px; 
+  box-sizing: border-box; 
 }
 
 .grid-container {
-  display: flex; /* Changed to flex to manage direction */
-  flex-direction: column; /* Ensures cards are laid out vertically */
-  gap: 15px; /* Keeps space between cards */
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
 }
 
 .playlist-wrapper {
-  position: relative; /* Contains absolutely positioned children */
+  position: relative; 
 }
 
 .playlist-line {
@@ -110,10 +106,9 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  width: 100%; /* Full container width */
-  position: relative; /* No longer absolute, each card stacks in normal flow */
+  width: 100%; 
+  position: relative; 
 }
-
 
 .playlist-line:hover {
   transform: translateY(-5px);

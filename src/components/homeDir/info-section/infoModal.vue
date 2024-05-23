@@ -81,6 +81,7 @@ export default {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
   animation: dropAnimation 0.5s ease-in-out forwards;
   position: relative;
+  margin-bottom: 200px;
 }
 
 @media(max-width: 600px)
@@ -167,7 +168,7 @@ export default {
   padding: 0.5rem;
   width: 100%;
   overflow-y: auto;
-  max-height: calc(80vh - 150px);
+  max-height: calc(78vh - 150px);
 }
 
 .info-icon {

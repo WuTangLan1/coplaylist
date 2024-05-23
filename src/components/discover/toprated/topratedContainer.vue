@@ -1,31 +1,13 @@
 <!-- src\components\discover\toprated\topratedContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { onMounted, computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 export default {
-  name: 'toprated-Container',
+  name: 'topratedContainer',
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
-    const topRatedPlaylists = computed(() => {
-      const playlists = discoverStore.topRatedPlaylists;
-      const clonedPlaylists = [...playlists, ...playlists, ...playlists];
-      return clonedPlaylists;
-    });
-
-    const scrollingPlaylistsRef = ref(null);
-
-    const pauseScrolling = () => {
-      if (scrollingPlaylistsRef.value) {
-        scrollingPlaylistsRef.value.style.animationPlayState = 'paused';
-      }
-    };
-
-    const resumeScrolling = () => {
-      if (scrollingPlaylistsRef.value) {
-        scrollingPlaylistsRef.value.style.animationPlayState = 'running';
-      }
-    };
+    const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists);
 
     onMounted(async () => {
       await discoverStore.fetchTopRatedPlaylists();
@@ -37,9 +19,6 @@ export default {
 
     return {
       topRatedPlaylists,
-      scrollingPlaylistsRef,
-      pauseScrolling,
-      resumeScrolling,
       showModal,
     };
   },
@@ -47,19 +26,35 @@ export default {
 </script>
 
 <template>
-  <div class="toprated-container" @mouseover="pauseScrolling" @mouseleave="resumeScrolling">
-    <div class="scrolling-playlists" ref="scrollingPlaylistsRef">
-      <div v-for="(playlist, index) in topRatedPlaylists" :key="index" class="playlist-line" @click="showModal(playlist)">
-        <span class="playlist-name">{{ playlist.name }}</span> by&nbsp;
-        <span class="creator-name">{{ playlist.creatorName }}</span> in&nbsp;
-        <span class="display-genre">{{ playlist.displayGenre }}</span>:
-        <span class="songs">
-          <template v-for="(song, idx) in playlist.songs" :key="idx">
-            {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
-          </template>
-        </span>
-      </div>
-    </div>
+  <div class="toprated-container">
+    <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
+      <v-card
+        class="playlist-line"
+        v-for="(playlist, index) in topRatedPlaylists"
+        :key="`toprated-${playlist.id}`"
+        @click="showModal(playlist)"
+      >
+        <div class="card-header">
+          <v-card-title>{{ playlist.name }}</v-card-title>
+          <div class="spotify-icon">
+            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify">
+            <span>Catch a Taste</span>
+          </div>
+        </div>
+        <div class="card-subtitle">
+          <span>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</span>
+          <v-btn small color="blue lighten-2" @click.stop="showMore(playlist)">See More</v-btn>
+        </div>
+        <v-card-text class="card-text">
+          <div v-if="playlist.songs && playlist.songs.length" class="artist-container">
+            <strong>Songs:</strong>
+            <span v-for="(song, idx) in playlist.songs" :key="`song-${idx}`">
+              {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
+            </span>
+          </div>
+        </v-card-text>
+      </v-card>
+    </transition-group>
   </div>
 </template>
 
@@ -67,68 +62,123 @@ export default {
 .toprated-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  overflow: hidden;
+  gap: 15px;
   position: relative;
-  height: 500px;
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.scrolling-playlists {
-  display: flex;
-  flex-direction: column;
-  animation: scrollPlaylists 60s linear infinite;
-}
-
-@keyframes scrollPlaylists {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-33.33%); /* Adjust to match the number of cloned playlists */
-  }
+.playlist-wrapper {
+  position: relative;
 }
 
 .playlist-line {
-  display: flex;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+  background: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
+  padding: 10px;
   margin-bottom: 10px;
-  color: #333;
-  font-size: 1rem;
-  transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
-  cursor: pointer;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  width: 100%; 
+  position: relative; 
 }
 
-.playlist-name {
-  color: #4b8df8;
+.playlist-line:hover {
+  transform: translateY(-5px);
 }
 
-.creator-name {
-  color: #4caf50;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #8d309f;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
 }
 
-.display-genre {
-  color: #6a3191;
+.spotify-icon {
+  display: flex;
+  align-items: center;
 }
 
-.songs {
-  color: #f44336;
-}
-
-.playlist-name, .creator-name, .display-genre, .songs {
+.spotify-icon img {
+  width: 24px;
+  height: 24px;
   margin-right: 5px;
+}
+
+.card-subtitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e8e8e8;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.card-text {
+  background-color: #e8e8e8;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.artist-container {
+  background-color: #d0e0f0;
+  padding: 5px;
+  border-radius: 8px;
+  display: flex; 
+  align-items: center; 
   white-space: nowrap;
-  overflow: hidden;
+  overflow: hidden; 
   text-overflow: ellipsis;
 }
 
-.playlist-line span {
-  flex-shrink: 0;
+.pagination-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #9932ad;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.active-dot {
+  transform: scale(1.5);
+  background-color: #4f035e;
+}
+
+.playlist-transition-enter-active, .playlist-transition-leave-active {
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+/* Entering playlists start from the left (-100% X) and slide to their position */
+.playlist-transition-enter-from {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.playlist-transition-enter-to {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+/* Exiting playlists slide off to the right (100% X) */
+.playlist-transition-leave-from {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.playlist-transition-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
 }
 </style>
