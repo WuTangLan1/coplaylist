@@ -14,15 +14,15 @@ export default {
     const newDiscoveries = computed(() => discoverStore.newDiscoveries);
     const visiblePlaylists = ref([]);
 
-    // Function to pick 5 random playlists
     const updateVisiblePlaylists = () => {
-      if (newDiscoveries.value.length > 5) {
+      if (newDiscoveries.value.length > 3) { // Changed from 5 to 3
         const shuffled = newDiscoveries.value.sort(() => 0.5 - Math.random());
-        visiblePlaylists.value = shuffled.slice(0, 5);
+        visiblePlaylists.value = shuffled.slice(0, 3); // Changed from 5 to 3
       } else {
         visiblePlaylists.value = newDiscoveries.value;
       }
     };
+
 
     const showModal = (playlist) => {
       emit('show-modal', playlist);
@@ -30,13 +30,13 @@ export default {
 
     onMounted(async () => {
       await discoverStore.fetchNewDiscoveries();
-      updateVisiblePlaylists(); // Initial population of visible playlists
+      updateVisiblePlaylists(); 
     });
 
     return {
       visiblePlaylists,
       showModal,
-      updateVisiblePlaylists, // Expose this method to allow re-triggering from the template
+      updateVisiblePlaylists,
     };
   },
 };
@@ -103,7 +103,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #8d309f; 
+  background-color: #8d309f;
   color: white;
   padding: 10px;
   border-radius: 8px;
@@ -124,6 +124,7 @@ export default {
   background-color: #e8e8e8;
   padding: 10px;
   margin-top: 5px;
+  margin-bottom: 10px; /* Added margin to create space between sections */
   border-radius: 8px;
 }
 .card-text {
