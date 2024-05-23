@@ -1,21 +1,36 @@
 <!-- src\components\discover\toprated\topratedContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch, onUnmounted } from 'vue';
 
 export default {
   name: 'topratedContainer',
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
-    const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists);
-    const currentPage = ref(1);  // Pagination control
+    const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists.slice(0, 10));
+    const currentPage = ref(1);
+    const totalPages = computed(() => Math.ceil(topRatedPlaylists.value.length / 5));
 
-    const changePage = (page) => {
-      currentPage.value = page;
+    // Watch for playlist updates and force a re-render by changing keys
+    const updateCount = ref(0);
+
+    const rotatePages = () => {
+      clearInterval(intervalId); 
+      const nextPage = currentPage.value >= totalPages.value ? 1 : currentPage.value + 1;
+      currentPage.value = nextPage;
+      updateCount.value++; // Increase update count to force key change
     };
 
+    let intervalId;
+
     onMounted(async () => {
-      await discoverStore.fetchTopRatedPlaylists();
+      await discoverStore.fetchTopRatedPlaylists(10);
+      console.log(discoverStore.topRatedPlaylists); // Check for IDs here
+      intervalId = setInterval(rotatePages, 10000); 
+    });
+
+    onUnmounted(() => {
+      clearInterval(intervalId); 
     });
 
     const showModal = (playlist) => {
@@ -25,23 +40,24 @@ export default {
     return {
       topRatedPlaylists,
       currentPage,
-      changePage,
+      changePage: rotatePages,
       showModal,
+      updateCount
     };
   },
 };
 </script>
 
-
 <template>
   <div class="toprated-container">
     <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
       <v-card
-        class="playlist-line"
-        v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 5, currentPage * 5)"
-        :key="`toprated-${playlist.id}`"
-        @click="showModal(playlist)"
-      >
+          class="playlist-line"
+          v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 5, currentPage * 5)"
+         :key="`toprated-${playlist.id}-${updateCount}`"
+          @click="showModal(playlist)"
+        >
+
         <div class="card-header">
           <v-card-title>{{ playlist.name }}</v-card-title>
           <div class="spotify-icon">
@@ -64,7 +80,7 @@ export default {
       </v-card>
     </transition-group>
     <div class="pagination-dots">
-      <span v-for="page in 2" :key="page"  
+      <span v-for="page in Math.ceil(topRatedPlaylists.length / 5)" :key="page"
             :class="['dot', { 'active-dot': page === currentPage }]"
             @click="changePage(page)"></span>
     </div>
@@ -90,13 +106,8 @@ export default {
   overflow: hidden;
   padding: 10px;
   margin-bottom: 10px;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  width: 100%; 
-  position: relative; 
-}
-
-.playlist-line:hover {
-  transform: translateY(-5px);
+  width: 100%;
+  position: relative;
 }
 
 .card-header {
@@ -141,10 +152,10 @@ export default {
   background-color: #d0e0f0;
   padding: 5px;
   border-radius: 8px;
-  display: flex; 
-  align-items: center; 
+  display: flex;
+  align-items: center;
   white-space: nowrap;
-  overflow: hidden; 
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -170,28 +181,14 @@ export default {
 }
 
 .playlist-transition-enter-active, .playlist-transition-leave-active {
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transition: opacity 1s ease-in-out;
 }
 
-/* Entering playlists start from the left (-100% X) and slide to their position */
-.playlist-transition-enter-from {
-  transform: translateX(-100%);
+.playlist-transition-enter-from, .playlist-transition-leave-to {
   opacity: 0;
 }
 
-.playlist-transition-enter-to {
-  transform: translateX(0%);
+.playlist-transition-enter-to, .playlist-transition-leave-from {
   opacity: 1;
-}
-
-/* Exiting playlists slide off to the right (100% X) */
-.playlist-transition-leave-from {
-  transform: translateX(0%);
-  opacity: 1;
-}
-
-.playlist-transition-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
 }
 </style>

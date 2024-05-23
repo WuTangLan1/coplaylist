@@ -25,6 +25,7 @@ export const useDiscoverStore = defineStore('discover', {
           const playlistData = doc.data();
           const uniqueArtists = getRandomUniqueArtists(playlistData.details, 3);
           playlists.push({
+            id: doc.id,
             name: playlistData.name,
             creatorName: playlistData.creator_name,
             displayGenre: playlistData.display_genre,
@@ -45,6 +46,7 @@ export const useDiscoverStore = defineStore('discover', {
         querySnapshot.forEach((doc) => {
           const playlistData = doc.data();
           playlists.push({
+            id: doc.id,
             name: playlistData.name,
             creatorName: playlistData.creator_name,
             displayGenre: playlistData.display_genre,
