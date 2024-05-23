@@ -9,7 +9,9 @@ export default {
     const discoverStore = useDiscoverStore();
     const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists.slice(0, 10));
     const currentPage = ref(1);
-    const totalPages = computed(() => Math.ceil(topRatedPlaylists.value.length / 5));
+
+    // Update totalPages calculation for 2 playlists per page
+    const totalPages = computed(() => Math.ceil(topRatedPlaylists.value.length / 2));
     const updateCount = ref(0);
 
     const rotatePages = () => {
@@ -19,6 +21,7 @@ export default {
       clearInterval(intervalId);
     };
     let intervalId;
+
     const showModal = (playlist) => {
       emit('show-modal', playlist);
     }
@@ -30,9 +33,6 @@ export default {
 
     onUnmounted(() => {
       clearInterval(intervalId);
-      if (currentAudio.value) {
-        currentAudio.value.pause();
-      }
     });
 
     const currentAudio = ref(null);
@@ -59,7 +59,6 @@ export default {
           } else if (response.status === 404) {
             continue;
           } else {
-            // try another song here
             console.warn('Preview URL not available for this song:', response.statusText);
           }
         } catch (error) {
@@ -71,14 +70,14 @@ export default {
       }
     };
 
-
     return {
       topRatedPlaylists,
       currentPage,
       changePage: rotatePages,
       playpreview,
       updateCount,
-      showModal
+      showModal,
+      totalPages
     };
   },
 };
@@ -89,8 +88,9 @@ export default {
     <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
       <v-card
           class="playlist-line"
-          v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 5, currentPage * 5)"
-         :key="`toprated-${playlist.id}-${updateCount}`"
+          v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 2, currentPage * 2)"
+          :key="`toprated-${playlist.id}-${updateCount}`"
+          @click="showModal(playlist)"
         >
 
         <div class="card-header">
@@ -105,7 +105,6 @@ export default {
           <v-btn small color="blue lighten-2" @click="showModal(playlist)">See More</v-btn>
         </div>
         <v-card-text class="card-text">
-          <!-- Modified part to display unique artists instead of songs -->
           <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
             <strong>Artists:</strong>
             <span v-for="(artist, idx) in playlist.uniqueArtists" :key="`artist-${idx}`">
@@ -116,7 +115,7 @@ export default {
       </v-card>
     </transition-group>
     <div class="pagination-dots">
-      <span v-for="page in Math.ceil(topRatedPlaylists.length / 5)" :key="page"
+      <span v-for="page in totalPages" :key="page"
             :class="['dot', { 'active-dot': page === currentPage }]"
             @click="changePage(page)"></span>
     </div>
@@ -137,9 +136,9 @@ export default {
 }
 
 .playlist-line {
-  width: 100%; /* Ensure full width within the container */
-  max-width: 600px; /* Optional: you might set a max-width if needed */
-  margin: auto; /* Centers the card if max-width is less than the container's width */
+  width: 100%; 
+  max-width: 600px;
+  margin: auto; 
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -191,16 +190,13 @@ export default {
 }
 
 .artist-container {
-  background-color: #85b0df; /* A shade of blue */
-  color: white; /* Ensure text color is white for better readability */
-  padding: 10px;
+  background-color: #d0e0f0;
+  padding: 5px;
   border-radius: 8px;
-  display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  gap: 10px; /* Optional: Adds space between icons or text if needed */
+  display: flex; 
+  align-items: center; 
   white-space: nowrap;
-  overflow: hidden;
+  overflow: hidden; 
   text-overflow: ellipsis;
 }
 
