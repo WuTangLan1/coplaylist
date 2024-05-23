@@ -98,7 +98,7 @@ export default {
           </div>
           <div class="card-subtitle">
             <span>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</span>
-            <v-btn small color="blue lighten-2" @click.stop="showMore(playlist)">See More</v-btn>
+            <v-btn small color="blue lighten-2" @click="showModal(playlist)">See More</v-btn>
           </div>
           <v-card-text class="card-text">
             <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
