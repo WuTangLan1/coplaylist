@@ -29,12 +29,49 @@ export default {
       updateVisiblePlaylists();
     });
 
+    const currentAudio = ref(null);
+    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+    const playpreview = async (playlist) => {
+      if (currentAudio.value) {
+        currentAudio.value.pause();
+        currentAudio.value = null; // Clear the previous audio
+      }
+      let foundPlayable = false;
+      for (let songDetail of playlist.songs) {
+        const [title, artist] = songDetail.split(' - ', 2);
+        try {
+          const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.previewUrl) {
+              currentAudio.value = new Audio(data.previewUrl);
+              currentAudio.value.play();
+              foundPlayable = true;
+              break;
+            }
+          } else if (response.status === 404) {
+            continue;
+          } else {
+            // try another song here
+            console.warn('Preview URL not available for this song:', response.statusText);
+          }
+        } catch (error) {
+          console.warn('Error playing song preview:', error);
+        }
+      }
+      if (!foundPlayable) {
+        console.info('No playable song found in the playlist.');
+      }
+    };
+
+
     return {
       visiblePlaylists,
       currentPage,
       showModal,
       changePage,
       updateVisiblePlaylists,
+      playpreview
     };
   },
 };
@@ -54,8 +91,8 @@ export default {
           <div class="card-header">
             <v-card-title>{{ playlist.name }}</v-card-title>
             <div class="spotify-icon">
-              <img src="@/assets/images/music_icons/spotify.png" alt="Spotify">
-              <span>Catch a Taste</span>
+              <span>Catch a Taste  </span>
+              <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click="playpreview(playlist)">
             </div>
           </div>
           <div class="card-subtitle">
@@ -132,7 +169,10 @@ export default {
 .spotify-icon img {
   width: 24px;
   height: 24px;
-  margin-right: 5px;
+}
+.spotify-icon span {
+  /* This will ensure the text has no margin on the right, sticking to the icon */
+  margin-right: 5px; 
 }
 
 .card-subtitle {

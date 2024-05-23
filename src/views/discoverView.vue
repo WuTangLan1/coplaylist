@@ -62,6 +62,7 @@ export default {
 <style scoped>
 .discover-view {
   padding: 1rem;
+  min-height: 98%;
   max-width: 100%;
   background: linear-gradient(to bottom, #e5e5ff, #ddedfc);
   border-radius: 10px;

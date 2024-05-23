@@ -11,7 +11,6 @@ export default {
     const currentPage = ref(1);
     const totalPages = computed(() => Math.ceil(topRatedPlaylists.value.length / 5));
     const updateCount = ref(0);
-    const currentAudio = ref(null); // Store the current playing audio element
 
     const rotatePages = () => {
       const nextPage = currentPage.value >= totalPages.value ? 1 : currentPage.value + 1;
@@ -19,7 +18,6 @@ export default {
       updateCount.value++;
       clearInterval(intervalId);
     };
-    const baseUrl = process.env.VUE_APP_API_BASE_URL
     let intervalId;
     const showModal = (playlist) => {
       emit('show-modal', playlist);
@@ -37,35 +35,41 @@ export default {
       }
     });
 
+    const currentAudio = ref(null);
+    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+
     const playpreview = async (playlist) => {
       if (currentAudio.value) {
-        currentAudio.value.pause(); // Stop current audio if it's playing
+        currentAudio.value.pause();
+        currentAudio.value = null; // Clear the previous audio
       }
+      let foundPlayable = false;
       for (let songDetail of playlist.songs) {
         const [title, artist] = songDetail.split(' - ', 2);
         try {
-
           const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}`);
           if (response.ok) {
             const data = await response.json();
             if (data.previewUrl) {
               currentAudio.value = new Audio(data.previewUrl);
               currentAudio.value.play();
-              break; // Stop searching once a playable song is found
+              foundPlayable = true;
+              break;
             }
+          } else if (response.status === 404) {
+            continue;
           } else {
-            console.error('Preview URL not available for this song:', response.statusText);
-            continue; 
+            // try another song here
+            console.warn('Preview URL not available for this song:', response.statusText);
           }
         } catch (error) {
-          console.error('Error playing song preview:', error);
+          console.warn('Error playing song preview:', error);
         }
       }
-      if (!currentAudio.value) {
-        console.error('No playable song found in the playlist.');
+      if (!foundPlayable) {
+        console.info('No playable song found in the playlist.');
       }
     };
-
 
 
     return {
@@ -93,8 +97,8 @@ export default {
         <div class="card-header">
           <v-card-title>{{ playlist.name }}</v-card-title>
           <div class="spotify-icon">
-            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click="playpreview(playlist)">
             <span>Catch a Taste</span>
+            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click="playpreview(playlist)">
           </div>
         </div>
         <div class="card-subtitle">
@@ -160,7 +164,9 @@ export default {
 .spotify-icon img {
   width: 24px;
   height: 24px;
-  margin-right: 5px;
+}
+.spotify-icon span {
+  margin-right: 5px; 
 }
 
 .card-subtitle {
