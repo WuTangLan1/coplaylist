@@ -3,7 +3,6 @@ import { defineStore } from 'pinia';
 import { collection, query, orderBy, getDocs, limit } from 'firebase/firestore'; 
 import { db } from '@/components/fbDir/fbInit';
 
-// Helper function to get unique random artists
 function getRandomUniqueArtists(details, count) {
   const uniqueArtists = Array.from(new Set(details.map(song => song.artist)));
   const shuffled = uniqueArtists.sort(() => 0.5 - Math.random());

@@ -51,14 +51,19 @@ export default {
         :key="index"
         @click="showModal(playlist)"
       >
-        <v-card-title>{{ playlist.name }}</v-card-title>
-        <v-card-subtitle>
+        <div class="card-header">
+          <v-card-title>{{ playlist.name }}</v-card-title>
+          <div class="spotify-icon">
+            <img src="@/assets/images/music_icons/spotify.png" alt="Spotify">
+            <span>Catch a Taste</span>
+          </div>
+        </div>
+        <v-card-subtitle class="card-subtitle">
           by {{ playlist.creatorName }}
           <span v-if="playlist.displayGenre">in {{ playlist.displayGenre }}</span>
         </v-card-subtitle>
-        <v-card-text>
-          <!-- Display unique artists -->
-          <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length">
+        <v-card-text class="card-text">
+          <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
             <strong>Artists: </strong>
             <span v-for="(artist, idx) in playlist.uniqueArtists" :key="`artist-${idx}`">
               {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
@@ -82,7 +87,7 @@ export default {
   gap: 15px;
 }
 .playlist-line {
-  background: white;
+  background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
@@ -94,17 +99,32 @@ export default {
 .playlist-line:hover {
   transform: translateY(-5px);
 }
-.playlist-name {
-  color: #4b8df8;
-  font-weight: bold;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 8px;
 }
-.creator-name, .display-genre {
-  color: #4caf50;
+.spotify-icon {
+  display: flex;
+  align-items: center;
 }
-.songs, .unique-artists {
-  color: #000;
+.spotify-icon img {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
 }
-.v-btn {
-  margin-top: 20px;
+.card-subtitle, .card-text {
+  background-color: #e8e8e8;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
+}
+.artist-container {
+  background-color: #d0e0f0;
+  padding: 5px;
+  border-radius: 8px;
 }
 </style>
