@@ -84,7 +84,6 @@ export default {
 };
 </script>
 
-
 <template>
   <div class="toprated-container">
     <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
@@ -103,13 +102,14 @@ export default {
         </div>
         <div class="card-subtitle">
           <span>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</span>
-          <v-btn small color="blue lighten-2"        @click="showModal(playlist)">See More</v-btn>
+          <v-btn small color="blue lighten-2" @click="showModal(playlist)">See More</v-btn>
         </div>
         <v-card-text class="card-text">
-          <div v-if="playlist.songs && playlist.songs.length" class="artist-container">
-            <strong>Songs:</strong>
-            <span v-for="(song, idx) in playlist.songs" :key="`song-${idx}`">
-              {{ song }}<span v-if="idx < playlist.songs.length - 1">, </span>
+          <!-- Modified part to display unique artists instead of songs -->
+          <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
+            <strong>Artists:</strong>
+            <span v-for="(artist, idx) in playlist.uniqueArtists" :key="`artist-${idx}`">
+              {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
             </span>
           </div>
         </v-card-text>
@@ -122,6 +122,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .toprated-container {
@@ -136,15 +137,18 @@ export default {
 }
 
 .playlist-line {
+  width: 100%; /* Ensure full width within the container */
+  max-width: 600px; /* Optional: you might set a max-width if needed */
+  margin: auto; /* Centers the card if max-width is less than the container's width */
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   overflow: hidden;
   padding: 10px;
   margin-bottom: 10px;
-  width: 100%;
-  position: relative;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
+
 
 .card-header {
   display: flex;
@@ -187,11 +191,14 @@ export default {
 }
 
 .artist-container {
-  background-color: #d0e0f0;
-  padding: 5px;
+  background-color: #85b0df; /* A shade of blue */
+  color: white; /* Ensure text color is white for better readability */
+  padding: 10px;
   border-radius: 8px;
   display: flex;
-  align-items: center;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  gap: 10px; /* Optional: Adds space between icons or text if needed */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

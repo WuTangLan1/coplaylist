@@ -34,7 +34,6 @@ export const useDiscoverStore = defineStore('discover', {
           });
         });
         this.newDiscoveries = playlists;
-        console.log(this.newDiscoveries)
       } catch (error) {
         console.error('Error fetching new discoveries:', error);
       }
@@ -47,11 +46,13 @@ export const useDiscoverStore = defineStore('discover', {
         const playlists = [];
         querySnapshot.forEach((doc) => {
           const playlistData = doc.data();
+          const uniqueArtists = getRandomUniqueArtists(playlistData.details, 3); // Assuming this function is defined similarly
           playlists.push({
             id: doc.id,
             name: playlistData.name,
             creatorName: playlistData.creator_name,
             displayGenre: playlistData.display_genre,
+            uniqueArtists, // Store unique artists here
             songs: playlistData.details.map(song => `${song.title} - ${song.artist}`),
           });
         });

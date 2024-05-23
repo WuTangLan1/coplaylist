@@ -122,9 +122,10 @@ export default {
 
 <style scoped>
 .newdisc-container {
-  width: 100%;
-  padding: 0 15px; 
-  box-sizing: border-box; 
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  position: relative;
 }
 
 .grid-container {
@@ -138,6 +139,9 @@ export default {
 }
 
 .playlist-line {
+  width: 100%; /* Ensure full width within the container */
+  max-width: 600px; /* Optional: you might set a max-width if needed */
+  margin: auto; /* Centers the card if max-width is less than the container's width */
   background: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
@@ -145,8 +149,6 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  width: 100%; 
-  position: relative; 
 }
 
 .playlist-line:hover {
