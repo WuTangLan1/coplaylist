@@ -15,7 +15,7 @@ export const useDiscoverStore = defineStore('discover', {
     newDiscoveries: [],
   }),
   actions: {
-    async fetchNewDiscoveries(limitCount = 40) {
+    async fetchNewDiscoveries(limitCount = 24) {  
       const playlistCollection = collection(db, 'playlists');
       const q = query(playlistCollection, orderBy('createdAt', 'desc'), limit(limitCount));
       try {

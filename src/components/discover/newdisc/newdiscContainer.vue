@@ -2,40 +2,35 @@
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
 import { computed, onMounted, ref } from 'vue';
-import Masonry from 'vue-masonry-css';
 
 export default {
   name: 'newdiscContainer',
-  components: {
-    Masonry
-  },
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
     const newDiscoveries = computed(() => discoverStore.newDiscoveries);
     const visiblePlaylists = ref([]);
+    const currentPage = ref(1);
 
-    const updateVisiblePlaylists = () => {
-      if (newDiscoveries.value.length > 3) { // Changed from 5 to 3
-        const shuffled = newDiscoveries.value.sort(() => 0.5 - Math.random());
-        visiblePlaylists.value = shuffled.slice(0, 3); // Changed from 5 to 3
-      } else {
-        visiblePlaylists.value = newDiscoveries.value;
-      }
+    const updateVisiblePlaylists = async () => {
+      await discoverStore.fetchNewDiscoveries(24);  // Adjusted to fetch 24 playlists
+      visiblePlaylists.value = discoverStore.newDiscoveries;
     };
-
 
     const showModal = (playlist) => {
       emit('show-modal', playlist);
     };
 
-    onMounted(async () => {
-      await discoverStore.fetchNewDiscoveries();
-      updateVisiblePlaylists(); 
-    });
+    const changePage = (page) => {
+      currentPage.value = page;
+    };
+
+    onMounted(updateVisiblePlaylists);
 
     return {
       visiblePlaylists,
+      currentPage,
       showModal,
+      changePage,
       updateVisiblePlaylists,
     };
   },
@@ -47,7 +42,7 @@ export default {
     <div class="grid-container">
       <v-card
         class="playlist-line"
-        v-for="(playlist, index) in visiblePlaylists"
+        v-for="(playlist, index) in visiblePlaylists.slice((currentPage - 1) * 3, currentPage * 3)"
         :key="index"
         @click="showModal(playlist)"
       >
@@ -64,7 +59,7 @@ export default {
         </div>
         <v-card-text class="card-text">
           <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
-            <strong>Artists: </strong>
+            <strong>Artists:</strong>
             <span v-for="(artist, idx) in playlist.uniqueArtists" :key="`artist-${idx}`">
               {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
             </span>
@@ -72,7 +67,11 @@ export default {
         </v-card-text>
       </v-card>
     </div>
-    <v-btn color="primary" @click="updateVisiblePlaylists">Refresh Playlists</v-btn>
+    <div class="pagination-dots">
+      <span v-for="page in 8" :key="page"
+            :class="['dot', { 'active-dot': page === currentPage }]"
+            @click="changePage(page)"></span>
+    </div>
   </div>
 </template>
 
@@ -124,7 +123,7 @@ export default {
   background-color: #e8e8e8;
   padding: 10px;
   margin-top: 5px;
-  margin-bottom: 10px; /* Added margin to create space between sections */
+  margin-bottom: 10px;
   border-radius: 8px;
 }
 .card-text {
@@ -136,5 +135,30 @@ export default {
   background-color: #d0e0f0;
   padding: 5px;
   border-radius: 8px;
+  display: flex; 
+  align-items: center; 
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
+
+.pagination-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.active-dot {
+  transform: scale(1.5);
+  background-color: #666;
+}
+
 </style>
