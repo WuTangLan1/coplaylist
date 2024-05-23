@@ -52,6 +52,8 @@ export default {
           :key="`${currentPage}-${playlist.id}`"
           @click="showModal(playlist)"
         >
+
+
           <div class="card-header">
             <v-card-title>{{ playlist.name }}</v-card-title>
             <div class="spotify-icon">
@@ -75,7 +77,7 @@ export default {
       </transition-group>
     </div>
     <div class="pagination-dots">
-      <span v-for="page in 8" :key="page"
+      <span v-for="page in Math.ceil(visiblePlaylists.length / 3)" :key="page"
             :class="['dot', { 'active-dot': page === currentPage }]"
             @click="changePage(page)"></span>
     </div>
@@ -85,13 +87,18 @@ export default {
 <style scoped>
 .newdisc-container {
   width: 100%;
-  margin: 0 auto;
+  padding: 0 15px; /* Add padding for better spacing */
+  box-sizing: border-box; /* Ensures padding is included in width */
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
+  display: flex; /* Changed to flex to manage direction */
+  flex-direction: column; /* Ensures cards are laid out vertically */
+  gap: 15px; /* Keeps space between cards */
+}
+
+.playlist-wrapper {
+  position: relative; /* Contains absolutely positioned children */
 }
 
 .playlist-line {
@@ -101,9 +108,11 @@ export default {
   overflow: hidden;
   padding: 10px;
   margin-bottom: 10px;
-  transition: transform 0.3s;
-  cursor: pointer;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  width: 100%; /* Full container width */
+  position: relative; /* No longer absolute, each card stacks in normal flow */
 }
+
 
 .playlist-line:hover {
   transform: translateY(-5px);
@@ -183,13 +192,25 @@ export default {
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
 }
 
-.playlist-transition-enter-from, .playlist-transition-leave-to {
-  transform: translateX(-100%); 
+/* Entering playlists start from the left (-100% X) and slide to their position */
+.playlist-transition-enter-from {
+  transform: translateX(-100%);
   opacity: 0;
 }
 
-.playlist-transition-enter-to, .playlist-transition-leave-from {
-  transform: translateX(0%); /* Slide in from the right to final position */
+.playlist-transition-enter-to {
+  transform: translateX(0%);
   opacity: 1;
+}
+
+/* Exiting playlists slide off to the right (100% X) */
+.playlist-transition-leave-from {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.playlist-transition-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
 }
 </style>
