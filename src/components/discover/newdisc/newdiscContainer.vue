@@ -58,10 +58,10 @@ export default {
             <span>Catch a Taste</span>
           </div>
         </div>
-        <v-card-subtitle class="card-subtitle">
-          by {{ playlist.creatorName }}
-          <span v-if="playlist.displayGenre">in {{ playlist.displayGenre }}</span>
-        </v-card-subtitle>
+        <div class="card-subtitle">
+          <span>by {{ playlist.creatorName }} in {{ playlist.displayGenre }}</span>
+          <v-btn small color="blue lighten-2" @click.stop="showMore(playlist)">See More</v-btn>
+        </div>
         <v-card-text class="card-text">
           <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
             <strong>Artists: </strong>
@@ -103,7 +103,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: #8d309f; 
+  color: white;
   padding: 10px;
   border-radius: 8px;
 }
@@ -116,10 +117,18 @@ export default {
   height: 24px;
   margin-right: 5px;
 }
-.card-subtitle, .card-text {
+.card-subtitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #e8e8e8;
   padding: 10px;
   margin-top: 5px;
+  border-radius: 8px;
+}
+.card-text {
+  background-color: #e8e8e8;
+  padding: 10px;
   border-radius: 8px;
 }
 .artist-container {
