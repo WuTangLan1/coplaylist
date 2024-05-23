@@ -109,7 +109,7 @@ export default {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   width: 90%;
-  max-height: 80vh;
+  max-height: 65vh;
   overflow-y: auto;
   max-width: 600px;
   display: flex;
