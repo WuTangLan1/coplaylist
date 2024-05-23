@@ -8,6 +8,11 @@ export default {
   setup(props, { emit }) {
     const discoverStore = useDiscoverStore();
     const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists);
+    const currentPage = ref(1);  // Pagination control
+
+    const changePage = (page) => {
+      currentPage.value = page;
+    };
 
     onMounted(async () => {
       await discoverStore.fetchTopRatedPlaylists();
@@ -19,18 +24,21 @@ export default {
 
     return {
       topRatedPlaylists,
+      currentPage,
+      changePage,
       showModal,
     };
   },
 };
 </script>
 
+
 <template>
   <div class="toprated-container">
     <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
       <v-card
         class="playlist-line"
-        v-for="(playlist, index) in topRatedPlaylists"
+        v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 5, currentPage * 5)"
         :key="`toprated-${playlist.id}`"
         @click="showModal(playlist)"
       >
@@ -55,6 +63,11 @@ export default {
         </v-card-text>
       </v-card>
     </transition-group>
+    <div class="pagination-dots">
+      <span v-for="page in 2" :key="page"  
+            :class="['dot', { 'active-dot': page === currentPage }]"
+            @click="changePage(page)"></span>
+    </div>
   </div>
 </template>
 

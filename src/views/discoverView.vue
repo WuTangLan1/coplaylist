@@ -43,17 +43,17 @@ export default {
     </p>
     <div class="section">
       <div class="title-bar">
-        <h2>Top Rated</h2>
-        <img src="@/assets/images/discover/toprated.png" alt="Top Rated" class="title-icon">
-      </div>
-      <toprated-container @show-modal="showPlaylistModal" />
-    </div>
-    <div class="section">
-      <div class="title-bar">
         <h2>Newly Generated</h2>
         <img src="@/assets/images/discover/newdiscoveries.png" alt="New Discoveries" class="title-icon">
       </div>
       <newdisc-container @show-modal="showPlaylistModal" />
+    </div>
+    <div class="section">
+      <div class="title-bar">
+        <h2>Top Rated</h2>
+        <img src="@/assets/images/discover/toprated.png" alt="Top Rated" class="title-icon">
+      </div>
+      <toprated-container @show-modal="showPlaylistModal" />
     </div>
     <playlist-info-modal v-if="selectedPlaylist" :playlist="selectedPlaylist" @update:visible="isModalVisible = $event" :visible="isModalVisible" />
   </div>
