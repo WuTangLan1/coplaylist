@@ -15,7 +15,7 @@ export const useDiscoverStore = defineStore('discover', {
     newDiscoveries: [],
   }),
   actions: {
-    async fetchNewDiscoveries(limitCount = 24) {  
+    async fetchNewDiscoveries(limitCount = 24) {
       const playlistCollection = collection(db, 'playlists');
       const q = query(playlistCollection, orderBy('createdAt', 'desc'), limit(limitCount));
       try {
@@ -29,10 +29,12 @@ export const useDiscoverStore = defineStore('discover', {
             name: playlistData.name,
             creatorName: playlistData.creator_name,
             displayGenre: playlistData.display_genre,
+            songs: playlistData.details.map(song => `${song.title} - ${song.artist}`), // Ensure songs are included
             uniqueArtists,
           });
         });
         this.newDiscoveries = playlists;
+        console.log(this.newDiscoveries)
       } catch (error) {
         console.error('Error fetching new discoveries:', error);
       }

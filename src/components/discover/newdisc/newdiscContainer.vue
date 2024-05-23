@@ -31,6 +31,7 @@ export default {
 
     const currentAudio = ref(null);
     const baseUrl = process.env.VUE_APP_API_BASE_URL;
+
     const playpreview = async (playlist) => {
       if (currentAudio.value) {
         currentAudio.value.pause();
@@ -85,14 +86,14 @@ export default {
         <v-card
           class="playlist-line"
           v-for="(playlist, index) in visiblePlaylists.slice((currentPage - 1) * 3, currentPage * 3)"
-          :key="`${currentPage}-${playlist.id || index}`"  
+          :key="`${currentPage}-${playlist.id || index}`"
           @click="showModal(playlist)"
         >
           <div class="card-header">
             <v-card-title>{{ playlist.name }}</v-card-title>
             <div class="spotify-icon">
-              <span>Catch a Taste  </span>
-              <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click="playpreview(playlist)">
+              <span>Catch a Taste</span>
+              <img src="@/assets/images/music_icons/spotify.png" alt="Spotify" @click.stop="playpreview(playlist)">
             </div>
           </div>
           <div class="card-subtitle">
@@ -103,7 +104,7 @@ export default {
             <div v-if="playlist.uniqueArtists && playlist.uniqueArtists.length" class="artist-container">
               <strong>Artists:</strong>
               <span v-for="(artist, idx) in playlist.uniqueArtists" :key="`artist-${idx}`">
-                {{  artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">,  </span>
+                {{ artist }}<span v-if="idx < playlist.uniqueArtists.length - 1">, </span>
               </span>
             </div>
           </v-card-text>
@@ -117,6 +118,7 @@ export default {
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .newdisc-container {
