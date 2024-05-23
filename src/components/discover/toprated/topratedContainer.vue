@@ -1,7 +1,7 @@
 <!-- src\components\discover\toprated\topratedContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { computed, onMounted, ref, watch, onUnmounted } from 'vue';
+import { computed, onMounted, ref, onUnmounted } from 'vue';
 
 export default {
   name: 'topratedContainer',
@@ -10,82 +10,76 @@ export default {
     const topRatedPlaylists = computed(() => discoverStore.topRatedPlaylists.slice(0, 10));
     const currentPage = ref(1);
     const totalPages = computed(() => Math.ceil(topRatedPlaylists.value.length / 5));
-
-    // Watch for playlist updates and force a re-render by changing keys
     const updateCount = ref(0);
+    const currentAudio = ref(null); // Store the current playing audio element
 
     const rotatePages = () => {
-      clearInterval(intervalId); 
       const nextPage = currentPage.value >= totalPages.value ? 1 : currentPage.value + 1;
       currentPage.value = nextPage;
-      updateCount.value++; // Increase update count to force key change
+      updateCount.value++;
+      clearInterval(intervalId);
     };
-
+    const baseUrl = process.env.VUE_APP_API_BASE_URL
     let intervalId;
+    const showModal = (playlist) => {
+      emit('show-modal', playlist);
+    }
 
     onMounted(async () => {
-      await discoverStore.fetchTopRatedPlaylists(10);
       intervalId = setInterval(rotatePages, 10000); 
+      await discoverStore.fetchTopRatedPlaylists(10);
     });
 
-    async function playpreview(playlist){
-        if (!playlist.songs.length) {
-          console.error('No songs in the playlist');
-          return;
-        }
+    onUnmounted(() => {
+      clearInterval(intervalId);
+      if (currentAudio.value) {
+        currentAudio.value.pause();
+      }
+    });
 
-        const firstSongDetails = playlist.songs[0].split(' - ');
-        const song = {
-          title: firstSongDetails[0],
-          artist: firstSongDetails.slice(1).join(' - ')
-        };
-        const baseUrl = process.env.VUE_APP_API_BASE_URL
-
-        if (!song.title || !song.artist) {
-          console.error("Song details are missing.");
-          return;
-        }
-
+    const playpreview = async (playlist) => {
+      if (currentAudio.value) {
+        currentAudio.value.pause(); // Stop current audio if it's playing
+      }
+      for (let songDetail of playlist.songs) {
+        const [title, artist] = songDetail.split(' - ', 2);
         try {
-          const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
-          console.log(`Requesting:${baseUrl}/spotify/preview?title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`);
 
+          const response = await fetch(`${baseUrl}/spotify/preview?title=${encodeURIComponent(title)}&artist=${encodeURIComponent(artist)}`);
           if (response.ok) {
             const data = await response.json();
             if (data.previewUrl) {
-              const audio = new Audio(data.previewUrl);
-              audio.play();
-            } else {
-              console.error('Preview URL not available for this song.');
+              currentAudio.value = new Audio(data.previewUrl);
+              currentAudio.value.play();
+              break; // Stop searching once a playable song is found
             }
           } else {
-            console.error('Error fetching preview:', response.status, response.statusText);
+            console.error('Preview URL not available for this song:', response.statusText);
+            continue; 
           }
         } catch (error) {
           console.error('Error playing song preview:', error);
         }
       }
-
-
-    onUnmounted(() => {
-      clearInterval(intervalId); 
-    });
-
-    const showModal = (playlist) => {
-      emit('show-modal', playlist);
+      if (!currentAudio.value) {
+        console.error('No playable song found in the playlist.');
+      }
     };
+
+
 
     return {
       topRatedPlaylists,
       currentPage,
       changePage: rotatePages,
-      showModal,
+      playpreview,
       updateCount,
-      playpreview
+      showModal
     };
   },
 };
 </script>
+
 
 <template>
   <div class="toprated-container">
