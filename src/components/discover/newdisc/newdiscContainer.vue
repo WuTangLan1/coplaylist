@@ -1,4 +1,4 @@
-<!-- src/components/discover/newdisc/newdiscContainer.vue -->
+// src/components/discover/newdisc/newdiscContainer.vue
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -12,8 +12,9 @@ export default {
     const currentPage = ref(1);
 
     const updateVisiblePlaylists = async () => {
-      await discoverStore.fetchNewDiscoveries(24);  // Adjusted to fetch 24 playlists
+      await discoverStore.fetchNewDiscoveries(24);
       visiblePlaylists.value = discoverStore.newDiscoveries;
+      console.log('Visible Playlists:', visiblePlaylists.value);  // Log to check data
     };
 
     const showModal = (playlist) => {
@@ -22,12 +23,13 @@ export default {
 
     const changePage = (page) => {
       currentPage.value = page;
+      console.log(`Page changed to: ${page}`);  // Log page changes
     };
 
     onMounted(updateVisiblePlaylists);
 
-    // Ensure reactivity on page change
     watch(currentPage, () => {
+      console.log(`Current page updated to: ${currentPage.value}`); // Log page changes
       updateVisiblePlaylists();
     });
 
@@ -42,6 +44,7 @@ export default {
 };
 </script>
 
+
 <template>
   <div class="newdisc-container" v-if="visiblePlaylists.length">
     <div class="grid-container">
@@ -49,11 +52,9 @@ export default {
         <v-card
           class="playlist-line"
           v-for="(playlist, index) in visiblePlaylists.slice((currentPage - 1) * 3, currentPage * 3)"
-          :key="`${currentPage}-${playlist.id}`"
+          :key="`${currentPage}-${playlist.id || index}`"  
           @click="showModal(playlist)"
         >
-
-
           <div class="card-header">
             <v-card-title>{{ playlist.name }}</v-card-title>
             <div class="spotify-icon">
