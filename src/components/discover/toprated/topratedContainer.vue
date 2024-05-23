@@ -85,14 +85,14 @@ export default {
 
 <template>
   <div class="toprated-container">
-    <transition-group name="playlist-transition" tag="div" class="playlist-wrapper">
+    <!-- Use v-slide-x-transition for sliding effects -->
+    <transition-group tag="div" class="playlist-wrapper" name="slide-x-transition" mode="out-in">
       <v-card
           class="playlist-line"
           v-for="(playlist, index) in topRatedPlaylists.slice((currentPage - 1) * 2, currentPage * 2)"
           :key="`toprated-${playlist.id}-${updateCount}`"
           @click="showModal(playlist)"
         >
-
         <div class="card-header">
           <v-card-title>{{ playlist.name }}</v-card-title>
           <div class="spotify-icon">
@@ -121,7 +121,6 @@ export default {
     </div>
   </div>
 </template>
-
 
 <style scoped>
 .toprated-container {
