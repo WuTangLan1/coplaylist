@@ -56,9 +56,16 @@ app.get('/auth/spotify/export', (req, res, next) => {
 }));
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
-  res.redirect(`http://localhost:8080/export-success?token=${req.user.accessToken}`);
+  if (req.user && req.user.accessToken && req.user.profile) {
+      console.log("Spotify login successful", req.user.profile);
+      console.log("Access Token:", req.user.accessToken);
+      console.log("Spotify User ID:", req.user.profile.id); // Make sure this ID is used in playlist creation
+      res.redirect(`http://localhost:8080/export-success?token=${req.user.accessToken}&user_id=${req.user.profile.id}`);
+  } else {
+      console.error("Failed to get access token.");
+      res.redirect(`http://localhost:8080/export-failure`);
+  }
 });
-
 
 app.post('/generate-playlist', async (req, res) => {
     const { vibes, tones = {}, songs, userTaste ={}, excludeSongs= [] } = req.body;

@@ -1,51 +1,53 @@
-<!-- src\components\homeDir\my-playlists\spotify\exportSuccess.vue -->
-
 <template>
-    <div>
-      Exporting your playlist to Spotify...
-      <div v-if="error">{{ error }}</div>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        error: null
-      };
-    },
-    created() {
-      const token = this.$route.query.token;  
-      if (token) {
-        this.createSpotifyPlaylist(token);
-      } else {
-        this.error = "Failed to receive Spotify authentication token.";
-      }
-    },
-    methods: {
-      async createSpotifyPlaylist(accessToken) {
+  <div>
+    Exporting your playlist to Spotify...
+    <div v-if="error">{{ error }}</div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      error: null
+    };
+  },
+  created() {
+    const token = this.$route.query.token;
+    const userId = this.$route.query.user_id; // Make sure this is correctly extracted
+    if (token && userId) {
+      console.log("Received token and user ID:", token, userId);
+      this.createSpotifyPlaylist(token, userId);
+    } else {
+      this.error = "Failed to receive Spotify authentication token or user ID.";
+    }
+  },
+  methods: {
+    async createSpotifyPlaylist(accessToken, userId) {
+        const playlistDetails = {
+          name: 'New Playlist', 
+          description: 'Created from CoPlaylist',
+          public: false
+        };
+
+        console.log("Attempting to create a playlist with User ID:", userId);
+
         try {
-          const response = await axios.post('https://api.spotify.com/v1/users/me/playlists', {
-            name: 'New Playlist', 
-            description: 'Created from CoPlaylist',
-            public: false  
-          }, {
+          const response = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json'
             }
           });
-          if (response.data) {
-            console.log('Playlist created:', response.data);
-          }
+
+          console.log('Playlist created:', response.data);
         } catch (error) {
           console.error('Failed to create playlist:', error);
-          this.error = 'Error creating playlist on Spotify.';
+          console.error('Error data:', error.response.data);
         }
       }
-    }
   }
-  </script>
-  
+}
+</script>
