@@ -5,7 +5,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const path = require('path');
-const axios = require('axios'); 
+const axios = require('axios');
+const session = require('express-session');
+const passport = require('./passport-setup');
 
 const app = express();
 
@@ -30,49 +32,20 @@ app.use((req, res, next) => {
   });
 
 
-const spotifyServer = require('./spotifyserver.js');
-app.use('/spotify', spotifyServer);
-
-
-const session = require('express-session');
-
-const passport = require('./passport-setup');
-
 app.use(session({
   secret: '1c4d8b9f-351c-4bc2-8626-c883ba47d443',  
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: process.env.NODE_ENV === 'production' }  // secure: true in production
+  cookie: { secure: process.env.NODE_ENV === 'production' }  
 }));
 
-// Initialize Passport and restore authentication state, if any, from the session.
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
 
-app.get('/google123456789abcd.html', function(req, res) {
-    res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
-});
+const spotifyServer = require('./spotifyserver.js');
+app.use('/spotify', spotifyServer);
 
-app.get('*', function (req, res) {
-    res.sendFile(path.join(__dirname, '/dist/index.html'));
-});
-
-app.use((req, res, next) => {
-  console.log('Request Origin:', req.origin);
-  console.log('Request URL:', req.url);
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log(`Request Method: ${req.method}, Request URL: ${req.url}`);
-  console.log('Headers:', req.headers);
-  console.log('Origin:', req.headers.origin);
-  next();
-});
 
 app.get('/auth/spotify/export', (req, res, next) => {
   console.log("Attempting to authenticate with Spotify");
@@ -178,6 +151,13 @@ app.post('/generate-playlist', async (req, res) => {
     }
 });
 
+app.get('/google123456789abcd.html', function(req, res) {
+  res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
+});
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
