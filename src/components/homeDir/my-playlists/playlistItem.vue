@@ -17,7 +17,8 @@ export default {
   data() {
     return {
       isOpen: false,
-      showConfirmModal: false
+      showConfirmModal: false,
+      baseUrl : process.env.VUE_APP_API_BASE_URL
     };
   },
   computed: {
@@ -58,9 +59,12 @@ export default {
       this.$emit('delete', this.playlist.id);
       this.showConfirmModal = false;
     },
-    exportToSpotify() {
-      // Add logic to export the playlist to Spotify
+    exportToSpotify(playlist) {
+      console.log(this.baseUrl);
+      console.log('playlist', playlist);
+      window.open(`${this.baseUrl}/auth/spotify/export`, '_blank');
     }
+
   }
 }
 </script>
@@ -84,7 +88,7 @@ export default {
       </v-list>
       <div v-if="isOpen" class="text-right">
         <v-btn color="red" @click="openConfirmModal">Remove</v-btn>
-        <v-btn color="green" @click="exportToSpotify">Export to Spotify</v-btn>
+        <v-btn color="green" @click="exportToSpotify(playlist)">Export to Spotify</v-btn>
       </div>
       <v-fade-transition>
         <div v-if="hiddenSongs.length > 0 && !isOpen" class="text-center">

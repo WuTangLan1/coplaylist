@@ -1,3 +1,4 @@
+// server.js
 require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
@@ -8,31 +9,17 @@ const axios = require('axios');
 
 const app = express();
 
-const allowedOrigins = [
-  'http://localhost:8080',
-  'https://coplaylist-3481ef838394.herokuapp.com',
-  'https://coplaylist.com',
-  'https://www.coplaylist.com'
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-  optionsSuccessStatus: 200,
+  origin: ['https://coplaylist-3481ef838394.herokuapp.com', 'https://coplaylist.com', 'https://www.coplaylist.com', 'http://localhost:3000'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  methods: ['GET', 'POST', 'OPTIONS']
+  optionsSuccessStatus: 200
 };
 
-app.use(cors(corsOptions));
-app.use(bodyParser.json()); // Parse JSON-formatted incoming request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded data
 
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 app.use((req, res, next) => {
     if (req.header('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === 'production') {
@@ -42,20 +29,30 @@ app.use((req, res, next) => {
     }
   });
 
-  app.use('/', serveStatic(path.join(__dirname, '/dist')));
-
 
 const spotifyServer = require('./spotifyserver.js');
 app.use('/spotify', spotifyServer);
 
 
+const session = require('express-session');
+
+const passport = require('./passport-setup');
+
+app.use(session({
+  secret: '1c4d8b9f-351c-4bc2-8626-c883ba47d443',  
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: process.env.NODE_ENV === 'production' }  // secure: true in production
+}));
+
+// Initialize Passport and restore authentication state, if any, from the session.
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-
-
-app.use('/spotify', spotifyServer); 
 app.get('/google123456789abcd.html', function(req, res) {
     res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });
@@ -63,6 +60,32 @@ app.get('/google123456789abcd.html', function(req, res) {
 app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
+
+app.use((req, res, next) => {
+  console.log('Request Origin:', req.origin);
+  console.log('Request URL:', req.url);
+  next();
+});
+
+app.use((req, res, next) => {
+  console.log(`Request Method: ${req.method}, Request URL: ${req.url}`);
+  console.log('Headers:', req.headers);
+  console.log('Origin:', req.headers.origin);
+  next();
+});
+
+app.get('/auth/spotify/export', (req, res, next) => {
+  console.log("Attempting to authenticate with Spotify");
+  next();
+}, passport.authenticate('spotify', {
+  scope: ['playlist-modify-public', 'playlist-modify-private'],
+  showDialog: true 
+}));
+
+app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
+  res.redirect(`http://localhost:8080/export-success?token=${req.user.accessToken}`);
+});
+
 
 app.post('/generate-playlist', async (req, res) => {
     const { vibes, tones = {}, songs, userTaste ={}, excludeSongs= [] } = req.body;

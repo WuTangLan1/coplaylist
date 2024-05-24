@@ -7,6 +7,7 @@ import VibeContainer from '../components/inputsDir/vibeContainer.vue';
 import SongsContainer from '../components/inputsDir/songsContainer.vue';
 import OutputContainer from '../components/outputsDir/outputContainer.vue'
 import playlistModal from '../components/homeDir/my-playlists/playlistModal.vue'
+import ExportSuccess from '../components/homeDir/my-playlists/spotify/exportSuccess.vue';
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/my-playlists',
     name: 'My-Playlists',
     component: playlistModal
+  },
+  {
+    path: '/export-success',
+    name: 'ExportSuccess',
+    component: ExportSuccess 
   }
 ];
 
