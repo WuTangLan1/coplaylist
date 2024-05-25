@@ -1,11 +1,4 @@
-
-<template>
-  <div>
-    Exporting your playlist to Spotify...
-    <div v-if="error">{{ error }}</div>
-  </div>
-</template>
-
+<!-- // In exportSuccess.vue -->
 <script>
 import axios from 'axios';
 
@@ -16,39 +9,76 @@ export default {
     };
   },
   created() {
-    const token = this.$route.query.token;
-    const userId = this.$route.query.user_id; // Make sure this is correctly extracted
-    if (token && userId) {
-      console.log("Received token and user ID:", token, userId);
-      this.createSpotifyPlaylist(token, userId);
+    const { token, user_id, playlist_name } = this.$route.query;
+    if (token && user_id && playlist_name) {
+      const trackDetails = JSON.parse(sessionStorage.getItem('trackDetails'));
+      if (trackDetails) {
+        this.createSpotifyPlaylist(token, user_id, decodeURIComponent(playlist_name), trackDetails);
+      } else {
+        this.error = "No track details available.";
+      }
+      sessionStorage.removeItem('trackDetails'); 
     } else {
-      this.error = "Failed to receive Spotify authentication token or user ID.";
+      this.error = "Failed to receive all necessary parameters.";
     }
   },
   methods: {
-    async createSpotifyPlaylist(accessToken, userId) {
-        const playlistDetails = {
-          name: 'New Playlist', 
-          description: 'Created from CoPlaylist',
-          public: false
-        };
+    async searchTrack(accessToken, track) {
+      const query = encodeURIComponent(`${track.title} artist:${track.artist}`);
+      try {
+        const searchResponse = await axios.get(`https://api.spotify.com/v1/search?q=${query}&type=track&limit=1`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        return searchResponse.data.tracks.items.length > 0 ? searchResponse.data.tracks.items[0].uri : null;
+      } catch (error) {
+        console.error('Failed to search for track:', error);
+        return null; // Ensure failure doesn't halt other track searches
+      }
+    },
 
-        console.log("Attempting to create a playlist with User ID:", userId);
+    async createSpotifyPlaylist(accessToken, userId, playlistName, tracks) {
+      const playlistDetails = {
+        name: playlistName,
+        description: 'Created from CoPlaylist',
+        public: false
+      };
 
-        try {
-          const response = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
+      try {
+        const createPlaylistResponse = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const newPlaylistId = createPlaylistResponse.data.id;
+        const trackUris = await Promise.all(tracks.map(track => this.searchTrack(accessToken, track)));
+        const validUris = trackUris.filter(uri => uri != null);
+
+        if (validUris.length > 0) {
+          await axios.post(`https://api.spotify.com/v1/playlists/${newPlaylistId}/tracks`, { uris: validUris }, {
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json'
             }
           });
-
-          console.log('Playlist created:', response.data);
-        } catch (error) {
-          console.error('Failed to create playlist:', error);
-          console.error('Error data:', error.response.data);
         }
+      } catch (error) {
+        console.error('Failed to create or populate playlist:', error);
+        this.error = 'Failed to create playlist on Spotify.';
       }
+    }
   }
 }
 </script>
+
+
+<template>
+  <div>
+    Exporting your playlist to Spotify...
+    <div v-if="error">{{ error }}</div>
+  </div>
+</template>

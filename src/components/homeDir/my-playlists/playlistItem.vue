@@ -60,11 +60,16 @@ export default {
       this.showConfirmModal = false;
     },
     exportToSpotify(playlist) {
-      console.log(this.baseUrl);
-      console.log('playlist', playlist);
-      window.open(`${this.baseUrl}/auth/spotify/export`, '_blank');
-    }
-
+        const trackDetails = playlist.details.map(song => ({
+          title: song.title,
+          artist: song.artist,
+          releaseYear: song.releaseYear,
+          previewUrl: song.previewUrl  // Ensure these properties exist in your playlist.details
+        }));
+        sessionStorage.setItem('trackDetails', JSON.stringify(trackDetails)); // Storing track details in sessionStorage
+        const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}&playlist_name=${encodeURIComponent(playlist.name)}`;
+        window.open(url, '_blank');
+      }
   }
 }
 </script>
