@@ -1,3 +1,4 @@
+
 <template>
   <div>
     Exporting your playlist to Spotify...
@@ -25,41 +26,29 @@ export default {
     }
   },
   methods: {
-    async createSpotifyPlaylist(playlistName, songs, accessToken, userId) {
-      const playlistDetails = {
-        name: playlistName, 
-        description: 'Created from CoPlaylist',
-        public: false
-      };
+    async createSpotifyPlaylist(accessToken, userId) {
+        const playlistDetails = {
+          name: 'New Playlist', 
+          description: 'Created from CoPlaylist',
+          public: false
+        };
 
-      try {
-        const createPlaylistResponse = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-            'Content-Type': 'application/json'
-          }
-        });
+        console.log("Attempting to create a playlist with User ID:", userId);
 
-        const playlistId = createPlaylistResponse.data.id;
-        const trackUris = songs.map(song => song.previewUrl).filter(url => url); // assuming previewUrl is the Spotify track URI
-
-        if (trackUris.length > 0) {
-          await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-            uris: trackUris
-          }, {
+        try {
+          const response = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
             headers: {
               'Authorization': `Bearer ${accessToken}`,
               'Content-Type': 'application/json'
             }
           });
-        }
 
-        console.log('Playlist created:', createPlaylistResponse.data);
-      } catch (error) {
-        console.error('Failed to create playlist:', error);
-        this.error = 'Failed to create playlist.';
+          console.log('Playlist created:', response.data);
+        } catch (error) {
+          console.error('Failed to create playlist:', error);
+          console.error('Error data:', error.response.data);
+        }
       }
-    }
   }
 }
 </script>
