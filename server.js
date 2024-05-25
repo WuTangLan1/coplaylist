@@ -59,7 +59,8 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
   if (req.user && req.user.accessToken && req.user.profile) {
       const playlistId = req.query.playlist_id;
       const playlistName = req.query.playlist_name;
-      res.redirect(`http://localhost:8080/export-success?token=${req.user.accessToken}&user_id=${req.user.profile.id}&playlist_id=${playlistId}&playlist_name=${playlistName}`);
+      console.log('Received playlist name:', playlistName); // Check what is logged here
+      res.redirect(`http://localhost:8080/export-success?token=${req.user.accessToken}&user_id=${req.user.profile.id}&playlist_id=${playlistId}&playlist_name=${encodeURIComponent(playlistName)}`);
   } else {
       console.error("Failed to get access token.");
       res.redirect(`http://localhost:8080/export-failure`);

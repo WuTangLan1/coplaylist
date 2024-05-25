@@ -61,15 +61,17 @@ export default {
     },
     exportToSpotify(playlist) {
         const trackDetails = playlist.details.map(song => ({
-          title: song.title,
-          artist: song.artist,
-          releaseYear: song.releaseYear,
-          previewUrl: song.previewUrl  // Ensure these properties exist in your playlist.details
+            title: song.title,
+            artist: song.artist,
+            releaseYear: song.releaseYear,
+            previewUrl: song.previewUrl  // This might still be null; ensure other details are correct
         }));
-        sessionStorage.setItem('trackDetails', JSON.stringify(trackDetails)); // Storing track details in sessionStorage
-        const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}&playlist_name=${encodeURIComponent(playlist.name)}`;
+        sessionStorage.setItem('trackDetails', JSON.stringify(trackDetails)); 
+        sessionStorage.setItem('playlistName', JSON.stringify(playlist.name));  
+        const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}`;
         window.open(url, '_blank');
-      }
+        console.log("Exporting playlist:", playlist.name); 
+    }
   }
 }
 </script>

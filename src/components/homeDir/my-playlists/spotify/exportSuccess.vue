@@ -9,19 +9,22 @@ export default {
     };
   },
   created() {
-    const { token, user_id, playlist_name } = this.$route.query;
-    if (token && user_id && playlist_name) {
-      const trackDetails = JSON.parse(sessionStorage.getItem('trackDetails'));
-      if (trackDetails) {
-        this.createSpotifyPlaylist(token, user_id, decodeURIComponent(playlist_name), trackDetails);
-      } else {
-        this.error = "No track details available.";
-      }
-      sessionStorage.removeItem('trackDetails'); 
+    const { token, user_id } = this.$route.query;
+    if (token && user_id) {
+        const trackDetails = JSON.parse(sessionStorage.getItem('trackDetails'));
+        const playlistName = JSON.parse(sessionStorage.getItem('playlistName'));  // Retrieve the playlist name
+        sessionStorage.removeItem('trackDetails'); // Clean up after retrieval
+        sessionStorage.removeItem('playlistName'); // Clean up after retrieval
+        if (playlistName && trackDetails) {
+            this.createSpotifyPlaylist(token, user_id, decodeURIComponent(playlistName), trackDetails);
+        } else {
+            this.error = "No track details or playlist name available.";
+        }
     } else {
-      this.error = "Failed to receive all necessary parameters.";
+        this.error = "Failed to receive all necessary parameters.";
     }
-  },
+},
+
   methods: {
     async searchTrack(accessToken, track) {
       const query = encodeURIComponent(`${track.title} artist:${track.artist}`);
@@ -45,6 +48,8 @@ export default {
         description: 'Created from CoPlaylist',
         public: false
       };
+
+      console.log("Creating playlist with name:", playlistName);
 
       try {
         const createPlaylistResponse = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
