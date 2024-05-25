@@ -12,7 +12,7 @@ const passport = require('./passport-setup');
 const app = express();
 
 const corsOptions = {
-  origin: ['https://coplaylist-3481ef838394.herokuapp.com', 'https://coplaylist.com', 'https://www.coplaylist.com', 'http://localhost:3000'],
+  origin: ['https://coplaylist-3481ef838394.herokuapp.com', 'https://coplaylist.com', 'https://www.coplaylist.com', 'http://localhost:3000', 'http://localhost:3000'],
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -87,7 +87,7 @@ app.post('/generate-playlist', async (req, res) => {
     }
 
     const prompt = `
-        Generate a playlist of between 8-13 (PLEASE VARY THIS LENGTH AND ALWAYS ATTEMPT TO GENERATE DIFFERENT LENGTHED PLAYLISTS (which must adhere to the following structure : "song title - artist name : release year") 
+        Generate a playlist of between 12-20 (PLEASE VARY THIS LENGTH AND ALWAYS ATTEMPT TO GENERATE DIFFERENT LENGTHED PLAYLISTS (which must adhere to the following structure : "song title - artist name : release year") 
         that must adhere to the following playlist guides to create a wonderful and inspiring playlist that will also impress the 
         user with how accurate and responsive to their input it is :  
         Generate a playlist that must adhere to the following playlist guides:

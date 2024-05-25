@@ -26,13 +26,13 @@ refreshSpotifyToken();
 setInterval(refreshSpotifyToken, 3600 * 1000); 
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
   app.use((req, res, next) => {
-    const allowedOrigins = ['http://localhost:8080', 'https://coplaylist.com', 'https://www.coplaylist.com'];
+    const allowedOrigins = ['http://localhost:8080', 'http://localhost:3000', 'https://coplaylist.com', 'https://www.coplaylist.com'];
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
