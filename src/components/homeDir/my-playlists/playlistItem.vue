@@ -69,8 +69,7 @@ export default {
         sessionStorage.setItem('trackDetails', JSON.stringify(trackDetails)); 
         sessionStorage.setItem('playlistName', JSON.stringify(playlist.name));  
         const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}`;
-        window.open(url, '_blank');
-        console.log("Exporting playlist:", playlist.name); 
+        window.open(url, '_blank'); 
     }
   }
 }

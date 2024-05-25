@@ -49,7 +49,6 @@ export default {
         public: false
       };
 
-      console.log("Creating playlist with name:", playlistName);
 
       try {
         const createPlaylistResponse = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
