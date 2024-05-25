@@ -60,11 +60,8 @@ export default {
       this.showConfirmModal = false;
     },
     exportToSpotify(playlist) {
-      console.log(this.baseUrl);
-      console.log('playlist', playlist);
-      window.open(`${this.baseUrl}/auth/spotify/export`, '_blank');
-    }
-
+        this.$emit('export-to-spotify', playlist);
+      }
   }
 }
 </script>

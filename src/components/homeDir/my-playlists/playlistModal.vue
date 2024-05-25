@@ -1,10 +1,11 @@
-<!-- src\components\homeDir\my-playlists\playlistContainer.vue -->
+<!-- src\components\homeDir\my-playlists\playlistModal.vue -->
 
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
 import { collection, query, where, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import PlaylistItem from './playlistItem.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -15,8 +16,19 @@ export default {
       playlists: [],
       loading: true,
       error: null,
-      filterBy: 'all'
+      filterBy: 'all',
+      token: '',
+      userId: ''
     };
+  },
+  watch: {
+    // Watchers to update token and userId when route query changes
+    '$route.query.token': function(newToken) {
+      this.token = newToken;
+    },
+    '$route.query.user_id': function(newUserId) {
+      this.userId = newUserId;
+    }
   },
   computed: {
     filteredPlaylists() {
@@ -60,9 +72,53 @@ export default {
         console.error('Error deleting playlist:', error);
       }
     },
+    handleSpotifyExport(playlist) {
+      this.createSpotifyPlaylist(playlist.name, playlist.details, this.token, this.userId);
+    },
+    async createSpotifyPlaylist(playlistName, songs, accessToken, userId) {
+        const playlistDetails = {
+            name: playlistName, 
+            description: 'Created from CoPlaylist',
+            public: false
+        };
+
+        try {
+            const createPlaylistResponse = await axios.post(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistDetails, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const playlistId = createPlaylistResponse.data.id;
+            const trackUris = songs.map(song => song.previewUrl).filter(url => url !== null);
+
+            if (trackUris.length > 0) {
+                await axios.post(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+                    uris: trackUris
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
+
+            console.log('Playlist created:', createPlaylistResponse.data);
+        } catch (error) {
+            console.error('Failed to create playlist:', error);
+            this.error = 'Failed to create playlist.'; // Make sure you handle this error appropriately
+        }
+    },
   },
   created() {
     this.fetchPlaylists();
+    this.token = this.$route.query.token;
+    this.userId = this.$route.query.user_id;
+  },
+  mounted() {
+    this.token = this.$route.query.token;
+    this.userId = this.$route.query.user_id;
   }
 }
 </script>
@@ -95,7 +151,7 @@ export default {
           <p class="no-playlists-message">You don't have any playlists yet.</p>
         </div>
         <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @export-to-spotify="handleSpotifyExport" @delete="deletePlaylist" />
         </div>
       </div>
     </div>
