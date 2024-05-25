@@ -12,7 +12,7 @@ const passport = require('./passport-setup');
 const app = express();
 
 const corsOptions = {
-  origin: ['https://coplaylist-3481ef838394.herokuapp.com', 'https://coplaylist.com', 'https://www.coplaylist.com', 'http://localhost:3000', 'http://localhost:3000'],
+  origin: ['https://coplaylist-3481ef838394.herokuapp.com', 'https://coplaylist.com', 'https://www.coplaylist.com', 'http://localhost:3000', 'http://localhost:8080'],
   credentials: true,
   optionsSuccessStatus: 200
 };
