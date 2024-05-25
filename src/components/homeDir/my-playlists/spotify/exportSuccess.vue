@@ -97,13 +97,15 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  max-width: 400px;
+  max-height: 400px;
   min-height: 100vh;
   font-family: Arial, sans-serif;
 }
 
 .success-message, .error-message {
   color: #fff;
-  background-color: #44c767; /* Green for success */
+  background-color: #44c767; 
   padding: 20px;
   border-radius: 5px;
   margin-top: 20px;
