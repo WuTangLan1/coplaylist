@@ -94,7 +94,7 @@ export default {
         <div v-else-if="filteredPlaylists.length === 0" class="no-playlists-container">
           <p class="no-playlists-message">You don't have any playlists yet.</p>
         </div>
-        <div v-else class="playlist-container">
+        <div v-else class="show-playlist-container">
           <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" class="playlist-item" />
         </div>
        
@@ -129,6 +129,15 @@ export default {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
+    overflow: hidden;
+}
+
+@media (max-width: 850px)
+{
+  .modal {
+    margin-top: 1.5rem;
+    max-height: 85vh;
+  }
 }
 
 @media (max-width: 550px)
@@ -199,9 +208,25 @@ export default {
 .playlist-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;  /* Adjusted for visual spacing */
-    justify-content: flex-start;
-    width: 100%;  /* Ensures it takes full width inside modal */
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    width: 100%;
+    max-height: 64vh;
+  
+}
+
+.show-playlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    width: 100%;
 }
 
 .playlist-item {
@@ -211,12 +236,6 @@ export default {
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-}
-
-
-.playlists {
-  width: 100%;
-  min-width: 70vh;
 }
 
 

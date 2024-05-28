@@ -163,7 +163,6 @@ export default {
   align-self: center;
   width: 100%;
   height: calc(100vh - var(--header-height) - var(--footer-height));
-  overflow-y: auto;
 }
 
 
