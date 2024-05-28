@@ -145,7 +145,7 @@ export default {
 {
   .modal {
     margin-top: 2.5rem;
-    max-height: 75vh;
+    max-height: 78vh;
   }
 }
 
@@ -214,7 +214,8 @@ export default {
     align-items: start;
     padding: 10px;
     width: 100%;
-    max-height: 64vh;
+    max-height: 60vh;
+    margin-bottom: 20px;
   
 }
 

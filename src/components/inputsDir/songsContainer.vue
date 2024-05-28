@@ -153,7 +153,7 @@ export default {
         <p>Please verify your email address before generating a playlist.</p>
       </div>
       <div class="button-row">
-        <button class="prev-btn" @click="goBack">Previous</button>
+        <VBtn @click="goBack" color="primary">Previous</VBtn>
         <div v-if="authStore.user" class="token-display">
           <img
             :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
@@ -193,12 +193,34 @@ export default {
 }
 
 .input-column input {
-  width:100%;
+  width: 50vw;
+  max-width: 600px;
   margin: 10px 15px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 1rem; 
+}
+
+@media(max-width : 500px)
+{
+  .input-column input {
+     width:70vw;
+  }
+}
+
+@media(max-width : 700px)
+{
+  .input-column input {
+     width: 65vw;
+  }
+}
+
+@media(max-width : 900px)
+{
+  .input-column input {
+     width: 60vw;
+  }
 }
 
 .checkbox-group {

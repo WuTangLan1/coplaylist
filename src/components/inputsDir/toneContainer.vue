@@ -198,31 +198,6 @@ export default {
   gap: 20px;
 }
 
-@media (min-width: 1000px) {
-  .selections-container {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .genres-container, .eras-container {
-    width: 48%; /* Adjusting the width to be slightly less than half to fit side by side */
-    display: flex;
-    flex-direction: column; /* Ensures vertical stacking of content within each container */
-  }
-
-  .genres-container > .placeholder, 
-  .eras-container > .placeholder,
-  .selected-genres-container,
-  .selected-eras-container {
-    width: 100%; /* Ensures these elements take the full width of their container */
-    margin-top: 10px; /* Adds space between the chips and the label */
-  }
-
-  .genre-chip, .era-chip {
-    width: 100%; /* Chips take full width to fill their container */
-  }
-}
-
 
 .step-heading {
   display: flex;
