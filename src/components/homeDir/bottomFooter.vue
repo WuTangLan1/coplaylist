@@ -54,22 +54,19 @@ export default {
 
 @media (min-width: 600px) {
   .footer-content {
-    flex-wrap: nowrap; /* Prevent wrapping to a new line */
-  }
-
-  .footer-links, .copy-right {
-    flex: 1; /* Assign equal space to both columns */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row; /* Ensures items are in a row */
+    justify-content: space-around; /* Distributes space evenly */
   }
 
   .footer-links {
-    justify-content: space-evenly; /* Distribute links evenly */
+    flex-direction: row;
+    justify-content: center;
   }
 
   .copy-right {
-    justify-content: flex-end; /* Align copyright to the right */
+    align-self: center; /* Centers vertically within the column */
+    margin-left: auto; /* Pushes to the right */
+    margin-top: 0; /* Removes the margin on top */
   }
 }
 
