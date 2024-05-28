@@ -103,11 +103,74 @@ export default {
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 1rem auto;
   overflow-y: auto;
   box-shadow: 0 2px 12px rgb(48, 5, 57);
 }
+
+@media (min-width: 724px) {
+  .playlist-section ol {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    column-gap: 20px; /* Space between columns */
+  }
+
+  .song-item {
+    padding: 0.75rem 1rem; /* Smaller padding for more compact items */
+    font-size: 0.8rem; /* Smaller font size */
+  }
+
+  .song-details {
+    font-size: 0.8rem; /* Adjusting text size within song details */
+  }
+
+  .song-name, .song-artist {
+    font-size: 0.9rem; /* Smaller font size for song titles and artist names */
+  }
+
+  .icon-container {
+    min-width: 50px; /* Adjust width as necessary */
+  }
+
+  .spotify-icon, .redo-icon {
+    width: 20px; /* Smaller icons */
+    height: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .playlist-section ol {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    column-gap: 20px; /* Space between columns */
+    row-gap: 20px; /* Space between rows for better separation */
+  }
+
+  .song-item {
+    padding: 0.75rem 1rem; /* Smaller padding for a more compact look */
+    font-size: 0.75rem; /* Slightly smaller font size */
+  }
+
+  .song-details {
+    font-size: 0.75rem; /* Adjusting text size within song details */
+  }
+
+  .song-name, .song-artist {
+    font-size: 0.85rem; /* Smaller font size for song titles and artist names */
+  }
+
+  .icon-container {
+    min-width: 50px; /* Adjust width as necessary */
+  }
+
+  .spotify-icon, .redo-icon {
+    width: 18px; /* Smaller icons */
+    height: 18px;
+  }
+}
+
+
 
 .playlist-title {
   font-size: 2rem;
@@ -142,6 +205,21 @@ ol {
   display: flex;
   flex-direction: column;
 }
+
+@media (min-width: 1024px) {
+  .song-item {
+    padding: 1.5rem 2rem; /* More padding for spacious layout */
+  }
+
+  .song-name, .song-artist {
+    font-size: 1.5rem; /* Larger text for better readability */
+  }
+
+  .song-artist {
+    font-size: 1.2rem;
+  }
+}
+
 
 .redo-icon {
   margin-right: 10px;
