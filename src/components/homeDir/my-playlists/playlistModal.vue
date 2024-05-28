@@ -196,11 +196,32 @@ export default {
 }
 
 .playlist-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 1rem;
     max-width: 800px;
     margin: 0 auto;
     max-height: 50vh;
     overflow-y: auto;
 }
+
+@media (min-width: 800px) {
+    .playlist-container {
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    }
+}
+
+
+.playlist-item {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .filter-container {
     display: flex;
