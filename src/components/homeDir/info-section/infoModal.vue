@@ -62,45 +62,44 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.8); /* Increased opacity for better overlay visibility */
+  backdrop-filter: blur(15px); /* Increased blur for more focus on modal */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 500;
+  z-index: 5000; /* Make sure this is higher than any other content */
+  overflow: hidden; /* Prevents scrolling inside the backdrop */
 }
 
 .modal {
   background: white;
-  padding: 1rem;
+  padding: 20px;
   border-radius: 10px;
-  width: 90%;
+  width: 80%; /* Responsive width */
   max-width: 700px;
   max-height: 75vh;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-  animation: dropAnimation 0.5s ease-in-out forwards;
-  position: relative;
-  margin-bottom: 200px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  position: relative; 
 }
 
-@media(max-width: 600px)
-{
-  .modal {
-    margin-top: 2.5rem;
-    max-height: 75vh;
-    margin-bottom: 1rem;
-  }
-}
-
+/* Ensures the modal does not animate from the top on larger screens */
 @keyframes dropAnimation {
-  0% {
-    transform: translateY(-100%);
+  from {
     opacity: 0;
+    transform: translateY(-50px); /* Less dramatic drop */
   }
-  100% {
-    transform: translateY(0);
+  to {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments for modal on smaller screens */
+@media (max-width: 600px) {
+  .modal {
+    width: 95%; /* Makes modal wider on smaller screens */
+    margin-top: 50px; /* Provides some space from the top */
+    margin-bottom: 50px; /* Provides some space from the bottom */
   }
 }
 
@@ -111,6 +110,13 @@ export default {
   padding: 1rem;
   background-color: #f3f3f4;
   border-radius: 10px 10px 0 0;
+}
+
+.modal-body {
+  padding: 0.5rem;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 50vh;
 }
 
 .modal-title {
@@ -164,12 +170,6 @@ export default {
   background-color: #345f8d;
 }
 
-.modal-body {
-  padding: 0.5rem;
-  width: 100%;
-  overflow-y: auto;
-  max-height: calc(78vh - 150px);
-}
 
 .info-icon {
   height: 60px; 
