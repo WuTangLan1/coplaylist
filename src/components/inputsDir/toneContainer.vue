@@ -184,7 +184,7 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px; 
+  max-width: 1100px; 
   margin: 0 auto;
   overflow-y: auto; 
 }
@@ -272,6 +272,21 @@ h3.description {
   .genres-container,
   .eras-container {
     grid-template-columns: repeat(4, 1fr); 
+  }
+}
+
+@media (min-width: 800px) {
+  .genres-container,
+  .eras-container {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 1rem); /* Adjusting the width to be slightly less than half to accommodate margin */
+  }
+
+  .tone-container {
+    flex-direction: row; /* Making the main container flex to align children side by side */
+    justify-content: space-between; /* Adding space between the children */
+    gap: 2rem; /* Gap between genre and era containers */
   }
 }
 
