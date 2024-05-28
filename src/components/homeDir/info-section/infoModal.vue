@@ -24,12 +24,16 @@ export default {
     };
   },
   methods: {
-    closeModal() {
-      this.$emit('closeModal');
-    },
-    changeComponent(componentName) {
-      this.$emit('update:currentComponent', componentName);  
-    }
+       closeModal() {
+          this.$emit('closeModal');
+          document.body.style.overflow = 'auto'; 
+        },
+        changeComponent(componentName) {
+          this.$emit('update:currentComponent', componentName);  
+        },
+        openModal() {
+          document.body.style.overflow = 'hidden'; 
+        }
   }
 };
 </script>
