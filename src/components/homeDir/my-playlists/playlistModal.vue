@@ -94,9 +94,10 @@ export default {
         <div v-else-if="filteredPlaylists.length === 0" class="no-playlists-container">
           <p class="no-playlists-message">You don't have any playlists yet.</p>
         </div>
-        <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
+        <div v-else class="playlist-container">
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" class="playlist-item" />
         </div>
+       
       </div>
     </div>
   </div>
@@ -196,31 +197,27 @@ export default {
 }
 
 .playlist-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 1rem;
-    max-width: 800px;
-    margin: 0 auto;
-    max-height: 50vh;
-    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;  /* Adjusted for visual spacing */
+    justify-content: flex-start;
+    width: 100%;  /* Ensures it takes full width inside modal */
 }
-
-@media (min-width: 800px) {
-    .playlist-container {
-        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    }
-}
-
 
 .playlist-item {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    flex: 1 0 250px; /* Adjust base width to fit more items in a row */
+    max-width: 300px; /* Maximum width to ensure items do not grow too large */
+    margin: 5px;  /* Adjust margins as necessary */
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 
+
+.playlists {
+  width: 100%;
+  min-width: 70vh;
+}
 
 
 .filter-container {
