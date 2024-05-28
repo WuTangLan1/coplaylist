@@ -125,11 +125,12 @@ export default {
     padding: 0.4rem;
     width: 90%;
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 82vh;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
     overflow: hidden;
+    z-index: 1000;
 }
 
 @media (max-width: 850px)

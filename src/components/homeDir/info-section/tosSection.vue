@@ -55,7 +55,10 @@ export default {
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
-  padding-bottom: 60px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 50px;
 }
 
 .tos-section h1, .tos-section h2 {
