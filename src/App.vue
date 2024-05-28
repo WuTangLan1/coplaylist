@@ -162,9 +162,10 @@ export default {
   align-content: center;
   align-self: center;
   width: 100%;
+  height: calc(100vh - var(--header-height) - var(--footer-height));
   overflow-y: auto;
-  padding-top: 64px; /* Adjust padding to match the height of the topHeader */
 }
+
 
 @media (min-width: 500px) {
   .router-view-container {
@@ -172,7 +173,7 @@ export default {
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    padding-top: 64px; /* Adjust padding to match the height of the topHeader */
+    padding-top: 64px; 
   }
 }
 </style>

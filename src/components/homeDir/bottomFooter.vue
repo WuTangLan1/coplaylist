@@ -47,10 +47,42 @@ export default {
 .bottom-footer {
   background-color: #220956;
   color: black;
-  max-height: 15vh;
   text-align: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+}
+
+@media (min-width: 600px) {
+  .footer-content {
+    flex-wrap: nowrap; /* Prevent wrapping to a new line */
+  }
+
+  .footer-links, .copy-right {
+    flex: 1; /* Assign equal space to both columns */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer-links {
+    justify-content: space-evenly; /* Distribute links evenly */
+  }
+
+  .copy-right {
+    justify-content: flex-end; /* Align copyright to the right */
+  }
+}
+
+@media(min-height: 840px)
+{
+  .bottom-footer {
+    max-height: 13vh;
+  }
+
+  .footer-links {
+    font-size: 0,7rem;
+  }
+
 }
 
 .footer-content {
@@ -77,7 +109,7 @@ export default {
 }
 
 .copy-right {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 0.8rem;
   color: white;
 }

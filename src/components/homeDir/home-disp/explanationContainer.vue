@@ -150,6 +150,13 @@ export default {
   min-height: 500px;
 }
 
+@media (min-width: 1000px) {
+  .features-container {
+    min-width: 800px;
+    min-height: 53vh;
+  }
+}
+
 .button-group {
   display: flex;
   width: 100%;
