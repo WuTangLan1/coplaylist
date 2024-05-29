@@ -52,10 +52,10 @@ export default {
   padding: 20px;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 500px) {
   .footer-content {
-    flex-direction: row; /* Ensures items are in a row */
-    justify-content: space-around; /* Distributes space evenly */
+    flex-direction: row; 
+    justify-content: space-around;
   }
 
   .footer-links {
@@ -64,9 +64,9 @@ export default {
   }
 
   .copy-right {
-    align-self: center; /* Centers vertically within the column */
-    margin-left: auto; /* Pushes to the right */
-    margin-top: 0; /* Removes the margin on top */
+    align-self: center; 
+    margin-left: auto; 
+    margin-top: 0; 
   }
 }
 
