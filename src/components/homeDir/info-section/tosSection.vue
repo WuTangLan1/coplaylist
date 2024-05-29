@@ -44,7 +44,7 @@ export default {
     </p>
     <h2>9. Contact Us</h2>
     <p>
-      If you have any questions about these Terms, please contact us.
+      If you have any questions about these Terms, please contact us at adminaccount@coplaylist.com
     </p>
   </div>
 </template>

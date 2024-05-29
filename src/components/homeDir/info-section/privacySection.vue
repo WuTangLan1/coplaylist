@@ -40,7 +40,7 @@ export default {
     </p>
     <h2>8. Contact Us</h2>
     <p>
-      If you have questions about this privacy policy, please contact us via [your contact information].
+      If you have questions about this privacy policy, please contact us via <a href="mailto:adminaccount@coplaylist.com">adminaccount@coplaylist.com</a>
     </p>
   </div>
 </template>
