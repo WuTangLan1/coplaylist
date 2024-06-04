@@ -248,7 +248,6 @@ export default {
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 
-
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -271,6 +270,29 @@ export default {
   border-radius: 0.3rem;
   background-color: #d0caec;
   padding: 0.3rem;
+  max-width: 45vw;
+}
+
+@media(max-width:500px)
+{
+  .key-container {
+    max-width: 40vw;
+  }
+
+  .filter-container {
+    max-width: 40vw;
+  }
+}
+
+@media(max-width:400px)
+{
+  .key-container {
+    max-width: 37vw;
+  }
+
+  .filter-container {
+    max-width: 37vw;
+  }
 }
 
 .key-note {
