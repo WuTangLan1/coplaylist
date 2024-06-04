@@ -76,14 +76,22 @@ export default {
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
-      <div class="filter-container">
-        <label for="filter">Filter by:</label>
-        <select id="filter" v-model="filterBy">
-          <option value="all">All</option>
-          <option value="favourited">Favourited</option>
-          <option value="date">Date</option>
-          <option value="alphabetical">Alphabetical</option>
-        </select>
+      <div class="header-container">
+        <div class="filter-container">
+          <label for="filter">Filter by:</label>
+          <select id="filter" v-model="filterBy">
+            <option value="all">All</option>
+            <option value="favourited">Favourited</option>
+            <option value="date">Date</option>
+            <option value="alphabetical">Alphabetical</option>
+          </select>
+        </div>
+        <div class="key-container">
+          <v-btn>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <span class="key-note">Click to add songs to your Spotify library</span>
+        </div>
       </div>
       <div class="playlist-container">
         <div v-if="loading" class="loading-container">
@@ -232,22 +240,43 @@ export default {
 }
 
 .playlist-item {
-    flex: 1 0 250px; /* Adjust base width to fit more items in a row */
-    max-width: 300px; /* Maximum width to ensure items do not grow too large */
-    margin: 5px;  /* Adjust margins as necessary */
+    flex: 1 0 250px; 
+    max-width: 300px; 
+    margin: 5px;  
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
 
 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+
 .filter-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.3rem;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.key-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(89, 89, 228);
+  border-radius: 0.3rem;
+  background-color: #d0caec;
+  padding: 0.3rem;
+}
+
+.key-note {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
 }
 
 label {
