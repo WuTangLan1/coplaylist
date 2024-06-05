@@ -1,7 +1,7 @@
 <!-- // src/components/discover/newdisc/newdiscContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { computed, onMounted, ref, watch, nextTick } from 'vue';
+import {  onMounted, ref, watch, nextTick } from 'vue';
 import anime from 'animejs';
 
 export default {
@@ -14,10 +14,10 @@ export default {
     const animatePlaylists = () => {
       anime({
         targets: '.playlist-line',
-        translateX: [300, 0],  // Start from off-screen right and come into view
-        scale: [0.8, 1],       // Start smaller and scale up to normal size
+        translateX: [300, 0], 
+        scale: [0.8, 1],      
         opacity: [0, 1],
-        delay: anime.stagger(150, {start: 200}), // Stagger the start of animation for each card with 150ms apart
+        delay: anime.stagger(150, {start: 200}), 
         easing: 'easeOutExpo'
       });
     };
@@ -26,9 +26,9 @@ export default {
     const updateVisiblePlaylists = async () => {
       await discoverStore.fetchNewDiscoveries(24);
       visiblePlaylists.value = discoverStore.newDiscoveries;
-      anime.set('.playlist-line', { opacity: 0, translateX: 300 }); // Reset the state for new animation
+      anime.set('.playlist-line', { opacity: 0, translateX: 300 }); 
       nextTick(() => {
-        animatePlaylists(); // Trigger animation after Vue updates the DOM
+        animatePlaylists(); 
       });
     };
 

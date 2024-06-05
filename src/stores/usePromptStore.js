@@ -219,7 +219,7 @@ export const usePromptStore = defineStore('prompt', {
         }
     
         return playlistArray.map(line => {
-            if (!line.trim() || !line.includes('-') || !line.includes(':')) return null; // Enhanced validation
+            if (!line.trim() || !line.includes('-') || !line.includes(':')) return null;
             try {
                 const [titleArtist, releaseYear] = line.trim().split(':');
                 if (!titleArtist || !releaseYear) throw new Error("Malformed line, missing components");
