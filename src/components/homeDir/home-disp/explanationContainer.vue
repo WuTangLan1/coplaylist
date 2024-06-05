@@ -86,9 +86,10 @@ export default {
     <v-row class="button-group" justify="space-between">
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
-          <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
-          Improve
-        </v-btn>
+            <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
+            Improve
+            <span class="badge">Coming Soon</span>
+          </v-btn>
       </v-col>
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button discover" @click="discover">
@@ -185,6 +186,7 @@ export default {
   text-transform: none;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .button-image {
@@ -192,6 +194,7 @@ export default {
   width: 24px;
   height: 24px;
 }
+
 
 .discover {
   background-color: #36aa4f;
@@ -202,9 +205,32 @@ export default {
 }
 
 .improve-playlist {
+  position: relative;
   background-color: #A0A0A0;
   cursor: not-allowed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 18px;
 }
+
+.badge {
+  position: absolute;
+  top: 50%;
+  right: 50%; 
+  transform: translate(50%, -50%); 
+  background-color: #ff9900;
+  color: white;
+  font-size: 0.75em;
+  padding: 4px 8px;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+.improve-playlist .button-image {
+  margin-right: 4px; /* Adjust spacing if necessary */
+}
+
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s;

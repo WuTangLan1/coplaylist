@@ -71,9 +71,6 @@ export default {
         const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}`;
         window.open(url, '_blank'); 
     },
-    logSongDetails(song) {
-      console.log(`Song Title: ${song.title}, Artist: ${song.artist}`);
-    }
   }
 }
 </script>
@@ -94,9 +91,6 @@ export default {
             <div class="song-title">{{ song.title }}</div>
             <div class="song-artist">{{ song.artist }}</div>
           </div>
-          <v-btn icon @click="logSongDetails(song)" class="add-btn">
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
         </v-list-item>
       </v-list>
       <div v-if="isOpen" class="text-right">

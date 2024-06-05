@@ -86,12 +86,6 @@ export default {
             <option value="alphabetical">Alphabetical</option>
           </select>
         </div>
-        <div class="key-container">
-          <v-btn>
-            <v-icon>mdi-plus</v-icon>
-          </v-btn>
-          <span class="key-note">Click to add songs to your Spotify library</span>
-        </div>
       </div>
       <div class="playlist-container">
         <div v-if="loading" class="loading-container">
@@ -227,6 +221,13 @@ export default {
   
 }
 
+@media(max-width: 500px)
+{
+  .playlist-container {
+    max-height: 40vh;
+  }
+}
+
 .show-playlist-container {
     display: flex;
     flex-wrap: wrap;
@@ -237,6 +238,13 @@ export default {
     max-height: 60vh;
     overflow-y: auto;
     width: 100%;
+}
+
+@media(max-width: 500px)
+{
+  .show-playlist-container {
+    max-height: 40vh;
+  }
 }
 
 .playlist-item {
@@ -263,43 +271,6 @@ export default {
   align-items: center;
 }
 
-.key-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid rgb(89, 89, 228);
-  border-radius: 0.3rem;
-  background-color: #d0caec;
-  padding: 0.3rem;
-  max-width: 45vw;
-}
-
-@media(max-width:500px)
-{
-  .key-container {
-    max-width: 40vw;
-  }
-
-  .filter-container {
-    max-width: 40vw;
-  }
-}
-
-@media(max-width:400px)
-{
-  .key-container {
-    max-width: 37vw;
-  }
-
-  .filter-container {
-    max-width: 37vw;
-  }
-}
-
-.key-note {
-  margin-left: 0.5rem;
-  font-size: 0.8rem;
-  color: #666;
-}
 
 label {
     margin-right: 10px;
@@ -312,7 +283,20 @@ select {
     font-size: 14px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    appearance: none; /* Removes default styling */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23000" d="M7 10l5 5 5-5z"/></svg>'); /* Adds dropdown arrow */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px 12px;
 }
+
+/* Ensuring the dropdown arrow does not get hidden on smaller screens */
+@media(max-width:500px) {
+    .filter-container select {
+        background-position: right 5px center;
+    }
+}
+
 
 .no-playlists-container {
     display: flex;
