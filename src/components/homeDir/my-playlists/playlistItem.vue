@@ -87,20 +87,16 @@ export default {
       </v-btn>
       <v-btn @click="toggleOpen">{{ buttonText }}</v-btn>
     </v-card-title>
-
     <v-card-text>
-      <v-list>
-        <v-list-item v-for="(song, index) in visibleSongs" :key="index">
-              <div class="song-info">
-            <div class="song-details">
-              <span>{{ song.title }}</span>
-              <span>{{ song.artist }}</span>
-            </div>
-            <v-btn icon @click="logSongDetails(song)" class="add-btn">
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
+      <v-list dense>
+        <v-list-item v-for="(song, index) in visibleSongs" :key="index" class="song-item">
+          <div class="song-details">
+            <div class="song-title">{{ song.title }}</div>
+            <div class="song-artist">{{ song.artist }}</div>
           </div>
-
+          <v-btn icon @click="logSongDetails(song)" class="add-btn">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
         </v-list-item>
       </v-list>
       <div v-if="isOpen" class="text-right">
@@ -118,7 +114,6 @@ export default {
   </v-card>
 </template>
 
-
 <style scoped>
 .open {
   max-height: none !important;
@@ -127,19 +122,38 @@ export default {
 .v-list-item {
   display: flex;
   align-items: center;
-}
-
-.song-info {
-  display: flex;
-  align-items: center;
-  width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%; 
 }
 
 .song-details {
-  flex-grow: 1;
+  flex: 1; 
+  display: flex;
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: flex-start;
+  min-width: 0; 
+}
+
+.song-title {
+  font-weight: bold;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  margin-right: 8px;
+}
+
+.song-artist {
+  font-size: smaller;
+  color: #666;
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .add-btn {
-  margin-left: 10px;
+  flex-shrink: 0; 
 }
+
 </style>
