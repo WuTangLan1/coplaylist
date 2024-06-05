@@ -65,7 +65,7 @@ export default {
 
 .prompt-guide-section h1 {
   color: #507cac;
-  font-size: 1.8rem;
+  font-size: 1.7rem;
   margin-bottom: 1rem;
 }
 

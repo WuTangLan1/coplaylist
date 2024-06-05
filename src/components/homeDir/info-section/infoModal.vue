@@ -4,6 +4,7 @@ import AboutSection from './aboutSection.vue';
 import TosSection from './tosSection.vue';
 import PrivacySection from './privacySection.vue';
 import PromptGuideSection from './promptguideSection.vue';
+import ErrorSide from './logError/errorSide.vue';
 
 export default {
   props: ['currentComponent'],
@@ -11,8 +12,10 @@ export default {
     AboutSection,
     TosSection,
     PrivacySection,
-    PromptGuideSection
+    PromptGuideSection,
+    ErrorSide
   },
+  emits: ['closeModal', 'update:currentComponent'],
   data() {
     return {
       components: [
@@ -22,6 +25,11 @@ export default {
         { name: 'Guide', component: 'PromptGuideSection' }
       ]
     };
+  },
+  data() {
+    return {
+      showErrorModal: false,
+    }
   },
   methods: {
        closeModal() {
@@ -34,9 +42,9 @@ export default {
         openModal() {
           document.body.style.overflow = 'hidden'; 
         },
-        openErrorModal()
-        {
-          // update this method to display the errorSide.vue
+        openErrorModal() {
+          this.showErrorModal = true;  
+          document.body.style.overflow = 'hidden';
         }
   }
 };
@@ -46,7 +54,8 @@ export default {
   <div class="modal-backdrop" @click.self="closeModal">
     <div class="modal">
       <div class="modal-header">
-        <h2 class="modal-title">Information Center</h2>
+        <v-icon class="info-icon" right>mdi-information-outline</v-icon>
+        <h2 class="modal-title">Info Center</h2>
         <v-btn icon @click="closeModal" class="close-btn">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -60,6 +69,9 @@ export default {
         <component :is="currentComponent" @openErrorSide="openErrorModal"></component>
       </div>
     </div>
+  </div>
+  <div class="modal-backdrop" v-if="showErrorModal" @click.self="closeModal">
+      <error-side @closeErrorSide="closeModal"></error-side>
   </div>
 </template>
 
@@ -177,8 +189,14 @@ export default {
   background-color: #345f8d;
 }
 
-
 .info-icon {
-  height: 60px; 
+  color: #507cac; 
+  margin-left: 10px; 
+  cursor: pointer; 
+  min-width: 26px;
+  min-height: 26px;
+  max-width: 32px;
+  max-height: 32px;
 }
+
 </style>

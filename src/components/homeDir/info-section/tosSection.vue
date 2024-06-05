@@ -64,4 +64,8 @@ export default {
 .tos-section h1, .tos-section h2 {
   color: #507cac;
 }
+
+.tos-section h1 {
+  font-size: 1.7rem;
+}
 </style>
