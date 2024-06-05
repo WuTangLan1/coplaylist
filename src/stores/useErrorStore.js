@@ -14,7 +14,7 @@ export const useErrorStore = defineStore('error', {
       const errorDoc = {
         uid: authStore.user.uid,
         errorMessage: errorMessage,
-        timestamp: serverTimestamp() // Adds a timestamp from the server
+        timestamp: serverTimestamp() 
       };
       try {
         await setDoc(doc(db, 'logged_errors', doc().id), errorDoc);

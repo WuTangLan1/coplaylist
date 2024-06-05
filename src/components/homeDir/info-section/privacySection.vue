@@ -60,4 +60,8 @@ export default {
 .privacy-section h1, .privacy-section h2 {
   color: #507cac;
 }
+
+.privacy-section h1 {
+  font-size: 1.7rem;;
+}
 </style>

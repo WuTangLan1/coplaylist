@@ -5,7 +5,7 @@ export default {
   name: "AboutSection",
   methods: {
     logError() {
-      this.$emit('openErrorSide'); // Emit event to open error side
+      this.$emit('openErrorSide'); 
     }
   }
 };
@@ -56,6 +56,10 @@ export default {
 
 .about-section h1, .about-section h2 {
   color: #507cac;
+}
+
+.about-section h1 {
+  font-size: 1.7rem;
 }
 
 .about-section ul {

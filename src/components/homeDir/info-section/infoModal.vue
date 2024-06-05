@@ -33,6 +33,10 @@ export default {
         },
         openModal() {
           document.body.style.overflow = 'hidden'; 
+        },
+        openErrorModal()
+        {
+          // update this method to display the errorSide.vue
         }
   }
 };
@@ -53,7 +57,7 @@ export default {
         </button>
       </div>
       <div class="modal-body">
-        <component :is="currentComponent"></component>
+        <component :is="currentComponent" @openErrorSide="openErrorModal"></component>
       </div>
     </div>
   </div>
@@ -66,31 +70,30 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); /* Increased opacity for better overlay visibility */
-  backdrop-filter: blur(15px); /* Increased blur for more focus on modal */
+  background-color: rgba(0, 0, 0, 0.8); 
+  backdrop-filter: blur(15px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5000; /* Make sure this is higher than any other content */
-  overflow: hidden; /* Prevents scrolling inside the backdrop */
+  z-index: 5000;
+  overflow: hidden; 
 }
 
 .modal {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 80%; /* Responsive width */
+  width: 80%; 
   max-width: 700px;
   max-height: 75vh;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
   position: relative; 
 }
 
-/* Ensures the modal does not animate from the top on larger screens */
 @keyframes dropAnimation {
   from {
     opacity: 0;
-    transform: translateY(-50px); /* Less dramatic drop */
+    transform: translateY(-50px); 
   }
   to {
     opacity: 1;
@@ -98,12 +101,11 @@ export default {
   }
 }
 
-/* Responsive adjustments for modal on smaller screens */
 @media (max-width: 600px) {
   .modal {
-    width: 95%; /* Makes modal wider on smaller screens */
-    margin-top: 50px; /* Provides some space from the top */
-    margin-bottom: 50px; /* Provides some space from the bottom */
+    width: 95%;
+    margin-top: 50px;
+    margin-bottom: 50px; 
   }
 }
 
@@ -129,6 +131,7 @@ export default {
   color: #333;
   margin: 0;
 }
+
 
 .close-btn {
   background-color: #f44336;
