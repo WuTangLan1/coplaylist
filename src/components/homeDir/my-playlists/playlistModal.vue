@@ -71,6 +71,7 @@ export default {
   <div class="modal-backdrop">
     <div class="modal">
       <div class="modal-header">
+        <img src="@/assets/images/my-playlists/my-playlists.png" alt="My Playlists" class="header-image"/>
         <h2 class="modal-title">My Playlists</h2>
         <v-btn icon @click="closeModal" class="close-btn">
           <v-icon>mdi-close</v-icon>
@@ -211,6 +212,7 @@ export default {
 .playlist-container {
     display: flex;
     flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 10px;
     justify-content: center;
     align-items: start;
@@ -271,6 +273,10 @@ export default {
   align-items: center;
 }
 
+.header-image {
+  height: 40px; /* Adjust size accordingly */
+  margin-right: 10px; /* Adds spacing between image and title */
+}
 
 label {
     margin-right: 10px;
