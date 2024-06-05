@@ -15,7 +15,7 @@ export default {
     PromptGuideSection,
     ErrorSide
   },
-  emits: ['closeModal', 'update:currentComponent'],
+  emits: ['closeModal', 'closeErrorSide', 'update:currentComponent'],
   data() {
     return {
       components: [
@@ -45,6 +45,10 @@ export default {
         openErrorModal() {
           this.showErrorModal = true;  
           document.body.style.overflow = 'hidden';
+        },
+        handleErrorClose() {
+          this.showErrorModal = false;  
+          document.body.style.overflow = 'auto';
         }
   }
 };
@@ -71,7 +75,7 @@ export default {
     </div>
   </div>
   <div class="modal-backdrop" v-if="showErrorModal" @click.self="closeModal">
-      <error-side @closeErrorSide="closeModal"></error-side>
+      <error-side @closeErrorSide="handleErrorClose"></error-side>
   </div>
 </template>
 
@@ -123,12 +127,14 @@ export default {
 
 .modal-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Ensures equal spacing */
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   background-color: #f3f3f4;
   border-radius: 10px 10px 0 0;
+  box-shadow: inset 0 -1px 0 #ddd;
 }
+
 
 .modal-body {
   padding: 0.5rem;
@@ -138,24 +144,41 @@ export default {
 }
 
 .modal-title {
+  flex: 1; 
+  text-align: center; 
   font-size: 1.8rem;
   font-weight: bold;
   color: #333;
   margin: 0;
+  position: relative;
+  transform: translateX(-18px);
 }
 
+.info-icon, .close-btn {
+  flex-shrink: 0;
+  width: 36px;  
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer; 
+}
+
+.info-icon {
+  color: #507cac;
+  border-radius: 50%; 
+  font-size: 44px; 
+}
 
 .close-btn {
   background-color: #f44336;
   color: #ffffff;
   border-radius: 50%;
-  min-width: 26px;
-  min-height: 26px;
-  max-width: 32px;
-  max-height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-width: 36px; 
+  min-height: 36px;
+  max-width: 36px;
+  max-height: 36px;
+  transition: background-color 0.2s;
 }
 
 .close-btn:hover {
@@ -189,14 +212,5 @@ export default {
   background-color: #345f8d;
 }
 
-.info-icon {
-  color: #507cac; 
-  margin-left: 10px; 
-  cursor: pointer; 
-  min-width: 26px;
-  min-height: 26px;
-  max-width: 32px;
-  max-height: 32px;
-}
 
 </style>

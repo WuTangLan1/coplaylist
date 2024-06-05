@@ -1,4 +1,33 @@
 <!-- src\components\homeDir\info-section\logError\errorSide.vue -->
+
+<script>
+import { useErrorStore } from '@/stores/useErrorStore';
+export default {
+  name: "ErrorSide",
+  data() {
+    return {
+      errorMessage: '',
+    };
+  },
+  methods: {
+    submitError() {
+      const errorStore = useErrorStore();
+      errorStore.logError(this.errorMessage)
+        .then(() => {
+          console.log("Error submitted successfully");
+          this.$emit('closeErrorSide');
+        })
+        .catch(error => {
+          console.error("Failed to submit error: ", error);
+        });
+    },
+    closeErrorForm() {
+      this.$emit('closeErrorSide');
+    }
+  }
+};
+</script>
+
 <template>
   <div class="modal-backdrop">
     <v-card class="error-report-section" outlined tile>

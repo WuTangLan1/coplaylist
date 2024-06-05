@@ -1,6 +1,6 @@
 // src/stores/useErrorStore.js
 import { defineStore } from 'pinia';
-import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/components/fbDir/fbInit';
 import { useAuthStore } from './useAuthStore';
 
@@ -14,10 +14,11 @@ export const useErrorStore = defineStore('error', {
       const errorDoc = {
         uid: authStore.user.uid,
         errorMessage: errorMessage,
-        timestamp: serverTimestamp() 
+        timestamp: serverTimestamp()
       };
       try {
-        await setDoc(doc(db, 'logged_errors', doc().id), errorDoc);
+        // Use addDoc to automatically generate the document ID
+        await addDoc(collection(db, 'user_errors'), errorDoc);
         console.log('Error logged successfully');
       } catch (error) {
         console.error('Error logging the error:', error);
