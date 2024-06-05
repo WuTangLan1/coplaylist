@@ -76,14 +76,22 @@ export default {
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </div>
-      <div class="filter-container">
-        <label for="filter">Filter by:</label>
-        <select id="filter" v-model="filterBy">
-          <option value="all">All</option>
-          <option value="favourited">Favourited</option>
-          <option value="date">Date</option>
-          <option value="alphabetical">Alphabetical</option>
-        </select>
+      <div class="header-container">
+        <div class="filter-container">
+          <label for="filter">Filter by:</label>
+          <select id="filter" v-model="filterBy">
+            <option value="all">All</option>
+            <option value="favourited">Favourited</option>
+            <option value="date">Date</option>
+            <option value="alphabetical">Alphabetical</option>
+          </select>
+        </div>
+        <div class="key-container">
+          <v-btn>
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+          <span class="key-note">Click to add songs to your Spotify library</span>
+        </div>
       </div>
       <div class="playlist-container">
         <div v-if="loading" class="loading-container">
@@ -94,9 +102,10 @@ export default {
         <div v-else-if="filteredPlaylists.length === 0" class="no-playlists-container">
           <p class="no-playlists-message">You don't have any playlists yet.</p>
         </div>
-        <div v-else>
-          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" />
+        <div v-else class="show-playlist-container">
+          <playlist-item v-for="(playlist, index) in filteredPlaylists" :key="index" :playlist="playlist" @delete="deletePlaylist" class="playlist-item" />
         </div>
+       
       </div>
     </div>
   </div>
@@ -124,17 +133,27 @@ export default {
     padding: 0.4rem;
     width: 90%;
     max-width: 90vw;
-    max-height: 80vh;
+    max-height: 82vh;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
     animation: dropAnimation 1s ease-in-out forwards;
     position: relative;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+@media (max-width: 850px)
+{
+  .modal {
+    margin-top: 1.5rem;
+    max-height: 85vh;
+  }
 }
 
 @media (max-width: 550px)
 {
   .modal {
     margin-top: 2.5rem;
-    max-height: 75vh;
+    max-height: 70vh;
   }
 }
 
@@ -196,19 +215,90 @@ export default {
 }
 
 .playlist-container {
-    max-width: 800px;
-    margin: 0 auto;
-    max-height: 50vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    width: 100%;
+    max-height: 60vh;
+    margin-bottom: 20px;
+  
+}
+
+.show-playlist-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: start;
+    padding: 10px;
+    max-height: 60vh;
     overflow-y: auto;
+    width: 100%;
+}
+
+.playlist-item {
+    flex: 1 0 250px; 
+    max-width: 300px; 
+    margin: 5px;  
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  margin-top: 0.3rem;
+  padding: 0.5rem;
+  width: 100%;
 }
 
 .filter-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.3rem;
-    margin-top: 0.3rem;
-    padding: 0.5rem;
-    width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.key-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(89, 89, 228);
+  border-radius: 0.3rem;
+  background-color: #d0caec;
+  padding: 0.3rem;
+  max-width: 45vw;
+}
+
+@media(max-width:500px)
+{
+  .key-container {
+    max-width: 40vw;
+  }
+
+  .filter-container {
+    max-width: 40vw;
+  }
+}
+
+@media(max-width:400px)
+{
+  .key-container {
+    max-width: 37vw;
+  }
+
+  .filter-container {
+    max-width: 37vw;
+  }
+}
+
+.key-note {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  color: #666;
 }
 
 label {

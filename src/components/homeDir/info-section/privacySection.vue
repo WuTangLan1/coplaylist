@@ -40,7 +40,7 @@ export default {
     </p>
     <h2>8. Contact Us</h2>
     <p>
-      If you have questions about this privacy policy, please contact us via [your contact information].
+      If you have questions about this privacy policy, please contact us via <a href="mailto:adminaccount@coplaylist.com">adminaccount@coplaylist.com</a>
     </p>
   </div>
 </template>
@@ -50,8 +50,11 @@ export default {
   padding: 10px;
   line-height: 1.6;
   font-size: 1rem;
-  padding-bottom: 40px;
   color: #333;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 50px;
 }
 
 .privacy-section h1, .privacy-section h2 {

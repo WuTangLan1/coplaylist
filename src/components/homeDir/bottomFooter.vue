@@ -47,10 +47,39 @@ export default {
 .bottom-footer {
   background-color: #220956;
   color: black;
-  max-height: 15vh;
   text-align: center;
   box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+}
+
+@media (min-width: 500px) {
+  .footer-content {
+    flex-direction: row; 
+    justify-content: space-around;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .copy-right {
+    align-self: center; 
+    margin-left: auto; 
+    margin-top: 0; 
+  }
+}
+
+@media(min-height: 840px)
+{
+  .bottom-footer {
+    max-height: 13vh;
+  }
+
+  .footer-links {
+    font-size: 0,7rem;
+  }
+
 }
 
 .footer-content {
@@ -77,7 +106,7 @@ export default {
 }
 
 .copy-right {
-  margin-top: 10px;
+  margin-top: 5px;
   font-size: 0.8rem;
   color: white;
 }

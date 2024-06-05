@@ -58,9 +58,10 @@ export default {
           name: playlistData.name,
           likes: 0,
           favourited: false,
+          userLikes: [],
           details: playlistStore.playlistDetails,
           isPublic: playlistData.isPublic,
-          public_genre: playlistData.genre,
+          display_genre: playlistData.genre,
           createdAt: new Date()
         });
 
@@ -112,10 +113,18 @@ export default {
   padding: 0.5rem;
   background: #F4F4F4; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px; 
+  max-width: 1200px; 
   margin: 0 auto;
   overflow-y: auto; 
 }
+
+@media (min-width: 1024px) {
+  .output-container {
+    max-width: 1600px; 
+    padding: 1rem;
+  }
+}
+
 
 .step-heading {
   display: flex;

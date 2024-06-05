@@ -153,7 +153,7 @@ export default {
         <p>Please verify your email address before generating a playlist.</p>
       </div>
       <div class="button-row">
-        <button class="prev-btn" @click="goBack">Previous</button>
+        <VBtn @click="goBack" color="primary">Previous</VBtn>
         <div v-if="authStore.user" class="token-display">
           <img
             :src="authStore.user.tokens === 1 ? tokenImg : tokensImg"
@@ -175,14 +175,67 @@ export default {
 .songs-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 0.3rem; 
+  align-items: center; 
+  padding: 1rem; 
   background: #F4F4F4;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 750px; 
+  max-width: 750px;
   margin: auto; 
-  overflow-y: auto; 
+}
+
+.input-column {
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  padding: 0 ;
+}
+
+.input-column input {
+  width: 50vw;
+  max-width: 600px;
+  margin: 10px 15px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem; 
+}
+
+@media(max-width : 500px)
+{
+  .input-column input {
+     width:70vw;
+  }
+}
+
+@media(max-width : 700px)
+{
+  .input-column input {
+     width: 65vw;
+  }
+}
+
+@media(max-width : 900px)
+{
+  .input-column input {
+     width: 60vw;
+  }
+}
+
+.checkbox-group {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  width: 100%; 
+  margin: 20px 0;
+}
+
+.checkbox-label {
+  padding: 8px 15px;
+  background-color: #f4f4f4; 
+  border-radius: 5px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .step-heading {
@@ -223,20 +276,6 @@ h3.description {
   line-height: 1.4; 
   margin-left: auto; 
   margin-right: auto;
-}
-
-.input-group {
-  width: 90%; 
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 1rem; 
-}
-
-.input-column {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 1rem;
 }
 
 .slider-container {
@@ -286,40 +325,11 @@ h3.description {
   margin-bottom: 0.5rem; 
 }
 
-.input-column input {
-  padding: 0.5rem; 
-  border: 1px solid #dcdcdc; 
-  border-radius: 4px;
-  font-size: 0.9rem; 
-  transition: border 0.3s, box-shadow 0.3s; 
-}
 
 .input-column input:focus {
   border-color: #507cac; 
   box-shadow: 0 0 0 2px #b0c4de; 
   outline: none;
-}
-
-.checkbox-group {
-  display: flex;
-  justify-content: center; 
-  align-items: center; 
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  width: 100%;
-}
-
-.checkbox-label {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.checkbox-description {
-  margin-left: 10px;
-  font-size: 0.8rem;
-  color: #666;
 }
 
 input[type="checkbox"] {
@@ -329,12 +339,6 @@ input[type="checkbox"] {
 
 .input-column input:focus, input[type="checkbox"]:focus + .checkbox-description {
   outline: 2px solid #507cac; 
-}
-
-@media (min-width: 550px) {
-  .checkbox-group {
-    justify-content: start; 
-  }
 }
 
 .help-icon {
@@ -399,17 +403,6 @@ button:disabled {
   background-color: #3b5998; 
 }
 
-@media (min-width: 550px) {
-  .input-group {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .input-column {
-    width: 48%; 
-    margin-bottom: 0;
-  }
-}
 
 .email-verification-warning p {
   color: #d9534f;

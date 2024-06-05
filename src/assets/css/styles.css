@@ -1,9 +1,30 @@
 /* src/assets/css/styles.css */
 :root {
-    --header-height: 45px; 
-    --router-view-height: calc(100vh - var(--header-height));
-  }
-  
-  button:hover {
-    transform : translateY(-2px)
-  }
+  --header-height: 64px;  /* Adjust if needed */
+  --footer-height: 70px;  /* Adjust if needed */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+.router-view-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  align-self: center;
+  width: 100%;
+  height: calc(100vh - var(--header-height) - var(--footer-height));
+  padding-top: var(--header-height); 
+}
+
+.v-app-bar {
+  height: var(--header-height); 
+}
+
+.bottom-footer {
+  max-height: var(--footer-height);  
+}

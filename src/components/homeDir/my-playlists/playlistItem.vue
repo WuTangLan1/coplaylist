@@ -44,7 +44,7 @@ export default {
         const newFavourited = !this.playlist.favourited;
         const playlistRef = doc(db, 'playlists', this.playlist.id);
         await updateDoc(playlistRef, { favourited: newFavourited });
-        this.playlist.favourited = newFavourited; // Update local state
+        this.playlist.favourited = newFavourited; 
       } catch (error) {
         console.error('Error updating favourited status:', error);
       }
@@ -68,9 +68,11 @@ export default {
         }));
         sessionStorage.setItem('trackDetails', JSON.stringify(trackDetails)); 
         sessionStorage.setItem('playlistName', JSON.stringify(playlist.name));  
-        console.log("Stored in sessionStorage", JSON.stringify(trackDetails), JSON.stringify(playlist.name));
         const url = `${this.baseUrl}/auth/spotify/export?playlist_id=${playlist.id}`;
         window.open(url, '_blank'); 
+    },
+    logSongDetails(song) {
+      console.log(`Song Title: ${song.title}, Artist: ${song.artist}`);
     }
   }
 }
@@ -89,8 +91,16 @@ export default {
     <v-card-text>
       <v-list>
         <v-list-item v-for="(song, index) in visibleSongs" :key="index">
-          <v-list-item-title>{{ song.title }}</v-list-item-title>
-          <v-list-item-subtitle>{{ song.artist }}</v-list-item-subtitle>
+              <div class="song-info">
+            <div class="song-details">
+              <span>{{ song.title }}</span>
+              <span>{{ song.artist }}</span>
+            </div>
+            <v-btn icon @click="logSongDetails(song)" class="add-btn">
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </div>
+
         </v-list-item>
       </v-list>
       <div v-if="isOpen" class="text-right">
@@ -112,5 +122,24 @@ export default {
 <style scoped>
 .open {
   max-height: none !important;
+}
+
+.v-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.song-info {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.song-details {
+  flex-grow: 1;
+}
+
+.add-btn {
+  margin-left: 10px;
 }
 </style>

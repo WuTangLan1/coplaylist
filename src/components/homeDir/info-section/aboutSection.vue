@@ -3,6 +3,11 @@
 <script>
 export default {
   name: "AboutSection",
+  methods: {
+    logError() {
+      this.$emit('openErrorSide'); // Emit event to open error side
+    }
+  }
 };
 </script>
 
@@ -29,26 +34,28 @@ export default {
     <p>
       Ready to explore a new era of music streaming? Sign up today and start your personalized musical adventure with CoPlaylist. It's more than a music app—it's your personal music journey, crafted uniquely for you.
     </p>
+    <div class="error-section">
+      <h2>Experiencing Issues?</h2>
+      <p>We strive to create a seamless and bug-free experience, but unexpected errors may occur. If you encounter any issues, please help us improve by logging the error.</p>
+      <button @click="logError">Log Error</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .about-section {
   padding: 10px;
-  padding-bottom: 40px;
   line-height: 1.6;
   font-size: 1rem;
   color: #333;
-  width: 100%;
-  margin-bottom: 2rem;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding-bottom: 50px;
 }
 
 .about-section h1, .about-section h2 {
   color: #507cac;
-}
-
-.about-section h1 {
-  font-size: 1.6rem;
 }
 
 .about-section ul {
@@ -65,4 +72,40 @@ export default {
   width: 1em;
   margin-left: -1.5em;
 }
+
+.error-section {
+  background: #eef1f6;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px; /* Added margin at the bottom for spacing */
+}
+
+.error-section h2 {
+  color: #506c99;
+}
+
+.error-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+button {
+  background-color: #507cac;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: auto; /* Ensure button width is auto to avoid stretching */
+  display: block; /* Ensures button is a block element */
+  margin: 10px auto 0; /* Center button horizontally */
+}
+
+button:hover {
+  background-color: #345f8d;
+}
 </style>
+

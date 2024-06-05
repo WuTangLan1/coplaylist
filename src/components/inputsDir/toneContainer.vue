@@ -102,74 +102,76 @@ export default {
     <h3 class="description">
       Select at least one genre and one era to create a base for your generated playlist
     </h3>
-    <div class="genres-container">
-      <VChip
-        v-for="genre in commonGenres"
-        :key="genre"
-        :active="selectedGenres.includes(genre)"
-        @click="toggleGenreSelection(genre)"
-        class="genre-chip"
-      >
-        {{ genre }}
-      </VChip>
-    </div>
+        <div class="selections-container">
+          <div class="genres-container">
+          <VChip
+            v-for="genre in commonGenres"
+            :key="genre"
+            :active="selectedGenres.includes(genre)"
+            @click="toggleGenreSelection(genre)"
+            class="genre-chip"
+          >
+            {{ genre }}
+          </VChip>
+        </div>
 
-    <div v-if="selectedGenres.length === 0" class="placeholder">
-      Select up to 3 genres
-    </div>
+        <div v-if="selectedGenres.length === 0" class="placeholder">
+          Select up to 3 genres
+        </div>
 
-    <div class="selected-genres-container">
-      <VChip
-        v-for="genre in selectedGenres"
-        :key="genre"
-        class="selected-genre-chip"
-        closable
-        @click:close="removeGenre(genre)"
-      >
-        {{ genre }}
-      </VChip>
-    </div>
+        <div class="selected-genres-container">
+          <VChip
+            v-for="genre in selectedGenres"
+            :key="genre"
+            class="selected-genre-chip"
+            closable
+            @click:close="removeGenre(genre)"
+          >
+            {{ genre }}
+          </VChip>
+        </div>
 
-    <div class="input-group">
-      <VTextField
-        v-model="newGenre"
-        placeholder="Add Genre"
-        @keyup.enter="addNewItem('genre', newGenre)"
-        maxlength="25"
-        outlined
-        dense
-      />
-      <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3 || selectedGenres.length >= 3" color="primary">
-        Submit
-      </VBtn>
-    </div>
+        <div class="input-group">
+          <VTextField
+            v-model="newGenre"
+            placeholder="Add Genre"
+            @keyup.enter="addNewItem('genre', newGenre)"
+            maxlength="25"
+            outlined
+            dense
+          />
+          <VBtn @click="addNewItem('genre', newGenre)" :disabled="newGenre.length < 3 || selectedGenres.length >= 3" color="primary">
+            Submit
+          </VBtn>
+        </div>
 
-    <div class="eras-container">
-      <VChip
-        v-for="era in commonEras"
-        :key="era"
-        :active="selectedEra.includes(era)"
-        @click="toggleEraSelection(era)"
-        class="era-chip"
-      >
-        {{ era }}
-      </VChip>
-    </div>
+        <div class="eras-container">
+          <VChip
+            v-for="era in commonEras"
+            :key="era"
+            :active="selectedEra.includes(era)"
+            @click="toggleEraSelection(era)"
+            class="era-chip"
+          >
+            {{ era }}
+          </VChip>
+        </div>
 
-    <div v-if="selectedEra.length === 0" class="placeholder">
-      Select up to 3 eras
+        <div v-if="selectedEra.length === 0" class="placeholder">
+          Select up to 3 eras
+        </div>
+        <div class="selected-eras-container">
+          <VChip
+            v-for="era in selectedEra"
+            :key="era"
+            class="selected-era-chip"
+            closable
+            @click:close="removeEra(era)"
+          >
+            {{ era }}
+          </VChip>
     </div>
-    <div class="selected-eras-container">
-      <VChip
-        v-for="era in selectedEra"
-        :key="era"
-        class="selected-era-chip"
-        closable
-        @click:close="removeEra(era)"
-      >
-        {{ era }}
-      </VChip>
-    </div>
+        </div>
 
     <VBtn class="next-btn" @click="handleNext" color="primary">Next</VBtn>
   </div>
@@ -184,10 +186,18 @@ export default {
   background: #F4F4F4; 
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 700px; 
+  max-width: 1200px; 
   margin: 0 auto;
   overflow-y: auto; 
 }
+
+.selections-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 
 .step-heading {
   display: flex;
@@ -261,44 +271,28 @@ h3.description {
   
 }
 
-.genres-container,
-.eras-container {
+.genres-container, .eras-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr); /* Set three columns regardless of width */
+  gap: 10px;
 }
 
-@media (min-width: 500px) {
-  .genres-container,
-  .eras-container {
-    grid-template-columns: repeat(4, 1fr); 
-  }
-}
 
-.genre-chip, .era-chip,
-.selected-genre-chip, .selected-era-chip {
+
+.genre-chip, .era-chip {
   padding: 0.5rem 1rem;
   border: 1px solid #ccc;
   border-radius: 10px;
-  align-items: center;
   text-align: center;
-  align-content: center;
-  font-size: 1rem;
   cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s, color 0.3s;
-  margin: 0.25rem;
   background-color: #e5e1f2;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.genre-chip.selected, .era-chip.selected,
-.selected-genre-chip, .selected-era-chip {
+.genre-chip.selected, .era-chip.selected {
   border-color: #0b1d30;
   background-color: #d4cbef;
-  position: relative; 
-  text-align: center;
 }
-
 .input-group {
   display: flex;
   justify-content: space-between;

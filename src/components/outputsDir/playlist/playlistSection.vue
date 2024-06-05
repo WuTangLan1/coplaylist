@@ -103,10 +103,83 @@ export default {
   border-radius: 0.5rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 800px;
+  max-width: 1600px;
   margin: 1rem auto;
   overflow-y: auto;
   box-shadow: 0 2px 12px rgb(48, 5, 57);
+}
+
+@media (min-width: 724px) {
+  .playlist-section ol {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    column-gap: 20px; 
+  }
+
+  .song-item {
+    padding: 0.75rem 1rem; 
+    font-size: 0.8rem; 
+  }
+
+  .song-details {
+    font-size: 0.8rem; 
+  }
+
+  .song-name, .song-artist {
+    font-size: 0.9rem; 
+  }
+
+  .icon-container {
+    min-width: 50px;
+  }
+
+  .spotify-icon, .redo-icon {
+    width: 20px; 
+    height: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .playlist-section ol {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    column-gap: 20px; 
+    row-gap: 20px;
+    padding: 10px;
+  }
+
+  .song-item {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem; 
+  }
+
+  .song-details {
+    font-size: 0.75rem; 
+  }
+
+  .song-name, .song-artist {
+    font-size: 0.85rem; 
+  }
+
+  .icon-container {
+    min-width: 50px; 
+  }
+
+  .spotify-icon, .redo-icon {
+    width: 18px; 
+    height: 18px;
+  }
+
+  .song-item:hover {
+      background-color: #e0e0e0;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@media (min-width: 1440px) { /* New breakpoint for larger screens */
+  .playlist-section ol {
+    grid-template-columns: repeat(4, 1fr); /* Four columns for screens >= 1440px */
+  }
 }
 
 .playlist-title {
@@ -141,6 +214,20 @@ ol {
 .song-details {
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .song-item {
+    padding: 1.5rem 2rem;
+  }
+
+  .song-name, .song-artist {
+    font-size: 1.5rem; 
+  }
+
+  .song-artist {
+    font-size: 1.2rem;
+  }
 }
 
 .redo-icon {
@@ -217,7 +304,6 @@ ol {
   padding: 3rem;
 }
 
-/* Adding some playful colors for the hover effect */
 .song-item:nth-child(odd):hover {
   background-color: #e3f2fd;
 }
