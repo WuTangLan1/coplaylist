@@ -1,7 +1,8 @@
 <!-- // src/components/discover/newdisc/newdiscContainer.vue -->
 <script>
 import { useDiscoverStore } from '@/stores/useDiscoverStore';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, nextTick } from 'vue';
+import anime from 'animejs';
 
 export default {
   name: 'newdiscContainer',
@@ -10,10 +11,27 @@ export default {
     const visiblePlaylists = ref([]);
     const currentPage = ref(1);
 
+    const animatePlaylists = () => {
+      anime({
+        targets: '.playlist-line',
+        translateX: [300, 0],  // Start from off-screen right and come into view
+        scale: [0.8, 1],       // Start smaller and scale up to normal size
+        opacity: [0, 1],
+        delay: anime.stagger(150, {start: 200}), // Stagger the start of animation for each card with 150ms apart
+        easing: 'easeOutExpo'
+      });
+    };
+
+
     const updateVisiblePlaylists = async () => {
       await discoverStore.fetchNewDiscoveries(24);
       visiblePlaylists.value = discoverStore.newDiscoveries;
+      anime.set('.playlist-line', { opacity: 0, translateX: 300 }); // Reset the state for new animation
+      nextTick(() => {
+        animatePlaylists(); // Trigger animation after Vue updates the DOM
+      });
     };
+
 
     const showModal = (playlist) => {
       emit('show-modal', playlist);
@@ -149,7 +167,10 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  transform: translateX(300px); /* Start off-screen */
+  opacity: 0; /* Start as invisible */
 }
+
 
 .playlist-line:hover {
   transform: translateY(-5px);
@@ -228,29 +249,4 @@ export default {
   background-color: #4f035e;
 }
 
-.playlist-transition-enter-active, .playlist-transition-leave-active {
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
-
-/* Entering playlists start from the left (-100% X) and slide to their position */
-.playlist-transition-enter-from {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-.playlist-transition-enter-to {
-  transform: translateX(0%);
-  opacity: 1;
-}
-
-/* Exiting playlists slide off to the right (100% X) */
-.playlist-transition-leave-from {
-  transform: translateX(0%);
-  opacity: 1;
-}
-
-.playlist-transition-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
-}
 </style>

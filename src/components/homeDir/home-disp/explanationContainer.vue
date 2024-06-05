@@ -219,7 +219,7 @@ export default {
   top: 50%;
   right: 50%; 
   transform: translate(50%, -50%); 
-  background-color: #ff9900;
+  background-color: #ff0000;
   color: white;
   font-size: 0.75em;
   padding: 4px 8px;

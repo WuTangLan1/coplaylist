@@ -18,6 +18,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@mdi/font": "^7.4.47",
     "@vueform/multiselect": "^2.6.7",
+    "animejs": "^3.2.2",
     "axios": "^1.6.8",
     "body-parser": "^1.20.2",
     "core-js": "^3.37.1",
