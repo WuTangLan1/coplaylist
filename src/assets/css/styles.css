@@ -1,7 +1,7 @@
 /* src/assets/css/styles.css */
 :root {
-  --header-height: 64px;  /* Adjust if needed */
-  --footer-height: 70px;  /* Adjust if needed */
+  --header-height: 64px;  
+  --footer-height: 120px;  
 }
 
 #app {
