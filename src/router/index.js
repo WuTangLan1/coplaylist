@@ -1,13 +1,13 @@
 // src\router\index.js
 import { createRouter, createWebHistory } from 'vue-router';
 import homeView from '../views/homeView.vue';
-import discoverView from '../views/discoverView.vue'
 import ToneContainer from '../components/inputsDir/toneContainer.vue';
 import VibeContainer from '../components/inputsDir/vibeContainer.vue';
 import SongsContainer from '../components/inputsDir/songsContainer.vue';
 import OutputContainer from '../components/outputsDir/outputContainer.vue'
 import playlistModal from '../components/homeDir/my-playlists/playlistModal.vue'
 import ExportSuccess from '../components/homeDir/my-playlists/spotify/exportSuccess.vue';
+import improveView from '../views/improveView.vue'
 
 const routes = [
   {
@@ -16,9 +16,9 @@ const routes = [
     component: homeView
   },
   {
-    path: '/discover',
-    name: 'Discover',
-    component: discoverView
+    path: '/improve-playlist',
+    name: 'Improve',
+    component: improveView
   },
   {
     path: '/tone',
