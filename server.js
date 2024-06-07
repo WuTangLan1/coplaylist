@@ -67,6 +67,20 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
   }
 });
 
+app.get('/spotify/callback', (req, res) => {
+  const hash = req.url.split('#')[1];
+  const urlParams = new URLSearchParams(hash);
+  const accessToken = urlParams.get('access_token');
+
+  if (accessToken) {
+    const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
+    res.redirect(`${redirectBaseUrl}/improve?access_token=${accessToken}`);
+  } else {
+    console.error("Failed to get access token.");
+    res.redirect('/');
+  }
+});
+
 
 app.post('/generate-playlist', async (req, res) => {
     const { vibes, tones = {}, songs, userTaste ={}, excludeSongs= [] } = req.body;
