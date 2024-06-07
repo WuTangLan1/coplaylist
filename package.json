@@ -39,7 +39,7 @@
     "vue-masonry-css": "^1.0.3",
     "vue-router": "^4.0.3",
     "vue-tel-input": "^9.1.1",
-    "vuetify": "^3.6.6"
+    "vuetify": "^3.6.8"
   },
   "devDependencies": {
     "@types/vue-tel-input": "^2.1.6",

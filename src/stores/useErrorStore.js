@@ -17,7 +17,6 @@ export const useErrorStore = defineStore('error', {
         timestamp: serverTimestamp()
       };
       try {
-        // Use addDoc to automatically generate the document ID
         await addDoc(collection(db, 'user_errors'), errorDoc);
         console.log('Error logged successfully');
       } catch (error) {

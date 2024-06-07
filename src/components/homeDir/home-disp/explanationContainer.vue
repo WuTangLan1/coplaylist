@@ -27,11 +27,11 @@ export default {
     getStarted() {
       this.$emit('next');
     },
-    improvePlaylist() {
+    comingSoon() {
       // Placeholder function until the functionality is implemented
     },
-    discover() {
-      this.$router.push('/discover');
+    improvePlaylist() {
+      this.$router.push('/improve-playlist');
     },
     startRotation() {
       setInterval(() => {
@@ -85,16 +85,16 @@ export default {
     </v-row>
     <v-row class="button-group" justify="space-between">
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
-        <v-btn class="next-button improve-playlist" @click="improvePlaylist" disabled>
-            <img src="@/assets/images/explanation-container/improve.png" alt="Improve Playlist" class="button-image">
+        <v-btn class="next-button improve-playlist" @click="comingSoon" disabled>
+            <img src="@/assets/images/explanation-container/discover.png" alt="ComingSoon" class="button-image">
             Improve
             <span class="badge">Coming Soon</span>
           </v-btn>
       </v-col>
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
-        <v-btn class="next-button discover" @click="discover">
-          <img src="@/assets/images/explanation-container/discover.png" alt="Discover" class="button-image">
-          Discover
+        <v-btn class="next-button discover" @click="improvePlaylist">
+          <img src="@/assets/images/explanation-container/improve.png" alt="Improve" class="button-image">
+          Improve
         </v-btn>
       </v-col>
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
