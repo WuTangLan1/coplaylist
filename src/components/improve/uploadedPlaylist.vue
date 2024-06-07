@@ -10,6 +10,9 @@
     methods: {
       uploadPlaylist() {
         console.log("Upload functionality to be implemented");
+      },
+      improvePlaylist() {
+        // logic to start process
       }
     }
   }
@@ -31,6 +34,7 @@
         </v-list>
         <div v-else>No playlist loaded</div>
       </v-card-text>
+      <v-btn @click="improvePlaylist">Improve Playlist</v-btn>
     </v-card>
   </template>
   

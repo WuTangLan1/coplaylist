@@ -7,11 +7,6 @@
         improvedTracks: [],
       };
     },
-    methods: {
-      improvePlaylist() {
-        console.log("Improvement functionality to be implemented");
-      }
-    }
   }
   </script>
   
@@ -19,7 +14,7 @@
     <v-card>
       <v-card-title>Improved Playlist</v-card-title>
       <v-card-text>
-        <v-btn @click="improvePlaylist">Improve Playlist</v-btn>
+
         <v-list dense v-if="improvedTracks.length">
           <v-list-item
             v-for="track in improvedTracks"
@@ -29,7 +24,7 @@
             <v-list-item-subtitle>{{ track.artist }}</v-list-item-subtitle>
           </v-list-item>
         </v-list>
-        <div v-else>No improvements made yet</div>
+        <div v-else></div>
       </v-card-text>
     </v-card>
   </template>
