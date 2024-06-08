@@ -14,6 +14,7 @@ export default {
       const clientId = process.env.VUE_APP_SPOTIFY_CLIENT_ID;
       console.log(clientId)
       const apiUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000';
+      console.log(apiUrl)
       const redirectUri = `${apiUrl}/spotify/callback`;
       const scope = 'playlist-read-private';
       const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scope)}`;
@@ -33,7 +34,6 @@ export default {
       // Logic to start the process of improving the selected playlist
     },
     async mounted() {
-        console.log('Spotify Client ID:', process.env.VUE_APP_SPOTIFY_CLIENT_ID);
         const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get('access_token');
 
@@ -80,13 +80,9 @@ export default {
         </div>
         <div v-else>No playlists available</div>
       </v-card-text>
-      <v-btn
-        @click="improvePlaylist"
-        class="gen-btn float-right"
-        :disabled="!improveStore.selectedPlaylist"
-      >
-        Improve Playlist
-      </v-btn>
+      <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified" @click="uploadPlaylist">
+          <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> Generate
+        </button>
     </v-card>
   </template>
 
