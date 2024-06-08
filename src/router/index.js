@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/improve-playlist',
-    name: 'Improve',
+    name: 'ImprovePlaylist',
     component: improveView
   },
   {

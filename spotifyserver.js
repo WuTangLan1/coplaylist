@@ -76,21 +76,6 @@ app.get('/preview', async (req, res) => {
     }
   });
 
-  app.get('/user-playlists', async (req, res) => {
-    if (!req.user || !req.user.accessToken) {
-      res.status(401).json({ error: 'User not authenticated' });
-      return;
-    }
-    try {
-      spotifyApi.setAccessToken(req.user.accessToken);
-      const data = await spotifyApi.getUserPlaylists({ limit: 50 });
-      res.json({ playlists: data.body.items });
-    } catch (error) {
-      console.error('Failed to fetch user playlists:', error);
-      res.status(500).json({ error: 'Failed to fetch playlists' });
-    }
-  });
-
   app.get('/search', async (req, res) => {
     const { query } = req.query;
     if (!query) {
