@@ -36,21 +36,22 @@ export default {
         }
       },
       handlePlaylistSelected(playlist) {
+        console.log('Playlist selected in parent:', playlist); 
         this.selectedPlaylist = playlist;
         this.fetchTracks(playlist.id);
-        this.showModal = false; 
       },
       fetchTracks(playlistId) {
+        console.log('Fetching tracks for:', playlistId); // Confirm ID is correct
         axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           headers: { 'Authorization': `Bearer ${this.token}` }
         }).then(response => {
-          this.tracks = response.data.items;
-          this.playlistUploaded = true;  // This should trigger the display in UploadedPlaylist
+          this.tracks = response.data.items; // Log to check the response data
+          console.log('Tracks received:', this.tracks);
+          this.playlistUploaded = true;
         }).catch(error => {
           console.error("Error fetching tracks:", error);
         });
       },
-
       },
   mounted() {
     this.fetchPlaylists();

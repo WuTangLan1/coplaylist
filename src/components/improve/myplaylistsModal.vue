@@ -14,10 +14,11 @@ export default {
       this.$emit('close');
     },
     selectPlaylist(playlist) {
-      console.log(playlist)
+      console.log('Emitting selected playlist:', playlist);
       this.$emit('playlist-selected', playlist);
       this.close();
     }
+
   }
 }
 </script>
