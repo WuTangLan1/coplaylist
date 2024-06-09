@@ -1,7 +1,8 @@
 <!-- src\views\improveView.vue -->
+// src\views\improveView.vue
 <script>
-import UploadedPlaylist from '@/components/improve/uploadedPlaylist.vue'
-import ImprovedPlaylist from '@/components/improve/improvedPlaylist.vue'
+import UploadedPlaylist from '@/components/improve/uploadedPlaylist.vue';
+import ImprovedPlaylist from '@/components/improve/improvedPlaylist.vue';
 import MyplaylistsModal from '@/components/improve/myplaylistsModal.vue';
 import axios from 'axios';
 
@@ -20,28 +21,27 @@ export default {
     };
   },
   methods: {
-    setPlaylistUploaded(status) {
-      this.playlistUploaded = status;
-    },
     fetchPlaylists() {
-      if (this.token) {
-        axios.get('https://api.spotify.com/v1/me/playlists', {
-          headers: { 'Authorization': `Bearer ${this.token}` }
-        }).then(response => {
-          this.playlists = response.data.items;
-          this.showModal = true;
-          this.playlistUploaded = true; 
-        }).catch(error => {
-          console.error("Error fetching playlists:", error);
-        });
+        if (this.token) {
+          axios.get('https://api.spotify.com/v1/me/playlists', {
+            headers: { 'Authorization': `Bearer ${this.token}` }
+          }).then(response => {
+            this.playlists = response.data.items;
+            this.showModal = true;  
+            console.log("Playlists fetched", this.playlists);
+          }).catch(error => {
+            console.error("Error fetching playlists:", error);
+          });
+        }
       }
-    },
-    created() {
+  },
+  mounted() {
+    console.log("Received token:", this.token); 
     this.fetchPlaylists();
-  }
   }
 }
 </script>
+
 
 <template>
     <v-container class="fill-height">
