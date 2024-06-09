@@ -2,6 +2,7 @@
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
    export default {
+    props: ['tracks'],
     setup() {
       const authStore = useAuthStore();
       return {
@@ -18,10 +19,15 @@ import { useAuthStore } from '@/stores/useAuthStore';
 </script>
 
 <template>
-    <v-card>
-      <v-card-title>Uploaded Playlist</v-card-title>
-      <v-btn @click="loginToSpotifyForPlaylists">Upload Playlist</v-btn>
-      
+      <v-card>
+        <v-card-title>Uploaded Playlist</v-card-title>
+        <v-btn @click="loginToSpotifyForPlaylists">Upload Playlist</v-btn>
+        <div v-if="tracks && tracks.length > 0">
+          <div v-for="track in tracks" :key="track.track.id">
+            {{ track.track.name }} by {{ track.track.artists[0].name }}
+          </div>
+        </div>
+        <div v-else>No tracks available</div>
       <button class="gen-btn" :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified" @click="uploadPlaylist">
           <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon"> Generate
         </button>

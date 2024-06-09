@@ -14,9 +14,9 @@ export default {
       this.$emit('close');
     },
     selectPlaylist(playlist) {
-      console.log('Playlist selected:', playlist);
+      console.log(playlist)
       this.$emit('playlist-selected', playlist);
-      this.close();  
+      this.close();
     }
   }
 }

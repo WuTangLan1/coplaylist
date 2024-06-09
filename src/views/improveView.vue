@@ -17,7 +17,9 @@ export default {
     return {
       playlistUploaded: false,
       playlists: [],
-      showModal: false
+      showModal: false,
+      selectedPlaylist: null,
+      tracks: [] 
     };
   },
   methods: {
@@ -32,8 +34,24 @@ export default {
             console.error("Error fetching playlists:", error);
           });
         }
-      }
-  },
+      },
+      handlePlaylistSelected(playlist) {
+        this.selectedPlaylist = playlist;
+        this.fetchTracks(playlist.id);
+        this.showModal = false; 
+      },
+      fetchTracks(playlistId) {
+        axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+          headers: { 'Authorization': `Bearer ${this.token}` }
+        }).then(response => {
+          this.tracks = response.data.items;
+          this.playlistUploaded = true;  // This should trigger the display in UploadedPlaylist
+        }).catch(error => {
+          console.error("Error fetching tracks:", error);
+        });
+      },
+
+      },
   mounted() {
     this.fetchPlaylists();
   }
@@ -65,14 +83,14 @@ export default {
           </v-card>
         </v-col>
         <v-col cols="12" md="6" v-if="!playlistUploaded">
-          <uploaded-playlist @playlist-uploaded="setPlaylistUploaded(true)" />
+          <uploaded-playlist :tracks="tracks" @playlist-uploaded="setPlaylistUploaded(true)" />
         </v-col>
         <v-col cols="12" md="6" v-else>
           <improved-playlist />
         </v-col>
       </v-row>
     </v-container>
-    <myplaylists-modal v-if="showModal" :playlists="playlists" @close="showModal = false"/>
+    <myplaylists-modal v-if="showModal" :playlists="playlists" @playlist-selected="handlePlaylistSelected" @close="showModal = false" />
   </template>
   
   <style>
