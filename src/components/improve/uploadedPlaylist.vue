@@ -10,8 +10,9 @@ import { useAuthStore } from '@/stores/useAuthStore';
     },
     methods : {
       loginToSpotifyForPlaylists() {
-          window.location.href = '/auth/spotify/login';  
-        }
+        const baseUrl = process.env.VUE_APP_API_BASE_URL;
+        window.location.href = `${baseUrl}/auth/spotify/login-fetch`;  
+      }
     }
    }
 </script>

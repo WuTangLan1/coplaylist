@@ -23,13 +23,13 @@ export default {
     }
   },
   created() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get('token');
-    if (token) {
-      this.showModal = true;
-      this.fetchPlaylists(token);
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      if (token) {
+        this.showModal = true;
+        this.fetchPlaylists(token);
+      }
     }
-  }
 }
 </script>
 

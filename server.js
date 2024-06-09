@@ -64,6 +64,20 @@ app.get('/auth/spotify/login', (req, res, next) => {
   passport.authenticate('spotify', authOptions)(req, res, next);
 });
 
+app.get('/auth/spotify/login-fetch', (req, res, next) => {
+  const authOptions = {
+    scope: ['playlist-read-private', 'playlist-read-collaborative'],
+    showDialog: true,
+    state: 'fetch-playlists'  
+  };
+  passport.authenticate('spotify', authOptions)(req, res, next);
+});
+
+app.get('/callback-fetch', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
+  const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
+  res.redirect(`${redirectBaseUrl}/my-playlists?token=${req.user.accessToken}`);
+});
+
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
   if (req.user && req.user.accessToken && req.user.profile) {
@@ -74,17 +88,6 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
   } else {
       console.error("Failed to get access token.");
       res.redirect(`${redirectBaseUrl}/export-failure`);
-  }
-});
-
-app.get('/callback-view-playlists', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
-  if (req.user && req.user.accessToken && req.user.profile) {
-    const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
-    res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
-  } else {
-    console.error("Failed to get access token for viewing playlists.");
-    const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
-    res.redirect(`${redirectBaseUrl}/export-failure`);
   }
 });
 
