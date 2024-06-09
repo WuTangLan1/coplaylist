@@ -74,6 +74,7 @@ export default {
         </v-col>
       </v-row>
     </v-container>
+    <myplaylists-modal v-if="showModal" :playlists="playlists" @close="showModal = false"/>
   </template>
   
   <style>
