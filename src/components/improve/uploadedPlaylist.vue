@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
     methods : {
       loginToSpotifyForPlaylists() {
         const baseUrl = process.env.VUE_APP_API_BASE_URL;
-        window.location.href = `${baseUrl}/auth/spotify/login-fetch`;  
+        window.location.href = `${baseUrl}/auth/spotify/login?state=fetch-playlists`; 
       }
     }
    }

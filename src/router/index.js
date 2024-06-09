@@ -8,6 +8,7 @@ import OutputContainer from '../components/outputsDir/outputContainer.vue'
 import playlistModal from '../components/homeDir/my-playlists/playlistModal.vue'
 import ExportSuccess from '../components/homeDir/my-playlists/spotify/exportSuccess.vue';
 import improveView from '../views/improveView.vue';
+import MyplaylistsModal from '@/components/improve/myplaylistsModal.vue';
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/my-playlists',
     name: 'My-Playlists',
     component: playlistModal,
+  },
+  {
+    path: '/my-playlistsModal',
+    name: 'My-PlaylistsModal',
+    component: MyplaylistsModal,
     props: route => ({ token: route.query.token })
   },
   {

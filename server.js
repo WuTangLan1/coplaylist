@@ -68,26 +68,41 @@ app.get('/auth/spotify/login-fetch', (req, res, next) => {
   const authOptions = {
     scope: ['playlist-read-private', 'playlist-read-collaborative'],
     showDialog: true,
-    state: 'fetch-playlists'  
+    state: 'fetch-playlists'  // Ensuring state is passed to Spotify
   };
   passport.authenticate('spotify', authOptions)(req, res, next);
 });
 
+// Callback route for fetching playlists
 app.get('/callback-fetch', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
   const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
+  // Log to confirm this path is taken
+  console.log("Handling fetch-playlists callback");
   res.redirect(`${redirectBaseUrl}/my-playlists?token=${req.user.accessToken}`);
 });
 
-
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
+  const state = req.query.state;
+  const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
+  
+  console.log("Received URL: ", req.originalUrl); // Log the full URL to see all parameters
+  console.log("State from Spotify: ", state); // Confirm state value
+
   if (req.user && req.user.accessToken && req.user.profile) {
-      const playlistId = req.query.playlist_id;
-      const playlistName = req.query.playlist_name;
-      const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
-      res.redirect(`${redirectBaseUrl}/export-success?token=${req.user.accessToken}&user_id=${req.user.profile.id}&playlist_id=${playlistId}&playlist_name=${encodeURIComponent(playlistName)}`);
+    switch (state) {
+      case 'fetch-playlists':
+        console.log('Handling fetch playlists redirection');
+        res.redirect(`${redirectBaseUrl}/my-playlists?token=${req.user.accessToken}`);
+        break;
+      default:
+        console.log('Handling export playlists redirection');
+        const playlistId = req.query.playlist_id || 'undefined';
+        const playlistName = req.query.playlist_name || 'undefined';
+        res.redirect(`${redirectBaseUrl}/export-success?token=${req.user.accessToken}&user_id=${req.user.profile.id}&playlist_id=${playlistId}&playlist_name=${encodeURIComponent(playlistName)}`);
+    }
   } else {
-      console.error("Failed to get access token.");
-      res.redirect(`${redirectBaseUrl}/export-failure`);
+    console.error("Failed to get access token.");
+    res.redirect(`${redirectBaseUrl}/export-failure`);
   }
 });
 
