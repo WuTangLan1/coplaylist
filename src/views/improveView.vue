@@ -28,7 +28,6 @@ export default {
           }).then(response => {
             this.playlists = response.data.items;
             this.showModal = true;  
-            console.log("Playlists fetched", this.playlists);
           }).catch(error => {
             console.error("Error fetching playlists:", error);
           });
@@ -36,7 +35,6 @@ export default {
       }
   },
   mounted() {
-    console.log("Received token:", this.token); 
     this.fetchPlaylists();
   }
 }

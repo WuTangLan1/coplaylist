@@ -48,7 +48,6 @@ app.use('/spotify', spotifyServer);
 
 
 app.get('/auth/spotify/export', (req, res, next) => {
-  console.log("Attempting to authenticate with Spotify");
   next();
 }, passport.authenticate('spotify', {
   scope: ['playlist-modify-public', 'playlist-modify-private'],
@@ -68,28 +67,20 @@ app.get('/auth/spotify/login-fetch', (req, res, next) => {
   const authOptions = {
     scope: ['playlist-read-private', 'playlist-read-collaborative'],
     showDialog: true,
-    state: 'fetch-playlists'  // Ensuring state is passed to Spotify
+    state: 'fetch-playlists'  
   };
   passport.authenticate('spotify', authOptions)(req, res, next);
 });
 
-// Callback route for fetching playlists
 app.get('/callback-fetch', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
   const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
-  // Log to confirm this path is taken
-  console.log("Handling fetch-playlists callback");
   res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
 });
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
-  console.log("Full Callback URL Received: ", req.originalUrl);
-  console.log("Query Parameters: ", req.query);
 
   const { state, code } = req.query;
-  console.log("State from Spotify: ", state);
-  console.log("Authorization Code: ", code);
 
-  // Proceed based on state
   if (req.user && req.user.accessToken && req.user.profile) {
       const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
       if (state === 'fetch-playlists') {
