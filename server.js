@@ -78,7 +78,7 @@ app.get('/callback-fetch', passport.authenticate('spotify', { failureRedirect: '
   const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
   // Log to confirm this path is taken
   console.log("Handling fetch-playlists callback");
-  res.redirect(`${redirectBaseUrl}/my-playlistsModal?token=${req.user.accessToken}`);
+  res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
 });
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
@@ -94,7 +94,7 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
       const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
       if (state === 'fetch-playlists') {
           console.log('Redirecting to fetch playlists');
-          res.redirect(`${redirectBaseUrl}/my-playlistsModal?token=${req.user.accessToken}`);
+          res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
       } else {
           console.log('Redirecting to export playlists');
           const playlistId = req.query.playlist_id || 'undefined';
