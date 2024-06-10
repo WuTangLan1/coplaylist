@@ -1,6 +1,7 @@
 <!-- src\components\improve\uploadedPlaylist.vue -->
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
+import axios from 'axios';
 
 export default {
   props: ['tracks'],
@@ -16,11 +17,27 @@ export default {
       window.location.href = `${baseUrl}/auth/spotify/login?state=fetch-playlists`;
     },
     improvePlaylist() {
-      if (!this.tracks.length) return; 
-      const baseUrl = process.env.VUE_APP_API_BASE_URL;
-      this.$emit(baseUrl,'/improve-playlist', this.tracks);
-    },
+    if (!this.tracks.length) return;
 
+    // Map over the tracks to create a new array that only contains the necessary data
+    const formattedTracks = this.tracks.map(t => ({
+      name: t.track.name,  // Assuming 'track' is the object that contains the 'name'
+      artist: t.track.artists.map(a => a.name).join(', ')  // Assuming 'artists' is an array of objects with 'name'
+    }));
+
+    console.log('formatted tracks : ', formattedTracks)
+
+    // Base URL for API
+    const baseUrl = process.env.VUE_APP_API_BASE_URL;
+
+    axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
+      .then(response => {
+        console.log('Playlist improved:', response.data);
+      })
+      .catch(error => {
+        console.error('Error improving playlist:', error);
+      });
+  },
   },
 };
 </script>
