@@ -192,6 +192,31 @@ app.post('/generate-playlist', async (req, res) => {
     }
 });
 
+app.post('/api/improve-playlist', async (req, res) => {
+  const { tracks } = req.body;
+  const trackNames = tracks.map(t => `${t.name} by ${t.artist}`).join(', ');
+
+  try {
+    const response = await axios.post("https://api.openai.com/v1/chat/completions", {
+      model: "gpt-4-turbo",
+      messages: [
+        { role: "system", content: "You are an expert in music and creating song music playlists for users based on their requests." },
+        { role: "user", content: `Improve the following playlist by adding 5-15 songs that would complement these tracks: ${trackNames}` }
+      ]
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+      }
+    });
+
+    res.json(response.data.choices[0].message.content);
+  } catch (error) {
+    console.error('Error generating improved playlist:', error);
+    res.status(500).send('Failed to improve playlist');
+  }
+});
+
 app.get('/google123456789abcd.html', function(req, res) {
   res.sendFile(path.join(__dirname, '/google123456789abcd.html'));
 });

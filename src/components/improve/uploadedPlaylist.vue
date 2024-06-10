@@ -15,9 +15,12 @@ export default {
       const baseUrl = process.env.VUE_APP_API_BASE_URL;
       window.location.href = `${baseUrl}/auth/spotify/login?state=fetch-playlists`;
     },
-    ImprovePlaylist() {
-      console.log('clicked')
-    }
+    improvePlaylist() {
+      if (!this.tracks.length) return; 
+      const baseUrl = process.env.VUE_APP_API_BASE_URL;
+      this.$emit(baseUrl,'/improve-playlist', this.tracks);
+    },
+
   },
 };
 </script>
@@ -39,8 +42,8 @@ export default {
     <div class="button-container">
       <v-btn
         class="gen-btn"
-        :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified"
-        @click="ImprovePlaylist"
+        :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified|| !tracks.length"
+        @click="improvePlaylist"
       >
         <v-icon>mdi-check</v-icon> Improve this playlist
         <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon">
@@ -149,6 +152,14 @@ export default {
   transition: background-color 0.3s ease;
   align-items: center;
 }
+
+.gen-btn:disabled {
+  background-color: #7a7a7a; 
+  color: #cccccc; 
+  cursor: not-allowed;
+  opacity: 0.6; 
+}
+
 
 .gen-btn:hover {
   background-color: #66138c;

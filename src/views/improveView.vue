@@ -51,6 +51,18 @@ export default {
           console.error("Error fetching tracks:", error);
         });
       },
+      handleImprovePlaylist(tracks) {
+            if (!tracks.length) return; 
+
+            axios.post('/api/improve-playlist', { tracks })
+              .then(response => {
+                console.log('Improved Playlist:', response.data);
+              })
+              .catch(error => {
+                console.error('Failed to improve playlist:', error);
+              });
+          },
+
       },
   mounted() {
     this.fetchPlaylists();
@@ -83,7 +95,7 @@ export default {
         </v-card>
       </v-col>
       <v-col cols="12">
-        <uploaded-playlist :tracks="tracks" @playlist-uploaded="playlistUploaded = true" />
+        <uploaded-playlist :tracks="tracks" @improve-playlist="handleImprovePlaylist" />
       </v-col>
     </v-row>
   </v-container>
