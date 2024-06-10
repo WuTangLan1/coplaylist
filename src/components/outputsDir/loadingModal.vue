@@ -1,17 +1,4 @@
 <!-- src\components\outputsDir\loadingModal.vue -->
-<template>
-  <v-dialog v-model="localShow" persistent max-width="300">
-    <v-card class="text-center">
-      <v-card-text>
-        <img src="@/assets/images/loading/loading.gif" alt="Loading" />
-        <v-divider class="my-4"></v-divider>
-        <v-icon large color="primary">mdi-music-note</v-icon>
-        <v-card-title class="text-h6">Generating Playlist...</v-card-title>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
-</template>
-
 <script>
 export default {
   props: {
@@ -35,6 +22,20 @@ export default {
   }
 };
 </script>
+
+<template>
+  <v-dialog v-model="localShow" persistent max-width="300">
+    <v-card class="text-center">
+      <v-card-text>
+        <img src="@/assets/images/loading/loading.gif" alt="Loading" />
+        <v-divider class="my-4"></v-divider>
+        <v-icon large color="primary">mdi-music-note</v-icon>
+        <v-card-title class="text-h6">Generating Playlist...</v-card-title>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
+</template>
+
 
 <style scoped>
 .v-dialog {

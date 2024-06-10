@@ -1,14 +1,27 @@
 <!-- src\components\improve\uploadedPlaylist.vue -->
 <script>
 import { useAuthStore } from '@/stores/useAuthStore';
+import { useImproveStore } from '@/stores/useImproveStore';
 import axios from 'axios';
+import LoadingModal from '@/components/outputsDir/loadingModal.vue';
 
 export default {
   props: ['tracks'],
+  components : {
+    LoadingModal
+  },
+  data() {
+    return {
+      loading: false
+    };
+  },
   setup() {
     const authStore = useAuthStore();
+    const improveStore = useImproveStore();
+
     return {
       authStore,
+      improveStore
     };
   },
   methods: {
@@ -17,28 +30,28 @@ export default {
       window.location.href = `${baseUrl}/auth/spotify/login?state=fetch-playlists`;
     },
     improvePlaylist() {
-    if (!this.tracks.length) return;
+      if (!this.tracks.length) return;
 
-    // Map over the tracks to create a new array that only contains the necessary data
-    const formattedTracks = this.tracks.map(t => ({
-      name: t.track.name,  // Assuming 'track' is the object that contains the 'name'
-      artist: t.track.artists.map(a => a.name).join(', ')  // Assuming 'artists' is an array of objects with 'name'
-    }));
+      const formattedTracks = this.tracks.map(t => ({
+        name: t.track.name,
+        artist: t.track.artists.map(a => a.name).join(', ')
+      }));
 
-    console.log('formatted tracks : ', formattedTracks)
+      const baseUrl = process.env.VUE_APP_API_BASE_URL;
+      this.loading = true; // Show loading modal
 
-    // Base URL for API
-    const baseUrl = process.env.VUE_APP_API_BASE_URL;
-
-    axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
-      .then(response => {
-        console.log('Playlist improved:', response.data);
-      })
-      .catch(error => {
-        console.error('Error improving playlist:', error);
-      });
-  },
-  },
+      axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
+        .then(response => {
+          this.improveStore.setImprovedTracks(response.data);
+          this.loading = false; // Hide loading modal
+          this.$emit('playlist-improved');
+        })
+        .catch(error => {
+          console.error('Error improving playlist:', error);
+          this.loading = false; // Hide loading modal
+        });
+    }
+  }
 };
 </script>
 
@@ -75,6 +88,7 @@ export default {
       </v-tooltip>
     </div>
   </v-card>
+  <loading-modal :show="loading" />
 </template>
 
 <style scoped>
