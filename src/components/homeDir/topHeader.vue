@@ -58,7 +58,7 @@ export default {
       <v-icon>mdi-playlist-music</v-icon>
     </v-btn>
     <v-btn icon @click="handleAuthAction" color="white">
-      <v-icon v-if="isAuthenticated">mdi-logout</v-icon>
+      <v-icon v-if="isAuthenticated">mdi-account</v-icon>
       <v-icon v-else>mdi-login</v-icon>
     </v-btn>
   </v-app-bar>
