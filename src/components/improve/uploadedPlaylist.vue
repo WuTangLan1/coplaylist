@@ -49,9 +49,6 @@ export default {
         v-if="!authStore.isAuthenticated || !authStore.user.email_verified || (authStore.user && authStore.user.tokens < 1)"
         bottom
       >
-        <template v-slot:activator="{ on, attrs }">
-          <v-icon color="red" v-bind="attrs" v-on="on">mdi-alert-circle</v-icon>
-        </template>
         <span v-if="!authStore.isAuthenticated">Please log in to improve the playlist.</span>
         <span v-if="authStore.user && authStore.user.tokens < 1">Insufficient tokens to improve the playlist.</span>
         <span v-if="authStore.user && !authStore.user.email_verified">Please verify your email to improve the playlist.</span>
@@ -125,6 +122,20 @@ export default {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+}
+
+.upload-btn {
+  align-self: flex-start;
+  background-color: #4CAF50;
+  color: white;
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  max-width: 200px;
+}
+
+.upload-btn v-icon {
+  margin-right: 8px;
 }
 
 .gen-btn {
