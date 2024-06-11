@@ -36,17 +36,14 @@ export default {
         }
       },
       handlePlaylistSelected(playlist) {
-        console.log('Playlist selected in parent:', playlist); 
         this.selectedPlaylist = playlist;
         this.fetchTracks(playlist.id);
       },
       fetchTracks(playlistId) {
-        console.log('Fetching tracks for:', playlistId);
         axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           headers: { 'Authorization': `Bearer ${this.token}` }
         }).then(response => {
           this.tracks = response.data.items; 
-          console.log('Tracks received:', this.tracks);
           this.playlistUploaded = true;
         }).catch(error => {
           console.error("Error fetching tracks:", error);
