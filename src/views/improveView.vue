@@ -95,7 +95,7 @@ export default {
         </v-card>
       </v-col>
       <v-col cols="12">
-        <uploaded-playlist :tracks="tracks" @improve-playlist="handleImprovePlaylist" />
+        <uploaded-playlist :tracks="tracks" @improvePlaylist="handleImprovePlaylist" />
       </v-col>
     </v-row>
   </v-container>
