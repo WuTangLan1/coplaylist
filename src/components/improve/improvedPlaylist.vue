@@ -10,69 +10,60 @@ export default {
   }
 };
 </script>
-
 <template>
-  <v-card class="improved-playlist-card">
-    <v-card-title class="header">Improved Playlist</v-card-title>
-    <div class="track-list">
-      <v-list dense v-if="improveStore.improvedTracks.length">
-        <v-list-item
-          v-for="(track, index) in improveStore.improvedTracks"
-          :key="index"
-          class="track-item"
-        >
-          <v-list-item-content>
-            <v-list-item-title class="track-name">{{ track.title }}</v-list-item-title>
-            <v-list-item-subtitle class="artist-name">{{ track.artist }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <div v-else class="no-tracks">No improved tracks available.</div>
+  <div class="improved-playlist-card">
+    <div v-if="improveStore.improvedTracks.length">
+      <v-card
+        v-for="(track, index) in improveStore.improvedTracks"
+        :key="index"
+        class="track-card"
+      >
+        <v-card-title class="track-name">{{ track.title }}</v-card-title>
+        <v-card-subtitle class="artist-name">{{ track.artist }}</v-card-subtitle>
+      </v-card>
     </div>
-  </v-card>
+    <div v-else class="no-tracks">No improved tracks available.</div>
+  </div>
 </template>
 
 <style scoped>
 .improved-playlist-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  max-width: 98vw;
+}
+
+.track-card {
+  width: 100%;
   background-color: #2D2F48;
   color: #FFF;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  justify-content: space-between;
-  max-height: 60vh;
-  overflow-y: auto;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.header {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.track-list {
-  margin-top: 20px;
-  flex-grow: 1;
-}
-
-.track-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #444;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.track-item:hover {
-  background-color: #3A3B55;
+.track-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .track-name {
+  font-size: 18px;
   font-weight: bold;
+  color: #FFF;
 }
 
 .artist-name {
+  font-size: 16px;
   color: #BBBBBB;
+}
+
+.no-tracks {
+  font-size: 16px;
+  color: #AAAAAA;
+  font-style: italic;
 }
 </style>

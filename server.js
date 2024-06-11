@@ -195,7 +195,6 @@ app.post('/generate-playlist', async (req, res) => {
 app.post('/improve-playlist', async (req, res) => {
   console.log('Received request to improve playlist with data:', req.body);
   try {
-    // Assuming tracks are directly structured with 'name' and 'artist' without a nested 'track' object
     const trackDescriptions = req.body.tracks.map(t => `${t.name} by ${t.artist}`).join(', ');
 
     const response = await axios.post("https://api.openai.com/v1/chat/completions", {
@@ -206,6 +205,12 @@ app.post('/improve-playlist', async (req, res) => {
               content: `Improve the following playlist by adding 8-13 songs that would complement these tracks: ${trackDescriptions}
               Please add these imporvemenets into the playlist in varying spots that are complementary, and please ensure that the songs
               you integrate are the aboslute best options to integrate into the existing playlist through analysing the existing playlist comprehensively
+
+              please ensure the tracks for the improved playlist are returned in a song by artist format.
+
+              IMPORTANT : PLEASE ENSURE NONE OF THE EXISTING TRACKS ARE REMOVED FROM THE PLAYLIST, BUT 5-10 SONGS ARE INTEGRATED INTO THE EXISTING PLAYLIST, HENCE MAKING THE PLAYLIST 5-10 SONGS LONGER.
+              IT IS IMPERITAVE THE USER DOES NOT LOSE ANY OF THE EXISTING SONS IN THE THEIR PLAYLIST.
+              ALSO IMPORTANT, PLEASE JUST POSTED THE IMPROVED PLAYLIST WITH NO ADDITIONAL INFORMATION, JUST THE UPDATED AND LONGER PLAYLIST
               ` }
         ]
     }, {

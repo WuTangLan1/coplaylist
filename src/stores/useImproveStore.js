@@ -7,21 +7,30 @@ export const useImproveStore = defineStore('improve', {
   }),
   actions: {
     setImprovedTracks(responseData) {
-        const pattern = /\*\*([^\*]+)\*\*/g; 
-        if (!responseData || !pattern.test(responseData)) {
-          console.error("Invalid or unexpected response data:", responseData);
-          return;
+      if (!responseData) {
+        console.error("Invalid or unexpected response data:", responseData);
+        return;
+      }
+    
+      console.log('Raw response data:', responseData);
+    
+      // Clear existing tracks to avoid displaying old data
+      this.improvedTracks = [];
+    
+      // Improved regex to match "song title by artist" more reliably
+      const lines = responseData.split('\n');
+      lines.forEach(line => {
+        const match = line.match(/^\d*\.?\s*([^-\n]+?)\s*(?:-|by)\s*([^-\n]+)$/);
+        if (match) {
+          this.improvedTracks.push({ title: match[1].trim(), artist: match[2].trim() });
+        } else {
+          console.error('Line not matched:', line);
         }
-        const tracks = [];
-        let match;
-        while (match = pattern.exec(responseData)) {
-          const [title, artist] = match[1].split('by').map(str => str.trim());
-          tracks.push({ title, artist });
-        }
-        this.improvedTracks = tracks;
-      },
-      clearImprovedTracks() {
-        this.improvedTracks = [];
-      }    
-  }
+      });
+    
+      // Log to check what we are actually pushing to state
+      console.log(this.improvedTracks);
+    }
+    
+  }    
 });
