@@ -6,7 +6,7 @@ import axios from 'axios';
 import LoadingModal from '@/components/outputsDir/loadingModal.vue';
 
 export default {
-  emits: ['improvePlaylist'],
+  emits: ['improvePlaylist', 'playlist-improved'],
   props: ['tracks'],
   components : {
     LoadingModal

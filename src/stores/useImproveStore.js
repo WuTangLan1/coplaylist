@@ -7,15 +7,17 @@ export const useImproveStore = defineStore('improve', {
   }),
   actions: {
     setImprovedTracks(responseData) {
-        if (!responseData || !/\*\*\*/g.test(responseData)) {
+        const pattern = /\*\*([^\*]+)\*\*/g; 
+        if (!responseData || !pattern.test(responseData)) {
           console.error("Invalid or unexpected response data:", responseData);
           return;
         }
-        const tracks = responseData.match(/\*\*\*([^\*]+)\*\*\*/g).map(item => {
-          const track = item.replace(/\*\*\*/g, '').trim();
-          const [title, artist] = track.split('by');
-          return { title: title.trim(), artist: artist.trim() };
-        });
+        const tracks = [];
+        let match;
+        while (match = pattern.exec(responseData)) {
+          const [title, artist] = match[1].split('by').map(str => str.trim());
+          tracks.push({ title, artist });
+        }
         this.improvedTracks = tracks;
       },
       clearImprovedTracks() {

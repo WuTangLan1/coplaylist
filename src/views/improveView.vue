@@ -18,7 +18,8 @@ export default {
       playlists: [],
       showModal: false,
       selectedPlaylist: null,
-      tracks: [] 
+      tracks: [],
+      isPlaylistImproved: false  
     };
   },
   methods: {
@@ -40,30 +41,32 @@ export default {
         this.fetchTracks(playlist.id);
       },
       fetchTracks(playlistId) {
-        console.log('Fetching tracks for:', playlistId); // Confirm ID is correct
+        console.log('Fetching tracks for:', playlistId);
         axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
           headers: { 'Authorization': `Bearer ${this.token}` }
         }).then(response => {
-          this.tracks = response.data.items; // Log to check the response data
+          this.tracks = response.data.items; 
           console.log('Tracks received:', this.tracks);
           this.playlistUploaded = true;
         }).catch(error => {
           console.error("Error fetching tracks:", error);
         });
       },
-      handleImprovePlaylist(tracks) {
-            if (!tracks.length) return; 
-
-            axios.post('/api/improve-playlist', { tracks })
-              .then(response => {
-                console.log('Improved Playlist:', response.data);
-              })
-              .catch(error => {
-                console.error('Failed to improve playlist:', error);
-              });
-          },
-
-      },
+      handleImprovePlaylist() {
+        if (!this.tracks || !this.tracks.length) {
+          console.error('No tracks available to improve.');
+          return;
+        }
+        axios.post('/api/improve-playlist', { tracks: this.tracks })
+          .then(response => {
+            console.log('Improved Playlist:', response.data);
+            this.isPlaylistImproved = true;
+          })
+          .catch(error => {
+            console.error('Failed to improve playlist:', error);
+          });
+      }
+    },
   mounted() {
     this.fetchPlaylists();
   }
@@ -95,7 +98,8 @@ export default {
         </v-card>
       </v-col>
       <v-col cols="12">
-        <uploaded-playlist :tracks="tracks" @improvePlaylist="handleImprovePlaylist" />
+        <uploaded-playlist v-if="!isPlaylistImproved" :tracks="tracks" @playlist-improved="handleImprovePlaylist" />
+        <improved-playlist v-else />
       </v-col>
     </v-row>
   </v-container>
