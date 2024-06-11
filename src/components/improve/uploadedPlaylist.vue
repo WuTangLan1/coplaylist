@@ -31,28 +31,28 @@ export default {
       window.location.href = `${baseUrl}/auth/spotify/login?state=fetch-playlists`;
     },
     improvePlaylist() {
-      if (!this.tracks.length) return;
+        if (!this.tracks.length) return;
 
-      const formattedTracks = this.tracks.map(t => ({
-        name: t.track.name,
-        artist: t.track.artists.map(a => a.name).join(', ')
-      }));
+        const formattedTracks = this.tracks.map(t => ({
+          name: t.track.name,
+          artist: t.track.artists.map(a => a.name).join(', ')
+        }));
 
-      const baseUrl = process.env.VUE_APP_API_BASE_URL;
-      this.loading = true; 
-
-      axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
-        .then(response => {
-          this.improveStore.setImprovedTracks(response.data);
-          this.loading = false; 
-          this.$emit('playlist-improved');
-        })
-        .catch(error => {
-          console.error('Error improving playlist:', error);
-          this.loading = false;
-        });
+        const baseUrl = process.env.VUE_APP_API_BASE_URL;
+        this.loading = true;  
+        axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
+          .then(response => {
+            this.improveStore.setImprovedTracks(response.data);
+            this.loading = false; 
+            this.$emit('playlist-improved'); 
+          })
+          .catch(error => {
+            console.error('Error improving playlist:', error);
+            this.loading = false; 
+          });
+      }
     }
-  }
+
 };
 </script>
 

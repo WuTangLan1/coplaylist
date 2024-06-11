@@ -50,20 +50,9 @@ export default {
         });
       },
       handleImprovePlaylist() {
-        if (!this.tracks || !this.tracks.length) {
-          console.error('No tracks available to improve.');
-          return;
-        }
-        const baseUrl = process.env.VUE_APP_API_BASE_URL;
-        axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: this.tracks })
-          .then(response => {
-            console.log('Improved Playlist:', response.data);
-            this.isPlaylistImproved = true;
-          })
-          .catch(error => {
-            console.error('Failed to improve playlist:', error);
-          });
+        this.isPlaylistImproved = true; 
       }
+
     },
   mounted() {
     this.fetchPlaylists();
