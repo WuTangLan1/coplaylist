@@ -10,6 +10,8 @@ export default {
   }
 };
 </script>
+
+
 <template>
   <div class="improved-playlist-card">
     <div v-if="improveStore.improvedTracks.length">
@@ -33,37 +35,35 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  max-width: 98vw;
+  width: 100%; /* Ensure it fills the container but respects padding */
+  background-color: #2D2F48; /* Background color as in uploadedPlaylist */
+  color: #FFF; /* Text color */
 }
 
 .track-card {
-  width: 100%;
-  background-color: #2D2F48;
-  color: #FFF;
-  margin-bottom: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.track-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 100%; /* Adjust width to match the uploadedPlaylist style */
+  background-color: #3A3B55; /* Darker shade for card background */
+  margin-bottom: 5px; /* Space between cards */
+  border-radius: 4px; /* Smooth edges */
+  padding: 12px 20px; /* Padding inside each card */
+  box-shadow: none; /* Remove shadow for flat design */
+  border: 1px solid #444; /* Subtle border */
 }
 
 .track-name {
-  font-size: 18px;
-  font-weight: bold;
-  color: #FFF;
+  font-size: 18px; /* Font size */
+  font-weight: bold; /* Bold font for track name */
+  margin-bottom: 4px; /* Space between track name and artist name */
 }
 
 .artist-name {
-  font-size: 16px;
-  color: #BBBBBB;
+  font-size: 16px; /* Smaller font size for artist name */
+  color: #BBBBBB; /* Light grey color for artist name */
 }
 
 .no-tracks {
-  font-size: 16px;
-  color: #AAAAAA;
-  font-style: italic;
+  font-size: 16px; /* Consistent font size for no tracks message */
+  color: #AAAAAA; /* Grey color */
+  font-style: italic; /* Italic style for message */
 }
 </style>
