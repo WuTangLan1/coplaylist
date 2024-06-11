@@ -57,7 +57,8 @@ export default {
           console.error('No tracks available to improve.');
           return;
         }
-        axios.post('/api/improve-playlist', { tracks: this.tracks })
+        const baseUrl = process.env.VUE_APP_API_BASE_URL;
+        axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: this.tracks })
           .then(response => {
             console.log('Improved Playlist:', response.data);
             this.isPlaylistImproved = true;

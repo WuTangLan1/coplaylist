@@ -39,17 +39,17 @@ export default {
       }));
 
       const baseUrl = process.env.VUE_APP_API_BASE_URL;
-      this.loading = true; // Show loading modal
+      this.loading = true; 
 
       axios.post(`${baseUrl.trim()}/improve-playlist`, { tracks: formattedTracks })
         .then(response => {
           this.improveStore.setImprovedTracks(response.data);
-          this.loading = false; // Hide loading modal
+          this.loading = false; 
           this.$emit('playlist-improved');
         })
         .catch(error => {
           console.error('Error improving playlist:', error);
-          this.loading = false; // Hide loading modal
+          this.loading = false;
         });
     }
   }
