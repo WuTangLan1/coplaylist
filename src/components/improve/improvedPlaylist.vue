@@ -32,35 +32,31 @@ export default {
 .improved-playlist-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%; 
-  margin: auto;
-  padding: 0 10px; 
-  box-sizing: border-box;
-  overflow-x: hidden;
-  background-color: #2D2F48; 
-  max-width: 960px; /* Setting a max-width for large screens */
+  background-color: #2D2F48;
+  color: #FFF;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 
 .track-card {
-  width: 100%;
-  background-color: #3A3B55;
+  margin-top: 20px;
+  flex-grow: 1;
+  background-color: #2D2F48;
   color: #FFF;
-  margin-bottom: 20px; /* Increased margin for better spacing */
-  border-radius: 4px;
-  padding: 15px; /* Increased padding for better aesthetics */
-  box-shadow: none;
-  border: none;
 }
 
-.track-name, .artist-name {
-  font-size: 1.2rem; /* Slightly larger font for better readability on large screens */
+.track-name {
+  font-weight: bold;
 }
 
 .artist-name {
-  color: #BBBBBB; 
+  color: #BBBBBB;
 }
+
 
 .no-tracks {
   font-size: 1rem;
