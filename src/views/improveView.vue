@@ -62,8 +62,8 @@ export default {
 
 
 <template>
-  <v-container class="fill-height">
-    <v-row class="align-center justify-center" style="height: 100%;">
+  <v-container fluid class="fill-height">
+    <v-row class="align-center justify-center " style="height: 100%;">
       <v-col cols="12">
         <v-card class="d-flex align-center" :style="{ backgroundColor: '#220956' }" flat tile>
           <v-row class="ma-0" align="center" justify="start">

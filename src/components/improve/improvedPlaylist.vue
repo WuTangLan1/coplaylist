@@ -34,48 +34,54 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 100vw;
+  width: 100%; 
   margin: auto;
-  padding: 0 5%; /* Use percentage for padding */
+  padding: 0 10px; 
   box-sizing: border-box;
   overflow-x: hidden;
-  background-color: #2D2F48;
+  background-color: #2D2F48; 
+  max-width: 960px; /* Setting a max-width for large screens */
 }
 
 .track-card {
-  width: 100%; /* Full width */
+  width: 100%;
   background-color: #3A3B55;
   color: #FFF;
-  margin-bottom: 5px;
+  margin-bottom: 20px; /* Increased margin for better spacing */
   border-radius: 4px;
-  padding: 10px; /* Uniform padding */
+  padding: 15px; /* Increased padding for better aesthetics */
   box-shadow: none;
   border: none;
 }
 
-.track-name {
-  font-size: 1.2rem; /* Responsive font size */
+.track-name, .artist-name {
+  font-size: 1.2rem; /* Slightly larger font for better readability on large screens */
 }
 
 .artist-name {
-  font-size: 1rem;
-  color: #BBBBBB;
+  color: #BBBBBB; 
 }
 
 .no-tracks {
   font-size: 1rem;
   color: #AAAAAA;
   font-style: italic;
+  text-align: center;
 }
 
 @media (max-width: 600px) {
   .improved-playlist-card {
-    padding: 0 10px;
+    padding: 0 5px; 
+    max-width: none; /* No max width for small screens */
   }
-  
+
   .track-name, .artist-name {
-    font-size: 0.9rem; /* Smaller font size for very small devices */
+    font-size: 0.9rem; /* Smaller font size for small screens */
+  }
+
+  .track-card {
+    margin-bottom: 10px; /* Smaller margin for small screens */
+    padding: 10px; /* Smaller padding for small screens */
   }
 }
 </style>
