@@ -96,7 +96,6 @@ export default {
   <style>
   .fill-height {
     height: 100%; 
-    max-width: 99vw;
   }
   .align-center {
     align-items: center; 
