@@ -58,7 +58,7 @@ export default {
 
 <template>
   <v-card class="playlist-card">
-    <v-card-title class="header">Uploaded Playlist</v-card-title>
+    <v-card-title class="header">Expand your Playlist</v-card-title>
     <v-btn @click="loginToSpotifyForPlaylists" class="upload-btn">
       <v-icon>mdi-upload</v-icon> Upload Playlist
     </v-btn>
@@ -76,7 +76,7 @@ export default {
         :disabled="!authStore.isAuthenticated || (authStore.user && authStore.user.tokens < 1) || !authStore.user.email_verified|| !tracks.length"
         @click="improvePlaylist"
       >
-        <v-icon>mdi-check</v-icon> Improve this playlist
+        Improve this playlist
         <img src="@/assets/images/header/tokens.png" alt="Token" class="token-icon">
       </v-btn>
       <v-tooltip

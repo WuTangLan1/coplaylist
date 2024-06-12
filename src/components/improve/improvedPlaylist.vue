@@ -6,7 +6,15 @@ import { useImproveStore } from '@/stores/useImproveStore';
 export default {
   setup() {
     const improveStore = useImproveStore();
-    return { improveStore };
+    function savePlaylist() {
+      console.log("Saving the playlist...");
+    }
+
+    function updateSpotifyPlaylist() {
+      console.log("Updating Spotify playlist...");
+    }
+
+    return { improveStore, updateSpotifyPlaylist, savePlaylist };
   }
 };
 </script>
@@ -23,6 +31,16 @@ export default {
         <v-card-title class="track-name">{{ track.title }}</v-card-title>
         <v-card-subtitle class="artist-name">{{ track.artist }}</v-card-subtitle>
       </v-card>
+      <div class="button-container">
+        <v-btn color="purple" dark class="action-button" @click="savePlaylist">
+          <v-icon left>mdi-content-save</v-icon>
+          Save 
+        </v-btn>
+        <v-btn color="deep-purple" dark class="action-button" @click="updateSpotifyPlaylist">
+          <v-icon left>mdi-sync</v-icon>
+          Update Spotify 
+        </v-btn>
+      </div>
     </div>
     <div v-else class="no-tracks">No improved tracks available.</div>
   </div>
@@ -47,6 +65,7 @@ export default {
   flex-grow: 1;
   background-color: #2D2F48;
   color: #FFF;
+  text-overflow: ellipsis;
 }
 
 .track-name {
@@ -65,19 +84,37 @@ export default {
   text-align: center;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 10px;
+}
+
+.action-button {
+  flex: 1; 
+  margin: 0 5px; 
+}
+
+@media (max-width: 600px) {
+  .track-card, .track-name, .artist-name {
+    padding: 5px; 
+    margin-bottom: 5px; 
+  }
+}
+
 @media (max-width: 600px) {
   .improved-playlist-card {
     padding: 0 5px; 
-    max-width: none; /* No max width for small screens */
+    max-width: none; 
   }
 
   .track-name, .artist-name {
-    font-size: 0.9rem; /* Smaller font size for small screens */
+    font-size: 0.9rem; 
   }
 
   .track-card {
-    margin-bottom: 10px; /* Smaller margin for small screens */
-    padding: 10px; /* Smaller padding for small screens */
+    margin-bottom: 10px; 
+    padding: 10px; 
   }
 }
 </style>
