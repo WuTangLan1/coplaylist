@@ -57,6 +57,8 @@ export default {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   max-height: 60vh;
+  max-width: 99vw;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -88,6 +90,7 @@ export default {
   display: flex;
   justify-content: space-between; 
   margin-top: 10px;
+  padding-bottom: 10px;
 }
 
 .action-button {
