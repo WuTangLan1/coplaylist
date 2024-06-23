@@ -45,11 +45,21 @@ export default {
 
 <style scoped>
 .bottom-footer {
-  background-color: #220956;
-  color: black;
-  text-align: center;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+    background-color: #220956;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; 
+    width: 100vw;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 0; 
+    margin: 0; 
+    position: relative; /* Helps with positioning if needed */
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%); 
 }
 
 @media (min-width: 500px) {
