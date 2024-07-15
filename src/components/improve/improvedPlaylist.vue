@@ -92,7 +92,7 @@ export default {
 .improved-playlist-card {
   display: flex;
   flex-direction: column;
-  background-color: #2D2F48;
+  background-color: #220956;
   color: #FFF;
   border-radius: 10px;
   padding: 20px;

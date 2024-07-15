@@ -64,7 +64,6 @@ export default {
   </v-app-bar>
 </template>
 
-/* src/components/homeDir/topHeader.vue */
 <style scoped>
 .logo-container {
   display: flex;
