@@ -53,98 +53,101 @@ export default {
 </script>
 
 <template>
-  <div class="improved-playlist-card">
-    <div v-if="improveStore.improvedTracks.length">
-      <v-card
-        v-for="(track, index) in improveStore.improvedTracks"
-        :key="index"
-        class="track-card"
-      >
-        <v-card-title class="track-name">{{ track.title }}</v-card-title>
-        <v-card-subtitle class="artist-name">{{ track.artist }}</v-card-subtitle>
-        <!-- Icons container -->
+  <v-card class="playlist-card">
+    <v-card-title class="header">Your Improved Playlist</v-card-title>
+    <div class="track-list">
+      <div v-for="(track, index) in improveStore.improvedTracks" :key="index" class="track-item">
+        <span class="track-name">{{ track.title }}</span> by <span class="artist-name">{{ track.artist }}</span>
         <div class="icons-container">
-          <img
-            src="@/assets/images/music_icons/spotify.png"
-            alt="Spotify"
-            class="spotify-icon"
-            @click="playSongPreview(track)"
-          >
+          <v-icon class="spotify-icon">mdi-spotify</v-icon>
           <v-icon class="delete-icon">mdi-close</v-icon>
         </div>
-      </v-card>
-      <div class="button-container">
-        <v-btn color="purple" dark class="action-button" @click="savePlaylist">
-          <v-icon left>mdi-content-save</v-icon>
-          Save 
-        </v-btn>
-        <v-btn color="deep-purple" dark class="action-button" @click="updateSpotifyPlaylist">
-          <v-icon left>mdi-sync</v-icon>
-          Update Spotify 
-        </v-btn>
       </div>
     </div>
-    <div v-else class="no-tracks">No improved tracks available.</div>
-  </div>
+    <div class="button-container">
+      <v-btn color="purple" dark class="action-button" @click="savePlaylist">
+        <v-icon left>mdi-content-save</v-icon>
+        Save
+      </v-btn>
+      <v-btn color="deep-purple" dark class="action-button" @click="updateSpotifyPlaylist">
+        <v-icon left>mdi-sync</v-icon>
+        Update Spotify
+      </v-btn>
+    </div>
+  </v-card>
+  <div v-if="!improveStore.improvedTracks.length" class="no-tracks">No improved tracks available.</div>
 </template>
 
 <style scoped>
-.improved-playlist-card {
+.playlist-card {
   display: flex;
   flex-direction: column;
-  background-color: #220956;
+  background-color: #2D2F48;
   color: #FFF;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   justify-content: space-between;
   max-height: 60vh;
-  max-width: 99vw;
-  overflow-x: hidden;
   overflow-y: auto;
 }
 
-.track-card {
-  margin-top: 20px;
-  background-color: #1E1E2F;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #FFFFFF; /* Ensuring text is white */
 }
 
-.track-name {
+.track-list {
+  margin-top: 20px;
+}
+
+.track-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s;
+  max-width: 90vw;
+}
+
+.track-item:hover {
+  background-color: #3A3B55;
+}
+
+.track-name, .artist-name {
   font-weight: bold;
-  font-size: 1.2rem;
-  color: #E0E0E0;
-  max-width: 70%;
-  text-overflow: ellipsis;
 }
 
 .artist-name {
-  font-size: 1rem;
-  color: #CCCCCC;
-  margin-bottom: 5px;
+  color: #BBBBBB; /* Light gray for artist names */
 }
 
-.no-tracks {
-  font-size: 1rem;
-  color: #AAAAAA;
-  font-style: italic;
-  text-align: center;
+.icons-container {
+  display: flex;
+  align-items: center;
+}
+
+.spotify-icon, .delete-icon {
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.spotify-icon:hover {
+  color: #1DB954; /* Spotify green */
+}
+
+.delete-icon:hover {
+  color: #D32F2F; /* Red for delete */
 }
 
 .button-container {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
-  padding-bottom: 10px;
-}
-
-.v-btn { 
-  border: none;
-  border-radius: 5px; 
-  background-color: #6A1B9A;
-  color: #FFFFFF;
 }
 
 .action-button {
@@ -153,66 +156,4 @@ export default {
   padding: 10px 0;
   font-size: 1rem;
 }
-
-.icons-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 5px; 
-}
-
-.spotify-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px; 
-}
-
-.delete-icon {
-  color: #FF0000;
-  cursor: pointer; 
-}
-
-.spotify-icon:hover, .delete-icon:hover {
-  transform: scale(1.1); 
-}
-
-.delete-icon:hover {
-  color: #D32F2F; 
-}
-
-.spotify-icon {
-  transition: transform 0.2s ease-in-out;
-}
-
-.delete-icon {
-  transition: color 0.2s, transform 0.2s ease-in-out;
-}
-
-@media(min-width:1000px)
-{
-  .improved-playlist-card {
-    max-height: 59vh;
-  }
-}
-
-@media (max-width: 600px) {
-  .track-name, .artist-name {
-    font-size: 1rem; 
-  }
-
-  .action-button {
-    padding: 8px 0;
-    font-size: 0.9rem;
-  }
-
-  .improved-playlist-card {
-    padding: 5px;
-    max-width: 100vw;
-  }
-
-  .track-card {
-    margin-bottom: 15px;
-  }
-}
-
 </style>
