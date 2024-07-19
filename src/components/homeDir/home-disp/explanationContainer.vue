@@ -87,14 +87,15 @@ export default {
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
         <v-btn class="next-button improve-playlist" @click="comingSoon" disabled>
             <img src="@/assets/images/explanation-container/discover.png" alt="ComingSoon" class="button-image">
-            Improve
+            Discover
             <span class="badge">Coming Soon</span>
           </v-btn>
       </v-col>
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">
-        <v-btn class="next-button discover" @click="improvePlaylist">
+        <v-btn class="next-button improve-playlist" @click="comingSoon" disabled>
           <img src="@/assets/images/explanation-container/improve.png" alt="Improve" class="button-image">
           Improve
+          <span class="badge">Coming Soon</span>
         </v-btn>
       </v-col>
       <v-col cols="4" xs="4" sm="4" md="4" class="d-flex justify-center button-col" style="padding: 0 4px;">

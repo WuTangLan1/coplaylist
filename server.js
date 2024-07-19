@@ -72,10 +72,6 @@ app.get('/auth/spotify/login-fetch', (req, res, next) => {
   passport.authenticate('spotify', authOptions)(req, res, next);
 });
 
-app.get('/callback-fetch', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
-  const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
-  res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
-});
 
 app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }), (req, res) => {
 
@@ -85,7 +81,6 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
       const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com' : 'http://localhost:8080';
       if (state === 'fetch-playlists') {
           console.log('Redirecting to fetch playlists');
-          res.redirect(`${redirectBaseUrl}/improve-playlist?token=${req.user.accessToken}`);
       } else {
           console.log('Redirecting to export playlists');
           const playlistId = req.query.playlist_id || 'undefined';
@@ -190,41 +185,6 @@ app.post('/generate-playlist', async (req, res) => {
         console.error('Error generating playlist:', error);
         res.status(error.response ? error.response.status : 500).send('Failed to generate playlist');
     }
-});
-
-app.post('/improve-playlist', async (req, res) => {
-  console.log('Received request to improve playlist with data:', req.body);
-  try {
-    const trackDescriptions = req.body.tracks.map(t => `${t.name} by ${t.artist}`).join(', ');
-
-    const response = await axios.post("https://api.openai.com/v1/chat/completions", {
-        model: "gpt-4-turbo",
-        messages: [
-            { role: "system", content: "You are an expert in music and creating song music playlists for users based on their requests." },
-            { role: "user", 
-              content: `Improve the following playlist by adding 8-13 songs that would complement these tracks: ${trackDescriptions}
-              Please add these imporvemenets into the playlist in varying spots that are complementary, and please ensure that the songs
-              you integrate are the aboslute best options to integrate into the existing playlist through analysing the existing playlist comprehensively
-
-              please ensure the tracks for the improved playlist are returned in a song by artist format.
-
-              IMPORTANT : PLEASE ENSURE NONE OF THE EXISTING TRACKS ARE REMOVED FROM THE PLAYLIST, BUT 5-10 SONGS ARE INTEGRATED INTO THE EXISTING PLAYLIST, HENCE MAKING THE PLAYLIST 5-10 SONGS LONGER.
-              IT IS IMPERITAVE THE USER DOES NOT LOSE ANY OF THE EXISTING SONS IN THE THEIR PLAYLIST.
-              ALSO IMPORTANT, PLEASE JUST POSTED THE IMPROVED PLAYLIST WITH NO ADDITIONAL INFORMATION, JUST THE UPDATED AND LONGER PLAYLIST
-              ` }
-        ]
-    }, {
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
-        }
-    });
-
-    res.json(response.data.choices[0].message.content);
-  } catch (error) {
-      console.error('Error improving playlist:', error);
-      res.status(500).send('Failed to improve playlist');
-  }
 });
 
 
