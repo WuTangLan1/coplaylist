@@ -3,7 +3,7 @@ require('dotenv').config();
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 
-const callbackURL = process.env.NODE_ENV === 'production' ? 'https://www.coplaylist.com/callback' : 'http://localhost:3000/callback';
+const callbackURL = process.env.NODE_ENV === 'production' ? 'https://coplaylist-5ec2820dd416.herokuapp.com/callback' : 'http://localhost:3000/callback';
 
 passport.use(new SpotifyStrategy({
   clientID: process.env.SPOTIFY_CLIENT_ID,
