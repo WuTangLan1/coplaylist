@@ -12,7 +12,7 @@ const passport = require('./passport-setup');
 const app = express();
 
 const corsOptions = {
-  origin: ['https://coplaylist-5ec2820dd416.herokuapp.com/','http://localhost:3000', 'http://localhost:8080'],
+  origin: ['https://coplaylist-5ec2820dd416.herokuapp.com','http://localhost:3000', 'http://localhost:8080'],
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -78,7 +78,7 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
   const { state, code } = req.query;
 
   if (req.user && req.user.accessToken && req.user.profile) {
-      const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://coplaylist-5ec2820dd416.herokuapp.com/' : 'http://localhost:8080';
+      const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://coplaylist-5ec2820dd416.herokuapp.com' : 'http://localhost:8080';
       if (state === 'fetch-playlists') {
           console.log('Redirecting to fetch playlists');
       } else {
@@ -89,7 +89,7 @@ app.get('/callback', passport.authenticate('spotify', { failureRedirect: '/' }),
       }
   } else {
       console.error("Failed to get access token.");
-      const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://coplaylist-5ec2820dd416.herokuapp.com/' : 'http://localhost:8080';
+      const redirectBaseUrl = process.env.NODE_ENV === 'production' ? 'https://coplaylist-5ec2820dd416.herokuapp.com' : 'http://localhost:8080';
       res.redirect(`${redirectBaseUrl}/export-failure`);
   }
 });

@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 });
 
   app.use((req, res, next) => {
-    const allowedOrigins = ['http://localhost:8080', 'https://coplaylist-5ec2820dd416.herokuapp.com/'];
+    const allowedOrigins = ['http://localhost:8080', 'https://coplaylist-5ec2820dd416.herokuapp.com']
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
